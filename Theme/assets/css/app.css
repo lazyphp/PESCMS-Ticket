@@ -1,0 +1,137 @@
+/* Write your styles */
+.table-sort{
+    width: 60px;
+}
+/*状态进度标记开始*/
+.console-step .step-pass {
+    background-color: #99dcf3;
+}
+.console-step .step {
+    font-size: 14px;
+    height: 24px;
+    line-height: 24px;
+    color: #FFF;
+    z-index: 1;
+    text-align: center;
+}
+.console-step .step-active {
+    background-color: #00a0c7;
+}
+.row:before, .row:after {
+    display: table;
+    content: " ";
+}
+.row:after {
+    clear: both;
+}
+.console-step .step:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -12px;
+    z-index: 8;
+    top: 0px;
+    border-top: 12px solid #cacaca;
+    border-left: 12px solid transparent !important;
+    border-bottom: 12px solid #cacaca;
+}
+.console-step .step-pass:before {
+    border-color: #99dcf3;
+}
+.console-step .step-active:before {
+    border-color: #00a0c7;
+}
+.console-step .step-first:before {
+    display: none;
+}
+.console-step .step:after {
+    content: '';
+    display: block;
+    width: 16px;
+    height: 24px;
+    position: absolute;
+    right: 0px;
+    z-index: 9;
+    top: 0px;
+    border-top: 12px solid transparent !important;
+    border-left: 12px solid #cacaca;
+    border-bottom: 12px solid transparent !important;
+    background-color: #FFF;
+}
+.console-step .step-pass:after {
+    border-color: #99dcf3;
+}
+.console-step .step-active:after {
+    border-color: #00a0c7;
+}
+.console-step .step-end:after {
+    display: none;
+}
+/*状态标记结束*/
+
+/*工单内容描述开始*/
+.pt-info-panel{
+    background-color: #f8f8f8;
+}
+.pt-text-explode {
+    color: #999 !important;
+}
+/*工单内容描述结束*/
+
+/*鼠标移动至li上的背景颜色*/
+.am-list-hover li:hover{
+    background: #f5f5f5;
+}
+/*鼠标移动至li上的背景颜色*/
+
+/*扩展颜色*/
+.am-text-gray{
+    color: #999;
+}
+/*扩展颜色*/
+
+/*
+===================
+图标 导航、版块管理
+展开收起、所属
+===================
+*/
+.start_icon,
+.away_icon,
+.zero_icon,
+.plus_icon,
+.plus_end_icon{
+    background:url(../i/icon_list.png) no-repeat;
+    display:inline-block;
+    vertical-align:middle;
+}
+.start_icon,
+.away_icon,
+.zero_icon,
+.plus_none_icon{
+    width:20px;
+    height:20px;
+    overflow:hidden;
+    cursor:pointer;
+}
+.away_icon{
+    background-position:0 -20px;
+}
+.zero_icon{
+    background-position:-20px 0;
+    cursor:default;
+}
+.plus_icon,
+.plus_end_icon{
+    width:40px;
+    height:24px;
+    background-position:0 -43px;
+    margin-right:5px;
+}
+.plus_end_icon{
+    background-position:0 -70px;
+}
+.plus_on_icon{
+    background-position:0 -100px;
+    cursor:default;
+}

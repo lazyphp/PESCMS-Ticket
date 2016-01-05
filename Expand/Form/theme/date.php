@@ -1,0 +1,1 @@
+<input class="form-text-input input-leng3 datetimepicker" name="<?= $field['field_name'] ?>" placeholder="<?= $field['field_display_name'] ?>" type="text" value="<?= empty($field['value']) ? date('Y-m-d H:i') : date('Y-m-d H:i:s', $field['value']) ?>" <?= $field['field_required'] == '1' ? 'required' : '' ?> />

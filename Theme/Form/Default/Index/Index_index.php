@@ -4,7 +4,7 @@
     </h1>
 
         <div class="am-topbar-right">
-            <a href="/?g=Ticket&m=Login&a=index" class="am-btn am-btn-primary am-topbar-btn am-btn-sm">管理工单</a>
+            <a href="<?=DOCUMENT_ROOT?>/?g=Ticket&m=Login&a=index" class="am-btn am-btn-primary am-topbar-btn am-btn-sm">管理工单</a>
         </div>
     </div>
 </header>

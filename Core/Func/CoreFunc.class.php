@@ -106,7 +106,7 @@ class CoreFunc {
                 }
                 $url .= $replaceurl . $suffix;
                 self::$useRoute = true;
-                return $url;
+                return DOCUMENT_ROOT . $url;
 
             }
         }

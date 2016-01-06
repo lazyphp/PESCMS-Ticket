@@ -337,7 +337,7 @@ class Controller {
     /**
      * 验证令牌
      */
-    protected static function chedkToken() {
+    protected static function checkToken() {
         if (empty($_REQUEST['token'])) {
             self::error('Lose Token');
         }

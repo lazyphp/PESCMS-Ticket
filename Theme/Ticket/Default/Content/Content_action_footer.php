@@ -9,8 +9,6 @@
     <div class="am-g">
         <div class="am-u-sm-10 am-u-sm-offset-2">
             <button type="submit" id="btn-submit" class="am-btn am-btn-primary am-btn-xs" data-am-loading="{spinner: 'circle-o-notch', loadingText: '提交中...', resetText: '再次提交'}">提交保存</button>
-            <a href="<?= $label->url(GROUP . '-Model-fieldList', array('id' => $modelId)); ?>"
-               class="am-btn am-btn-danger am-btn-xs">放弃保存</a>
         </div>
     </div>
 </li>

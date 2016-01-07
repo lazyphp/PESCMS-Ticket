@@ -51,8 +51,12 @@ class UpdateRoute extends \Core\Slice\Slice {
         ]);
 
         if (empty($route)) {
-            unlink($routePath);
-            unlink($routeUrl);
+          if(is_file($routePath)){
+              unlink($routePath);
+          }
+          if(is_file($routeUrl)){
+              unlink($routeUrl);
+          }
         } else {
             $routeStr['route'] = $routeStr['url'] = "<?php\r\n return array(\r\n";
             foreach ($route as $key => $value) {

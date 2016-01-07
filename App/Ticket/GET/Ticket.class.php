@@ -41,7 +41,7 @@ class Ticket extends \App\Ticket\Common {
                 FROM {$this->prefix}ticket AS t
                 LEFT JOIN {$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id
                 {$this->condition}
-                ORDER BY t.ticket_status ASC, t.ticket_id DESC";
+                ORDER BY t.ticket_close ASC, t.ticket_status ASC, t.ticket_id DESC ";
         $result = \Model\Content::quickListContent(['count' => sprintf($sql, 'count(*)'), 'normal' => sprintf($sql, 't.*, tm.ticket_model_name'), 'param' => $this->param]);
 
         $this->assign('ticketModel', \Model\Content::listContent(['table' => 'ticket_model']));

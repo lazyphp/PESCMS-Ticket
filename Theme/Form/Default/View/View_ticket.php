@@ -6,7 +6,7 @@
             <li>
                 <div class="am-g am-g-collapse">
                     <div class="am-u-lg-8">
-                        <form action="<?= $label->url('Submit-reply'); ?>" class="am-form" method="POST" data-am-validator>
+                        <form action="<?= $label->url('Form-Submit-reply'); ?>" class="am-form" method="POST" data-am-validator>
                             <input type="hidden" name="number" value="<?= $ticket_number; ?>"/>
 
                             <div class="am-form-group pt-reply-content">

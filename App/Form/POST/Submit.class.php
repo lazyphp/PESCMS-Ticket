@@ -44,7 +44,7 @@ class Submit extends \App\Form\Common{
         \Model\Ticket::addReply($ticket['ticket_id'], $content, 'custom');
 
 
-        $this->success('回复工单成功!', $this->url('View-ticket', ['number' => $ticket['ticket_number']]));
+        $this->success('回复工单成功!', $this->url('Form-View-ticket', ['number' => $ticket['ticket_number']]));
 
     }
 

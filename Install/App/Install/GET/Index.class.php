@@ -98,14 +98,14 @@ class Index extends \Core\Controller\Controller {
      * 执行安装
      */
     public function doinstall() {
-		$data['domain'] = $this->isP('domain', '请填写管理员帐号');
+		$data['domain'] = $this->isP('domain', '请填写域名');
         $data['account'] = $this->isP('account', '请填写管理员帐号');
         $data['passwd'] = $this->isP('passwd', '请填写管理员密码');
         $data['name'] = $this->isP('name', '请填写管理员名称');
         $data['mail'] = $this->isP('mail', '请填写管理员邮箱');
 
         //纯粹为了效果
-        $table = array('创建文档表', '创建文档内容表', '创建文档历史表', '创建文档树表', '创建模型列表','创建字段列表', '创建用户列表', '创建用户组列表');
+        $table = array('创建部门列表', '创建用户动态表', '创建字段列表', '创建菜单列表', '创建模型列表', '创建权限节点列表', '创建用户组权限节点', '创建系统消息列表', '创建选项列表', '创建项目列表', '创建报表列表', '创建报表内容列表', '创建任务列表', '创建任务审核列表', '创建任务日志列表', '创建任务补充说明列表', '创建更新列表', '创建用户列表', '创建用户组列表');
         $this->assign('table', json_encode($table));
 
         $this->assign($data);
@@ -117,9 +117,9 @@ class Index extends \Core\Controller\Controller {
      * 导入数据库
      */
     public function import() {
-		$domain = $this->isP('domain', '请填写管理员帐号');
+		$domain = $this->isP('domain', '请填写域名');
         $data['user_account'] = $this->isP('account', '请填写管理员帐号');
-        $data['user_password'] = \Core\Func\CoreFunc::generatePwd($this->isP('passwd', '请填写管理员密码'), 'PRIVATE_KEY');
+        $data['user_password'] = \Core\Func\CoreFunc::generatePwd($data['user_account'].$this->isP('passwd', '请填写管理员密码'), 'PRIVATE_KEY');
         $data['user_name'] = $this->isP('name', '请填写管理员名称');
         $data['user_mail'] = $this->isP('mail', '请填写管理员邮箱');
         $data['user_group_id'] = '1';
@@ -189,7 +189,6 @@ class Index extends \Core\Controller\Controller {
 
         fwrite($fopen, $str);
         fclose($fopen);
-
         //更新根目录的index.php
         $readWriteFile = file_get_contents(PES_PATH . '/Install/Write/index.php');
         $fopen = fopen(PES_PATH . '/index.php', 'w+');

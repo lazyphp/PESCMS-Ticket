@@ -31,7 +31,7 @@ class Login extends \Core\Controller\Controller{
 
         //若返回上一页为空，那么跳转到用户自定义的首页
         if(empty($_POST['back_url'])){
-            $url = $this->url(empty($login['user_home']) ? 'Team-Task-index' : $login['user_home']);
+            $url = $this->url('Ticket-Index-index');
         }else{
             $url = base64_decode($_POST['back_url']);
         }

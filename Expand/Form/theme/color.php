@@ -1,0 +1,1 @@
+<input class="form-text-input input-leng3 color-input" name="<?= $field['field_name'] ?>" placeholder="<?= $field['field_display_name'] ?>" type="text" value="<?= $field['value'] ?>" <?= $field['field_required'] == '1' ? 'required' : '' ?>  />

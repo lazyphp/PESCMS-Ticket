@@ -7,7 +7,9 @@
     <meta name="keywords" content="">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>PESCMS Ticket</title>
+    <meta http-equiv="x-pjax-version" content="v123">
+
+    <title><?= !empty($title) ? "{$title} - " : '' ?>PESCMS Team</title>
 
     <!-- Set render engine for 360 browser -->
     <meta name="renderer" content="webkit">
@@ -20,6 +22,7 @@
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/amazeui.min.css">
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/app.css">
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/ui-dialog.css">
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/amazeui.datetimepicker.css">
     <!--[if (gte IE 9)|!(IE)]><!-->
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/jquery.min.js"></script>
     <!--<![endif]-->
@@ -31,5 +34,20 @@
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/amazeui.min.js"></script>
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/dialog-min.js"></script>
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/dialog-plus-min.js"></script>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/amazeui.datetimepicker.min.js"></script>
+
+    <!--加载百度编辑器-->
+    <script>var path = '<?= DOCUMENT_ROOT; ?>';</script>
+    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.config.js"></script>
+    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.all.js"></script>
+    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <!--加载百度编辑器-->
+
+    <!--拾色器-->
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/spectrum.js"></script>
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/spectrum.css"/>
+    <!--拾色器-->
+
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/app.js"></script>
 </head>
 <body>

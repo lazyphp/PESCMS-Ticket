@@ -5,7 +5,7 @@ namespace App\Ticket\PUT;
 /**
  * 公用内容更新
  */
-class Content extends \App\Ticket\Common {
+class Content extends \Core\Controller\Controller {
 
     /**
      * 更新内容

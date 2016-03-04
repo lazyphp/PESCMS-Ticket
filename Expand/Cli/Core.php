@@ -30,8 +30,8 @@ abstract class Core {
      * @param type $name 表名
      * @return type
      */
-    public function db($name = '') {
-        return \Core\Func\CoreFunc::db($name);
+    public function db($name = '', $database = '', $dbPrefix = '') {
+        return \Core\Func\CoreFunc::db($name, $database, $dbPrefix);
     }
 
     /**

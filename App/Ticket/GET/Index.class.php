@@ -12,7 +12,7 @@
 
 namespace App\Ticket\GET;
 
-class Index extends \App\Ticket\Common {
+class Index extends \Core\Controller\Controller {
 
     /**
      * 系统首页

@@ -12,20 +12,31 @@
 
 namespace App\Ticket\POST;
 
-class Login extends \App\Ticket\Common{
+class Login extends \Core\Controller\Controller{
 
     public function index(){
         $data['user_account'] = $data['user_mail'] = $this->isP('account', '请提交账号信息');
-        $data['user_password'] = \Core\Func\CoreFunc::generatePwd($this->isP('passwd', '请提交密码'));
-        $login = $this->db('user')->where('(user_account = :user_account OR user_mail = :user_mail ) AND user_password = :user_password AND user_status = 1  ')->find($data);
-
+        $login = $this->db('user')->where('(user_account = :user_account OR user_mail = :user_mail) AND user_status = 1 ')->find($data);
         if(empty($login)){
+            $this->error('帐号或者密码错误，也可能您的账号被禁止登录鸟!');
+        }
+
+        $data['user_password'] = \Core\Func\CoreFunc::generatePwd($login['user_account'].$this->isP('passwd', '请提交密码'));
+
+        if($login['user_password'] !== $data['user_password']){
             $this->error('帐号或者密码错误，也可能您的账号被禁止登录鸟!');
         }
 
         $_SESSION['ticket'] = $login;
 
-        $this->success('登录成功!', $this->url('Ticket-Index-index'));
+        //若返回上一页为空，那么跳转到用户自定义的首页
+        if(empty($_POST['back_url'])){
+            $url = $this->url(empty($login['user_home']) ? 'Team-Task-index' : $login['user_home']);
+        }else{
+            $url = base64_decode($_POST['back_url']);
+        }
+
+        $this->success('登录成功!', $url);
     }
 
 }

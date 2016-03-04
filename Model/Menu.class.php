@@ -16,6 +16,8 @@ namespace Model;
  */
 class Menu extends \Core\Model\Model {
 
+    private static $menuTitle = '';
+
     /**
      * 生成后台菜单
      */
@@ -51,8 +53,10 @@ class Menu extends \Core\Model\Model {
      * 根据菜单获取标题
      */
     public static function getTitleWithMenu() {
-        $result = self::db('menu')->field('menu_name')->where('menu_link = :menu_link')->find(array('menu_link' => GROUP . '-' . MODULE . "-" . ACTION));
-        return $result['menu_name'];
+        if(empty(self::$menuTitle[GROUP . '-' . MODULE . "-" . ACTION])){
+            self::$menuTitle[GROUP . '-' . MODULE . "-" . ACTION] = $result = self::db('menu')->where('menu_link = :menu_link')->find(array('menu_link' => GROUP . '-' . MODULE . "-" . ACTION));
+        }
+        return self::$menuTitle[GROUP . '-' . MODULE . "-" . ACTION];
     }
 
     /**

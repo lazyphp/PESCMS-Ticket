@@ -15,7 +15,7 @@ namespace App\Ticket\DELETE;
 /**
  * 公用内容删除方法
  */
-class Content extends \App\Ticket\Common {
+class Content extends \Core\Controller\Controller {
 
     /**
      * 魔术方法，执行删除

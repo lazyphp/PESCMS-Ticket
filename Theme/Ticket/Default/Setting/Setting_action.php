@@ -7,8 +7,8 @@
     </div>
     <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
 
-    <form class="am-form am-form-horizontal" action="<?= $url; ?>" method="post" data-am-validator>
-        <input type="hidden" name="method" value="PUT" />
+    <form class="am-form am-form-horizontal ajax-submit" action="<?= $url; ?>" method="post" data-am-validator>
+        <input type="hidden" name="method" value="PUT"/>
         <ul class="am-list am-list-static am-list-border am-text-sm">
             <li style="background: #F5f6FA;border-left: 4px solid #6d7781;">基础信息</li>
             <li>

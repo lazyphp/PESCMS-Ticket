@@ -25,6 +25,30 @@ class Page extends PageCommon {
     public $totalPages = ''; //总页数
     public $totalRow = ''; //总记录
     public $nowPage = '';
+    /**
+     * 设置分页样式，除了total不会带a链接，其他所有标签都会带上a链接
+     * 可用变量：
+     * {total} => 合计页数,
+     * {first} => 第一页,
+     * {pre} => 上一页,
+     * {current} => 当前页,
+     * {next} => 下一页,
+     * {last} => 最后一页
+     * @var string
+     */
+    //
+    public $style = [];
+
+    /**
+     * 国际化，语言包
+     * 可用变量：
+     * first => 第一页,
+     * pre => 上一页,
+     * next => 下一页,
+     * last => 最后一页
+     * @var array
+     */
+    public $LANG = [];
 
     public function __construct() {
         $this->total('');
@@ -45,33 +69,60 @@ class Page extends PageCommon {
     }
 
     public function show() {
+        //分页缺省值
+        $this->style = array_merge([
+            'total' => '<li><a>总计<b>{total}</b>个记录</a></li>',
+            'first' => '<li>{first}</li>',
+            'pre' => '<li>{pre}</li>',
+            'pagenumber' => '<li>{pagenumber}</li>',
+            'current' => '<li class="am-active">{current}</li>',
+            'next' => '<li>{next}</li>',
+            'last' => '<li>{last}</li>'
+        ], $this->style);
+
+        $this->LANG = array_merge([
+            'first' => '首页',
+            'pre' => '上一页',
+            'next' => '下一页',
+            'last' => '尾页'
+        ], $this->LANG);
+
         $nowCoolPage = ceil($this->nowPage / $this->rollPage);
         $upRow = $this->nowPage - 1;
         $downRow = $this->nowPage + 1;
 
         $url = "";
 
-        $url .= !empty($this->totalPages) ? '<li><a>总计<b>' . $this->totalRow . '</b>个记录</a></li>' : '';
+        $url .= !empty($this->totalPages) ? str_replace('{total}', $this->totalRow, $this->style['total']) : '';
 
-        $url .= !empty($upRow) ? '<li><a href="' . $this->urlLinkStr('1') . '">首页</a></li><li><a href="' . $this->urlLinkStr($upRow) . '">上一页</a></li> ' : '';
+        if (!empty($upRow)) {
+            $url .= str_replace('{first}', '<a href="' . $this->urlLinkStr('1') . '">'.$this->LANG['first'].'</a>', $this->style['first']);
+            $url .= str_replace('{pre}', '<a href="' . $this->urlLinkStr($upRow) . '">'.$this->LANG['pre'].'</a>', $this->style['pre']);
+        }
 
         $interval = ceil($this->rollPage / 2);
         for ($i = $this->nowPage - $interval; $i < $this->nowPage; $i++) {
             if ($i > 0) {
-                $url .= '<li><a href="' . $this->urlLinkStr($i) . '">' . $i . '</a></li>';
+                $url .= str_replace('{pagenumber}', '<a href="' . $this->urlLinkStr($i) . '">' . $i . '</a>', $this->style['pagenumber']);
             }
         }
 
-        $url .= '<li class="am-active"><a href="javascript:;">' . $this->nowPage . '</a></li>';
+        $url .= str_replace('{current}', '<a href="javascript:;">' . $this->nowPage . '</a>', $this->style['current']);
 
         for ($i = $this->nowPage + 1; $i < $this->nowPage + $interval + 1; $i++) {
             if ($i <= $this->totalPages) {
-                $url .= '<li><a href="' . $this->urlLinkStr($i) . '">' . $i . '</a></li>';
+                $url .= str_replace('{pagenumber}', '<a href="' . $this->urlLinkStr($i) . '">' . $i . '</a>', $this->style['pagenumber']);
             }
         }
 
-        $url .= $downRow <= $this->totalPages ? '<li><a href="' . $this->urlLinkStr($downRow) . '" class="next">下一页</a></li>' : '';
-        $url .= $this->totalPages > 1 && $this->nowPage < $this->totalPages ? '<li><a href="' . $this->urlLinkStr($this->totalPages) . '" class="last">最后一页</a></li>' : '';
+        if ($downRow <= $this->totalPages) {
+            $url .= str_replace('{next}', '<a href="' . $this->urlLinkStr($downRow) . '">'.$this->LANG['next'].'</a>', $this->style['next']);
+        }
+
+        if ($this->totalPages > 1 && $this->nowPage < $this->totalPages) {
+            $url .= str_replace('{last}', '<a href="' . $this->urlLinkStr($this->totalPages) . '">'.$this->LANG['last'].'</a>', $this->style['last']);
+        }
+
         return $url;
     }
 

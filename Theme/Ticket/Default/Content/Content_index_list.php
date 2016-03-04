@@ -10,7 +10,7 @@
                 <p>本页面没有数据 :-(</p>
             </div>
         <?php else: ?>
-            <form class="am-form" action="<?= $label->url(GROUP . '-' . MODULE . '-listsort'); ?>" method="POST">
+            <form class="am-form ajax-submit" action="<?= $label->url(GROUP . '-' . MODULE . '-listsort'); ?>" method="POST">
                 <input type="hidden" name="method" value="PUT"/>
                 <table class="am-table am-table-bordered am-table-striped am-table-hover am-text-sm">
                     <tr>
@@ -43,6 +43,10 @@
                                         <?= date('Y-m-d H:i', $value[$fieldPrefix . $fv['field_name']]); ?>
                                     <?php elseif (in_array($fv['field_type'], array('radio', 'checkbox', 'select'))): ?>
                                         <?= $label->getFieldOptionToMatch($fv['field_id'], $value[$fieldPrefix . $fv['field_name']]); ?>
+                                    <?php elseif ($fv['field_type'] == 'icon'): ?>
+                                        <i class="<?= $value[$fieldPrefix . $fv['field_name']]; ?>"></i>
+                                    <?php elseif ($fv['field_type'] == 'color'): ?>
+                                        <span class="am-badge am-radius" style="background-color: <?= $value[$fieldPrefix . $fv['field_name']]; ?>;color: <?= $value[$fieldPrefix . $fv['field_name']]; ?>;width: 100%;height: 100%"> &nbsp;</span>
                                     <?php elseif ($fv['field_type'] == 'listsort'): ?>
                                     <?php else: ?>
                                         <?= $value[$fieldPrefix . $fv['field_name']]; ?>

@@ -110,7 +110,10 @@ class Field extends \Core\Model\Model {
             case 'checkbox':
             case 'thumb':
                 return ' VARCHAR( 255 ) ';
-
+            case 'color':
+                return ' VARCHAR( 8 ) ';
+            case 'icon':
+                return ' VARCHAR( 32 ) ';
             case 'textarea':
             case 'editor':
             case 'img':

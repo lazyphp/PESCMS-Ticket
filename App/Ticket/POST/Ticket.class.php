@@ -17,7 +17,7 @@ namespace App\Ticket\POST;
  * Class Ticket
  * @package App\Ticket\GET
  */
-class Ticket extends \App\Ticket\Common {
+class Ticket extends \Core\Controller\Controller {
 
     /**
      * 回复工单

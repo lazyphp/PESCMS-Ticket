@@ -42,8 +42,8 @@ class Content extends \Core\Model\Model {
         if(empty($param['table'])){
             self::error('Unkonw Table!');
         }
-        $value = array_merge(['join' => '', 'condition' => '', 'order' => '', 'group' => '', 'limit' => '', 'param' => array()], $param);
-        return self::db($value['table'])->join($value['join'])->where($value['condition'])->order($value['order'])->group($value['group'])->limit($value['limit'])->select($value['param']);
+        $value = array_merge(['field' => '*', 'join' => '', 'condition' => '', 'order' => '', 'group' => '', 'limit' => '', 'param' => array()], $param);
+        return self::db($value['table'])->field($value['field'])->join($value['join'])->where($value['condition'])->order($value['order'])->group($value['group'])->limit($value['limit'])->select($value['param']);
     }
 
     /**
@@ -151,6 +151,9 @@ class Content extends \Core\Model\Model {
      * count => 一个完整的SQL count查询。用户获取本当前内容的总数量 如：SELECT count(*) TABLE WHERE id = :id
      * normal => 结合上面的SQL。这部分是分类的。如： SELECT * TABLE WHERE id = :id
      * param => 预处理参数。如果SQL语句中有占位符，此处也应该调用。如: array('id' => $id)
+     * page => '分页输出数量'
+     * style => '分页的样式，具体参考\Expand\Page分页类'
+     * LANG => '分页的语言设置，同上'
      * 上面说的可能不太好理解。有如下SQL：
      * $sql = SELECT %s FROM user WHERE user_id = :user_id ORDER BY user_id DESC
      * $param = array('user_id' => $uid);
@@ -158,17 +161,28 @@ class Content extends \Core\Model\Model {
      * 最终可以这样调用本方法：
      * \Model\Content::listContent(array('count' => sprintf($sql, 'count(*)'), 'normal' => sprintf($sql, '*'), 'param' => $param))
      *
-     * @return array 结果返回：处理好的 列表二维数组和 一个分类超链接
+     * @return array 结果返回：处理好的 列表二维数组和 一个分类超链接 还有分页的对象
      */
     public static function quickListContent(array $sql = array('count' => '', 'normal' => '', 'param' => array())) {
-        $sql = array_merge(['param' => array(), 'page' => '10'], $sql);
+        $sql = array_merge(['param' => array(), 'page' => '10', 'style' => [], 'LANG' => []], $sql);
         $page = new \Expand\Page();
+        $page->style = $sql['style'];
+        $page->LANG = $sql['LANG'];
         $page->listRows = $sql['page'];
         $total = current(self::db()->fetch($sql['count'], $sql['param']));
         $page->total($total);
         $page->handle();
         $list = self::db()->getAll("{$sql['normal']} LIMIT {$page->firstRow}, {$page->listRows}", $sql['param']);
-        return array('list' => $list, 'page' => $page->show());
+        return array('list' => $list, 'page' => $page->show(), 'pageObj' => $page);
+    }
+
+    /**
+     * 快速插入方法，适用不能调用db方法的地方使用
+     * @param $table 表名
+     * @param $data 数据
+     */
+    public static function insert($table, $data){
+        return self::db($table)->insert($data);
     }
 
 }

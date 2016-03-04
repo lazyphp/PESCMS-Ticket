@@ -12,7 +12,7 @@
 
 namespace App\Ticket\GET;
 
-class Setting extends \App\Ticket\Common{
+class Setting extends \Core\Controller\Controller {
 
 
     public function action(){

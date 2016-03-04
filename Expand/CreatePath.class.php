@@ -26,6 +26,9 @@ class CreatePath{
         }
         $mark = substr(PES_PATH, 0, -1);
         foreach($splitPath as $key => $value){
+			if($value == '.' || $value == '..'){
+                continue;
+            }
             $mark .= "/{$value}";
             if(!is_dir($mark) && mkdir($mark) === false && DEBUG === true){
                 echo "warning: Create {$mark} path fail!<br/>";

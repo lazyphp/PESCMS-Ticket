@@ -5,7 +5,7 @@ namespace App\Ticket\GET;
 /**
  * 公用内容删除方法
  */
-class Content extends \App\Ticket\Common {
+class Content extends \Core\Controller\Controller {
 
     protected $model, $table, $fieldPrefix, $field = [], $modelThemePrefixPath;
 

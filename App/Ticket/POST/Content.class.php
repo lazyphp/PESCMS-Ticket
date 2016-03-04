@@ -5,7 +5,7 @@ namespace App\Ticket\POST;
 /**
  * 公用内容插入
  */
-class Content extends \App\Ticket\Common {
+class Content extends \Core\Controller\Controller {
 
 
     /**

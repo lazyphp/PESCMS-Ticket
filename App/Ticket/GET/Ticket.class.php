@@ -17,7 +17,7 @@ namespace App\Ticket\GET;
  * Class Ticket
  * @package App\Ticket\GET
  */
-class Ticket extends \App\Ticket\Common {
+class Ticket extends \Core\Controller\Controller {
 
     public $condition = 'WHERE 1 = 1', $param = [];
 

@@ -9,8 +9,8 @@ $echoDeleteUrl = empty($deleteUrl) ? $label->url(GROUP . '-' . MODULE . '-action
 <div class="am-btn-toolbar">
     <div class="am-btn-group am-btn-group-xs">
         <a class="am-btn am-btn-secondary" href="<?= $echoEditUrl ?>"><span class="am-icon-pencil-square-o"></span> 编辑</a>
-        <a class="am-btn am-btn-danger"
+        <a class="am-btn am-btn-danger ajax-click ajax-delete"  msg="确定删除吗？将无法恢复的！"
            href="<?= $echoDeleteUrl; ?>"
-           onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span> 删除</a>
+           ><span class="am-icon-trash-o"></span> 删除</a>
     </div>
 </div>

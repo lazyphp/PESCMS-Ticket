@@ -15,7 +15,7 @@ namespace App\Ticket\DELETE;
 /**
  * 删除模型
  */
-class Model extends \App\Ticket\Common {
+class Model extends \Core\Controller\Controller {
 
     /**
      * 删除模型

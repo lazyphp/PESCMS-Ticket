@@ -8,7 +8,7 @@
 
     <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
 
-    <form class="am-form" action="<?= $label->url(GROUP . '-' . MODULE . '-listsort'); ?>" method="POST">
+    <form class="am-form ajax-submit" action="<?= $label->url(GROUP . '-' . MODULE . '-listsort'); ?>" method="POST">
         <input type="hidden" name="method" value="PUT"/>
         <table class="am-table am-table-striped am-table-hover table-main">
             <tr>
@@ -35,9 +35,9 @@
                                     <a class="am-btn am-btn-secondary"
                                        href="<?= $label->url(GROUP . '-' . MODULE . '-action', array('id' => $topValue["menu_id"], 'back_url' => base64_encode($_SERVER['REQUEST_URI']))) ?>"><span
                                             class="am-icon-pencil-square-o"></span> 编辑</a>
-                                    <a class="am-btn am-btn-danger"
+                                    <a class="am-btn am-btn-danger ajax-click ajax-delete"  msg="确定删除吗？将无法恢复的！"
                                        href="<?= $label->url(GROUP . '-' . MODULE . '-action', array('id' => $topValue["menu_id"], 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI']))); ?>"
-                                       onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span> 删除</a>
+                                       ><span class="am-icon-trash-o"></span> 删除</a>
                                 </div>
                             </div>
                         </td>
@@ -61,9 +61,9 @@
                                             <a class="am-btn am-btn-secondary"
                                                href="<?= $label->url(GROUP . '-' . MODULE . '-action', array('id' => $value["menu_id"], 'back_url' => base64_encode($_SERVER['REQUEST_URI']))) ?>"><span
                                                     class="am-icon-pencil-square-o"></span> 编辑</a>
-                                            <a class="am-btn am-btn-danger"
+                                            <a class="am-btn am-btn-danger ajax-click ajax-delete"  msg="确定删除吗？将无法恢复的！"
                                                href="<?= $label->url(GROUP . '-' . MODULE . '-action', array('id' => $value["menu_id"], 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI']))); ?>"
-                                               onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span>
+                                               ><span class="am-icon-trash-o"></span>
                                                 删除</a>
                                         </div>
                                     </div>

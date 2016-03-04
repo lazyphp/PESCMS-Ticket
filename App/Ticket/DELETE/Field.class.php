@@ -14,7 +14,7 @@ namespace App\Ticket\DELETE;
 /**
  * 删除字段
  */
-class Field extends \App\Ticket\Common {
+class Field extends \Core\Controller\Controller {
 
     public function action() {
         $id = $this->isG('id', '请选择要删除的数据!');

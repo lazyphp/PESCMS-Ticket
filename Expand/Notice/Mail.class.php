@@ -28,7 +28,6 @@ class Mail {
         $this->PHPMailer = new \PHPMailer;
         $this->PHPMailer->CharSet = "utf-8";
         $this->PHPMailer->isSMTP();
-        $this->PHPMailer->SMTPDebug = 2;
         $this->PHPMailer->Debugoutput = 'html';
         $this->PHPMailer->Host = $mail['address'];
         $this->PHPMailer->SMTPAuth = true;

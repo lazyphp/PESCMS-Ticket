@@ -12,7 +12,7 @@
 
 namespace App\Ticket\GET;
 
-class Login extends \App\Ticket\Common{
+class Login extends \Core\Controller\Controller{
 
     public function index(){
         $this->display();

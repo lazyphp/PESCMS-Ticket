@@ -9,7 +9,7 @@
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="x-pjax-version" content="v123">
 
-    <title><?= !empty($title) ? "{$title} - " : '' ?>PESCMS Team</title>
+    <title><?= !empty($title) ? "{$title} - " : '' ?>PESCMS Ticket</title>
 
     <!-- Set render engine for 360 browser -->
     <meta name="renderer" content="webkit">
@@ -36,17 +36,17 @@
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/dialog-plus-min.js"></script>
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/amazeui.datetimepicker.min.js"></script>
 
-    <!--¼ÓÔØ°Ù¶È±à¼­Æ÷-->
+    <!--ï¿½ï¿½ï¿½Ø°Ù¶È±à¼­ï¿½ï¿½-->
     <script>var path = '<?= DOCUMENT_ROOT; ?>';</script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.config.js"></script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.all.js"></script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/lang/zh-cn/zh-cn.js"></script>
-    <!--¼ÓÔØ°Ù¶È±à¼­Æ÷-->
+    <!--ï¿½ï¿½ï¿½Ø°Ù¶È±à¼­ï¿½ï¿½-->
 
-    <!--Ê°É«Æ÷-->
+    <!--Ê°É«ï¿½ï¿½-->
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/spectrum.js"></script>
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/spectrum.css"/>
-    <!--Ê°É«Æ÷-->
+    <!--Ê°É«ï¿½ï¿½-->
 
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/app.js"></script>
 </head>

@@ -32,25 +32,7 @@ class Abnormal extends \Exception {
      * ajax请求的异常信息提示
      */
     public function getTraceAsAjax() {
-        $type = explode(',', $_SERVER['HTTP_ACCEPT']);
-        $status['status'] = 0;
-        $status['info'] = $this->message;
-        switch ($type[0]) {
-            case 'application/json':
-                exit(json_encode($status));
-                break;
-            case 'text/javascript':
-                // javascript 或 JSONP 格式  需要扩展
-                exit();
-                break;
-            case 'text/html':
-                exit($status);
-                break;
-            case 'application/xml':
-                //  XML 格式  需要扩展
-                exit();
-                break;
-        }
+        \Core\Func\CoreFunc::isAjax(['msg' => $this->message], 0);
     }
 
 }

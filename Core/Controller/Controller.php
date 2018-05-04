@@ -29,7 +29,6 @@ class Controller {
      */
     public static $modelPrefix;
 
-
     /**
      * 当前启用的主题
      */
@@ -49,7 +48,7 @@ class Controller {
      * 实现自定义构造函数
      */
     public function __init() {
-        
+
     }
 
     /**
@@ -68,20 +67,7 @@ class Controller {
      * @return string 返回处理完的数据
      */
     protected static function g($name, $htmlentities = TRUE) {
-        if (empty($_GET[$name]) && !is_numeric($_GET[$name])) {
-            return '';
-        }
-
-        if (is_array($_GET[$name])) {
-            return $_GET[$name];
-        }
-        if ((bool) $htmlentities) {
-            $name = htmlspecialchars(trim(preg_replace('/<script>.*?<\/script>/is', '', $_GET[$name])));
-        } else {
-            $name = trim($_GET[$name]);
-        }
-
-        return $name;
+        return self::handleData($_GET[$name], $htmlentities);
     }
 
     /**
@@ -91,17 +77,27 @@ class Controller {
      * @return string 返回处理完的数据
      */
     protected static function p($name, $htmlentities = TRUE) {
-        if (empty($_POST[$name]) && !is_numeric($_POST[$name])) {
+        return self::handleData($_POST[$name], $htmlentities);
+    }
+
+    /**
+     * 处理数据
+     * @param $data 传递过来的数据
+     * @param bool $htmlentities 是否转义
+     * @return array|bool|string
+     */
+    private static function handleData($data, $htmlentities = TRUE){
+        if (empty($data) && !is_numeric($data)) {
             return '';
         }
 
-        if (is_array($_POST[$name])) {
-            return $_POST[$name];
+        if (is_array($data)) {
+            return $data;
         }
-        if ((bool) $htmlentities) {
-            $name = htmlspecialchars(trim(preg_replace('/<script>.*?<\/script>/is', '', $_POST[$name])));
+        if ((bool)$htmlentities) {
+            $name = (new \voku\helper\AntiXSS()) -> xss_clean($data);
         } else {
-            $name = trim($_POST[$name]);
+            $name = trim($data);
         }
         return $name;
     }
@@ -217,6 +213,7 @@ class Controller {
      * 检查主题文件是否存在
      */
     protected function checkThemeFileExist($themeFile) {
+        \Core\Func\CoreFunc::token();
         $this->beforeInitView();
         if (empty($themeFile)) {
             $file = THEME . '/' . GROUP . '/' . $this->theme . "/" . MODULE . '/' . MODULE . '_' . ACTION . '.php';
@@ -236,8 +233,8 @@ class Controller {
     /**
      * 切片开始前执行的动作
      */
-    private static function beforeInitView(){
-        array_walk(\Core\Slice\InitSlice::$slice, function($obj){
+    private static function beforeInitView() {
+        array_walk(\Core\Slice\InitSlice::$slice, function ($obj) {
             \Core\Slice\InitSlice::$beforeViewToExecAfter = true;
             $obj->after();
         });
@@ -250,14 +247,7 @@ class Controller {
      * @param int $waitSecond 跳转等待时间
      */
     protected static function success($message, $jumpUrl = 'javascript:history.go(-1)', $waitSecond = '3') {
-        self::beforeInitView();
-        self::isAjax('200', $message, $jumpUrl);
-
-        /* 加载标签库 */
-        $label = new \Expand\Label();
-
-        require self::promptPage();
-        exit;
+        self::tipsJump($message, $jumpUrl, $waitSecond, 200);
     }
 
     /**
@@ -267,8 +257,24 @@ class Controller {
      * @param int $waitSecond 跳转等待时间
      */
     protected static function error($message, $jumpUrl = 'javascript:history.go(-1)', $waitSecond = '3') {
+        self::tipsJump($message, $jumpUrl, $waitSecond, 0);
+    }
+
+    /**
+     * 提示信息跳转
+     * @param $message 信息
+     * @param string $jumpUrl 跳转地址|默认为返回上一页
+     * @param string $waitSecond 跳转等待时间
+     * @param $code 状态码
+     */
+    private static function tipsJump($message, $jumpUrl = 'javascript:history.go(-1)', $waitSecond = '3', $code){
+
         self::beforeInitView();
-        self::isAjax('0', $message, $jumpUrl);
+        \Core\Func\CoreFunc::isAjax(is_array($message) ? $message : ['msg' => $message],$code, $jumpUrl, $waitSecond);
+
+        if($waitSecond == -1 && $jumpUrl != 'javascript:history.go(-1)' ){
+            self::jump($jumpUrl);
+        }
 
         /* 加载标签库 */
         $label = new \Expand\Label();
@@ -290,8 +296,7 @@ class Controller {
      * @return type 返回模板
      */
     private static function promptPage() {
-        $theme = \Core\Func\CoreFunc::loadConfig(strtoupper(GROUP) . '_MES_PROMPT');
-        return is_array($theme) ? PES_CORE . 'Theme/jump.php' : $theme;
+        return PES_CORE . 'Core/Theme/jump.php';
     }
 
     /**
@@ -299,47 +304,8 @@ class Controller {
      * @param type $data 调用数据
      * @param type $code 状态码|默认200
      */
-    protected static function ajaxReturn($data, $code = '200') {
-        self::isAjax($code, $data);
-    }
-
-    /**
-     * 判断是否ajax提交
-     * @param str $code 状态码
-     * @param str $msg 信息
-     * @param str $jumpUrl 跳转的URL
-     * @return boolean|json|xml|str 返回对应的数据类型
-     */
-    private static function isAjax($code, $msg, $jumpUrl = '') {
-        if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
-            return FALSE;
-        }
-
-        //@todo 我觉得ajax请求不论失败还是什么，不应该存在返回上一页的。现在直接设置为空置，让本身的函数执行刷新功能。
-        if($jumpUrl == 'javascript:history.go(-1)'){
-            $jumpUrl = '';
-        }
-
-        $type = explode(',', $_SERVER['HTTP_ACCEPT']);
-        $status['status'] = $code;
-        $status['msg'] = $msg;
-        $status['url'] = $jumpUrl;
-        switch ($type[0]) {
-            case 'application/json':
-                exit(json_encode($status));
-                break;
-            case 'text/javascript':
-                // javascript 或 JSONP 格式  需要扩展
-                exit();
-                break;
-            case 'text/html':
-                exit($status);
-                break;
-            case 'application/xml':
-                //  XML 格式  需要扩展
-                exit();
-                break;
-        }
+    protected static function ajaxReturn($data, $code = 200) {
+        \Core\Func\CoreFunc::isAjax($data, $code);
     }
 
     /**
@@ -350,10 +316,11 @@ class Controller {
             self::error('Lose Token');
         }
 
-        if ($_REQUEST['token'] != $_SESSION['token']) {
+        if ($_REQUEST['token'] != self::session()->get('token')) {
             self::error('Token Incorrect');
         }
-        unset($_SESSION['token']);
+
+        self::session()->delete('token');
     }
 
     /**
@@ -364,9 +331,12 @@ class Controller {
             self::error('请输入验证码');
         }
 
-        if (md5($_REQUEST['verify']) != $_SESSION['verify']) {
+        if (md5(strtolower($_REQUEST['verify'])) !== self::session()->get('verify')) {
             self::error('验证码不一致');
         }
+
+        self::session()->delete('verify');
+
     }
 
     /**
@@ -396,6 +366,14 @@ class Controller {
         } else {
             return $_REQUEST['back_url'];
         }
+    }
+
+    /**
+     * 调用session
+     * @return \duncan3dc\Sessions\SessionInstance
+     */
+    public final static function session(){
+        return \Core\Func\CoreFunc::session();
     }
 
 }

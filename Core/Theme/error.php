@@ -6,8 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta name="renderer" content="webkit">
         <meta http-equiv="Cache-Control" content="no-siteapp" />
-        <title><?php echo $title; ?></title>
-        <link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css"/>
+        <title><?= $title ?></title>
+        <link rel="stylesheet" href="//cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css"/>
     </head>
     <body style="background: #fff;">
         <div class="footer"></div>
@@ -17,8 +17,9 @@
                     <h2 class="am-text-center am-text-xxl am-margin-top-lg"><?= $title; ?></h2>
                     <?php if (DEBUG == false): ?>
                         <p class="am-text-center">
-                            <?php echo $errorMes; ?>
+                            <?php echo $errorMsg; ?>
                             <?php echo $errorFile ?>
+
                         </p>
                         <pre class="page-404" style="width: 300px;margin: 0 auto;">
          ._                __.
@@ -51,7 +52,7 @@
                                 <?= $errorSql; ?>
                                 <?= $errorSqlString; ?>
                             <?php endif; ?>
-                            <span class="am-block"><?= $errorMes; ?></span>
+                            <span class="am-block"><?= $errorMsg; ?></span>
                             <span class="am-block"><?= $errorFile ?></span>
                         </pre>
                             <?php if (!empty($sql)): ?>

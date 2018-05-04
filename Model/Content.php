@@ -25,8 +25,8 @@ class Content extends \Core\Model\Model {
      * @param type $field 查找的字段
      * @return type
      */
-    public static function findContent($table, $value, $field) {
-        return self::db($table)->where("{$field} = :$field")->find(array($field => $value));
+    public static function findContent($table, $value, $field, $showField = '*') {
+        return self::db($table)->field($showField)->where("{$field} = :$field")->find(array($field => $value));
     }
 
     /**
@@ -115,8 +115,13 @@ class Content extends \Core\Model\Model {
                     self::error($value['field_display_name'] . '为必填选项');
                 }
             } else {
-                if (!$data[self::$fieldPrefix . $value['field_name']] = self::p($value['field_name'])) {
+                $field_name = self::p($value['field_name']);
+                if(!empty($field_name)){
+                    $data[self::$fieldPrefix . $value['field_name']] = $field_name;
+                }elseif( empty($field_name) && !is_numeric($field_name) && !empty($value['field_default']) ){
                     $data[self::$fieldPrefix . $value['field_name']] = $value['field_default'];
+                }elseif(empty($field_name) &&  in_array($value['field_type'], ['textarea', 'editor'])){
+                    $data[self::$fieldPrefix . $value['field_name']] = $field_name;
                 }
             }
         }
@@ -169,7 +174,8 @@ class Content extends \Core\Model\Model {
         $page->style = $sql['style'];
         $page->LANG = $sql['LANG'];
         $page->listRows = $sql['page'];
-        $total = current(self::db()->fetch($sql['count'], $sql['param']));
+        $count = self::db()->fetch($sql['count'], $sql['param']);
+        $total = $count === false ? '0' : current($count);
         $page->total($total);
         $page->handle();
         $list = self::db()->getAll("{$sql['normal']} LIMIT {$page->firstRow}, {$page->listRows}", $sql['param']);

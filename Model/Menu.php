@@ -16,7 +16,7 @@ namespace Model;
  */
 class Menu extends \Core\Model\Model {
 
-    private static $menuTitle = '';
+    private static $menuTitle = [];
 
     /**
      * 生成后台菜单

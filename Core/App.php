@@ -66,7 +66,7 @@ class App {
         if ($runningNormally === false) {
             $title = "404 Page Not Found";
             $errorMes = "<b>Debug route info:</b><br />Group:" . GROUP . ", Model:" . MODULE . ", Method:" . METHOD . ", Action:" . ACTION;
-            $errorFile = "<b>File loaded:</b><br />" . PES_PATH . "{$this->unixPath}.class.php";
+            $errorFile = "<b>File loaded:</b><br />" . PES_PATH . "{$this->unixPath}.php";
 
             $this->promptPage($title, $errorMes, $errorFile);
         }
@@ -94,7 +94,7 @@ class App {
     private function initObj($class) {
         $this->unixPath = str_replace("\\", "/", $class);
 
-        if (!file_exists(PES_PATH . $this->unixPath . '.class.php')) {
+        if (!file_exists(PES_PATH . $this->unixPath . '.php')) {
             return false;
         }
         //使用反射机制，验证控制器方法和是否支持魔术方法是否存在
@@ -132,15 +132,19 @@ class App {
     private function loader($className) {
         $unixPath = str_replace("\\", "/", $className);
 
-        if (file_exists(PES_PATH . $unixPath . '.class.php')) {
-            require PES_PATH . $unixPath . '.class.php';
+        if (file_exists(PES_PATH . $unixPath . '.php')) {
+            require PES_PATH . $unixPath . '.php';
+        }elseif(file_exists(PES_CORE . $unixPath . '.php')){
+            require PES_CORE . $unixPath . '.php';
+        }elseif(file_exists(VENDOR_PATH . $unixPath . '.php')){
+            require VENDOR_PATH . $unixPath . '.php';
         } else {
             if (\Core\Func\CoreFunc::$defaultPath == false) {
                 return true;
             } else {
                 $title = 'Class File Lose';
                 $errorMes = "<b>Debug info:</b><br /> Class undefined.";
-                $errorFile = "<b>File :</b> <br />" . PES_PATH . "{$unixPath}.class.php";
+                $errorFile = "<b>File :</b> <br />" . PES_PATH . "{$unixPath}.php";
                 $this->promptPage($title, $errorMes, $errorFile);
             }
         }
@@ -161,7 +165,7 @@ class App {
         if (file_exists(THEME . '/' . GROUP . '/404.php')) {
             require THEME . '/' . GROUP . '/404.php';
         } else {
-            require PES_CORE . 'Theme/error.php';
+            require PES_CORE . 'Core/Theme/error.php';
         }
         exit;
     }

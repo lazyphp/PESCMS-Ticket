@@ -46,6 +46,18 @@ class CoreFunc {
     public static $useRoute = false;
 
     /**
+     * 存储SESSION对象
+     * @var
+     */
+    public static $session;
+
+    /**
+     * 存放token值
+     * @var
+     */
+    public static $token;
+
+    /**
      * 获取系统配置信息
      * @param type $name
      * @return type
@@ -81,7 +93,7 @@ class CoreFunc {
 
         if ($param === true) {
             self::$useRoute = true;
-            return $controller;
+            return $controller.$suffix;
         }
 
         $routeUrlPath = PES_PATH . '/Config/RouteUrl/' . md5(self::loadConfig('PRIVATE_KEY')) . '_route.php';
@@ -188,6 +200,82 @@ class CoreFunc {
             defined('THEME_PATH') or define('THEME_PATH', THEME . '/' . $group . '/' . self::$ThemeName);
         }
         return self::$ThemeName;
+    }
+
+    /**
+     * 判断是否ajax提交
+     * @param str $data 信息
+     * @param str $code 状态码
+     * @param str $jumpUrl 跳转的URL
+     * @param str $waitSecond 响应时间
+     * @return boolean|json|xml|str 返回对应的数据类型
+     */
+    public static function isAjax($data, $code, $jumpUrl = '', $waitSecond = 3){
+        if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+            return FALSE;
+        }
+
+        //@todo 我觉得ajax请求不论失败还是什么，不应该存在返回上一页的。现在直接设置为空置，让本身的函数执行刷新功能。
+        if($jumpUrl == 'javascript:history.go(-1)'){
+            $jumpUrl = '';
+        }
+
+        $data = array_merge([
+            'msg' => '',
+            'data' => ''
+        ], $data);
+
+        $type = explode(',', $_SERVER['HTTP_ACCEPT']);
+        $status['status'] = $code;
+        $status['msg'] = $data['msg'];
+        $status['data'] = $data['data'];
+        $status['url'] = $jumpUrl;
+        $status['waitSecond'] = $waitSecond;
+
+        $token = md5(\Model\Extra::getOnlyNumber());
+        self::session()->set('token', $token);
+        $status['token'] = $token;
+        switch ($type[0]) {
+            case 'application/json':
+                exit(json_encode($status));
+                break;
+            case 'text/javascript':
+                // javascript 或 JSONP 格式  需要扩展
+                exit();
+                break;
+            case 'text/html':
+                exit($status);
+                break;
+            case 'application/xml':
+                //  XML 格式  需要扩展
+                exit();
+                break;
+        }
+    }
+
+    /**
+     * 调用session类库
+     * @return \duncan3dc\Sessions\SessionInstance
+     */
+    public final static function session(){
+        if(empty(self::$session)){
+            $sessionid = self::loadConfig('SESSION_ID');
+            self::$session = new \duncan3dc\Sessions\SessionInstance($sessionid);
+        }
+        return self::$session;
+    }
+
+    /**
+     * 生成token
+     * @return string
+     */
+    public static function token(){
+        if(empty(self::$token)){
+            list($usec, $sec) = explode(" ", microtime());
+            self::$token = md5(substr($usec, 2) * rand(1, 100));
+            \Core\Func\CoreFunc::session()->set('token', self::$token);
+        }
+        return self::$token;
     }
 
 }

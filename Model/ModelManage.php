@@ -56,12 +56,12 @@ class ModelManage extends \Core\Model\Model {
             self::error('设置预设字段失败');
         }
 
-        $setListsort = self::db('field')->insert(array('field_model_id' => $modelId, 'field_name' => 'listsort', 'field_display_name' => '排序', 'field_type' => 'text', 'field_listsort' => '98', 'field_status' => '1'));
+        $setListsort = self::db('field')->insert(array('field_model_id' => $modelId, 'field_name' => 'listsort', 'field_display_name' => '排序', 'field_type' => 'text', 'field_option' => '', 'field_listsort' => '98', 'field_status' => '1'));
         if ($setListsort === false) {
             self::error('设置预设字段失败');
         }
 
-        $setCreatetime = self::db('field')->insert(array('field_model_id' => $modelId, 'field_name' => 'createtime', 'field_display_name' => '创建时间', 'field_type' => 'date', 'field_listsort' => '99', 'field_status' => '1'));
+        $setCreatetime = self::db('field')->insert(array('field_model_id' => $modelId, 'field_name' => 'createtime', 'field_display_name' => '创建时间', 'field_type' => 'date', 'field_option' => '', 'field_listsort' => '99', 'field_status' => '1'));
         if ($setCreatetime === false) {
             self::error('设置预设字段失败');
         }
@@ -75,7 +75,7 @@ class ModelManage extends \Core\Model\Model {
         $model = strtolower($model);
         $table = self::$modelPrefix . $model;
 
-        $initResult = self::db()->alter("CREATE TABLE IF NOT EXISTS `{$table}` (`{$model}_id` int(11) NOT NULL AUTO_INCREMENT, `{$model}_listsort` int(11) NOT NULL,`{$model}_status` tinyint(4) NOT NULL, `{$model}_url` VARCHAR( 255 ) NOT NULL, `{$model}_createtime` int(11) NOT NULL, PRIMARY KEY (`{$model}_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;");
+        $initResult = self::db()->alter("CREATE TABLE IF NOT EXISTS `{$table}` (`{$model}_id` int(11) NOT NULL AUTO_INCREMENT, `{$model}_listsort` int(11) NOT NULL DEFAULT '0',`{$model}_status` tinyint(4) NOT NULL DEFAULT '0', `{$model}_url` VARCHAR( 255 ) NOT NULL DEFAULT '', `{$model}_createtime` int(11) NOT NULL DEFAULT '0', PRIMARY KEY (`{$model}_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;");
         if ($initResult == false) {
             $log = new \Expand\Log();
             $failLog = "Create Model Table : {$table}" . date("Y-m-d H:i:s");

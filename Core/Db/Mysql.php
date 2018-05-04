@@ -355,13 +355,19 @@ class Mysql {
         } elseif (empty($param)) {
             return true;
         } else {
-            exit('参数绑定只能为数组');
+            $this->returnError([
+                'msg' => '参数绑定只能为数组',
+                'string' => '参数绑定只能为数组'
+            ]);
         }
         //分析字段设置
         if (is_string($fieldType)) {
             $fieldTypeArray = explode(',', $fieldType);
         } else {
-            exit('字段类型只能为字符串');
+            $this->returnError([
+                'msg' => '字段类型只能为字符串',
+                'string' => '字段类型只能为字符串'
+            ]);
         }
 
         if (empty($fieldType)) {
@@ -374,7 +380,10 @@ class Mysql {
 
         $arrayLength = count($array);
         if ($arrayLength != count($fieldTypeArray)) {
-            exit('参数绑定与字段设置长度不一致');
+            $this->returnError([
+                'msg' => '参数绑定与字段设置长度不一致',
+                'string' => '参数绑定与字段设置长度不一致'
+            ]);
         }
 
         $i = 0;
@@ -382,53 +391,6 @@ class Mysql {
             $this->param[$key]['value'] = $value;
             $this->param[$key]['fieldType'] = $fieldTypeArray[$i];
             $i++;
-        }
-        return $this->param;
-    }
-
-    /**
-     * 处理二维参数
-     * @param type $param 参数
-     * @param type $fieldType 字段类型
-     * @return boolean 返回一个数组变量
-     */
-    private function dealMoreParam($param = '', $fieldType = '') {
-        //分析参数绑定
-        if (is_array($param)) {
-            $array = $param;
-        } elseif (empty($param)) {
-            return true;
-        } else {
-            exit('参数绑定只能为数组');
-        }
-        //分析字段设置
-        if (is_string($fieldType)) {
-            $fieldTypeArray = explode(',', $fieldType);
-        } else {
-            exit('字段类型只能为字符串');
-        }
-
-        if (empty($fieldType)) {
-            foreach ($array as $key => $value) {
-                foreach ($value as $key_2 => $value_2) {
-                    $this->param[$key][$key_2]['value'] = $value_2;
-                    $this->param[$key][$key_2]['fieldType'] = 2;
-                }
-            }
-            return $this->param;
-        }
-
-        $i = 0;
-        foreach ($array as $key => $value) {
-            foreach ($value as $key_2 => $value_2) {
-                $this->param[$key][$key_2]['value'] = $value_2;
-                $this->param[$key][$key_2]['fieldType'] = $fieldTypeArray[$i];
-                $i++;
-            }
-        }
-        //由于转换三维数组，顾使用$i 来做判断
-        if ($i != count($fieldTypeArray)) {
-            exit('参数绑定与字段设置长度不一致');
         }
         return $this->param;
     }
@@ -448,10 +410,21 @@ class Mysql {
             $sth->execute();
             return $sth;
         } catch (\PDOException $e) {
-            $this->errorInfo['message'] = $e->getMessage();
-            $this->errorInfo['string'] = $e->getTraceAsString();
-            \Core\Abnormal\Error::errorSql();
+            $this->returnError([
+                'msg' => $e->getMessage(),
+                'string' => $e->getTraceAsString()
+            ]);
         }
+    }
+
+    /**
+     * 返回错误信息
+     * @param $data
+     */
+    private function returnError($data){
+        $this->errorInfo['message'] = $data['msg'];
+        $this->errorInfo['string'] = $data['string'];
+        \Core\Abnormal\Error::errorSql();
     }
 
     /**

@@ -14,7 +14,7 @@
                     <?php endforeach; ?>
                 <?php else: ?>
                     <li id="example-pics">
-                        <p><img src="/Theme/assets/i/image.png"></p>
+                        <p><img src="/Public/Theme/assets/i/image.png"></p>
                     </li>
                 <?php endif; ?>
             </ul>

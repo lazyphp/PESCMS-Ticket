@@ -164,8 +164,8 @@
         </ul>
     </form>
 </div>
-<script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/spectrum.js"></script>
-<link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/spectrum.css"/>
+<script src="<?= DOCUMENT_ROOT; ?>/Public/Theme/assets/js/spectrum.js"></script>
+<link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Public/Themec/Theme/assets/css/spectrum.css"/>
 <script>
     $(".custom").spectrum({
         preferredFormat: "hex",

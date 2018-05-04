@@ -9,10 +9,10 @@
         <meta name="renderer" content="webkit">
         <meta http-equiv="Cache-Control" content="no-siteapp" />
         <link rel="icon" type="image/png" href="/favicon.ico">
-        <link rel="stylesheet" href="<?=str_replace("/Install", "", DOCUMENT_ROOT)?>/Theme/assets/css/amazeui.min.css"/>
+        <link rel="stylesheet" href="<?=str_replace("/>
         <!--[if (gte IE 9)|!(IE)]><!-->
-        <script src="<?=str_replace("/Install", "", DOCUMENT_ROOT)?>/Theme/assets/js/jquery.min.js"></script>
-        <script src="<?=str_replace("/Install", "", DOCUMENT_ROOT)?>/Theme/assets/js/amazeui.min.js"></script>
+        <script src="<?=str_replace("></script>
+        <script src="<?=str_replace("></script>
         <!--<![endif]-->
         <style>
             .header {

@@ -1,0 +1,31 @@
+{
+    "name": "duncan3dc/sessions",
+    "type": "library",
+    "description": "A non-blocking session manager",
+    "keywords": ["session", "non-blocking"],
+    "homepage": "https://github.com/duncan3dc/sessions",
+    "license": "Apache-2.0",
+    "authors": [{
+        "name": "Craig Duncan",
+        "email": "git@duncanc.co.uk",
+        "homepage": "https://github.com/duncan3dc",
+        "role": "Developer"
+    }],
+    "require": {
+        "ext-session": "*",
+        "php": "^5.6|^7.0"
+    },
+    "require-dev": {
+        "guzzlehttp/guzzle": "^6.3",
+        "mockery/mockery": "^1.0",
+        "duncan3dc/object-intruder": "^0.3.0",
+        "php-coveralls/php-coveralls": "^2.0",
+        "phpunit/phpunit": "^5.7.11"
+    },
+    "autoload": {
+        "psr-4": {"duncan3dc\\Sessions\\": "src/"}
+    },
+    "autoload-dev": {
+        "psr-4": {"duncan3dc\\SessionsTest\\": "tests/"}
+    }
+}

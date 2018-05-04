@@ -1,0 +1,6 @@
+{
+    "require": {
+        "voku/anti-xss": "^2.3.1",
+        "duncan3dc/sessions": "^1.4"
+    }
+}

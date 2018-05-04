@@ -7,6 +7,14 @@
  * @version 1.0
  */
 define('ITEM', 'App');
-define('THEME', dirname(__FILE__).'/Theme');
+//调试模式
 define('DEBUG', false);
-require './Core/index.php';
+$parentPath = dirname(dirname(__FILE__));
+//项目配置文件
+defined('CONFIG_PATH') or define('CONFIG_PATH', $parentPath . '/');
+//项目目录
+defined('PES_PATH') or define('PES_PATH', $parentPath. '/');
+//模板存放目录
+define('THEME', dirname(__FILE__).'/Theme');
+
+require $parentPath.'/Core/index.php';

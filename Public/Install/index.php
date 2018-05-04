@@ -7,9 +7,15 @@
  * @license http://www.pescms.com/license
  * @version 1.0
  */
-
 define('ITEM', 'Install\App');
-define('CONFIG_PATH', '../Install/');
-define('THEME', dirname(__FILE__).'/Theme');
+//调试模式
 define('DEBUG', true);
-require dirname(dirname(__FILE__)) . '/Core/index.php';
+$parentPath = dirname(dirname(dirname(__FILE__)));
+//项目配置文件
+defined('CONFIG_PATH') or define('CONFIG_PATH', $parentPath . '/Install/');
+//项目目录
+defined('PES_PATH') or define('PES_PATH', $parentPath. '/');
+//模板存放目录
+define('THEME', dirname(__FILE__).'/Theme');
+
+require $parentPath.'/Core/index.php';

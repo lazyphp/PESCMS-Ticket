@@ -14,14 +14,14 @@ class FileCache {
     }
 
     /**
-     * 验证日志目录是否存在
+     * 验证缓存目录是否存在
      */
     private function checkPath() {
-        $this->config = require PES_PATH . 'Config/config.php';
+        $this->config = require CONFIG_PATH . 'config.php';
 
-        \Expand\CreatePath::action($this->config['FILE_CACHE_PATH']);
+        \Expand\CreatePath::action($this->config['FILE_CACHE_PATH'], PES_CORE);
 
-        $this->cachePath = PES_PATH . $this->config['FILE_CACHE_PATH'];
+        $this->cachePath = PES_CORE . $this->config['FILE_CACHE_PATH'];
 
     }
 

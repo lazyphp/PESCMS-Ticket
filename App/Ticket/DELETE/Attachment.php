@@ -19,14 +19,14 @@ class Attachment extends Content {
 
     public function delete() {
         $file = \Model\Content::findContent('attachment', $_GET['id'], 'attachment_id');
-        if (is_file(PES_PATH . $file['attachment_path'])) {
+        if (is_file(APP_PATH . $file['attachment_path'])) {
             if($file['attachment_type'] == '1'){
-                $extension = pathinfo(PES_PATH . $file['attachment_path'])['extension'];
-                unlink(PES_PATH . $file['attachment_path']."_50x50.{$extension}");
-                unlink(PES_PATH . $file['attachment_path']."_150x150.{$extension}");
-                unlink(PES_PATH . $file['attachment_path']."_300x300.{$extension}");
+                $extension = pathinfo(APP_PATH . $file['attachment_path'])['extension'];
+                unlink(APP_PATH . $file['attachment_path']."_50x50.{$extension}");
+                unlink(APP_PATH . $file['attachment_path']."_150x150.{$extension}");
+                unlink(APP_PATH . $file['attachment_path']."_300x300.{$extension}");
             }
-            unlink(PES_PATH . $file['attachment_path']);
+            unlink(APP_PATH . $file['attachment_path']);
         }
         parent::delete();
     }

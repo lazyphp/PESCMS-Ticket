@@ -12,7 +12,7 @@ namespace Expand\UEupload;
 class UEController {
 
     public function action(){
-        $expandPath = PES_PATH . '/Expand/UEupload/';
+        $expandPath = PES_CORE . '/Expand/UEupload/';
         $configjson = file_get_contents("{$expandPath}config.json");
 
         $imgsuffix = \Model\Content::findContent('option', 'upload_img', 'option_name')['value'];

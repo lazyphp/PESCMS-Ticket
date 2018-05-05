@@ -46,7 +46,7 @@ class Verify {
         $text = implode(' ', $verify);
         $_SESSION['verify'] = md5(strtolower(implode('', $verify)));
         //加载字体
-        $font = PES_PATH.'/Expand/Font/Roboto-Regular.ttf';
+        $font = PES_CORE.'/Expand/Font/Roboto-Regular.ttf';
 
         //设置验证码颜色
         imagettftext($im, 24, 0, 11, 24, $this->randImagecolorallocate($im), $font, $text);

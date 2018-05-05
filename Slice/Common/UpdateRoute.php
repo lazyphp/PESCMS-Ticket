@@ -36,8 +36,8 @@ class UpdateRoute extends \Core\Slice\Slice {
         //路由规则文件
         $routeFileName = md5(\Core\Func\CoreFunc::loadConfig('PRIVATE_KEY')) . '_route.php';
 
-        $routePath = PES_PATH . "/Config/Route/{$routeFileName}";
-        $routeUrl = PES_PATH . "/Config/RouteUrl/{$routeFileName}";
+        $routePath = CONFIG_PATH . "Route/{$routeFileName}";
+        $routeUrl = CONFIG_PATH . "RouteUrl/{$routeFileName}";
 
         //检查路由规则文件是否存在。文件不存在则创建。只有在路由规则编辑中才会触发更新
         if ((is_file($routeUrl) && is_file($routeUrl)) && (GROUP != self::MATCH_GROUP || MODULE != 'Route' || ACTION != 'action')  ) {

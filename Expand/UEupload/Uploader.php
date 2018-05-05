@@ -320,7 +320,7 @@ class Uploader {
      */
     private function getFilePath() {
         $fullname = $this->fullName;
-        $rootPath = PES_PATH;
+        $rootPath = APP_PATH;
 
         if (substr($fullname, 0, 1) != '/') {
             $fullname = '/' . $fullname;

@@ -100,11 +100,11 @@ class Route {
      * @return type 成功则返回true
      */
     public function custom($request) {
-        if (!is_file(PES_PATH . '/Config/Route.php')) {
+        if (!is_file(CONFIG_PATH . 'Route.php')) {
             return false;
         }
 
-        $routeArray = require PES_PATH . '/Config/Route.php';
+        $routeArray = require CONFIG_PATH . 'Route.php';
         if(empty($routeArray)){
             return false;
         }

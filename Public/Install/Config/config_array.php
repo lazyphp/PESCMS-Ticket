@@ -8,4 +8,5 @@ return array(
     'LOG_PATH' => '/log',
     'LOG_DELETE' => '7',
     'UPLOAD_PATH' => '/upload',
+    'SESSION_ID' => 'PESTKSESSION',
 );

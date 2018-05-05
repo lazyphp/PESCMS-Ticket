@@ -19,12 +19,12 @@ class CreatePath{
      * 执行目录创建
      * @param $path 目录
      */
-    public static function action($path){
+    public static function action($path, $basePath = APP_PATH){
         $splitPath = explode('/', $path);
         if(empty($splitPath['0'])){
             array_shift($splitPath);
         }
-        $mark = substr(PES_PATH, 0, -1);
+        $mark = substr($basePath, 0, -1);
         foreach($splitPath as $key => $value){
 			if($value == '.' || $value == '..'){
                 continue;

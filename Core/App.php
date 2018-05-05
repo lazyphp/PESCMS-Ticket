@@ -13,7 +13,6 @@
 namespace Core;
 use Core\Abnormal\Abnormal as Abnormal,
     Core\Route\Route as Route;
-
 /**
  * 初始化系统控制层
  * @author LuoBoss
@@ -42,12 +41,17 @@ class App {
         $route->index();
         unset($route);
 
-        include PES_PATH . '/Slice/registerSlice.php';
+        include PES_CORE . 'Slice/registerSlice.php';
 
         array_walk(\Core\Slice\InitSlice::$slice, function($obj){
             $obj->before();
         });
 
+
+        /**
+         * runningNormally用于判断控制器是否存在、是否拥有魔术方法。
+         * 反之返回404状态和错误页
+         */
         $runningNormally = false;
         foreach (['getContorller', 'getContent'] as $value) {
             if ($this->$value() !== false) {
@@ -66,7 +70,7 @@ class App {
         if ($runningNormally === false) {
             $title = "404 Page Not Found";
             $errorMes = "<b>Debug route info:</b><br />Group:" . GROUP . ", Model:" . MODULE . ", Method:" . METHOD . ", Action:" . ACTION;
-            $errorFile = "<b>File loaded:</b><br />" . PES_PATH . "{$this->unixPath}.php";
+            $errorFile = "<b>File loaded:</b><br />" . APP_PATH . "{$this->unixPath}.php";
 
             $this->promptPage($title, $errorMes, $errorFile);
         }
@@ -94,7 +98,7 @@ class App {
     private function initObj($class) {
         $this->unixPath = str_replace("\\", "/", $class);
 
-        if (!file_exists(PES_PATH . $this->unixPath . '.php')) {
+        if (!file_exists(APP_PATH . $this->unixPath . '.php')) {
             return false;
         }
         //使用反射机制，验证控制器方法和是否支持魔术方法是否存在
@@ -132,8 +136,8 @@ class App {
     private function loader($className) {
         $unixPath = str_replace("\\", "/", $className);
 
-        if (file_exists(PES_PATH . $unixPath . '.php')) {
-            require PES_PATH . $unixPath . '.php';
+        if (file_exists(APP_PATH . $unixPath . '.php')) {
+            require APP_PATH . $unixPath . '.php';
         }elseif(file_exists(PES_CORE . $unixPath . '.php')){
             require PES_CORE . $unixPath . '.php';
         }elseif(file_exists(VENDOR_PATH . $unixPath . '.php')){
@@ -143,9 +147,9 @@ class App {
                 return true;
             } else {
                 $title = 'Class File Lose';
-                $errorMes = "<b>Debug info:</b><br /> Class undefined.";
-                $errorFile = "<b>File :</b> <br />" . PES_PATH . "{$unixPath}.php";
-                $this->promptPage($title, $errorMes, $errorFile);
+                $errorMsg = "<b>Debug info:</b><br /> Class undefined.";
+                $errorFile = "<b>File :</b> <br />" . APP_PATH . "{$unixPath}.php";
+                $this->promptPage($title, $errorMsg, $errorFile);
             }
         }
     }
@@ -154,11 +158,11 @@ class App {
      * 获取提示页
      * @return type 返回模板
      */
-    private function promptPage($title, $errorMes, $errorFile) {
+    private function promptPage($title, $errorMsg, $errorFile) {
         header('HTTP/1.1 404');
         if (DEBUG === false) {
             $title = '404';
-            $errorMes = 'The requested URL was not found on this server.';
+            $errorMsg = 'The requested URL was not found on this server.';
             $errorFile = 'That’s all we know.';
         }
 

@@ -27,13 +27,13 @@ class Log {
      * 验证日志目录是否存在
      */
     private function checkPath() {
-        $this->config = require PES_PATH . 'Config/config.php';
+        $this->config = require CONFIG_PATH . 'config.php';
 
-        $this->logPath = substr(PES_PATH, 0, -1) . $this->config['LOG_PATH'];
+        $this->logPath = PES_CORE . $this->config['LOG_PATH'];
 
         $this->path = $this->logPath . date('/Ymd');
 
-        \Expand\CreatePath::action($this->config['LOG_PATH']. date('/Ymd'));
+        \Expand\CreatePath::action($this->config['LOG_PATH']. date('/Ymd'), PES_CORE);
     }
 
     /**

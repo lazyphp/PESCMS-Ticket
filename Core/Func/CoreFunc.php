@@ -65,7 +65,7 @@ class CoreFunc {
     final public static function loadConfig($name = NULL) {
         static $config;
         if (empty($config)) {
-            $config = require CONFIG_PATH . 'Config/config.php';
+            $config = require CONFIG_PATH . 'config.php';
         }
         if (empty($config[$name])) {
             return $config;
@@ -96,7 +96,7 @@ class CoreFunc {
             return $controller.$suffix;
         }
 
-        $routeUrlPath = PES_PATH . '/Config/RouteUrl/' . md5(self::loadConfig('PRIVATE_KEY')) . '_route.php';
+        $routeUrlPath = CONFIG_PATH . 'RouteUrl/' . md5(self::loadConfig('PRIVATE_KEY')) . '_route.php';
 
         $routeUrl = [];
         if (is_file($routeUrlPath)) {

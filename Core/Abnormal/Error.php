@@ -92,14 +92,10 @@ class Error {
                 echo '当前PHP环境有扩展加载失败';
                 exit;
             }
-
-            $db = CoreFunc::db();
-            if (!empty($db->errorInfo)) {
-                self::recordLog(implode("\r", $db->errorInfo), false);
-            }
             //记录日志
             self::recordLog($error);
             if (DEBUG == true) {
+
                 $message = $error['message'];
                 $file = $error['file'];
                 $line = $error['line'];
@@ -113,21 +109,6 @@ class Error {
                         break;
                     default :
                         $type = 'PHP error';
-                }
-
-                /**
-                 * 处理最后一次执行的 SQL
-                 */
-                if (!empty($db->getLastSql)) {
-                    foreach ($db->param as $key => $value) {
-                        $placeholder[] = ":{$key}";
-                        $paramValue[] = "'{$value['value']}'";
-                    }
-                    $sql = str_replace($placeholder, $paramValue, $db->getLastSql);
-                }
-                if (!empty($db->errorInfo)) {
-                    $errorSql = "<b>Sql Run Message</b>: {$db->errorInfo['message']}";
-                    $errorSqlString = "<b>Sql Error Info</b>:<br/>" . implode("<br/>", explode("\n", $db->errorInfo['string']));
                 }
                 $errorMsg = "<b>{$type}:</b>{$message}";
                 $errorFile = "<b>File:</b>{$file}<b>Line:</b>{$line}";
@@ -152,6 +133,8 @@ class Error {
      * SQL执行错误提示信息
      */
     public static function errorSql() {
+        echo 'd';
+        exit;
         $db = CoreFunc::db();
         
         if (!empty($db->errorInfo)) {

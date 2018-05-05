@@ -9,7 +9,7 @@
  * the file LICENSE.md that was distributed with this source code.
  */
 
-namespace Install\App\Install\GET;
+namespace App\Install\GET;
 
 class Index extends \Core\Controller\Controller {
 

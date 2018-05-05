@@ -70,7 +70,7 @@ class App {
         if ($runningNormally === false) {
             $title = "404 Page Not Found";
             $errorMes = "<b>Debug route info:</b><br />Group:" . GROUP . ", Model:" . MODULE . ", Method:" . METHOD . ", Action:" . ACTION;
-            $errorFile = "<b>File loaded:</b><br />" . APP_PATH . "{$this->unixPath}.php";
+            $errorFile = "<b>File loaded:</b><br />" . APP_PATH . substr($this->unixPath, 1).".php";
 
             $this->promptPage($title, $errorMes, $errorFile);
         }

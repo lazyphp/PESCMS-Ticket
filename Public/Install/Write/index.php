@@ -6,15 +6,13 @@
  * @license http://www.pescms.com/license
  * @version 1.0
  */
+//控制器名称
 define('ITEM', 'App');
-//当前项目控制器所在目录
-defined('APP_PATH') or define('APP_PATH', dirname(__FILE__). '/');
-
 //调试模式
 define('DEBUG', true);
 //定位入口文件到PES CORE的目录路径
-$parentPath = dirname(dirname(APP_PATH));
+$parentPath = dirname(dirname(__FILE__));
 //模板存放目录
-define('THEME', APP_PATH.'Theme');
+defined('THEME') or define('THEME', dirname(__FILE__). '/Theme');
 
 require $parentPath.'/Core/index.php';

@@ -257,10 +257,10 @@ class CoreFunc {
      * 调用session类库
      * @return \duncan3dc\Sessions\SessionInstance
      */
-    public final static function session(){
+    public final static function session($id = ''){
         if(empty(self::$session)){
             $sessionid = self::loadConfig('SESSION_ID');
-            self::$session = new \duncan3dc\Sessions\SessionInstance($sessionid);
+            self::$session = new \duncan3dc\Sessions\SessionInstance($sessionid, null, $id);
         }
         return self::$session;
     }

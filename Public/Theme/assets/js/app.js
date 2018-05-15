@@ -78,7 +78,7 @@ $(function () {
         $.extend(obj, param)
 
         var progress = $.AMUI.progress;
-        var d = dialog({title: '系统提示', zIndex: '9999999'});
+        var d = dialog({title: '系统提示', zIndex: '999'}).showModal();
         progress.start();
 
         $.post(obj.url, obj.data, function (data) {
@@ -95,7 +95,7 @@ $(function () {
                         data.url ? window.location.href = data.url : location.reload();
                     }, 2000);
                 }
-                d.content(data.msg).showModal();
+                d.content(data.msg);
 
             }
             $.refreshToken(data.token);
@@ -117,16 +117,15 @@ $(function () {
             }catch (e){
 
             }
-            d.content(msg).showModal();
+            d.content(msg);
         }).complete(function(){
             var src = $('.refresh-verify').attr('src')
             $('.refresh-verify').attr('src', src + '&time=' + Math.random());
+            setTimeout(function () {
+                d.close();
+            }, 3000);
+            progress.done();
         });
-        setTimeout(function () {
-            d.close();
-        }, 3000);
-
-        progress.done();
     }
 
     /**

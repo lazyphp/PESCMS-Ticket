@@ -9,10 +9,12 @@
 //控制器名称
 define('ITEM', 'App');
 //调试模式
-define('DEBUG', true);
+define('DEBUG', false);
 //定位入口文件到PES CORE的目录路径
 $parentPath = dirname(dirname(__FILE__));
+//HTTP访问的目录路径
+defined('HTTP_PATH') or define('HTTP_PATH', dirname(__FILE__). '/');
 //模板存放目录
-defined('THEME') or define('THEME', dirname(__FILE__). '/Theme');
+defined('THEME') or define('THEME', HTTP_PATH. 'Theme');
 
 require $parentPath.'/Core/index.php';

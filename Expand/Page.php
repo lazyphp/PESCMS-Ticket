@@ -51,10 +51,10 @@ class Page extends PageCommon {
     public $LANG = [];
 
     public function __construct() {
-        $this->total('');
+        $this->total();
     }
 
-    public function total($total) {
+    public function total($total = 0) {
         $this->totalRow = $total;
         $this->totalPages = ceil($this->totalRow / $this->listRows);
     }

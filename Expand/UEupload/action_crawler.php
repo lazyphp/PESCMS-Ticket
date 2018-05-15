@@ -6,7 +6,7 @@
  * Time: 下午19:18
  */
 set_time_limit(0);
-include("Uploader.class.php");
+include("Uploader.php");
 
 /* 上传配置 */
 $config = array(

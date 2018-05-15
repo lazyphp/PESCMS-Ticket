@@ -1,20 +1,18 @@
-<div class="am-g">
-    <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
-        <div class="action am-padding am-margin-bottom am-text-xs" style="height: 200px; overflow-y: auto;border: 1px solid #DDDDDD">
+<div class="action am-padding am-margin-bottom am-text-xs"
+     style="height: 200px; overflow-y: auto;border: 1px solid #DDDDDD">
 
-        </div>
-        <div class="am-g doc-am-g">
-            <div class="am-u-sm-2">安装进度:</div>
-            <div class="am-u-sm-10">
-                <div class="am-progress am-progress-striped am-active ">
-                    <div class="am-progress-bar am-progress-bar-secondary"  style="width: 0%">0%</div>
-                </div>
-            </div>
-        </div>
-        <div class="am-center" style="width: 100px;">
-            <a href="<?=str_replace("/Install", "", DOCUMENT_ROOT)?>/" id="next" class="am-btn am-btn-success am-hide">查看系统</a>
+</div>
+<div class="am-g doc-am-g">
+    <div class="am-u-sm-2">安装进度:</div>
+    <div class="am-u-sm-10">
+        <div class="am-progress am-progress-striped am-active ">
+            <div class="am-progress-bar am-progress-bar-secondary" style="width: 0%">0%</div>
         </div>
     </div>
+</div>
+<div class="am-center" style="width: 100px;">
+    <a href="<?= str_replace("/Install", "", DOCUMENT_ROOT) ?>/" id="next"
+       class="am-btn am-btn-success am-hide">查看系统</a>
 </div>
 <script>
     $(function () {
@@ -64,11 +62,11 @@
                 } else if (data['status'] != '200') {
                     $(".action").prepend("<p>" + data['msg'] + "</p>");
                 } else {
-                    $(".action").prepend("<p>安装遇到无法解析的错误!</p><p>"+data+"</p><p>请访问<a href=\"http://www.pescms.com/d/v/10/37\">本链接</a>获取解决方案</p>");
+                    $(".action").prepend("<p>安装遇到无法解析的错误!</p><p>" + data + "</p><p>请访问<a href=\"http://www.pescms.com/d/v/10/37\">本链接</a>获取解决方案</p><p>注意：请先检查程序根目录下是否存在STRICT_TRANS_TABLES.txt文件</p>");
                 }
             },
-            error:function(obj){
-                $(".action").prepend("<p>安装出错,未知原因!</p><p>"+obj.responseText+"</p><p>请访问<a href=\"http://www.pescms.com/d/v/10/37\">本链接</a>获取解决方案</p>");
+            error: function (obj) {
+                $(".action").prepend("<p>安装出错,未知原因!</p><p>" + obj.responseText + "</p><p>请访问<a href=\"http://www.pescms.com/d/v/10/37\">本链接</a>获取解决方案</p><p>注意：请先检查程序根目录下是否存在STRICT_TRANS_TABLES.txt文件</p>");
             }
         })
     })

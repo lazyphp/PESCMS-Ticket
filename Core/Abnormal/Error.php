@@ -133,8 +133,6 @@ class Error {
      * SQL执行错误提示信息
      */
     public static function errorSql() {
-        echo 'd';
-        exit;
         $db = CoreFunc::db();
         
         if (!empty($db->errorInfo)) {

@@ -5,7 +5,7 @@
  * Date: 14-04-09
  * Time: 上午10:17
  */
-include "Uploader.class.php";
+include "Uploader.php";
 
 /* 判断类型 */
 switch ($_GET['action']) {

@@ -95,7 +95,7 @@ class Controller {
             return $data;
         }
         if ((bool)$htmlentities) {
-            $name = (new \voku\helper\AntiXSS()) -> xss_clean($data);
+            $name = htmlspecialchars((new \voku\helper\AntiXSS()) -> xss_clean($data));
         } else {
             $name = trim($data);
         }
@@ -372,8 +372,8 @@ class Controller {
      * 调用session
      * @return \duncan3dc\Sessions\SessionInstance
      */
-    public final static function session(){
-        return \Core\Func\CoreFunc::session();
+    public final static function session($id = ''){
+        return \Core\Func\CoreFunc::session($id);
     }
 
 }

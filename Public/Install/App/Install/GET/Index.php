@@ -33,7 +33,7 @@ class Index extends \Core\Controller\Controller {
     public function config() {
         $phpVersion = explode('.', phpversion());
         $version = "{$phpVersion['0']}.{$phpVersion['1']}";
-        $check['version'] =  $version >= 5.4 ? true : false;
+        $check['version'] =  $version >= 5.6 ? true : false;
 
         $check['pdo'] = in_array('pdo_mysql', get_loaded_extensions()) ? true : false;
 
@@ -146,6 +146,15 @@ class Index extends \Core\Controller\Controller {
             $this->error($e->getMessage());
         }
 
+        //检查是否开启MYSQL严格模式
+        $sql = "SELECT @@sql_mode AS mode";
+        foreach ($db->query($sql) as $row) {
+            if (strpos(strtoupper($row['mode']), 'STRICT_TRANS_TABLES') !== false) {
+                $transTable = fopen(APP_PATH . '/STRICT_TRANS_TABLES.txt', 'w+');
+                fwrite($transTable, $row['mode']);
+                fclose($transTable);
+            }
+        }
 
         //安装数据库文件
         $db->exec($sqlFile);

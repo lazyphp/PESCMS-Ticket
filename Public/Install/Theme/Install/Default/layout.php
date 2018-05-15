@@ -15,6 +15,11 @@
         <script src="<?=str_replace("/Install", "", DOCUMENT_ROOT)?>/Theme/assets/js/amazeui.min.js"></script>
         <!--<![endif]-->
         <style>
+        html, body {
+            -moz-background-size: 100% 100%;
+            background-size: cover;
+            background: url('<?=str_replace("/Install", "", DOCUMENT_ROOT)?>/Theme/assets/i/lattice.png');
+        }
             .header {
                 text-align: center;
             }
@@ -29,9 +34,12 @@
         </style>
     </head>
     <body>
-        <div class="header">
-            <div class="am-g">
-                <h1><?= $title ?></h1>
+<div class="am-g am-padding-top">
+    <div class="am-u-lg-8 am-u-md-8 am-u-sm-centered">
+        <div class="am-panel am-panel-default">
+            <div class="am-panel-bd">
+                <div class="header">
+                    <h1 class="am-margin-top-0"><?= $title ?></h1>
                 <?php if (ACTION == 'index'): ?>
                     <p>一款开源且简单得客服工单系统<br />The open source ticket system</p>
                 <?php elseif (ACTION == 'config'): ?>
@@ -39,10 +47,13 @@
                 <?php elseif (ACTION == 'option'): ?>
                     <p>还差一点，我们就能见面了!</p>
                 <?php endif; ?>
-            </div>
             <hr />
         </div>
         <?php include $file; ?>
+            </div>
+        </div>
+    </div>
+</div>
 
     </body>
 </html>

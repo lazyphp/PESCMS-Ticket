@@ -21,6 +21,12 @@ namespace Expand;
 class Label {
 
     /**
+     * 保存记录字段选项值
+     * @var array
+     */
+    private $fieldOption = [];
+
+    /**
      * 此是语法糖，将一些写法近似的方法整合一起，减少重复
      * @param type $name
      * @param type $arguments
@@ -78,69 +84,7 @@ class Label {
      * 生成令牌
      */
     public function token() {
-        list($usec, $sec) = explode(" ", microtime());
-        $token = md5(substr($usec, 2) * rand(1, 100));
-        $_SESSION['token'] = $token;
-        return "<input type=\"hidden\" name=\"token\" value=\"{$token}\" />";
-    }
-
-    /**
-     * 标准状态输出
-     * 0 禁用
-     * 1 启用
-     */
-    public function status($type) {
-        switch ($type) {
-            case '0':
-                return "<font color=\"red\">禁用</font>";
-            case '1':
-                return "<font color=\"green\">启用</font>";
-            default:
-                return '未知状态';
-        }
-    }
-
-    /**
-     * 是否搜索
-     */
-    public function isSearch($type) {
-        switch ($type) {
-            case '0':
-                return "<font color=\"red\">禁止</font>";
-            case '1':
-                return "<font color=\"green\">允许</font>";
-            default:
-                return '未知状态';
-        }
-    }
-
-    /**
-     * 是否必填
-     */
-    public function isQequired($type) {
-        switch ($type) {
-            case '0':
-                return "<font color=\"red\">不</font>";
-            case '1':
-                return "<font color=\"green\">是</font>";
-            default:
-                return '未知状态';
-        }
-    }
-
-    /**
-     * 模型属性
-     * @param type $attr 属性值
-     */
-    public function modelAttr($attr) {
-        switch ($attr) {
-            case '1':
-                return "<font color=\"green\">前台</font>";
-            case '2':
-                return "<font color=\"#E7790E\">后台</font>";
-            default:
-                return '未知状态';
-        }
+        return '<input type="hidden" name="token" value="'.\Core\Func\CoreFunc::$token.'" >';
     }
 
 
@@ -244,8 +188,11 @@ class Label {
      * @param type $value 进行匹配的值
      */
     public function getFieldOptionToMatch($fieldId, $value) {
-        $fieldContent = \Model\Content::findContent('field', $fieldId, 'field_id');
-        $option = json_decode(htmlspecialchars_decode($fieldContent['field_option']), true);
+        if(empty($this->fieldOption[$fieldId])){
+            $this->fieldOption[$fieldId] = \Model\Content::findContent('field', $fieldId, 'field_id');
+        }
+
+        $option = json_decode(htmlspecialchars_decode($this->fieldOption[$fieldId]['field_option']), true);
         $search = array_search($value, $option);
         if (empty($search)) {
             return '未知值';

@@ -42,8 +42,8 @@ class Content extends \Core\Model\Model {
         if(empty($param['table'])){
             self::error('Unkonw Table!');
         }
-        $value = array_merge(['field' => '*', 'join' => '', 'condition' => '', 'order' => '', 'group' => '', 'limit' => '', 'param' => array()], $param);
-        return self::db($value['table'])->field($value['field'])->join($value['join'])->where($value['condition'])->order($value['order'])->group($value['group'])->limit($value['limit'])->select($value['param']);
+        $value = array_merge(['field' => '*', 'db' => '', 'prefix' => '', 'join' => '', 'condition' => '', 'order' => '', 'group' => '', 'limit' => '', 'param' => array()], $param);
+        return self::db($value['table'], $value['db'], $value['prefix'])->field($value['field'])->join($value['join'])->where($value['condition'])->order($value['order'])->group($value['group'])->limit($value['limit'])->select($value['param']);
     }
 
     /**
@@ -120,7 +120,7 @@ class Content extends \Core\Model\Model {
                     $data[self::$fieldPrefix . $value['field_name']] = $field_name;
                 }elseif( empty($field_name) && !is_numeric($field_name) && !empty($value['field_default']) ){
                     $data[self::$fieldPrefix . $value['field_name']] = $value['field_default'];
-                }elseif(empty($field_name) &&  in_array($value['field_type'], ['textarea', 'editor'])){
+                }else{
                     $data[self::$fieldPrefix . $value['field_name']] = $field_name;
                 }
             }

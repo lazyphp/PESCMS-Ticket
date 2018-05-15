@@ -44,7 +44,8 @@ class Verify {
         //验证码
         $verify = array_slice($str, 0, $length);
         $text = implode(' ', $verify);
-        $_SESSION['verify'] = md5(strtolower(implode('', $verify)));
+
+        \Core\Func\CoreFunc::session()->set('verify', md5(strtolower(implode('', $verify))));
         //加载字体
         $font = PES_CORE.'/Expand/Font/Roboto-Regular.ttf';
 

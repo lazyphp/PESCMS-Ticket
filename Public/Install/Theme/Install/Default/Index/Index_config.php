@@ -1,5 +1,3 @@
-<div class="am-g am-margin-bottom">
-    <div class="am-u-lg-8 am-u-md-8 am-u-sm-centered">
         <form action="<?=DOCUMENT_ROOT?>/?m=Index&a=option" class="am-form am-form-horizontal" method="POST" data-am-validator>
             <input type="hidden" name="method" value="GET" />
             <?php include 'Index_check.php'; ?>
@@ -46,9 +44,8 @@
             <div class="am-margin-top am-fr">
                 <button type="submit" id="next" class="am-btn am-btn-default">下一步</button> 
             </div>
+    <div class="am-cf"></div>
         </form>
-    </div>
-</div>
 <script>
     $(function () {
         $("#next").on("click", function () {

@@ -6,11 +6,10 @@
 ?>
 <?php foreach ($field as $key => $value) : ?>
     <?php if ($value['field_form']): ?>
-        <li>
-            <div class="am-g">
-                <label for="" class="am-u-sm-2 am-form-label"><?= $value['field_display_name'] ?></label>
-
-                <div class="am-u-sm-9">
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block"><?= $value['field_display_name'] ?><?= $value['field_required'] == '1' ? '<i class="am-text-danger">*</i>' : '' ?></label>
                     <?= $form->formList($value); ?>
                     <?php if (!empty($value['field_explain'])): ?>
                         <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
@@ -18,10 +17,7 @@
                         </div>
                     <?php endif; ?>
                 </div>
-                <div class="am-u-sm-1">
-                    <?= $value['field_required'] == '1' ? '<span class="am-badge am-round am-badge-danger">必填</span>' : '' ?>
-                </div>
             </div>
-        </li>
+        </div>
     <?php endif; ?>
 <?php endforeach; ?>

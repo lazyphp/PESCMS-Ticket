@@ -1,4 +1,4 @@
-<header class="am-topbar">
+<header class="am-topbar am-text-sm">
     <h1 class="am-topbar-brand">
         <a href="#">PESCMS Ticket</a>
     </h1>
@@ -31,7 +31,7 @@
             <ul class="am-nav am-nav-pills am-topbar-nav admin-header-list">
                 <li class=""><a href="javascript:;">您好,<?= $this->session()->get('ticket')['user_name']; ?></a></li>
             </ul>
-            <a href="<?= $label->url('Ticket-Login-logout'); ?>" class="am-btn am-btn-primary am-topbar-btn am-btn-sm">注销</a>
+            <a href="<?= $label->url('Ticket-Login-logout'); ?>" class="am-btn am-btn-xs am-btn-primary am-margin-top-sm">退出</a>
         </div>
     </div>
 </header>

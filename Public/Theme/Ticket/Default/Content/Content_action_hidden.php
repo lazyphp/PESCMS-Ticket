@@ -7,3 +7,4 @@
 <input type="hidden" name="method" value="<?= $method ?>"/>
 <input type="hidden" name="id" value="<?= $id ?>"/>
 <input type="hidden" name="back_url" value="<?= $_GET['back_url'] ?>"/>
+<?= $label->token() ?>

@@ -31,7 +31,7 @@
                     <?php foreach ($list as $key => $value) : ?>
                         <tr>
                             <?php if ($listsort): ?>
-                                <td>
+                                <td class="am-text-middle">
                                     <input type="text" class="am-input-sm" name="id[<?= $value["{$fieldPrefix}id"]; ?>]"
                                            value="<?= $value["{$fieldPrefix}listsort"]; ?>">
                                 </td>
@@ -45,6 +45,8 @@
                                         <?= $label->getFieldOptionToMatch($fv['field_id'], $value[$fieldPrefix . $fv['field_name']]); ?>
                                     <?php elseif ($fv['field_type'] == 'icon'): ?>
                                         <i class="<?= $value[$fieldPrefix . $fv['field_name']]; ?>"></i>
+                                    <?php elseif ($fv['field_type'] == 'thumb'): ?>
+                                        <img class="am-radius" alt="140*140" src="<?= $value[$fieldPrefix . $fv['field_name']]; ?>" width="140" height="140" />
                                     <?php elseif ($fv['field_type'] == 'color'): ?>
                                         <span class="am-badge am-radius" style="background-color: <?= $value[$fieldPrefix . $fv['field_name']]; ?>;color: <?= $value[$fieldPrefix . $fv['field_name']]; ?>;width: 100%;height: 100%"> &nbsp;</span>
                                     <?php elseif ($fv['field_type'] == 'listsort'): ?>

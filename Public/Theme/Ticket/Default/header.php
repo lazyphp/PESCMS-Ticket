@@ -45,7 +45,7 @@
 
 
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/spectrum.js"></script>
-    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Themec/Theme/assets/css/spectrum.css"/>
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/spectrum.css"/>
 
 
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/app.js"></script>

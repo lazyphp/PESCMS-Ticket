@@ -5,22 +5,22 @@
  */
 ?>
 
-<li>
-    <div class="am-g">
-        <div class="am-u-sm-10 am-u-sm-offset-2">
-            <button type="submit" id="btn-submit" class="am-btn am-btn-primary am-btn-xs" data-am-loading="{spinner: 'circle-o-notch', loadingText: '提交中...', resetText: '再次提交'}">提交保存</button>
-        </div>
+
+<div class="am-g am-g-collapse am-margin-bottom">
+    <div class="am-u-sm-12 am-u-sm-centered">
+        <button type="submit" class="am-btn am-btn-primary am-btn-xs" >提交保存</button>
     </div>
-</li>
-</ul>
+</div>
 </form>
 </div>
+</div>
+</div>
 <script>
-    $(function(){
+    $(function () {
         $('#btn-submit').click(function () {
             var $btn = $(this)
             $btn.button('loading');
-            setTimeout(function(){
+            setTimeout(function () {
                 $btn.button('reset');
             }, 5000);
         });

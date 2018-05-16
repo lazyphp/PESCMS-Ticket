@@ -13,7 +13,7 @@
 namespace App\Ticket\GET;
 
 
-class CreateJs extends \App\Ticket\Common{
+class CreateJs extends \Core\Controller\Controller{
 
     /**
      * 生成JS

@@ -143,7 +143,7 @@ class Index extends \Core\Controller\Controller {
             $db = new \PDO("mysql:host={$config['DB_HOST']};port={$config['DB_PORT']};dbname={$config['DB_NAME']}", $config['DB_USER'], $config['DB_PWD']);
 
         } catch (\PDOException $e) {
-            $this->error($e->getMessage());
+            $this->error("数据库连接错误: ".$e->getMessage());
         }
 
         //检查是否开启MYSQL严格模式

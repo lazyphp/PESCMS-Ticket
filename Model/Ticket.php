@@ -41,7 +41,7 @@ class Ticket extends \Core\Model\Model {
 
         if ($firstContent['ticket_model_verify'] == '1') {
             $verify = self::isP('verify', '请填写验证码');
-            if (md5($verify) != $_SESSION['verify']) {
+            if (md5($verify) != self::session()->get('ticket')) {
                 self::error('验证码错误');
             }
         }
@@ -181,9 +181,9 @@ class Ticket extends \Core\Model\Model {
      */
     public static function addReply($id, $content, $custom = '') {
         $param = ['ticket_id' => $id, 'ticket_chat_content' => $content, 'ticket_chat_time' => time()];
-        if (!empty($_SESSION['ticket']) && empty($custom)) {
-            $param['user_id'] = $_SESSION['ticket']['user_id'];
-            $param['user_name'] = $_SESSION['ticket']['user_name'];
+        if (!empty(self::session()->get('ticket')) && empty($custom)) {
+            $param['user_id'] = self::session()->get('ticket')['user_id'];
+            $param['user_name'] = self::session()->get('ticket')['user_name'];
         }
 
         return self::db('ticket_chat')->insert($param);

@@ -5,7 +5,7 @@
     <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
     <?php require THEME . '/Ticket/Common/Ticket_view_package.php'; ?>
 
-    <?php if ($ticket_status < 3 && $ticket_close == '0' && ($user_id == $_SESSION['ticket']['user_id'] || empty($user_id) ) ): ?>
+    <?php if ($ticket_status < 3 && $ticket_close == '0' && ($user_id == $this->session()->get('ticket')['user_id'] || empty($user_id) ) ): ?>
         <ul class="am-list am-list-static am-list-border am-text-sm">
             <li style="background: #F5f6FA;border-left: 4px solid #6d7781;">处理工单</li>
             <li>

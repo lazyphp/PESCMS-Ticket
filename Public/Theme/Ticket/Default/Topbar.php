@@ -29,7 +29,7 @@
 
         <div class="am-topbar-right">
             <ul class="am-nav am-nav-pills am-topbar-nav admin-header-list">
-                <li class=""><a href="javascript:;">您好,<?= $_SESSION['ticket']['user_name']; ?></a></li>
+                <li class=""><a href="javascript:;">您好,<?= $this->session()->get('ticket')['user_name']; ?></a></li>
             </ul>
             <a href="<?= $label->url('Ticket-Login-logout'); ?>" class="am-btn am-btn-primary am-topbar-btn am-btn-sm">注销</a>
         </div>

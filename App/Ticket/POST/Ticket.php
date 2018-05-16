@@ -35,7 +35,7 @@ class Ticket extends \Core\Controller\Controller {
             case '0':
                 $status = '1';
                 $content = '已收到您的工单，我们将会尽快安排人手进行处理';
-                \Model\Ticket::setUser($ticket['ticket_id'], $_SESSION['ticket']['user_id'], $_SESSION['ticket']['user_name']);
+                \Model\Ticket::setUser($ticket['ticket_id'], $this->session()->get('ticket')['user_id'], $this->session()->get('ticket')['user_name']);
 
                 $sendTitle = \Model\MailTemplate::matchTitle($ticket['ticket_number'], '2');
                 $sendContent = \Model\MailTemplate::matchContent([

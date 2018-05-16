@@ -21,7 +21,7 @@ namespace Slice\Ticket;
 class Login extends \Core\Slice\Slice{
 
     public function before() {
-        if(empty($_SESSION['ticket']['user_id'])){
+        if(empty($this->session()->get('ticket')['user_id'])){
             $this->jump($this->url('Ticket-Login-index'));
         }
     }

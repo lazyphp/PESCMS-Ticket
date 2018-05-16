@@ -32,7 +32,7 @@ class Submit extends \App\Form\Common{
         }
 
         $verify = $this->isP('verify', '请填写验证码');
-        if (md5($verify) != $_SESSION['verify']) {
+        if (md5($verify) != $this->session()->get('verify')) {
             $this->error('验证码错误');
         }
 

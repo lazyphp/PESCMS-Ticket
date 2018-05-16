@@ -52,7 +52,7 @@ class Ticket extends \Core\Controller\Controller {
     }
 
     public function myTicket(){
-        $this->param['user_id'] = $_SESSION['ticket']['user_id'];
+        $this->param['user_id'] = $this->session()->get('ticket')['user_id'];
         $this->condition .= ' AND t.user_id = :user_id';
         $this->index();
     }
@@ -74,7 +74,10 @@ class Ticket extends \Core\Controller\Controller {
             'table' => 'user',
             'condition' => 'user_id != :user_id AND user_status = 1',
             'order' => 'user_group_id ASC',
-            'param' => ['user_id' => $_SESSION['ticket']['user_id']]
+            'param' => [
+                'user_id' =>
+                    $this->session()->get('ticket')['user_id']
+            ]
         ]));
         $this->assign('form', $content['form']);
         $this->assign('chat', $content['chat']['list']);

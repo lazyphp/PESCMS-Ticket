@@ -21,7 +21,7 @@ namespace Slice\Ticket;
 class Menu extends \Core\Slice\Slice{
 
     public function before() {
-        $this->assign('menu', \Model\Menu::menu($_SESSION['ticket']['user_group_id']));
+        $this->assign('menu', \Model\Menu::menu($this->session()->get('ticket')['user_group_id']));
     }
 
     public function after() {

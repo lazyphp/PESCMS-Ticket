@@ -23,7 +23,7 @@ class Menu extends \Core\Model\Model {
      */
     public static function menu($groupId = '') {
         $condition = "";
-        if (!empty($groupId) && $_SESSION['ticket']['user_id'] > '1') {
+        if (!empty($groupId) && self::session()->get('ticket')['user_id'] > '1') {
             $group = \Model\Content::findContent('user_group', $groupId, 'user_group_id');
             $condition .= "m.menu_id in ({$group['user_group_menu']})";
         }

@@ -19,10 +19,10 @@
 
     <!-- Tile icon for Win8 (144x144 + tile color) -->
 
-    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Themec/Theme/assets/css/amazeui.min.css">
-    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Themec/Theme/assets/css/app.css">
-    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Themec/Theme/assets/css/ui-dialog.css">
-    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Themec/Theme/assets/css/amazeui.datetimepicker.css">
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/app.css">
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/ui-dialog.css">
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/amazeui.datetimepicker.css">
     <!--[if (gte IE 9)|!(IE)]><!-->
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/jquery.min.js"></script>
     <!--<![endif]-->

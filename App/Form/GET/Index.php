@@ -12,7 +12,7 @@
 
 namespace App\Form\GET;
 
-class Index extends \App\Form\Common{
+class Index extends \Core\Controller\Controller{
 
     public function index(){
         $openindex = \Model\Content::findContent('option', 'openindex', 'option_name');

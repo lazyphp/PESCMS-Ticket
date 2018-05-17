@@ -12,7 +12,7 @@
 
 namespace App\Form\GET;
 
-class View extends \App\Form\Common{
+class View extends \Core\Controller\Controller{
 
 
     /**

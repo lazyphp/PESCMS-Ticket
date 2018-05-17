@@ -11,7 +11,7 @@
  */
 namespace App\Form\POST;
 
-class Submit extends \App\Form\Common{
+class Submit extends \Core\Controller\Controller{
 
     /**
      * 提交工单

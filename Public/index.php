@@ -6,15 +6,20 @@
  * @license http://www.pescms.com/license
  * @version 1.0
  */
-//控制器名称
-define('ITEM', 'App');
-//调试模式
-define('DEBUG', false);
-//定位入口文件到PES CORE的目录路径
-$parentPath = dirname(dirname(__FILE__));
-//HTTP访问的目录路径
-defined('HTTP_PATH') or define('HTTP_PATH', dirname(__FILE__). '/');
-//模板存放目录
-defined('THEME') or define('THEME', HTTP_PATH. 'Theme');
+define('IS_CGI', (0 === strpos(PHP_SAPI, 'cgi') || false !== strpos(PHP_SAPI, 'fcgi')) ? 1 : 0 );
+if (!defined('_PHP_FILE_')) {
+    if (IS_CGI) {
+        //CGI/FASTCGI模式下
 
-require $parentPath.'/Core/index.php';
+        $_temp = explode('.php', $_SERVER['PHP_SELF']);
+
+        define('PHP_FILE', rtrim(str_replace($_SERVER['HTTP_HOST'], '', $_temp[0] . '.php'), '/'));
+    } else {
+        define('PHP_FILE', rtrim($_SERVER['SCRIPT_NAME'], '/'));
+    }
+}
+if (!defined('DOCUMENT_ROOT')) {
+    $_root = rtrim(dirname(PHP_FILE), '/');
+    define('DOCUMENT_ROOT', (($_root == '/' || $_root == '\\') ? '' : $_root));
+}
+header('Location:'.DOCUMENT_ROOT.'/Install/index.php?g=Install&m=Index&a=index');

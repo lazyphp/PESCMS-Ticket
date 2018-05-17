@@ -12,7 +12,7 @@ class Category extends \Core\Model\Model {
      * @param string $space 空格
      * @return array|string
      */
-    public static function recursion($cid, $cidParent = '', $isSelect = false, $parent = 0, $space = '') {
+    public static function recursion($cid = '', $cidParent = '', $isSelect = false, $parent = 0, $space = '') {
         $list = \Model\Content::listContent([
             'table' => 'category',
             'condition' => 'category_parent = :category_parent AND category_status = 1',
@@ -26,7 +26,17 @@ class Category extends \Core\Model\Model {
             foreach ($list as $value) {
                 if ($isSelect === false) {
                     $category[$value['category_id']] = $value;
-                    $category[$value['category_id']]['child'] = self::recursion($cid, $cidParent, $isSelect, $value['category_id'],  $space);
+                    $category[$value['category_id']]['space'] = $space;
+
+                    $child = self::recursion($cid, $cidParent, $isSelect, $value['category_id'],  $space.'<span class="plus_icon plus_none_icon"></span>');
+
+					if(!empty($child)){
+						foreach($child as $item){
+							$category[$item['category_id']] = $item;
+							$category[$item['category_id']]['end_icon'] = '<span class="plus_icon plus_end_icon"></span>';
+						}
+					}
+
                 } else {
                     if (!empty($space)) {
                         $guide = '└─';

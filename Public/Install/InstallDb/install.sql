@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2016-01-05 15:30:34
--- 服务器版本： 5.5.16
--- PHP Version: 5.4.39
+-- Generation Time: 2018-05-17 09:55:38
+-- 服务器版本： 5.6.25-log
+-- PHP Version: 5.6.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,6 +19,22 @@ SET time_zone = "+00:00";
 --
 -- Database: `ticket`
 --
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `pes_category`
+--
+
+CREATE TABLE IF NOT EXISTS `pes_category` (
+  `category_id` int(11) NOT NULL AUTO_INCREMENT,
+  `category_listsort` int(11) NOT NULL DEFAULT '0',
+  `category_status` tinyint(4) NOT NULL DEFAULT '0',
+  `category_name` varchar(255) NOT NULL DEFAULT '',
+  `category_parent` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`category_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 
 -- --------------------------------------------------------
 
@@ -43,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `pes_field` (
   PRIMARY KEY (`field_id`),
   UNIQUE KEY `modle_id` (`field_model_id`,`field_name`),
   KEY `field_name` (`field_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=186 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=192 ;
 
 --
 -- 转存表中的数据 `pes_field`
@@ -88,9 +104,9 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (140, 13, 'method_type', '请求方法', 'select', '{&quot;GET&quot;:&quot;GET&quot;,&quot;POST&quot;:&quot;POST&quot;,&quot;PUT&quot;:&quot;PUT&quot;,&quot;DELETE&quot;:&quot;DELETE&quot;}', '', '', 0, 6, 0, 1, 1),
 (141, 13, 'value', '节点匹配值', 'text', '', '若选择父类节点为控制器，请填写控制器名称。反之填写方法名。区分大小写', '', 0, 7, 0, 1, 1),
 (142, 13, 'check_value', '验证值', 'text', '', '', '', 0, 8, 0, 0, 1),
-(151, 15, 'status', '状态', 'radio', '{"\\u7981\\u7528":"0","\\u542f\\u7528":"1"}', '', '1', 1, 5, 1, 1, 1),
-(153, 15, 'number', '工单ID', 'text', '', '', '', 1, 1, 1, 0, 1),
-(154, 15, 'name', '工单名称', 'text', '', '', '', 1, 2, 1, 1, 1),
+(151, 15, 'status', '状态', 'radio', '{"\\u7981\\u7528":"0","\\u542f\\u7528":"1"}', '', '1', 1, 6, 1, 1, 1),
+(153, 15, 'number', '工单ID', 'text', '', '', '', 1, 2, 1, 0, 1),
+(154, 15, 'name', '工单名称', 'text', '', '', '', 1, 3, 1, 1, 1),
 (155, 16, 'model_id', '工单模型ID', 'text', '', '', '', 1, 2, 0, 0, 1),
 (156, 16, 'name', '工单表单字段名称', 'text', '', '建议以英语字母下划线填写！否则容易引起工单内容提交丢失的现象。', '', 1, 2, 0, 1, 1),
 (157, 16, 'description', '工单字段显示名称', 'text', '', '告诉用户该表单的作用', '', 1, 3, 1, 1, 1),
@@ -104,8 +120,8 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (165, 16, 'listsort', '工单表单排序值', 'text', '', '升序', '', 0, 11, 0, 1, 1),
 (166, 16, 'bind', '联动显示', 'select', '', '若需联动显示，请设置绑定的表单选项，当用户选择该选项时会触发本表单的显示。\r\n注：仅限单选、单选下拉框。', '', 0, 1, 0, 1, 1),
 (167, 16, 'bind_value', '联动触发值', 'checkbox', '', '此处填写用户选择了绑定的表单的触发值。', '', 0, 1, 0, 1, 1),
-(168, 15, 'login', '登录验证', 'radio', '{&quot;\\u4e0d\\u9a8c\\u8bc1&quot;:&quot;0&quot;,&quot;\\u9a8c\\u8bc1&quot;:&quot;1&quot;}', '', '', 0, 3, 0, 0, 1),
-(169, 15, 'verify', '开启验证码', 'radio', '{"\\u5173\\u95ed":"0","\\u5f00\\u542f":"1"}', '', '', 1, 4, 1, 1, 1),
+(168, 15, 'login', '登录验证', 'radio', '{&quot;\\u4e0d\\u9a8c\\u8bc1&quot;:&quot;0&quot;,&quot;\\u9a8c\\u8bc1&quot;:&quot;1&quot;}', '', '', 0, 4, 0, 0, 1),
+(169, 15, 'verify', '开启验证码', 'radio', '{"\\u5173\\u95ed":"0","\\u5f00\\u542f":"1"}', '', '', 1, 5, 1, 1, 1),
 (170, 4, 'controller', '路由控制器', 'text', '', '控制器填写以‘-’为分隔符，分别以：组-控制器名称-方法 形式填写。若是默认组的控制器，那么可以忽略填写组参数。', '', 1, 2, 1, 1, 1),
 (171, 4, 'param', '显式参数', 'text', '', '若URL存在GET参数，填写上该参数，以半角逗号隔开。如有三个参数a，b，c。那么填写为：a,b,c', '', 0, 3, 1, 1, 1),
 (172, 4, 'rule', '路由规则', 'text', '', '若链接中存在显式参数，那么用左右大括号包围着。如参数number，那么路由规则这样写：route/{number}。同时规则开头不要添加任何字符，且分隔符只能为''/''', '', 1, 4, 1, 1, 1),
@@ -113,12 +129,17 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (174, 4, 'hash', '路由哈希值', 'text', '', '', '', 1, 99, 0, 0, 1),
 (175, 4, 'listsort', '排序', 'text', '', '', '', 0, 100, 1, 1, 1),
 (176, 4, 'status', '启用状态', 'radio', '{&quot;\\u542f\\u7528&quot;:&quot;1&quot;,&quot;\\u7981\\u7528&quot;:&quot;0&quot;}', '', '', 1, 7, 1, 1, 1),
-(177, 13, 'controller', '父类节点', 'select', '{"\\u8bf7\\u9009\\u62e9":"","\\u9876\\u5c42\\u8282\\u70b9":"0","\\u975e\\u6743\\u9650\\u8282\\u70b9":"-1","\\u5b57\\u6bb5\\u7ba1\\u7406":59,"\\u5de5\\u5355\\u6a21\\u578b":8,"\\u5de5\\u5355\\u8868\\u5355":9,"\\u5de5\\u5355\\u5217\\u8868":2,"\\u7528\\u6237\\u7ec4":22,"\\u8282\\u70b9\\u7ba1\\u7406":23,"\\u7528\\u6237\\u7ba1\\u7406":21,"\\u83dc\\u5355\\u8bbe\\u7f6e":46,"\\u7cfb\\u7edf\\u8bbe\\u7f6e":43,"\\u8def\\u7531\\u89c4\\u5219":52,"\\u6a21\\u578b\\u7ba1\\u7406":58}', '', '', 1, 2, 1, 1, 1),
+(177, 13, 'controller', '父类节点', 'select', '{"\\u8bf7\\u9009\\u62e9":"","\\u9876\\u5c42\\u8282\\u70b9":"0","\\u975e\\u6743\\u9650\\u8282\\u70b9":"-1","\\u5b57\\u6bb5\\u7ba1\\u7406":59,"\\u5de5\\u5355\\u6a21\\u578b":8,"\\u5de5\\u5355\\u8868\\u5355":9,"\\u5de5\\u5355\\u5217\\u8868":2,"\\u7528\\u6237\\u7ec4":22,"\\u8282\\u70b9\\u7ba1\\u7406":23,"\\u7528\\u6237\\u7ba1\\u7406":21,"\\u83dc\\u5355\\u8bbe\\u7f6e":46,"\\u7cfb\\u7edf\\u8bbe\\u7f6e":43,"\\u8def\\u7531\\u89c4\\u5219":52,"\\u90ae\\u4ef6\\u6a21\\u677f":70,"\\u6a21\\u578b\\u7ba1\\u7406":58}', '', '', 1, 2, 1, 1, 1),
 (178, 13, 'listsort', '排序', 'text', '', '', '', 0, 99, 1, 1, 1),
 (179, 3, 'type', '链接类型', 'radio', '{&quot;\\u7ad9\\u5185\\u94fe\\u63a5&quot;:&quot;0&quot;,&quot;\\u7ad9\\u5916\\u8fde\\u63a5&quot;:&quot;1&quot;}', '', '', 1, 3, 1, 1, 1),
 (183, 17, 'type', '模板类型', 'select', '{&quot;\\u65b0\\u5de5\\u5355&quot;:&quot;1&quot;,&quot;\\u53d7\\u7406\\u5de5\\u5355&quot;:&quot;2&quot;,&quot;\\u56de\\u590d\\u5de5\\u5355&quot;:&quot;3&quot;,&quot;\\u8f6c\\u4ea4\\u5ba2\\u670d&quot;:&quot;4&quot;,&quot;\\u5de5\\u5355\\u5b8c\\u6210&quot;:&quot;5&quot;,&quot;\\u5de5\\u5355\\u5173\\u95ed&quot;:&quot;6&quot;}', '', '', 1, 1, 1, 1, 1),
 (184, 17, 'title', '邮件标题', 'text', '', '标题输入框可以填写{number}变量，动态输出当时的工单号码。', '', 1, 2, 1, 1, 1),
-(185, 17, 'content', '邮件模板内容', 'textarea', '', '在模板内容，输入如下变量可以动态输出对应的值：{number}为工单号码，{content}为工单回复的内容，{view}为工单查询的链接地址', '', 1, 3, 0, 1, 1);
+(185, 17, 'content', '邮件模板内容', 'textarea', '', '在模板内容，输入如下变量可以动态输出对应的值：{number}为工单号码，{content}为工单回复的内容，{view}为工单查询的链接地址', '', 1, 3, 0, 1, 1),
+(186, 15, 'cid', '所属分类', 'category', '', '', '', 1, 1, 1, 1, 1),
+(187, 18, 'status', '状态', 'radio', '{&quot;\\u7981\\u7528&quot;:&quot;0&quot;,&quot;\\u542f\\u7528&quot;:&quot;1&quot;}', '', '1', 1, 100, 1, 1, 1),
+(188, 18, 'listsort', '排序', 'text', '', '', '', 0, 98, 1, 1, 1),
+(190, 18, 'name', '分类名称', 'text', '', '', '', 1, 2, 1, 1, 1),
+(191, 18, 'parent', '所属父类', 'select', '', '', '', 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -162,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `pes_menu` (
   `menu_type` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`menu_id`),
   KEY `menu_pid` (`menu_pid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
 
 --
 -- 转存表中的数据 `pes_menu`
@@ -171,9 +192,9 @@ CREATE TABLE IF NOT EXISTS `pes_menu` (
 INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_link`, `menu_listsort`, `menu_type`) VALUES
 (1, '工单设置', 0, 'am-icon-ticket', '', 3, 0),
 (2, '工单模型', 1, 'am-icon-modx', 'Ticket-Ticket_model-index', 1, 0),
-(3, '用户管理', 0, 'am-icon-users', '', 4, 0),
+(3, '用户管理', 0, 'am-icon-users', '', 5, 0),
 (4, '帐号列表', 3, 'am-icon-user', 'Ticket-User-index', 1, 0),
-(5, '系统设置', 0, 'am-icon-cog', '', 5, 0),
+(5, '系统设置', 0, 'am-icon-cog', '', 10, 0),
 (6, '基础设置', 5, 'am-icon-tv', 'Ticket-Setting-action', 1, 0),
 (7, '菜单设置', 5, 'am-icon-map-signs', 'Ticket-Menu-index', 2, 0),
 (10, '帮助文档', 5, 'am-icon-leanpub', 'http://www.pescms.com/d/index/22', 5, 1),
@@ -185,7 +206,9 @@ INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_l
 (16, '路由规则', 5, 'am-icon-map-o', 'Ticket-Route-index', 3, 0),
 (17, '工单列表', 13, 'am-icon-fire', 'Ticket-Ticket-index', 1, 0),
 (18, '我的工单', 13, 'am-icon-coffee', 'Ticket-Ticket-myTicket', 2, 0),
-(19, '邮件模板', 5, 'am-icon-paint-brush', 'Ticket-Mail_template-index', 4, 0);
+(19, '邮件模板', 5, 'am-icon-paint-brush', 'Ticket-Mail_template-index', 4, 0),
+(20, '分类', 9, 'am-icon-file', 'Ticket-Category-index', 0, 0),
+(21, '分类管理', 0, 'am-icon-list-alt', 'Ticket-Category-index', 4, 0);
 
 -- --------------------------------------------------------
 
@@ -202,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `pes_model` (
   `model_attr` tinyint(1) NOT NULL DEFAULT '0' COMMENT '模型属性 1:前台(含前台) 2:后台',
   PRIMARY KEY (`model_id`),
   UNIQUE KEY `model_name` (`model_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
 --
 -- 转存表中的数据 `pes_model`
@@ -218,7 +241,8 @@ INSERT INTO `pes_model` (`model_id`, `model_name`, `model_title`, `model_status`
 (13, 'Node', '节点列表', 1, 1, 2),
 (15, 'ticket_model', '工单模型', 1, 1, 2),
 (16, 'ticket_form', '工单表单', 1, 1, 2),
-(17, 'mail_template', '邮件模板', 1, 0, 2);
+(17, 'mail_template', '邮件模板', 1, 0, 2),
+(18, 'Category', '分类', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -499,6 +523,7 @@ CREATE TABLE IF NOT EXISTS `pes_ticket_model` (
   `ticket_model_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '工单模型是否启用',
   `ticket_model_login` int(11) NOT NULL DEFAULT '0',
   `ticket_model_verify` int(11) NOT NULL DEFAULT '0',
+  `ticket_model_cid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ticket_model_id`),
   UNIQUE KEY `ticket_model_number` (`ticket_model_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='工单模型' AUTO_INCREMENT=1 ;

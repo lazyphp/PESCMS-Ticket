@@ -51,17 +51,17 @@ class ModelManage extends \Core\Model\Model {
      * 设置预设的模型字段
      */
     public static function setInitField($modelId) {
-        $setStatus = self::db('field')->insert(array('field_model_id' => $modelId, 'field_name' => 'status', 'field_display_name' => '状态', 'field_type' => 'radio', 'field_option' => '{"\u7981\u7528":"0","\u542f\u7528":"1"}', 'field_default' => '1', 'field_required' => '1', 'field_listsort' => '100', 'field_status' => '1'));
+        $setStatus = self::db('field')->insert(array('field_model_id' => $modelId, 'field_name' => 'status', 'field_display_name' => '状态', 'field_type' => 'radio', 'field_option' => '{"\u7981\u7528":"0","\u542f\u7528":"1"}', 'field_default' => '1', 'field_required' => '1', 'field_listsort' => '100', 'field_list' => 1, 'field_form' => 1, 'field_status' => '1'));
         if ($setStatus === false) {
             self::error('设置预设字段失败');
         }
 
-        $setListsort = self::db('field')->insert(array('field_model_id' => $modelId, 'field_name' => 'listsort', 'field_display_name' => '排序', 'field_type' => 'text', 'field_option' => '', 'field_listsort' => '98', 'field_status' => '1'));
+        $setListsort = self::db('field')->insert(array('field_model_id' => $modelId, 'field_name' => 'listsort', 'field_display_name' => '排序', 'field_type' => 'text', 'field_option' => '', 'field_listsort' => '98', 'field_list' => 1, 'field_form' => 1, 'field_status' => '1'));
         if ($setListsort === false) {
             self::error('设置预设字段失败');
         }
 
-        $setCreatetime = self::db('field')->insert(array('field_model_id' => $modelId, 'field_name' => 'createtime', 'field_display_name' => '创建时间', 'field_type' => 'date', 'field_option' => '', 'field_listsort' => '99', 'field_status' => '1'));
+        $setCreatetime = self::db('field')->insert(array('field_model_id' => $modelId, 'field_name' => 'createtime', 'field_display_name' => '创建时间', 'field_type' => 'date', 'field_option' => '', 'field_listsort' => '99', 'field_list' => 1, 'field_form' => 1, 'field_status' => '1'));
         if ($setCreatetime === false) {
             self::error('设置预设字段失败');
         }

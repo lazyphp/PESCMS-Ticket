@@ -14,7 +14,7 @@ namespace App\Ticket\GET;
 
 class Node extends Content{
 
-    public function index() {
+    public function index($display = false) {
         $this->assign('title', $this->model['model_title']);
         $this->assign('node', \Model\Node::nodeList());
         $this->layout();

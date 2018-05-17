@@ -41,7 +41,7 @@ class Ticket_form extends Content {
     /**
      * 自定义工单表单列表
      */
-    public function index() {
+    public function index($display = false) {
 
         $this->assign('addUrl', $this->url(GROUP . '-' . MODULE . '-action', array('number' => $_GET['number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI']))));
 
@@ -60,7 +60,7 @@ class Ticket_form extends Content {
     /**
      * 添加/编辑自定义工单表单
      */
-    public function action() {
+    public function action($display = true) {
 
         //查找符合联动绑定的表单
         $param = [ 'ticket_model_id' => $this->ticket['ticket_model_id'] ];
@@ -89,7 +89,7 @@ class Ticket_form extends Content {
         $this->assign('bind', $bind);
         $this->assign('bindValue', $bindValue);
 
-        parent::action();
+        parent::action($display);
     }
 
 }

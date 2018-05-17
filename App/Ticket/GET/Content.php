@@ -3,15 +3,16 @@
 namespace App\Ticket\GET;
 
 /**
- * 公用内容删除方法
+ * 公用内容列表
  */
 class Content extends \Core\Controller\Controller {
 
-    protected $model, $table, $fieldPrefix, $field = [], $modelThemePrefixPath;
+    protected $model, $table, $fieldPrefix, $field = [], $modelThemePrefixPath, $condition = '1 = 1', $param = [], $page;
 
     public function __init() {
         parent::__init();
-
+        $pageNameSpace = "\\Expand\\Page";
+        $this->page = new $pageNameSpace();
         //表名
         $this->table = strtolower(MODULE);
 
@@ -36,21 +37,15 @@ class Content extends \Core\Controller\Controller {
     /**
      * 内容列表
      */
-    public function index() {
-        $condition = "";
-        $param = array();
+    public function index($display = true) {
 
         //排序条件
         $orderBy = "{$this->fieldPrefix}id DESC";
         foreach ($this->field as $key => $value) {
             if (!empty($_GET['keyword'])) {
                 $keyword = $this->g('keyword');
-                if (empty($condition)) {
-                    $condition .= " {$this->fieldPrefix}{$value['field_name']} LIKE :{$value['field_name']} ";
-                } else {
-                    $condition .= " OR {$this->fieldPrefix}{$value['field_name']} LIKE :{$value['field_name']} ";
-                }
-                $param[$value['field_name']] = "%{$keyword}%";
+                $conditionArray[] = " {$this->fieldPrefix}{$value['field_name']} LIKE :{$value['field_name']} ";
+                $this->param[$value['field_name']] = "%{$keyword}%";
             }
             //判断是否存在排序字段
             if ($value['field_name'] == 'listsort') {
@@ -60,28 +55,33 @@ class Content extends \Core\Controller\Controller {
             }
         }
 
-        $pageNameSpace = "\\Expand\\Page";
-        $page = new $pageNameSpace();
-        $total = count($this->db($this->table)->where($condition)->select($param));
-        $count = $page->total($total);
-        $page->handle();
-        $list = $this->db($this->table)->where($condition)->order($orderBy)->limit("{$page->firstRow}, {$page->listRows}")->select($param);
-        $show = $page->show();
+        if (!empty($conditionArray)) {
+            $this->condition .= ' AND ('.implode(' OR ', $conditionArray).')';
+        }
+
+
+        $total = count($this->db($this->table)->where($this->condition)->select($this->param));
+        $count = $this->page->total($total);
+        $this->page->handle();
+        $list = $this->db($this->table)->where($this->condition)->order($orderBy)->limit("{$this->page->firstRow}, {$this->page->listRows}")->select($this->param);
+        $show = $this->page->show();
         $this->assign('page', $show);
         $this->assign('list', $list);
         $this->assign('title', $this->model['model_title']);
         $this->assign('field', $this->field);
 
-        $this->assign('operate', is_file("{$this->modelThemePrefixPath}_index_operate.php") ? '/'.MODULE.'/'.MODULE."_index_operate.php" : '');
+        $this->assign('operate', is_file("{$this->modelThemePrefixPath}_index_operate.php") ? '/' . MODULE . '/' . MODULE . "_index_operate.php" : '');
 
 
-        $this->layout(is_file("{$this->modelThemePrefixPath}_index.php") ? MODULE . "_index" : 'Content_index');
+        if ($display === true) {
+            $this->layout(is_file("{$this->modelThemePrefixPath}_index.php") ? MODULE . "_index" : 'Content_index');
+        }
     }
 
     /**
      * 添加/编辑内容
      */
-    public function action() {
+    public function action($display = true) {
 
         $id = $this->g('id');
         if (empty($id)) {
@@ -107,7 +107,9 @@ class Content extends \Core\Controller\Controller {
         $this->assign('field', $this->field);
         $this->assign('form', new \Expand\Form\Form());
 
-        $this->layout(is_file("{$this->modelThemePrefixPath}_action.php") ? MODULE . "_action" : 'Content_action');
+        if ($display === true) {
+            $this->layout(is_file("{$this->modelThemePrefixPath}_action.php") ? MODULE . "_action" : 'Content_action');
+        }
     }
 
 }

@@ -23,7 +23,7 @@
 						foreach (json_decode(htmlspecialchars_decode($value['value']), true) as $ok => $ov) {
 							$optionStr .= "{$ok}|{$ov}\n";
 						}
-						$value['value'] = $optionStr;
+						$value['value'] = trim($optionStr);
 						?>
 					<?php endif; ?>
 

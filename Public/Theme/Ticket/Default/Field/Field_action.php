@@ -14,7 +14,7 @@
                 for (var key in objOption) {
                     str += key + '|' + objOption[key] + "\n";
                 }
-                $("textarea[name=option]").val(str);
+                $("textarea[name=option]").val(str.trim());
             }
 
             /**

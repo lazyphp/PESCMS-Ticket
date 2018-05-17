@@ -18,7 +18,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
 
     <!-- Tile icon for Win8 (144x144 + tile color) -->
-
+    <link rel="icon" type="image/png" href="<?= DOCUMENT_ROOT ?>/favicon.ico">
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/amazeui.min.css">
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/app.css">
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/ui-dialog.css">

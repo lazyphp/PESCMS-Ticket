@@ -8,10 +8,10 @@
         </div>
     </div>
 </header>
-<div class="am-g am-padding-top-xl" style="padding-top: 100px;">
+<div class="am-g am-padding-top-xl" style="padding-top: 20px;">
     <!--    logo-->
-    <div class="am-u-sm-3 am-u-sm-centered">
-        <img src="https://www.baidu.com/img/bdlogo.png" width="270"/>
+    <div class="am-u-sm-3 am-u-sm-centered am-margin-bottom">
+        <img src="<?= DOCUMENT_ROOT; ?>/Theme/assets/i/logo.png" width="180"/>
     </div>
 
     <div class="am-u-sm-6 am-u-sm-centered">

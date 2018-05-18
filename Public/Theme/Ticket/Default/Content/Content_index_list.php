@@ -39,20 +39,7 @@
                             <td class="am-text-middle"><?= $value["{$fieldPrefix}id"]; ?></td>
                             <?php foreach ($field as $fv) : ?>
                                 <td class="am-text-middle">
-                                    <?php if ($fv['field_type'] == 'date'): ?>
-                                        <?= date('Y-m-d H:i', $value[$fieldPrefix . $fv['field_name']]); ?>
-                                    <?php elseif (in_array($fv['field_type'], array('radio', 'checkbox', 'select'))): ?>
-                                        <?= $label->getFieldOptionToMatch($fv['field_id'], $value[$fieldPrefix . $fv['field_name']]); ?>
-                                    <?php elseif ($fv['field_type'] == 'icon'): ?>
-                                        <i class="<?= $value[$fieldPrefix . $fv['field_name']]; ?>"></i>
-                                    <?php elseif ($fv['field_type'] == 'thumb'): ?>
-                                        <img class="am-radius" alt="140*140" src="<?= $value[$fieldPrefix . $fv['field_name']]; ?>" width="140" height="140" />
-                                    <?php elseif ($fv['field_type'] == 'color'): ?>
-                                        <span class="am-badge am-radius" style="background-color: <?= $value[$fieldPrefix . $fv['field_name']]; ?>;color: <?= $value[$fieldPrefix . $fv['field_name']]; ?>;width: 100%;height: 100%"> &nbsp;</span>
-                                    <?php elseif ($fv['field_type'] == 'listsort'): ?>
-                                    <?php else: ?>
-                                        <?= $value[$fieldPrefix . $fv['field_name']]; ?>
-                                    <?php endif; ?>
+                                    <?= $label->valueTheme($fv, $fieldPrefix, $value); ?>
                                 </td>
                             <?php endforeach; ?>
 
@@ -69,7 +56,7 @@
                     <?= $page; ?>
                 </ul>
                 <?php if ($listsort): ?>
-                    <div class="am-margin">
+                    <div class="am-margin-top">
                         <button type="submit" class="am-btn am-btn-primary am-btn-xs">排序</button>
                     </div>
                 <?php endif; ?>

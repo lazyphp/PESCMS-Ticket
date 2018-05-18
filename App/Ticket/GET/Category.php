@@ -5,6 +5,7 @@ namespace App\Ticket\GET;
 class Category extends Content {
 
     public function index($display = true){
+        $this->assign('title', $this->model['model_title']);
         $this->assign('list', \Model\Category::recursion());
 		$this->layout();
     }

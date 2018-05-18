@@ -22,9 +22,6 @@ class Form {
      */
     public function formList($field) {
         switch ($field['field_type']) {
-            case $field['field_type']:
-                require "theme/{$field['field_type']}.php";
-                break;
             case 'editor':
                 /**
                  * 将属于必填项的表单名称写入数组
@@ -40,9 +37,11 @@ class Form {
                 require 'theme/editor.php';
                 break;
             case 'category':
-                \Model\Category::$where = 'm.model_name = "' . MODULE . '"';
-                $tree = \Model\Category::getSelectCate($field['value'] ? array($field['value']) : array(), true);
+                $category = \Model\Category::recursion(true);
                 require 'theme/category.php';
+                break;
+            case $field['field_type']:
+                require "theme/{$field['field_type']}.php";
                 break;
         }
     }

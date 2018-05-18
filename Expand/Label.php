@@ -201,4 +201,14 @@ class Label {
         }
     }
 
+    /**
+     * 格式化输出表单内容
+     * @param $field 字段数组
+     * @param $prefix 字段前缀名称
+     * @param $value 内容值
+     */
+    public function valueTheme($field, $prefix, $value){
+        require THEME_PATH.'/Content/Content_value_theme.php';
+    }
+
 }

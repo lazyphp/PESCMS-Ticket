@@ -12,7 +12,7 @@ class Category extends \Core\Model\Model {
      * @param string $space 空格
      * @return array|string
      */
-    public static function recursion($cid = '', $cidParent = '', $isSelect = false, $parent = 0, $space = '') {
+    public static function recursion($isSelect = false, $parent = 0, $space = '') {
         $list = \Model\Content::listContent([
             'table' => 'category',
             'condition' => 'category_parent = :category_parent AND category_status = 1',
@@ -21,33 +21,21 @@ class Category extends \Core\Model\Model {
                 'category_parent' => $parent
             ]
         ]);
-        $category = $isSelect === false ? [] : '';
+        $category = [];
+        $symbol = $isSelect === false ? '<span class="plus_icon plus_none_icon"></span>' : '&nbsp;&nbsp;';
+        $guide = $isSelect === false ? '<span class="plus_icon plus_end_icon"></span>' : '└─';
+
         if (!empty($list)) {
             foreach ($list as $value) {
-                if ($isSelect === false) {
                     $category[$value['category_id']] = $value;
                     $category[$value['category_id']]['space'] = $space;
-
-                    $child = self::recursion($cid, $cidParent, $isSelect, $value['category_id'],  $space.'<span class="plus_icon plus_none_icon"></span>');
-
+                    $child = self::recursion($isSelect, $value['category_id'],  $space.$symbol);
 					if(!empty($child)){
 						foreach($child as $item){
 							$category[$item['category_id']] = $item;
-							$category[$item['category_id']]['end_icon'] = '<span class="plus_icon plus_end_icon"></span>';
+							$category[$item['category_id']]['guide'] = $guide;
 						}
 					}
-
-                } else {
-                    if (!empty($space)) {
-                        $guide = '└─';
-                    }
-                    $selected = $cidParent == $value['category_id'] ? 'selected="selected"' : '';
-                    $disabled = $cid == $value['category_id'] ? 'disabled="disabled"' : '';
-                    
-                    $category .= '<option value="' . $value['category_id'] . '" '.$selected.' '.$disabled.'>' . $space . $guide . $value['category_name'] . '</option>';
-                    $category .= self::recursion($cid, $cidParent, $isSelect, $value['category_id'], $space . '&nbsp;&nbsp;');
-                }
-
             }
         }
 

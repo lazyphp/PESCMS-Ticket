@@ -15,7 +15,7 @@
 			<tr>
 				<td></td>
 				<td><?= $value['category_id'] ?></td>
-				<td><?= $value['space'].$value['end_icon'].$value['category_name'] ?></td>
+				<td><?= $value['space'].$value['guide'].$value['category_name'] ?></td>
 				<td></td>
 			</tr>
 		<?php endforeach; ?>

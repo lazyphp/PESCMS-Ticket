@@ -1,0 +1,25 @@
+.ticket-category{
+    display: block;
+    height: 110px;
+    background-color: #f2f2f2;
+    padding: 20px 0 20px 20px;
+    box-sizing: border-box;
+    color: #333;
+}
+.ticket-category:hover{
+    color: #333;
+    background-color: #e5e5e5;
+}
+
+.categort-breadcrumb .am-active a{
+    color: #333;
+}
+.categort-breadcrumb .am-active .am-badge{
+    background-color: #0e90d2;
+}
+.categort-breadcrumb a{
+    color: #e5e5e5;
+}
+.categort-breadcrumb .am-badge{
+    background-color: #e5e5e5;
+}

@@ -19,6 +19,7 @@
     <link rel="icon" type="image/png" href="<?= DOCUMENT_ROOT ?>/favicon.ico">
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/amazeui.min.css">
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/app.css">
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/index.css">
     <!--[if (gte IE 9)|!(IE)]><!-->
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/jquery.min.js"></script>
     <!--<![endif]-->

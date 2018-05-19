@@ -1,16 +1,6 @@
-<header class="am-topbar">
-    <h1 class="am-topbar-brand">
-        <a href="#">PESCMS Ticket</a>
-    </h1>
-
-        <div class="am-topbar-right">
-            <a href="<?=DOCUMENT_ROOT?>/?g=Ticket&m=Login&a=index" class="am-btn am-btn-primary am-topbar-btn am-btn-sm">管理工单</a>
-        </div>
-    </div>
-</header>
-<div class="am-g am-padding-top-xl" style="padding-top: 20px;">
+<div class="am-g">
     <!--    logo-->
-    <div class="am-u-sm-3 am-u-sm-centered am-margin-bottom">
+    <div class="am-u-sm-3 am-u-sm-centered am-padding-top am-margin-bottom">
         <img src="<?= DOCUMENT_ROOT; ?>/Theme/assets/i/logo.png" width="180"/>
     </div>
 

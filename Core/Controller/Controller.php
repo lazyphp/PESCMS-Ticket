@@ -190,13 +190,16 @@ class Controller {
         }
 
         //检查布局文件是否存在
-        $layout = THEME . '/' . GROUP . "/{$this->theme}/{$layout}.php";
+        $layoutFile = THEME . '/' . GROUP . "/{$this->theme}/{$layout}.php";
 
-        if (!is_file($layout)) {
-            $this->error("The theme file {$layout} not exist!");
+        if (!is_file($layoutFile)) {
+	        $layoutFile = THEME . '/' . GROUP . "/{$this->theme}/" . MODULE . "/{$layout}.php";
+	        if(!is_file($layoutFile)){
+		        $this->error("The theme file {$layout} not exist!");
+	        }
         }
 
-        require $layout;
+        require $layoutFile;
     }
 
     /**

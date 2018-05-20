@@ -6,6 +6,9 @@
     box-sizing: border-box;
     color: #333;
 }
+.ticket-list{
+    height: auto !important;
+}
 .ticket-category:hover{
     color: #333;
     background-color: #e5e5e5;

@@ -15,14 +15,35 @@ namespace App\Form\GET;
 class Category extends \Core\Controller\Controller{
 
 	public function index(){
-		$topCategory = \Model\Content::listContent([
+
+		$id = $this->g('id');
+		$param['category_parent'] = empty($id) ? 0 : $id;
+
+		$category = \Model\Content::listContent([
 			'table' => 'category',
-			'condition' => 'category_parent = 0 AND category_status = 1',
-			'order' => 'category_listsort ASC, category_id DESC'
+			'condition' => 'category_parent = :category_parent AND category_status = 1',
+			'order' => 'category_listsort ASC, category_id DESC',
+			'param' => $param
 		]);
 
-		$this->assign('topCategory', $topCategory);
-		$this->layout();
+		if(!empty($id)){
+			$ticketList = \Model\Content::listContent([
+				'table' => 'ticket_model',
+				'condition' => 'ticket_model_cid = :id AND ticket_model_status = 1',
+				'order' => 'ticket_model_listsort ASC, ticket_model_id DESC',
+				'param' => [
+					'id' => $id
+				]
+			]);
+			$this->assign('ticket', $ticketList);
+		}
+
+		$this->assign('category', $category);
+		$this->layout('Category_index', 'Category_layout');
+	}
+
+	public function ticket(){
+		$this->layout('Category_ticket', 'Category_layout');
 	}
 
 }

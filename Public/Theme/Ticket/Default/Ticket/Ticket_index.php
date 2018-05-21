@@ -87,18 +87,14 @@
                                 <?= $value['user_id'] > 0 ? $value['user_name'] : '<span class="am-text-danger">无人问津</span>'; ?>
                             </td>
                             <td class="am-text-center am-text-middle">
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <a href="<?= $label->url('Ticket-Ticket-handle', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>"
-                                       class="am-btn am-btn-primary">处理</a>
-                                    <?php if ($value['ticket_close'] == '0' && $value['ticket_status'] < 3): ?>
-                                        <a href="<?= $label->url('Ticket-Ticket-close', ['number' => $value['ticket_number'], 'method' => 'POST', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>"
-                                           class="am-btn am-btn-danger" onclick="return confirm('确定要关闭本工单吗？')"
-                                           class="am-btn am-btn-danger">关闭工单</a>
-                                    <?php else: ?>
-                                        <a href="javascript:;"
-                                           class="am-btn am-btn-warning"><?= $value['ticket_status'] == '3' ? '已结束' : '已关闭' ?></a>
-                                    <?php endif; ?>
-                                </div>
+                                <a href="<?= $label->url('Ticket-Ticket-handle', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>"
+                                   class="am-text-primary">处理</a>
+                                <i class="am-margin-left-xs am-margin-right-xs">|</i>
+                                <?php if ($value['ticket_close'] == '0' && $value['ticket_status'] < 3): ?>
+                                    <a href="<?= $label->url('Ticket-Ticket-close', ['number' => $value['ticket_number'], 'method' => 'POST', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>" class="am-text-danger ajax-click ajax-dialog" msg="确定要关闭本工单吗？">关闭工单</a>
+                                <?php else: ?>
+                                    <a href="javascript:;" class="am-text-warning"><?= $value['ticket_status'] == '3' ? '已结束' : '已关闭' ?></a>
+                                <?php endif; ?>
                             </td>
 
                         </tr>

@@ -1,12 +1,15 @@
-<div class="admin-content  am-padding">
+<div class="am-padding">
     <?php require THEME . '/Ticket/Common/Ticket_view_package.php'; ?>
     <?php if ($ticket_status < 3 && $ticket_close == '0'): ?>
-        <ul class="am-list am-list-static am-list-border am-text-sm">
-            <li style="background: #F5f6FA;border-left: 4px solid #6d7781;">回复工单</li>
+    <div class="am-panel am-panel-default">
+        <div class="am-panel-bd">
+            <h3 class="am-margin-0">补充内容</h3>
+        </div>
+        <ul class="am-list am-list-static am-text-sm">
             <li>
                 <div class="am-g am-g-collapse">
                     <div class="am-u-lg-8">
-                        <form action="<?= $label->url('Form-Submit-reply'); ?>" class="am-form" method="POST" data-am-validator>
+                        <form action="<?= $label->url('Form-Submit-reply'); ?>" class="am-form ajax-submit" method="POST" data-am-validator>
                             <input type="hidden" name="number" value="<?= $ticket_number; ?>"/>
 
                             <div class="am-form-group pt-reply-content">
@@ -27,6 +30,8 @@
                 </div>
             </li>
         </ul>
+    </div>
+
     <?php endif; ?>
 </div>
 <script>

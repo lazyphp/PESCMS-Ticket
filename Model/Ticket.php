@@ -130,8 +130,19 @@ class Ticket extends \Core\Model\Model {
             $form[$value['ticket_form_id']] = $value;
             $form[$value['ticket_form_id']]['ticket_value'] = $value['ticket_form_content'];
             if (in_array($value['ticket_form_type'], ['radio', 'checkbox', 'select'])) {
+                //获取相应工单字段的选项值
                 $form[$value['ticket_form_id']]['ticket_form_option'] = json_decode(htmlspecialchars_decode($value['ticket_form_option']), true);
-                $form[$value['ticket_form_id']]['ticket_value'] = array_search($value['ticket_form_content'], $form[$value['ticket_form_id']]['ticket_form_option']);
+                //复选项要做特殊处理
+                if($value['ticket_form_type'] == 'checkbox'){
+                    $ticketValue = [];
+                    foreach (explode(',', $value['ticket_form_content']) as $item){
+                        $ticketValue[] = array_search($item, $form[$value['ticket_form_id']]['ticket_form_option']);
+                    }
+                    $form[$value['ticket_form_id']]['ticket_value'] = implode(' , ', $ticketValue);
+                }else{
+                    $form[$value['ticket_form_id']]['ticket_value'] = array_search($value['ticket_form_content'], $form[$value['ticket_form_id']]['ticket_form_option']);
+                }
+
             }
 
             if ($value['ticket_form_bind'] > 0) {

@@ -22,26 +22,23 @@
 </div>
 <div class="am-g ">
     <?php foreach ($list as $kye => $ticket): ?>
-        <div class="am-u-sm-4 am-text-center">
+        <div class="am-u-sm-4">
             <div class="am-panel <?= $kye; ?>">
-                <div class="am-panel-hd"><?= $ticket['title']; ?></div>
-                <div class="am-panel-bd">
-                    <ul class="am-list">
-                        <?php if (empty($ticket['list'])): ?>
-                            <li>暂时没有符合该类型的工单</li>
-                        <?php else: ?>
+                <div class="am-panel-hd am-text-center"><?= $ticket['title']; ?></div>
+                <ul class="am-list am-list-static">
+                    <?php if (empty($ticket['list'])): ?>
+                        <li class="am-text-center">暂时没有符合该类型的工单</li>
+                    <?php else: ?>
 
-                            <?php foreach ($ticket['list'] as $value): ?>
-                                <li class="">
-                                    <a href="<?= $label->url(GROUP . '-Ticket-handle', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>" title="<?= $value['ticket_title']; ?>" class="am-text-truncate">
-                                        <span class="am-badge am-margin-right-xs" style="background-color: <?= $ticketStatus[$value['ticket_status']]['color']; ?>"><?= $ticketStatus[$value['ticket_status']]['name']; ?></span><?= $value['ticket_title']; ?>
-                                    </a>
-                                </li>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-
+                        <?php foreach ($ticket['list'] as $value): ?>
+                            <li class="am-padding-0">
+                                <a href="<?= $label->url(GROUP . '-Ticket-handle', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>" title="<?= $value['ticket_title']; ?>" class="am-text-truncate">
+                                    <span class="am-badge am-margin-right-xs" style="background-color: <?= $ticketStatus[$value['ticket_status']]['color']; ?>"><?= $ticketStatus[$value['ticket_status']]['name']; ?></span><?= $value['ticket_title']; ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </ul>
             </div>
         </div>
     <?php endforeach; ?>

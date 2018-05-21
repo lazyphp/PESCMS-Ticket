@@ -19,7 +19,7 @@
 	<ul class="am-avg-sm-4 am-thumbnails">
 		<?php foreach($ticket as $item ): ?>
 			<li >
-				<a href="<?= $label->url('Category-ticket', ['id' => $item['ticket_model_cid'], 'tid' => $item['ticket_model_id'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>" class="ticket-category ticket-list">
+				<a href="<?= $label->url('Category-ticket', ['id' => $item['ticket_model_cid'], 'number' => $item['ticket_model_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>" class="ticket-category ticket-list">
 					<h4 class="am-margin-0"><?= $item['ticket_model_name'] ?></h4>
 				</a>
 			</li>

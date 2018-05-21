@@ -203,6 +203,15 @@ class Controller {
     }
 
     /**
+     * 404专用提示
+     */
+    protected function _404(){
+        header("HTTP/1.1 404 Page not found");
+        $this->layout('404');
+        exit;
+    }
+
+    /**
      * 选择前后台主题名称
      */
     private function chooseTheme() {

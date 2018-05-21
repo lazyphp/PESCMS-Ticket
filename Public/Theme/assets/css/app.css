@@ -175,3 +175,10 @@ html,body{
     background-position:0 -100px;
     cursor:default;
 }
+/*404*/
+.page-404 {
+    background: #fff;
+    border: none;
+    width: 200px;
+    margin: 0 auto;
+}

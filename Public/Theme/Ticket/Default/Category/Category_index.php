@@ -13,13 +13,13 @@
 		</tr>
 		<?php foreach($list as $key => $value): ?>
 			<tr>
-				<td>
+				<td class="am-text-middle">
                     <input type="text" name="id[<?= $value['category_id']; ?>]"
                            value="<?= $value['category_listsort']; ?>">
                 </td>
-				<td><?= $value['category_id'] ?></td>
-				<td><?= $value['space'].$value['guide'].$value['category_name'] ?></td>
-				<td>
+				<td class="am-text-middle"><?= $value['category_id'] ?></td>
+				<td class="am-text-middle"><?= $value['space'].$value['guide'].$value['category_name'] ?></td>
+				<td class="am-text-middle">
                     <a class="am-text-secondary" href="<?= $label->url(GROUP . '-' . MODULE . '-action', ['id' => $value["category_id"], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>"><span class="am-icon-pencil-square-o"></span> 编辑</a>
                     <i class="am-margin-left-xs am-margin-right-xs">|</i>
                     <a class="am-text-danger ajax-click ajax-dialog"  msg="确定删除吗？将无法恢复的！" href="<?= $label->url(GROUP . '-' . MODULE . '-action', ['id' => $value["category_id"], 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>"><span class="am-icon-trash-o"></span> 删除</a>

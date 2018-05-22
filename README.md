@@ -1,5 +1,5 @@
 # PESCMS Ticket  
-![mahua](https://img.shields.io/github/tag/lazyphp/PESCMS-Ticket.svg) ![mahua](https://img.shields.io/github/license/lazyphp/PESCMS-Ticket.svg)
+![mahua](https://img.shields.io/github/tag/lazyphp/PESCMS-Ticket.svg) ![mahua](https://img.shields.io/github/license/lazyphp/PESCMS-Ticket.svg)  
 PESMCS Ticket(下称PT)是一款基于GPLv2协议发布的开源客服工单系统。PT以全新的设计理念，实现一句JS即可嵌入任意页面中，让工单系统变得更加轻便。  
 ## 运行环境
 PHP 5.6及以上版本  

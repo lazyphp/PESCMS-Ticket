@@ -41,7 +41,7 @@ class Ticket extends \Core\Model\Model {
 
         if ($firstContent['ticket_model_verify'] == '1') {
             $verify = self::isP('verify', '请填写验证码');
-            if (md5($verify) != self::session()->get('ticket')) {
+            if (md5($verify) != self::session(PHPSESSIONID)->get('verify')) {
                 self::error('验证码错误');
             }
         }
@@ -70,7 +70,12 @@ class Ticket extends \Core\Model\Model {
 
         self::db()->commit();
         $domain = \Model\Content::findContent('option', 'domain', 'option_name');
-        self::success($domain['value'] . self::url('Form-View-ticket', ['number' => $param['ticket_number']]));
+
+        $msg = '<p>工单提交成功,您的受理编号为：'.$param['ticket_number'].'</p>
+                <a href="'.$domain['value'] .self::url('Form-View-ticket', ['number' => $param['ticket_number']]).'" target="_blank">点击查看</a>
+                ';
+
+        self::success($msg, '', '10');
 
 
     }
@@ -150,13 +155,15 @@ class Ticket extends \Core\Model\Model {
 
                     break;
                 case 'thumb':
-                    $form[$value['ticket_form_id']]['ticket_value'] = '<img src="'.$value['ticket_form_content'].'" alt="'.$value['ticket_form_content'].'" class="am-img-thumbnail" height="300" />';
+                    $form[$value['ticket_form_id']]['ticket_value'] = empty($value['ticket_form_content']) ? '' : '<img src="'.$value['ticket_form_content'].'" alt="'.$value['ticket_form_content'].'" class="am-img-thumbnail" height="300" />';
                     break;
                 case 'img':
                     $splitImg = explode(',', $value['ticket_form_content']);
                     $imgStr = '<ul class="am-avg-sm-4 am-thumbnails">';
-                    foreach ($splitImg as $item){
-                        $imgStr .= '<li><img src="'.$item.'" alt="'.imgs.'" class="am-img-thumbnail" /></li>';
+                    if(!empty($value['ticket_form_content'])){
+                        foreach ($splitImg as $item){
+                            $imgStr .= '<li><img src="'.$item.'" alt="'.imgs.'" class="am-img-thumbnail" /></li>';
+                        }
                     }
                     $imgStr .= '</ul>';
                     $form[$value['ticket_form_id']]['ticket_value'] = $imgStr;

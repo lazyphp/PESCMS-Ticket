@@ -14,6 +14,11 @@ namespace App\Form\GET;
 
 class Category extends \Core\Controller\Controller{
 
+    private $domain = '';
+
+    /**
+     * 工单分类
+     */
 	public function index(){
 
 		$id = $this->g('id');
@@ -42,6 +47,9 @@ class Category extends \Core\Controller\Controller{
 		$this->layout('Category_index', 'Category_layout');
 	}
 
+    /**
+     * 创建工单
+     */
 	public function ticket(){
         $number = $this->isG('number', '请提交您要生成的工单');
         $result = \Model\TicketForm::getFormWithNumber($number);
@@ -74,7 +82,26 @@ class Category extends \Core\Controller\Controller{
         $this->assign('ticketInfo', $ticketInfo);
         $this->assign('field', $field);
 
-        $this->layout('Category_ticket', 'Category_layout');
+        $this->domain = \Model\Content::findContent('option', 'domain', 'option_name')['value'];
+        $this->assign('domain', $this->domain);
+        if(ACTION == 'ticket'){
+            $this->layout('Category_ticket', 'Category_layout');
+        }
 	}
+
+	public function createJS(){
+	    $this->ticket();
+        ob_start();
+	    $this->display('Category_ticket');
+        $javascript = "var formString = '" . addslashes(preg_replace("/\\n||\\r||\\n\\r/m ", '', ob_get_contents())) . "'\n";
+        ob_clean();
+        $javascript .= str_replace('{domain}', $this->domain, file_get_contents(THEME_PATH . '/Category/create_js.js'));
+
+        header("Content-type: text/html; charset=utf-8");
+        header("Content-type: application/octet-stream");
+        header('Content-Disposition: attachment; filename=PESCMS_Ticket.js');
+        echo $javascript;
+
+    }
 
 }

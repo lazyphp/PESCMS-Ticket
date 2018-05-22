@@ -43,11 +43,7 @@ class CrossDomain extends \Core\Slice\Slice {
 
         //强制覆盖SESSION
         if (!empty($_REQUEST['PHPSESSIONID'])) {
-            //先清空访问产生的session_start()方法；
-            session_destroy();
-            //重新复写一次SESSION
-            session_id($_REQUEST['PHPSESSIONID']);
-            session_start();
+            defined('PHPSESSIONID') or define('PHPSESSIONID', $_REQUEST['PHPSESSIONID']);
         }
 
     }

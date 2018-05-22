@@ -112,7 +112,7 @@ $(function () {
          * 声明简易版的上传组件
          */
         $('[data-am-webuploader-simple]').each(function () {
-            var options = AMUI.utils.parseOptions($(this).attr('data-am-webuploader-simple'));
+            var options = AMUIwebuploader.options($(this).attr('data-am-webuploader-simple'));
             //初始化简易版的上传样式
             $(this).html(AMUIwebuploader.template(options.id, options.type, options.pick.multiple, options.gallery));
 
@@ -266,5 +266,24 @@ var AMUIwebuploader = {
     init: function (dom, obj) {
         $('#' + dom).html(this.template(obj.id, obj.type, obj.pick.multiple, obj.gallery));
         $.webuploader_for_amazeui(obj);
+    },
+
+    options : function(string) {
+        if ($.isPlainObject(string)) {
+            return string;
+        }
+        var start = (string ? string.indexOf('{') : -1);
+        var options = {};
+
+        if (start != -1) {
+            try {
+                options = (new Function('',
+                    'var json = ' + string.substr(start) +
+                    '; return JSON.parse(JSON.stringify(json));'))();
+            } catch (e) {
+            }
+        }
+
+        return options;
     }
 }

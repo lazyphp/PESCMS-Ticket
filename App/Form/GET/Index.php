@@ -29,7 +29,7 @@ class Index extends \Core\Controller\Controller{
     }
 
     public function getSession(){
-        echo json_encode(session_id());
+        echo json_encode($this->session()->getId());
         exit;
     }
 

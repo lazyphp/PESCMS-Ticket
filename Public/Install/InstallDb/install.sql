@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2018-05-17 09:55:38
+-- Generation Time: 2018-05-22 09:07:24
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `pes_category` (
   `category_status` tinyint(4) NOT NULL DEFAULT '0',
   `category_name` varchar(255) NOT NULL DEFAULT '',
   `category_parent` int(11) NOT NULL DEFAULT '0',
+  `category_description` text NOT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -59,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `pes_field` (
   PRIMARY KEY (`field_id`),
   UNIQUE KEY `modle_id` (`field_model_id`,`field_name`),
   KEY `field_name` (`field_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=192 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=204 ;
 
 --
 -- 转存表中的数据 `pes_field`
@@ -139,7 +140,10 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (187, 18, 'status', '状态', 'radio', '{&quot;\\u7981\\u7528&quot;:&quot;0&quot;,&quot;\\u542f\\u7528&quot;:&quot;1&quot;}', '', '1', 1, 100, 1, 1, 1),
 (188, 18, 'listsort', '排序', 'text', '', '', '', 0, 98, 1, 1, 1),
 (190, 18, 'name', '分类名称', 'text', '', '', '', 1, 2, 1, 1, 1),
-(191, 18, 'parent', '所属父类', 'select', '', '', '', 1, 1, 1, 1, 1);
+(191, 18, 'parent', '所属父类', 'select', '', '', '', 1, 1, 1, 1, 1),
+(192, 18, 'description', '分类描述', 'textarea', '', '', '', 1, 3, 1, 1, 1),
+(193, 15, 'listsort', '排序值', 'text', '', '', '', 0, 99, 1, 1, 1),
+(194, 15, 'explain', '工单说明', 'editor', '', '', '', 0, 10, 0, 1, 1),
 
 -- --------------------------------------------------------
 
@@ -371,7 +375,7 @@ CREATE TABLE IF NOT EXISTS `pes_option` (
   `value` text NOT NULL,
   `option_range` varchar(128) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- 转存表中的数据 `pes_option`
@@ -384,7 +388,9 @@ INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) 
 (4, 'openindex', '开启首页', '1', ''),
 (5, 'customstatus', '工单状态', '[{"color":"#dd514c","name":"\\u5f85\\u89e3\\u51b3"},{"color":"#F37B1D","name":"\\u5df2\\u53d7\\u7406"},{"color":"#3bb4f2","name":"\\u5f85\\u56de\\u590d"},{"color":"#5eb95e","name":"\\u5b8c\\u6210"}]', ''),
 (6, 'mail', '邮箱设置', '', ''),
-(7, 'notice_way', '通知方式', '2', '');
+(7, 'notice_way', '通知方式', '2', ''),
+(8, 'upload_img', '图片格式', '[".jpg",".jpge",".bmp",".gif",".png"]', 'upload'),
+(9, 'upload_file', '文件格式', '[".zip",".rar",".7z",".doc",".docx",".pdf",".xls",".xlsx",".ppt",".pptx",".txt"]', 'upload');
 
 -- --------------------------------------------------------
 
@@ -524,6 +530,8 @@ CREATE TABLE IF NOT EXISTS `pes_ticket_model` (
   `ticket_model_login` int(11) NOT NULL DEFAULT '0',
   `ticket_model_verify` int(11) NOT NULL DEFAULT '0',
   `ticket_model_cid` int(11) NOT NULL DEFAULT '0',
+  `ticket_model_listsort` int(11) NOT NULL DEFAULT '0',
+  `ticket_model_explain` text NOT NULL,
   PRIMARY KEY (`ticket_model_id`),
   UNIQUE KEY `ticket_model_number` (`ticket_model_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='工单模型' AUTO_INCREMENT=1 ;

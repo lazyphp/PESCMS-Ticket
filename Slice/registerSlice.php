@@ -58,4 +58,4 @@ InitSlice::any(['Ticket-Route-action'], ['\Ticket\HandleForm\HandleRoute', '\Com
 InitSlice::get(['Ticket-', 'Form-'], ['\Common\UpdateRoute', '\Common\SendNotice']);
 
 //注册跨域的设置
-InitSlice::any(['Form-Submit-ticket', 'Form-Index-getSession', 'Form-Index-verify'], ['\Form\CrossDomain']);
+InitSlice::any(['Form-Submit-ticket', 'Form-Index-getSession', 'Form-Index-verify', 'Form-Upload-ueditor'], ['\Form\CrossDomain']);

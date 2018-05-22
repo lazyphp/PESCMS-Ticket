@@ -35,19 +35,42 @@
     </div>
 
     <?php foreach ($field as $key => $value): ?>
-    <div id="<?= $value['field_name'] ?>" class="am-g am-g-collapse <?= $value['field_bind'] != '0' ? 'am-hide' : '' ?>">
-        <div class="am-u-sm-12 am-u-sm-centered">
-            <div class="am-form-group">
-                <label class="am-block"><?= $value['field_display_name'] ?><?= $value['field_required'] == '1' ? '<i class="am-text-danger">*</i>' : '' ?></label>
-                <?= (new \Expand\Form\Form())->formList($value); ?>
-                <?php if (!empty($value['field_explain'])): ?>
-                    <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
-                        <i class="am-icon-lightbulb-o"></i> <?= $value['field_explain'] ?>
-                    </div>
-                <?php endif; ?>
+        <div id="<?= $value['field_name'] ?>_band" class="am-g am-g-collapse <?= $value['field_bind'] != '0' ? 'am-hide' : '' ?>">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block"><?= $value['field_display_name'] ?><?= $value['field_required'] == '1' ? '<i class="am-text-danger">*</i>' : '' ?></label>
+                    <?= (new \Expand\Form\Form())->formList($value); ?>
+                    <?php if (!empty($value['field_explain'])): ?>
+                        <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
+                            <i class="am-icon-lightbulb-o"></i> <?= $value['field_explain'] ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
-    </div>
+        <?php if ($value['field_bind'] != '0'): ?>
+            <script>
+                $(function () {
+                    var formName_<?=$value['field_name']?> = $("input[name=<?=$value['field_name']?>], select[name=<?= $value['field_name'] ?>]");
+                    formName_<?=$value['field_name']?>.removeAttr("required", "required");
+                    $('input[name=<?=$field[$value['field_bind']]['field_name']?>], select[name=<?=$field[$value['field_bind']]['field_name']?>]').on("change", function () {
+                        var bindForm = $("#<?=$value['field_name']?>_band");
+                        var bindValue = '<?=$value['field_bind_value']?>'.split(',');
+                        if ($.inArray($(this).val(), bindValue) != '-1') {
+                            bindForm.removeClass('am-hide');
+                            <?php if($value['field_required'] == '1'): ?>
+                            formName_<?=$value['field_name']?>.attr("required", "required");
+                            <?php endif;?>
+                        } else {
+                            bindForm.addClass('am-hide');
+                            <?php if($value['field_required'] == '1'): ?>
+                            formName_<?=$value['field_name']?>.removeAttr("required", "required");
+                            <?php endif;?>
+                        }
+                    })
+                })
+            </script>
+        <?php endif; ?>
     <?php endforeach; ?>
     <?php if ($ticketInfo['verify'] == '1'): ?>
         <div class="am-g am-g-collapse">

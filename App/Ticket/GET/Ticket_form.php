@@ -24,7 +24,7 @@ class Ticket_form extends Content {
 
         //输出工单的表单类型
         $form = json_decode(htmlspecialchars_decode(\Model\Content::findContent('field', '7', 'field_id')['field_option']), true);
-
+        unset($form['分类'], $form['编辑器'], $form['上传文件']);
         $this->assign('formType', $form);
 
         //验证类型

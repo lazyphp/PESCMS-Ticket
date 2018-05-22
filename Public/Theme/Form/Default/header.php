@@ -36,6 +36,20 @@
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/dialog-plus-min.js"></script>
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/amazeui.datetimepicker.min.js"></script>
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/spectrum.js"></script>
+
+    <!--百度上传控件-->
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/webuploader.css"/>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/webuploader.js"></script>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/AMUIwebuploader.js"></script>
+    <script>
+        $(function(){
+            $.webuploaderConfig({
+                server:'<?=$label->url('Upload-ueditor', ['method' => 'POST', 'action' => 'uploadimage'])?>'
+            });
+        })
+    </script>
+    <!--百度上传控件-->
+
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/app.js"></script>
 </head>
 <body>

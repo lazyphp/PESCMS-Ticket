@@ -128,21 +128,41 @@ class Ticket extends \Core\Model\Model {
         //组装一下，让他ticket_form_id成为键值
         foreach ($result as $value) {
             $form[$value['ticket_form_id']] = $value;
-            $form[$value['ticket_form_id']]['ticket_value'] = $value['ticket_form_content'];
-            if (in_array($value['ticket_form_type'], ['radio', 'checkbox', 'select'])) {
-                //获取相应工单字段的选项值
-                $form[$value['ticket_form_id']]['ticket_form_option'] = json_decode(htmlspecialchars_decode($value['ticket_form_option']), true);
-                //复选项要做特殊处理
-                if($value['ticket_form_type'] == 'checkbox'){
-                    $ticketValue = [];
-                    foreach (explode(',', $value['ticket_form_content']) as $item){
-                        $ticketValue[] = array_search($item, $form[$value['ticket_form_id']]['ticket_form_option']);
-                    }
-                    $form[$value['ticket_form_id']]['ticket_value'] = implode(' , ', $ticketValue);
-                }else{
-                    $form[$value['ticket_form_id']]['ticket_value'] = array_search($value['ticket_form_content'], $form[$value['ticket_form_id']]['ticket_form_option']);
-                }
 
+            switch ($value['ticket_form_type']){
+                case 'radio':
+                case 'checkbox':
+                case 'select':
+                case 'checkbox':
+                    //获取相应工单字段的选项值
+                    $form[$value['ticket_form_id']]['ticket_form_option'] = json_decode(htmlspecialchars_decode($value['ticket_form_option']), true);
+                    //复选项要做特殊处理
+                    if($value['ticket_form_type'] == 'checkbox'){
+                        $ticketValue = [];
+                        foreach (explode(',', $value['ticket_form_content']) as $item){
+                            $ticketValue[] = array_search($item, $form[$value['ticket_form_id']]['ticket_form_option']);
+                        }
+                        $form[$value['ticket_form_id']]['ticket_value'] = implode(' , ', $ticketValue);
+                    }else{
+                        $form[$value['ticket_form_id']]['ticket_value'] = array_search($value['ticket_form_content'], $form[$value['ticket_form_id']]['ticket_form_option']);
+                    }
+
+
+                    break;
+                case 'thumb':
+                    $form[$value['ticket_form_id']]['ticket_value'] = '<img src="'.$value['ticket_form_content'].'" alt="'.$value['ticket_form_content'].'" class="am-img-thumbnail" height="300" />';
+                    break;
+                case 'img':
+                    $splitImg = explode(',', $value['ticket_form_content']);
+                    $imgStr = '<ul class="am-avg-sm-4 am-thumbnails">';
+                    foreach ($splitImg as $item){
+                        $imgStr .= '<li><img src="'.$item.'" alt="'.imgs.'" class="am-img-thumbnail" /></li>';
+                    }
+                    $imgStr .= '</ul>';
+                    $form[$value['ticket_form_id']]['ticket_value'] = $imgStr;
+                    break;
+                default:
+                    $form[$value['ticket_form_id']]['ticket_value'] = $value['ticket_form_content'];
             }
 
             if ($value['ticket_form_bind'] > 0) {

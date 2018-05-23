@@ -10,4 +10,4 @@
 <a class="am-text-primary" href="<?= $label->url('Category-ticket', array('number' => $value["ticket_model_number"])); ?>" target="_blank"><span class="am-icon-pencil-square-o"></span> 预览工单</a>
 <i class="am-margin-left-xs am-margin-right-xs">|</i>
 
-<a class="am-text-danger" href="<?= $label->url('Ticket-'.MODULE . '-action', array('id' => $value["ticket_model_number"], 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI']))); ?>" onclick="return confirm('确定删除吗?')"><span class="am-icon-trash-o"></span> 删除</a>
+<a class="am-text-danger ajax-click ajax-dialog" msg="确定删除吗?" href="<?= $label->url('Ticket-'.MODULE . '-action', array('id' => $value["ticket_model_number"], 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI']))); ?>" ><span class="am-icon-trash-o"></span> 删除</a>

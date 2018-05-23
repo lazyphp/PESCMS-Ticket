@@ -29,6 +29,10 @@ html,body{
 .am-topbar .am-nav.am-nav>li>a:hover:after{
     border-bottom-color: rgb(63, 169, 245) !important;
 }
+/*---------------内容---------------*/
+#wrapper{
+    min-height: 50rem;
+}
 /*---------------表格---------------*/
 .am-table-bordered{
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
@@ -181,4 +185,17 @@ html,body{
     border: none;
     width: 200px;
     margin: 0 auto;
+}
+
+/*页脚*/
+.my-footer {
+    height: 6rem;
+    color: #EFEFEF;
+    background-color: #272b35;
+    border-top: 1px solid #dcdcdc;
+    padding: 10px 0;
+    text-align: center;
+}
+.my-footer small{
+    line-height: 4rem;
 }

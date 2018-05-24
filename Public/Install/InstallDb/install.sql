@@ -143,7 +143,7 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (191, 18, 'parent', '所属父类', 'select', '', '', '', 1, 1, 1, 1, 1),
 (192, 18, 'description', '分类描述', 'textarea', '', '', '', 1, 3, 1, 1, 1),
 (193, 15, 'listsort', '排序值', 'text', '', '', '', 0, 99, 1, 1, 1),
-(194, 15, 'explain', '工单说明', 'editor', '', '', '', 0, 10, 0, 1, 1),
+(194, 15, 'explain', '工单说明', 'editor', '', '', '', 0, 10, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -384,7 +384,7 @@ CREATE TABLE IF NOT EXISTS `pes_option` (
 INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) VALUES
 (1, 'domain', '网站URL', '', ''),
 (2, 'crossdomain', '跨域列表', '', ''),
-(3, 'version', '系统版本', '1.0', ''),
+(3, 'version', '系统版本', '1.1.0', ''),
 (4, 'openindex', '开启首页', '1', ''),
 (5, 'customstatus', '工单状态', '[{"color":"#dd514c","name":"\\u5f85\\u89e3\\u51b3"},{"color":"#F37B1D","name":"\\u5df2\\u53d7\\u7406"},{"color":"#3bb4f2","name":"\\u5f85\\u56de\\u590d"},{"color":"#5eb95e","name":"\\u5b8c\\u6210"}]', ''),
 (6, 'mail', '邮箱设置', '', ''),

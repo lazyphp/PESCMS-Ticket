@@ -12,6 +12,6 @@ $echoDeleteUrl = empty($deleteUrl) ? $label->url(GROUP . '-' . MODULE . '-action
 <i class="am-margin-left-xs am-margin-right-xs">|</i>
 <a class="am-text-warning dialog" href="<?= $label->url(GROUP . '-' . MODULE . '-setAuth', ['id' => $value['user_group_id']]) ?>"><span class="am-icon-puzzle-piece"></span> 设置权限</a>
 <i class="am-margin-left-xs am-margin-right-xs">|</i>
-<a class="am-text-danger ajax-click ajax-delete"  msg="确定删除吗？将无法恢复的！"
+<a class="am-text-danger ajax-click ajax-dialog"  msg="确定删除吗？将无法恢复的！"
    href="<?= $echoDeleteUrl; ?>"><span class="am-icon-trash-o"></span> 删除</a>
 

@@ -37,7 +37,7 @@ $(function () {
     /**
      * 适用于GET请求的ajax方法
      * 需要注意的是，若需要明确restful的话，请在URL中声明method方法。
-     * 若监听的class中存在ajax-delete，在该标签中声明 msg="提示信息" ，将可以自定义提示信息
+     * 若监听的class中存在ajax-dialog，在该标签中声明 msg="提示信息" ，将可以自定义提示信息
      */
     $("body").on("click", ".ajax-click", function () {
         var url = $(this).attr("href");

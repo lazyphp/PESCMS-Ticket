@@ -46,6 +46,8 @@ InitSlice::any(['Ticket-Node'], ['\Ticket\UpdateField\UpdateNodeParentField']);
 
 //注册自动处理后台用户提交的用户密码表单
 InitSlice::any(['Ticket-User-action'], ['\Ticket\HandleForm\HandleUser']);
+//注册自动处理后台会员提交的会员密码表单
+InitSlice::any(['Ticket-Member-action'], ['\Ticket\HandleForm\HandleMember']);
 //注册处理工单表单管理 添加/编辑 提交的表单内容
 InitSlice::any(['Ticket-Ticket_form-action'], ['\Ticket\HandleForm\HandleModelTicket_form']);
 //注册处理节点管理 添加/编辑 提交的表单内容

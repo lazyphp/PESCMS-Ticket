@@ -133,6 +133,29 @@ html,body{
 }
 /*扩展颜色*/
 
+/*登录界面*/
+.login{
+    min-height: 46rem;
+    padding: 50px 0 10px 0;
+    background-image: url(https://imgcache.qq.com/open_proj/proj_qcloud_v2/gateway/login-regist/css/img/qcloud-login-bg.jpg?nowebp);
+}
+.login-form{
+    display: inline-block;
+    background: #fff;
+    width: 430px;
+    border-radius: 4px;
+    padding-bottom: 20px;
+    margin-top: 50px;
+}
+
+.login-verify{
+    width: 44% !important;
+    display: inline-block !important;
+}
+.login-form .refresh-verify{
+    width: 54% !important;
+}
+
 /*
 ===================
 图标 导航、版块管理

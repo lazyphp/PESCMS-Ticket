@@ -4,8 +4,8 @@
 	</h1>
 
     <div class="am-topbar-right">
-        <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm">登录</button>
-        <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">注册</button>
+        <a href="<?= $label->url('Login-index') ?>" class="am-btn am-btn-primary am-topbar-btn am-btn-sm">登录</a>
+        <a href="<?= $label->url('Login-signup') ?>" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">注册</a>
     </div>
 
 </header>

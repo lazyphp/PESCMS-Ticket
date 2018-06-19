@@ -38,6 +38,21 @@
     <div class="am-u-lg-8 am-u-md-8 am-u-sm-centered">
         <div class="am-panel am-panel-default">
             <div class="am-panel-bd">
+                <div class="pesad"></div>
+                <script>
+                    $(function(){
+                        $.getJSON('https://www.pescms.com/pesad/2', function(data){
+                            if(data.status == 200){
+                                for(var i = 0; i < data.data.length; i++){
+                                    $('.pesad').append(data.data[i]);
+                                }
+                            }else{
+                                $('.pesad').append('<a href="https://www.pescms.com/Page/ad.html" style="color: #fff;"><div class="am-vertical-align" style="background: #61cff9;height: 70px;text-align: center;"><div class="am-vertical-align-middle am-text-xxxl">广告投放</div></div></a>');
+                            }
+                        })
+                    })
+                </script>
+
                 <div class="header">
                     <h1 class="am-margin-top-0"><?= $title ?></h1>
                 <?php if (ACTION == 'index'): ?>

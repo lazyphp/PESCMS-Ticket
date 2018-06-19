@@ -46,4 +46,44 @@ class Model extends Content {
         $this->success('添加模型成功', $this->url(GROUP . '-Model-index'));
     }
 
+    /**
+     * 导入模型
+     */
+    public function import(){
+        $model = json_decode($this->isP('model', '请提交您要导入的模型代码', false), true);
+        if(empty($model)){
+            $this->error('解析提交的模型代码失败，请检查JSON格式是否异常');
+        }
+
+        $this->db()->transaction();
+        unset($model['model']['model_id']);
+        $modelID = $this->db('model')->insert($model['model']);
+        if(empty($modelID)){
+            $this->error('创建模型失败');
+        }
+
+        if(!empty($model['field'])){
+            foreach ($model['field'] as $value){
+                unset($value['field_id'], $value['field_model_id']);
+                $value['field_model_id'] = $modelID;
+                $this->db('field')->insert($value);
+            }
+        }
+
+        $this->db('menu')->insert([
+            'menu_name' => $model['model']['model_title'],
+            'menu_pid' => 5,
+            'menu_icon' => 'am-icon-file',
+            'menu_link' => GROUP."-{$model['model']['model_name']}-index"
+        ]);
+
+        $this->db()->commit();
+
+        $this->db()->query($model['table']);
+
+        $this->success('导入模型成功!', $this->url(GROUP . '-Model-index'));
+
+
+    }
+
 }

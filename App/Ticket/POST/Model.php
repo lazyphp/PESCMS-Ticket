@@ -72,7 +72,7 @@ class Model extends Content {
 
         $this->db('menu')->insert([
             'menu_name' => $model['model']['model_title'],
-            'menu_pid' => 5,
+            'menu_pid' => 9,
             'menu_icon' => 'am-icon-file',
             'menu_link' => GROUP."-{$model['model']['model_name']}-index"
         ]);

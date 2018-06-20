@@ -26,3 +26,20 @@
 .categort-breadcrumb .am-badge{
     background-color: #e5e5e5;
 }
+
+/*登录界面*/
+.login{
+    min-height: 46rem;
+    padding: 50px 0 10px 0;
+}
+.login-form{
+    width: 430px;
+}
+
+.login-verify{
+    width: 44% !important;
+    display: inline-block !important;
+}
+.login-form .refresh-verify{
+    width: 54% !important;
+}

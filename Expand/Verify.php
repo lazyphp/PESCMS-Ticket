@@ -31,6 +31,15 @@ class Verify {
             default :
                 $str = array_merge(range(1, 9), range('a', 'z'), range('A', 'Z'));
         }
+
+        //移除一些容易混淆的字符
+        foreach (['o', 'O', 'l', 'I'] as $needle){
+            $key = array_search($needle, $str);
+            if(!empty($key)){
+                unset($str[$key]);
+            }
+        }
+
         //打乱数组
         shuffle($str);
         header('Content-Type: image/png');
@@ -68,7 +77,7 @@ class Verify {
      * 随机生成一个颜色
      */
     private function randImagecolorallocate($img) {
-        return imagecolorallocate($img, rand(0, 255), rand(0, 255), rand(0, 255));
+        return imagecolorallocate($img, rand(238, 255), rand(0, 40), rand(0, 255));
     }
 
     /**

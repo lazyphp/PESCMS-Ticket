@@ -20,7 +20,46 @@ namespace Slice\Ticket\HandleForm;
 class HandleMember extends \Core\Slice\Slice {
 
     public function before() {
+        $this->checkEmail();
+        $this->setPassword();
+    }
 
+    public function after() {
+    }
+
+    /**
+     * 验证邮箱地址
+     */
+    private function checkEmail(){
+
+        if(!in_array(METHOD, ['POST', 'PUT'])){
+            return true;
+        }
+
+        $condition = ' member_email = :member_email ';
+        $param = [];
+
+        $param['member_email'] = $this->isP('email', '请提交邮箱地址');
+        if(\Model\Extra::checkInputValueType($param['member_email'], 1) === false){
+            $this->error("邮箱地址 '{$param['member_email']}' 不正确");
+        }
+
+        if(METHOD == 'PUT'){
+            $condition .= ' AND member_id != :member_id ';
+            $param['member_id'] = $this->isP('id', '请提交您要编辑的会员ID');
+        }
+
+        $check = $this->db('member')->where($condition)->find($param);
+        if(!empty($check)){
+            $this->error("邮箱地址 '{$param['member_email']}' 已存在");
+        }
+
+    }
+
+    /**
+     * 设置密码
+     */
+    private function setPassword(){
         if (METHOD == 'POST') {
             $this->isP('password', '请填写密码');
         }
@@ -30,11 +69,6 @@ class HandleMember extends \Core\Slice\Slice {
         } else {
             $_POST['password'] = (string)\Core\Func\CoreFunc::generatePwd($this->p('password'), 'USER_KEY');
         }
-
-
-    }
-
-    public function after() {
     }
 
 

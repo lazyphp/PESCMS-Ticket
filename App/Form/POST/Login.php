@@ -14,21 +14,21 @@ class Login extends \Core\Controller\Controller {
      * 登录帐号
      */
     public function index() {
-        $param['user_email'] = $this->isP('email', '请填写邮箱地址');
+        $param['member_email'] = $this->isP('email', '请填写邮箱地址');
         $password = $this->isP('password', '请填密码');
 
-        $param['user_password'] = \Core\Func\CoreFunc::generatePwd($param['user_email'] . $password);
+        $param['member_password'] = \Core\Func\CoreFunc::generatePwd($password, 'USER_KEY');
 
-        $user = $this->db('user')->where('user_email = :user_email AND user_password = :user_password')->find($param);
-        if (empty($user)) {
+        $member = $this->db('member')->where('member_email = :member_email AND member_password = :member_password')->find($param);
+        if (empty($member)) {
             $this->error('帐号不存在或者密码错误');
         }
-        unset($user['user_password']);
-        $this->session()->set('user', $user);
+        unset($member['member_password']);
+        $this->session()->set('member', $member);
         $this->session()->set('login_expire', time());
 
         if (empty($_POST['back_url'])) {
-            $url = $this->url('User-index');
+            $url = $this->url('Member-index');
         } else {
             $url = base64_decode($_POST['back_url']);
         }
@@ -42,28 +42,26 @@ class Login extends \Core\Controller\Controller {
      */
     public function signup() {
         $param = [
-            'user_vip' => 1,
-            'user_analyze_frequency' => 100,
-            'user_vip_expire' => time() + 86400 * 30,
-            'user_apikey' => \Model\User::apikey()
+            'member_status' => 1,
+            'member_createtime' => time(),
         ];
 
 
-        $param['user_name'] = $this->isP('name', '请填写名字');
-        $param['user_email'] = $this->isP('email', '请填写邮箱地址');
+        $param['member_name'] = $this->isP('name', '请填写名字');
+        $param['member_email'] = $this->isP('email', '请填写邮箱地址');
+        $param['member_phone'] = $this->isP('phone', '请填写手机号码');
         $password = $this->isP('password', '请填密码');
         $repassword = $this->isP('repassword', '请填写再次确认密码');
 
-        if($_POST['agree'] != 1){
-            $this->error('您没有同意《基金定投助手用户协议》');
-        }
-
-        if (\Model\Extra::checkInputValueType($param['user_email'], 1) == false) {
+        if (\Model\Extra::checkInputValueType($param['member_email'], 1) == false) {
             $this->error('请输入正确的邮箱地址');
         }
+        if (\Model\Extra::checkInputValueType($param['member_phone'], 5) == false) {
+            $this->error('请输入正确的手机号码');
+        }
 
-        $checkEmail = $this->db('user')->where('user_email = :user_email')->find([
-            'user_email' => $param['user_email']
+        $checkEmail = $this->db('member')->where('member_email = :member_email')->find([
+            'member_email' => $param['member_email']
         ]);
         if (!empty($checkEmail)) {
             $this->error('该邮箱地址已存在');
@@ -73,13 +71,11 @@ class Login extends \Core\Controller\Controller {
             $this->error('两次输入的密码不一致');
         }
 
-        $param['user_password'] = \Core\Func\CoreFunc::generatePwd($param['user_email'] . $password);
+        $param['member_password'] = \Core\Func\CoreFunc::generatePwd($password, 'USER_KEY');
 
-        $this->db('user')->insert($param);
+        $this->db('member')->insert($param);
 
-        \Model\Notice::addNotice('Welcome', $param['user_email'], '欢迎注册基金定投助手', ['{username}' => $param['user_name']]);
-
-        $this->success('注册成功', $this->url('User-index'));
+        $this->success('注册成功', $this->url('Member-index'));
     }
 
     /**
@@ -87,8 +83,8 @@ class Login extends \Core\Controller\Controller {
      */
     public function findpw() {
         $email = $this->isP('email', '请提交邮箱地址');
-        $checkUser = \Model\Content::findContent('user', $email, 'user_email');
-        if (empty($checkUser)) {
+        $checkmember = \Model\Content::findContent('member', $email, 'member_email');
+        if (empty($checkmember)) {
             $this->error('邮箱地址不存在');
         }
 
@@ -100,14 +96,9 @@ class Login extends \Core\Controller\Controller {
 
         //创建标记
         $this->db('findpassword')->insert([
-            'user_id' => $checkUser['user_id'],
+            'member_id' => $checkmember['member_id'],
             'findpassword_mark' => $mark,
             'findpassword_createtime' => time()
-        ]);
-
-        //创建邮件
-        \Model\Notice::addNotice('FindPassword', $checkUser['user_email'], '重置密码请求', [
-            '{key}' => $mark
         ]);
 
         $this->success('系统已将找回密码的信息发至您的邮箱，请注意查收。', $this->url('Login-index'));
@@ -136,13 +127,13 @@ class Login extends \Core\Controller\Controller {
             $this->error('两次密码不正确');
         }
 
-        $user = \Model\Content::findContent('user', $checkMark['user_id'], 'user_id');
+        $member = \Model\Content::findContent('member', $checkMark['member_id'], 'member_id');
 
-        $data['noset']['user_id'] = $checkMark['user_id'];
+        $data['noset']['member_id'] = $checkMark['member_id'];
 
-        $data['user_password'] = \Core\Func\CoreFunc::generatePwd($user['user_email'] . $password);
+        $data['member_password'] = \Core\Func\CoreFunc::generatePwd($member['member_email'] . $password);
 
-        $this->db('user')->where('user_id = :user_id')->update($data);
+        $this->db('member')->where('member_id = :member_id')->update($data);
 
         $this->db('findpassword')->where('findpassword_id = :id')->delete([
             'id' => $checkMark['findpassword_id']

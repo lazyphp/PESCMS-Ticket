@@ -41,7 +41,7 @@ class Login extends \Core\Controller\Controller {
         }
 
         $this->assign('title', '重置密码');
-        $this->layout('Login_layout');
+        $this->layout('', 'Login_layout');
     }
 
     /**

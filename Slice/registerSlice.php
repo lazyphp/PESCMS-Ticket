@@ -31,10 +31,12 @@
 use \Core\Slice\InitSlice as InitSlice;
 
 //注册全局的工单状态输出
-InitSlice::get(['Ticket-Index-', 'Ticket-Ticket', 'Form-View'], ['\Common\TicketStatus'], ['Ticket-Ticket-Login']);
+InitSlice::get(['Ticket-Index-', 'Ticket-Ticket', 'Form-View', 'Form-Member-index'], ['\Common\TicketStatus'], ['Ticket-Ticket-Login']);
 
 //注册后台登录验证
 InitSlice::any('Ticket', ['\Ticket\Login', '\Ticket\Auth'], ['Ticket-Login']);
+//注册前台登录验证
+InitSlice::any(['Form-Member-index', 'Form-Login'], ['\Form\Login'], ['Form-Login-logout']);
 //注册后台菜单get请求的输出
 InitSlice::get('Ticket', ['\Ticket\Menu'], ['Ticket-Login']);
 

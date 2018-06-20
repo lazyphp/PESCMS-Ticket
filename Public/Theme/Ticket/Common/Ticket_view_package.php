@@ -7,7 +7,7 @@
         <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
         <?php endif; ?>
 
-        <div class="am-g console-step row am-margin-bottom-sm">
+        <div class="console-step row am-margin-bottom-sm">
             <?php foreach ($ticketStatus as $key => $value): ?>
 
                 <div
@@ -17,10 +17,10 @@
             <?php endforeach; ?>
         </div>
 
-        <div class="am-g am-padding pt-info-panel ">
+        <div class="am-padding pt-info-panel ">
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div><span class="pt-text-explode">问题标题 : </span> <?= $ticket_title; ?></div>
-                <div class="am-g">
+                <div class="am-g am-g-collapse">
                     <div class="am-u-sm-4"><span class="pt-text-explode">工单编号 : </span><?= $ticket_number; ?></div>
                     <div class="am-u-sm-4">
                         <span class="pt-text-explode">提交时间 : </span><?= date('Y-m-d H:i:s', $ticket_submit_time); ?></div>

@@ -1,13 +1,13 @@
 <header class="am-topbar am-text-sm">
     <h1 class="am-topbar-brand">
-        <a href="#">PESCMS Ticket</a>
+        <a href="<?= $label->url('Ticket-Index-index') ?>">PESCMS Ticket</a>
     </h1>
 
     <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
             data-am-collapse="{target: '#doc-topbar-collapse'}">
         <span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
 
-    <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+    <div class="am-collapse am-topbar-collapse">
         <ul class="am-nav am-nav-pills am-topbar-nav">
             <?php foreach ($menu as $topValue): ?>
                 <?php if (!empty($topValue['menu_child'])): ?>
@@ -29,9 +29,9 @@
 
         <div class="am-topbar-right">
             <ul class="am-nav am-nav-pills am-topbar-nav admin-header-list">
-                <li class=""><a href="javascript:;">您好,<?= $this->session()->get('ticket')['user_name']; ?></a></li>
+                <li><a href="javascript:;">您好,<?= $this->session()->get('ticket')['user_name']; ?></a></li>
+                <li><a href="<?= $label->url('Ticket-Login-logout'); ?>"><i class="am-icon-sign-out"></i> 退出</a></li>
             </ul>
-            <a href="<?= $label->url('Ticket-Login-logout'); ?>" class="am-btn am-btn-xs am-btn-primary am-margin-top-sm">退出</a>
         </div>
     </div>
 </header>

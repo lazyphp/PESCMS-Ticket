@@ -20,7 +20,7 @@ class Login extends \Core\Controller\Controller{
 
     public function logout(){
         $this->session()->destroy();
-        $this->success('您已安全退出', $this->url('Ticket-Login-index'));
+        $this->jump($this->url('Ticket-Login-index'));
     }
 
 }

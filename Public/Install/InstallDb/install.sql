@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2018-05-22 09:07:24
+-- Generation Time: 2018-06-20 08:21:10
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -73,7 +73,7 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (4, 1, 'attr', '模型属性', 'radio', '{"\\u524d\\u53f0":"1","\\u540e\\u53f0":"2"}', '', '', 1, 4, 1, 1, 1),
 (5, 1, 'status', '模型状态', 'radio', '{"\\u542f\\u7528":"1","\\u7981\\u7528":"0"}', '', '', 1, 5, 1, 1, 1),
 (6, 2, 'model_id', '模型ID', 'text', '', '', '', 1, 0, 0, 0, 1),
-(7, 2, 'type', '字段类型', 'select', '{"\\u5206\\u7c7b":"category","\\u5355\\u884c\\u8f93\\u5165\\u6846":"text","\\u5355\\u9009\\u6309\\u94ae":"radio","\\u590d\\u9009\\u6846":"checkbox","\\u5355\\u9009\\u4e0b\\u62c9\\u6846":"select","\\u591a\\u884c\\u8f93\\u5165\\u6846":"textarea","\\u7f16\\u8f91\\u5668":"editor","\\u7565\\u7f29\\u56fe":"thumb","\\u4e0a\\u4f20\\u56fe\\u7ec4":"img","\\u4e0a\\u4f20\\u6587\\u4ef6":"file","\\u65e5\\u671f":"date"}', '', '', 1, 1, 1, 1, 1),
+(7, 2, 'type', '字段类型', 'select', '{&quot;\\u5206\\u7c7b&quot;:&quot;category&quot;,&quot;\\u5355\\u884c\\u8f93\\u5165\\u6846&quot;:&quot;text&quot;,&quot;\\u5355\\u9009\\u6309\\u94ae&quot;:&quot;radio&quot;,&quot;\\u590d\\u9009\\u6846&quot;:&quot;checkbox&quot;,&quot;\\u5355\\u9009\\u4e0b\\u62c9\\u6846&quot;:&quot;select&quot;,&quot;\\u591a\\u884c\\u8f93\\u5165\\u6846&quot;:&quot;textarea&quot;,&quot;\\u7f16\\u8f91\\u5668&quot;:&quot;editor&quot;,&quot;\\u7565\\u7f29\\u56fe&quot;:&quot;thumb&quot;,&quot;\\u4e0a\\u4f20\\u56fe\\u7ec4&quot;:&quot;img&quot;,&quot;\\u4e0a\\u4f20\\u6587\\u4ef6&quot;:&quot;file&quot;,&quot;\\u65e5\\u671f&quot;:&quot;date&quot;,&quot;\\u7c7b\\u578b&quot;:&quot;types&quot;}', '', '', 1, 1, 1, 1, 1),
 (8, 2, 'name', '字段名称', 'text', '', '', '', 1, 2, 1, 1, 1),
 (9, 2, 'display_name', '显示名称', 'text', '', '', '', 1, 3, 1, 1, 1),
 (10, 2, 'option', '选项值', 'textarea', '', '选填， 选填， 此处若没有特殊说明，必须 名称|值 填写、且一行一个选项值，否则将导致数据异常!  注意:目前选项适用于单选，复选，下拉菜单。其余功能填写也不会产生任何实际效果。', '', 0, 4, 0, 1, 1),
@@ -143,7 +143,28 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (191, 18, 'parent', '所属父类', 'select', '', '', '', 1, 1, 1, 1, 1),
 (192, 18, 'description', '分类描述', 'textarea', '', '', '', 1, 3, 1, 1, 1),
 (193, 15, 'listsort', '排序值', 'text', '', '', '', 0, 99, 1, 1, 1),
-(194, 15, 'explain', '工单说明', 'editor', '', '', '', 0, 10, 0, 1, 1);
+(194, 15, 'explain', '工单说明', 'editor', '', '', '', 0, 10, 0, 1, 1),
+(204, 20, 'status', '状态', 'radio', '{"\\u7981\\u7528":"0","\\u542f\\u7528":"1"}', '', '1', 1, 100, 1, 1, 1),
+(206, 20, 'createtime', '创建时间', 'date', '', '', '', 0, 99, 1, 1, 1),
+(207, 20, 'email', '邮箱地址', 'text', '', '', '', 1, 1, 1, 1, 1),
+(208, 20, 'password', '用户密码', 'text', '', '', '', 0, 2, 0, 1, 1),
+(209, 20, 'name', '用户名称', 'text', '', '', '', 1, 3, 1, 1, 1),
+(210, 20, 'phone', '手机号码', 'text', '', '', '', 1, 4, 1, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `pes_findpassword`
+--
+
+CREATE TABLE IF NOT EXISTS `pes_findpassword` (
+  `findpassword_id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `findpassword_mark` varchar(255) NOT NULL DEFAULT '' COMMENT '标记',
+  `findpassword_createtime` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  PRIMARY KEY (`findpassword_id`),
+  UNIQUE KEY `findpassword_mark` (`findpassword_mark`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='查找密码' AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -174,6 +195,21 @@ INSERT INTO `pes_mail_template` (`mail_template_id`, `mail_template_type`, `mail
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `pes_member`
+--
+
+CREATE TABLE IF NOT EXISTS `pes_member` (
+  `member_id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_email` varchar(255) NOT NULL DEFAULT '',
+  `member_password` varchar(255) NOT NULL DEFAULT '',
+  `member_name` varchar(255) NOT NULL DEFAULT '',
+  `member_phone` varchar(255) NOT NULL DEFAULT '',
+  `member_status` tinyint(4) NOT NULL DEFAULT '0',
+  `member_createtime` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`member_id`),
+  UNIQUE KEY `member_email` (`member_email`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 -- 表的结构 `pes_menu`
 --
 
@@ -187,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `pes_menu` (
   `menu_type` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`menu_id`),
   KEY `menu_pid` (`menu_pid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
 
 --
 -- 转存表中的数据 `pes_menu`
@@ -196,23 +232,23 @@ CREATE TABLE IF NOT EXISTS `pes_menu` (
 INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_link`, `menu_listsort`, `menu_type`) VALUES
 (1, '工单设置', 0, 'am-icon-ticket', '', 3, 0),
 (2, '工单模型', 1, 'am-icon-modx', 'Ticket-Ticket_model-index', 1, 0),
-(3, '用户管理', 0, 'am-icon-users', '', 5, 0),
-(4, '帐号列表', 3, 'am-icon-user', 'Ticket-User-index', 1, 0),
-(5, '系统设置', 0, 'am-icon-cog', '', 10, 0),
-(6, '基础设置', 5, 'am-icon-tv', 'Ticket-Setting-action', 1, 0),
-(7, '菜单设置', 5, 'am-icon-map-signs', 'Ticket-Menu-index', 2, 0),
-(10, '帮助文档', 5, 'am-icon-leanpub', 'http://www.pescms.com/d/index/22', 5, 1),
-(11, '关于我们', 5, 'am-icon-whatsapp', '', 6, 0),
-(12, '首页', 0, 'am-icon-home', 'Ticket-Index-index', 1, 0),
+(3, '帐号管理', 0, 'am-icon-users', '', 5, 0),
+(4, '管理员列表', 3, 'am-icon-user', 'Ticket-User-index', 1, 0),
+(6, '基础设置', 9, 'am-icon-tv', 'Ticket-Setting-action', 1, 0),
+(7, '菜单设置', 9, 'am-icon-map-signs', 'Ticket-Menu-index', 2, 0),
+(9, '系统设置', 0, 'am-icon-cog', '', 10, 0),
+(10, '帮助文档', 9, 'am-icon-leanpub', 'http://www.pescms.com/d/index/22', 5, 1),
+(11, '反馈建议', 9, 'am-icon-twitch', 'https://forum.pescms.com/list/22.html', 6, 1),
+(12, '仪表盘', 0, 'am-icon-tachometer', 'Ticket-Index-index', 1, 0),
 (13, '工单列表', 0, 'am-icon-yelp', '', 2, 0),
 (14, '用户组', 3, 'am-icon-steam', 'Ticket-User_group-index', 2, 0),
 (15, '节点管理', 3, 'am-icon-toggle-off', 'Ticket-Node-index', 3, 0),
-(16, '路由规则', 5, 'am-icon-map-o', 'Ticket-Route-index', 3, 0),
+(16, '路由规则', 9, 'am-icon-map-o', 'Ticket-Route-index', 3, 0),
 (17, '工单列表', 13, 'am-icon-fire', 'Ticket-Ticket-index', 1, 0),
 (18, '我的工单', 13, 'am-icon-coffee', 'Ticket-Ticket-myTicket', 2, 0),
-(19, '邮件模板', 5, 'am-icon-paint-brush', 'Ticket-Mail_template-index', 4, 0),
-(20, '分类', 9, 'am-icon-file', 'Ticket-Category-index', 0, 0),
-(21, '分类管理', 0, 'am-icon-list-alt', 'Ticket-Category-index', 4, 0);
+(19, '邮件模板', 9, 'am-icon-paint-brush', 'Ticket-Mail_template-index', 4, 0),
+(21, '分类管理', 0, 'am-icon-list-alt', 'Ticket-Category-index', 4, 0),
+(23, '客户列表', 3, 'am-icon-street-view', 'Ticket-Member-index', 4, 0);
 
 -- --------------------------------------------------------
 
@@ -229,7 +265,7 @@ CREATE TABLE IF NOT EXISTS `pes_model` (
   `model_attr` tinyint(1) NOT NULL DEFAULT '0' COMMENT '模型属性 1:前台(含前台) 2:后台',
   PRIMARY KEY (`model_id`),
   UNIQUE KEY `model_name` (`model_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 --
 -- 转存表中的数据 `pes_model`
@@ -246,7 +282,8 @@ INSERT INTO `pes_model` (`model_id`, `model_name`, `model_title`, `model_status`
 (15, 'ticket_model', '工单模型', 1, 1, 2),
 (16, 'ticket_form', '工单表单', 1, 1, 2),
 (17, 'mail_template', '邮件模板', 1, 0, 2),
-(18, 'Category', '分类', 1, 1, 1);
+(18, 'Category', '分类', 1, 1, 1),
+(20, 'Member', '会员管理', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -444,13 +481,14 @@ CREATE TABLE IF NOT EXISTS `pes_ticket` (
   `ticket_number` varchar(128) NOT NULL DEFAULT '' COMMENT '工单序号',
   `ticket_title` varchar(255) NOT NULL DEFAULT '' COMMENT '工单标题',
   `ticket_model_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应的工单模型',
-  `ticket_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '工单状态,详情参考pes_ticket_status表',
+  `ticket_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '工单状态,详情参考option中customstatus',
   `ticket_submit_time` int(11) NOT NULL DEFAULT '0' COMMENT '工单提交时间',
   `ticket_refer_time` int(11) NOT NULL DEFAULT '0' COMMENT '工单耗时参照时间',
   `ticket_run_time` int(11) NOT NULL DEFAULT '0' COMMENT '工单解决时长',
   `ticket_complete_time` int(11) NOT NULL DEFAULT '0' COMMENT '工单完成时间',
   `ticket_read` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0:未读 1:已读',
   `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '工单操作者ID',
+  `member_id` int(11) NOT NULL DEFAULT '-1' COMMENT '站内会员ID . -1表示匿名提交',
   `user_name` varchar(128) NOT NULL DEFAULT '' COMMENT '工单操作者名字',
   `ticket_contact` tinyint(4) NOT NULL DEFAULT '0' COMMENT '联系方式 1:邮箱 2:手机号码',
   `ticket_contact_account` varchar(128) NOT NULL DEFAULT '' COMMENT '联系账号',

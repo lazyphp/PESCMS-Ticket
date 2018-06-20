@@ -11,8 +11,8 @@
     </div>
 </div>
 <div class="am-center" style="width: 100px;">
-    <a href="<?= str_replace("/Install", "", DOCUMENT_ROOT) ?>/" id="next"
-       class="am-btn am-btn-success am-hide">查看系统</a>
+    <a href="<?= str_replace("/Install", "", DOCUMENT_ROOT) ?>/" class="next" class="am-btn am-btn-success am-hide">查看前台</a>
+    <a href="<?= str_replace("/Install", "", DOCUMENT_ROOT) ?><?= $label->url('Ticket-Login-index') ?>" class="next" class="am-btn am-btn-primary am-hide">查看后台</a>
 </div>
 <script>
     $(function () {
@@ -45,7 +45,7 @@
                     var endtimeId = setInterval(function () {
                         if (i >= obj.length && process > 100) {
                             $(".action").prepend("<p>安装结束，Install目录请手动移除!</p>");
-                            $("#next").removeClass("am-hide");
+                            $(".next").removeClass("am-hide");
                             clearTimeout(endtimeId);
                             return true;
                         }

@@ -81,7 +81,8 @@ class Member extends \Core\Controller\Controller {
      * 查看和更新个人信息
      */
     public function update(){
-
+        $this->assign('member', \Model\Content::findContent('member', $this->session()->get('member')['member_id'], 'member_id'));
+        $this->layout();
     }
 
 }

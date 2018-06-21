@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2018-06-20 08:21:10
+-- Generation Time: 2018-06-21 07:12:32
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -422,12 +422,14 @@ INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) 
 (1, 'domain', '网站URL', '', ''),
 (2, 'crossdomain', '跨域列表', '', ''),
 (3, 'version', '系统版本', '1.1.0', ''),
-(4, 'openindex', '开启首页', '1', ''),
+(4, 'openindex', '开启首页', '1', 'system'),
 (5, 'customstatus', '工单状态', '[{"color":"#dd514c","name":"\\u5f85\\u89e3\\u51b3"},{"color":"#F37B1D","name":"\\u5df2\\u53d7\\u7406"},{"color":"#3bb4f2","name":"\\u5f85\\u56de\\u590d"},{"color":"#5eb95e","name":"\\u5b8c\\u6210"}]', ''),
 (6, 'mail', '邮箱设置', '', ''),
-(7, 'notice_way', '通知方式', '2', ''),
+(7, 'notice_way', '通知方式', '1', 'system'),
 (8, 'upload_img', '图片格式', '[".jpg",".jpge",".bmp",".gif",".png"]', 'upload'),
-(9, 'upload_file', '文件格式', '[".zip",".rar",".7z",".doc",".docx",".pdf",".xls",".xlsx",".ppt",".pptx",".txt"]', 'upload');
+(9, 'upload_file', '文件格式', '[".zip",".rar",".7z",".doc",".docx",".pdf",".xls",".xlsx",".ppt",".pptx",".txt"]', 'upload'),
+(10, 'interior_ticket', '站内工单', '1', 'system'),
+(11, 'open_register', '开启注册', '1', 'system');
 
 -- --------------------------------------------------------
 

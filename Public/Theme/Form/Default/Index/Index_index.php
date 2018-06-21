@@ -12,7 +12,9 @@
                 <input type="text" name="number" class="am-form-field" required placeholder="键入工单编号，了解进度">
             <span class="am-input-group-btn">
                 <button class="am-btn am-btn-default" type="submit"><i class="am-icon-search"></i> 查询进度</button>
+                <?php if($system['interior_ticket'] == 1): ?>
                 <a href="<?= $label->url('Category-index') ?>" class="am-btn am-btn-warning"><i class="am-icon-yelp"></i> 提交工单</a>
+                <?php endif; ?>
             </span>
             </div>
         </form>

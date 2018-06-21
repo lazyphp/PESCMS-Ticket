@@ -19,7 +19,7 @@ class Login extends \Core\Controller\Controller {
 
         $param['member_password'] = \Core\Func\CoreFunc::generatePwd($password, 'USER_KEY');
 
-        $member = $this->db('member')->where('member_email = :member_email AND member_password = :member_password')->find($param);
+        $member = $this->db('member')->where('member_email = :member_email AND member_password = :member_password AND member_status = 1')->find($param);
         if (empty($member)) {
             $this->error('帐号不存在或者密码错误');
         }

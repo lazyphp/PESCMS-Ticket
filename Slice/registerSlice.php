@@ -36,7 +36,7 @@ InitSlice::get(['Ticket-Index-', 'Ticket-Ticket', 'Form-View', 'Form-Member-inde
 //注册后台登录验证
 InitSlice::any('Ticket', ['\Ticket\Login', '\Ticket\Auth'], ['Ticket-Login']);
 //注册前台登录验证
-InitSlice::any(['Form-Member-index', 'Form-Login'], ['\Form\Login'], ['Form-Login-logout']);
+InitSlice::any(['Form-Member-', 'Form-Login'], ['\Form\Login'], ['Form-Login-logout']);
 //注册后台菜单get请求的输出
 InitSlice::get('Ticket', ['\Ticket\Menu'], ['Ticket-Login']);
 
@@ -59,7 +59,7 @@ InitSlice::any(['Ticket-Ticket_model-action'], ['\Ticket\HandleForm\HandleTicket
 //注册理路由规则 添加/编辑 提交的表单内容
 InitSlice::any(['Ticket-Route-action'], ['\Ticket\HandleForm\HandleRoute', '\Common\UpdateRoute']);
 //注册自动更新路由规则和发送通知
-InitSlice::get(['Ticket-', 'Form-'], ['\Common\UpdateRoute', '\Common\SendNotice']);
+InitSlice::get(['Ticket-', 'Form-'], ['\Common\UpdateRoute', '\Common\SendNotice', '\Common\Option']);
 
 //注册跨域的设置
 InitSlice::any(['Form-Submit-ticket', 'Form-Index-getSession', 'Form-Index-verify', 'Form-Upload-ueditor'], ['\Form\CrossDomain']);

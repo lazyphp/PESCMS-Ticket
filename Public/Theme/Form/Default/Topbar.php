@@ -5,13 +5,21 @@
 
     <div class="am-topbar-right am-text-sm">
         <ul class="am-nav am-nav-pills am-topbar-nav admin-header-list">
+            <?php if ((MODULE != 'Index' || ACTION != 'index') && $system['interior_ticket'] == 1 ): ?>
+                <li>
+                    <a href="<?= $label->url('Category-index') ?>"><i class="am-icon-yelp"></i> 提交工单</a>
+                </li>
+            <?php endif; ?>
+
             <?php if (empty($this->session()->get('member'))): ?>
+                <?php if($system['open_register'] == 1): ?>
                 <li>
                     <a href="<?= $label->url('Login-index') ?>"><i class="am-icon-sign-in"></i> 登录</a>
                 </li>
                 <li>
                     <a href="<?= $label->url('Login-signup') ?>"><i class="am-icon-user-plus"></i> 注册</a>
                 </li>
+                <?php endif; ?>
             <?php else: ?>
                 <li>
                     <a href="<?= $label->url('Member-index') ?>"><i class="am-icon-fire"></i> 我的工单</a>

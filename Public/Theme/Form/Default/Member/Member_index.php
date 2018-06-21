@@ -33,10 +33,10 @@
                         <input type="hidden" name="g" value="<?= GROUP; ?>"/>
                         <input type="hidden" name="m" value="<?= MODULE ?>"/>
                         <input type="hidden" name="a" value="<?= ACTION ?>"/>
-                        <input type="text" name="keyword" value="<?= $keyword ?>" class="am-form-field">
+                        <input type="text" name="keyword" placeholder="请输入工单编号或者工单内容" value="<?= $keyword ?>" class="am-form-field">
                         <span class="am-input-group-btn">
-                        <input class="am-btn am-btn-default" type="submit" value="搜索"/>
-                    </span>
+                        <button class="am-btn am-btn-default" type="submit"><span class="am-icon-search"></span></button>
+                        </span>
                     </div>
                 </form>
             </div>

@@ -1,5 +1,7 @@
 <div class="am-g">
     <div class="am-u-sm-12 am-u-sm-centered">
+
+        <?php if(!empty($statistics)): ?>
         <div class="am-panel am-panel-default">
             <div class="am-panel-bd am-text-center">
                 <div class="am-g">
@@ -14,6 +16,7 @@
                 </div>
             </div>
         </div>
+        <?php endif; ?>
 
         <div class="am-g am-margin-bottom am-g-collapse">
             <div class="am-u-sm-12 am-u-md-6">

@@ -82,6 +82,8 @@ class Category extends \Core\Controller\Controller{
         $this->assign('ticketInfo', $ticketInfo);
         $this->assign('field', $field);
 
+        $this->assign('member', $this->session()->get('member'));
+
         $this->domain = \Model\Content::findContent('option', 'domain', 'option_name')['value'];
         $this->assign('domain', $this->domain);
         if(ACTION == 'ticket'){
@@ -89,6 +91,9 @@ class Category extends \Core\Controller\Controller{
         }
 	}
 
+    /**
+     * 创建JS
+     */
 	public function createJS(){
 	    $this->ticket();
         ob_start();

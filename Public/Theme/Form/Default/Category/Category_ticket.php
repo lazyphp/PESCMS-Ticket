@@ -21,7 +21,7 @@
         <div class="am-u-sm-12 am-u-sm-centered">
             <div class="am-form-group">
                 <label class="am-block">联系信息<i class="am-text-danger">*</i></label>
-                <input class="form-text-input input-leng3 am-field-valid" name="contact_account" placeholder="请填写您的联系信息,方便我们与您联系" type="text" value="" required="">
+                <input class="form-text-input input-leng3 am-field-valid" name="contact_account" placeholder="请填写您的联系信息,方便我们与您联系" type="text" value="<?= !empty($member) ? $member['member_email'] : '' ?>" required="">
             </div>
         </div>
     </div>

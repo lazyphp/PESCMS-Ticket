@@ -144,6 +144,10 @@ a.am-btn-white:visited{
 .am-btn-white:hover{
     background-color: #f2f2f2;
 }
+.am-btn-white.am-disabled, .am-btn-white[disabled]{
+    background-color: #fff;
+    border-color: #e6e6e6;
+}
 
 
 /*

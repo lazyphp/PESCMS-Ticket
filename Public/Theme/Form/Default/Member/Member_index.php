@@ -3,11 +3,11 @@
         <div class="am-panel am-panel-default">
             <div class="am-panel-bd am-text-center">
                 <div class="am-g">
-                    <?php foreach ([1, 2, 3] as $key => $value): ?>
-                        <div class="am-u-sm-4">
-                            <a href="">
-                                <div class="am-text-xxxl">0</div>
-                                <div>待处理</div>
+                    <?php foreach ($statistics as $key => $value): ?>
+                        <div class="am-u-sm-3">
+                            <a href="<?= $label->url(MODULE.'-index', ['status' => $value['ticket_status']]) ?>">
+                                <div class="am-text-xxxl"><?= $value['total'] ?></div>
+                                <div><?= $ticketStatus[$value['ticket_status']]['name']; ?></div>
                             </a>
                         </div>
                     <?php endforeach; ?>
@@ -19,8 +19,9 @@
             <div class="am-u-sm-12 am-u-md-6">
                 <div class="am-btn-toolbar">
                     <div class="am-btn-group am-btn-group-sm">
-                        <?php foreach ([1, 2, 3, 4] as $key => $value): ?>
-                            <a href="" class="am-btn am-btn-white">今天</a>
+                        <a href="<?= $label->url(MODULE.'-index') ?>" class="am-btn am-btn-white <?= empty($_GET['dataType'])  ? 'am-disabled' : '' ?>">全部</a>
+                        <?php foreach (['1' => '今天', '-1' => '昨天', '-7' => '本周'] as $key => $value): ?>
+                            <a href="<?= $label->url(MODULE.'-index', ['dataType' => $key, 'keyword' => $keyword]) ?>" class="am-btn am-btn-white <?= $_GET['dataType'] == $key ? 'am-disabled' : '' ?>"><?= $value ?></a>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -32,7 +33,7 @@
                         <input type="hidden" name="g" value="<?= GROUP; ?>"/>
                         <input type="hidden" name="m" value="<?= MODULE ?>"/>
                         <input type="hidden" name="a" value="<?= ACTION ?>"/>
-                        <input type="text" name="keyword" value="<?= $_GET['keyword'] ?>" class="am-form-field">
+                        <input type="text" name="keyword" value="<?= $keyword ?>" class="am-form-field">
                         <span class="am-input-group-btn">
                         <input class="am-btn am-btn-default" type="submit" value="搜索"/>
                     </span>
@@ -51,19 +52,28 @@
                     <th>提交时间</th>
                     <th>操作</th>
                 </tr>
-                <?php foreach($list as $key => $value): ?>
+                <?php if(empty($list)): ?>
                     <tr>
-                        <td><?= $value['ticket_number'] ?></td>
-                        <td><?= $value['ticket_model_name'] ?>	</td>
-                        <td><?= $value['ticket_title'] ?></td>
-                        <td style="color: <?= $ticketStatus[$value['ticket_status']]['color']; ?>"><?= $ticketStatus[$value['ticket_status']]['name']; ?></td>
-                        <td><?= date('Y-m-d H:i', $value['ticket_submit_time']) ?></td>
-                        <td>
-                            <a href="<?= $label->url('View-ticket', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>">查看详情</a>
-                        </td>
+                        <td colspan="6" class="am-text-center">当前没有工单提交记录</td>
                     </tr>
-                <?php endforeach; ?>
+                <?php else: ?>
+                    <?php foreach($list as $key => $value): ?>
+                        <tr>
+                            <td><?= $value['ticket_number'] ?></td>
+                            <td><?= $value['ticket_model_name'] ?>	</td>
+                            <td><?= $value['ticket_title'] ?></td>
+                            <td style="color: <?= $ticketStatus[$value['ticket_status']]['color']; ?>"><?= $ticketStatus[$value['ticket_status']]['name']; ?></td>
+                            <td><?= date('Y-m-d H:i', $value['ticket_submit_time']) ?></td>
+                            <td>
+                                <a href="<?= $label->url('View-ticket', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>">查看详情</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </table>
         </div>
+        <ul class="am-pagination am-pagination-right am-text-sm">
+            <?= $page; ?>
+        </ul>
     </div>
 </div>

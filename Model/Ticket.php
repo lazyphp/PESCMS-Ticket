@@ -38,6 +38,7 @@ class Ticket extends \Core\Model\Model {
         $param['ticket_number'] = \Model\Extra::getOnlyNumber();
         $param['ticket_model_id'] = $firstContent['ticket_model_id'];
         $param['ticket_submit_time'] = time();
+        $param['member_id'] = empty(self::session()->get('member')) ? '-1' : self::session()->get('member')['member_id'];
 
         if ($firstContent['ticket_model_verify'] == '1') {
             $verify = self::isP('verify', '请填写验证码');

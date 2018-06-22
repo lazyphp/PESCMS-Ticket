@@ -6,6 +6,9 @@
         <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">网站域名:</label>
         <div class="am-u-sm-10">
             <input type="text" name="domain" placeholder="网站域名" required>
+            <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
+                <i class="am-icon-lightbulb-o"></i> 请填写正确的域名，以便工单能够正确地提交！域名需要带http或者https，按照服务器实际情况填写。
+            </div>
         </div>
     </div>
 

@@ -28,7 +28,8 @@ class HandleUser extends \Core\Slice\Slice {
         if (empty($_POST['password'])) {
             $_POST['password'] = \Model\Content::findContent('user', $_POST['id'], 'user_id')['user_password'];
         } else {
-            $_POST['password'] = (string)\Core\Func\CoreFunc::generatePwd($this->p('password'));
+            $account = $this->p('account');
+            $_POST['password'] = (string)\Core\Func\CoreFunc::generatePwd($account.$this->p('password'));
         }
 
 

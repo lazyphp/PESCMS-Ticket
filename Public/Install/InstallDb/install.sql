@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2018-06-21 07:12:32
+-- Generation Time: 2018-06-22 06:17:18
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `pes_field` (
   PRIMARY KEY (`field_id`),
   UNIQUE KEY `modle_id` (`field_model_id`,`field_name`),
   KEY `field_name` (`field_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=204 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=211 ;
 
 --
 -- 转存表中的数据 `pes_field`
@@ -96,10 +96,10 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (75, 7, 'password', '会员密码', 'text', '', '新增用户时,密码为必填.编辑用户时为空则表示不修改密码', '', 0, 3, 0, 1, 1),
 (76, 7, 'mail', '邮箱地址', 'text', '', '', '', 1, 4, 1, 1, 1),
 (77, 7, 'name', '会员名称', 'text', '', '', '', 1, 5, 1, 1, 1),
-(78, 7, 'group_id', '用户组', 'select', '{"\\u7ba1\\u7406\\u5458":1}', '', '', 1, 1, 1, 1, 1),
+(78, 7, 'group_id', '用户组', 'select', '{"\\u7ba1\\u7406\\u5458":1,"\\u5ba2\\u670d\\u4eba\\u5458":2}', '', '', 1, 1, 1, 1, 1),
 (79, 6, 'name', '用户组名称', 'text', '', '', '', 1, 1, 1, 1, 1),
 (136, 13, 'name', '节点名称', 'text', '', '', '', 1, 3, 0, 1, 1),
-(137, 13, 'parent', '所属菜单', 'select', '{"\\u8bf7\\u9009\\u62e9":"","\\u9876\\u5c42\\u83dc\\u5355":"0","\\u9996\\u9875":1,"\\u5de5\\u5355\\u5217\\u8868":2,"\\u5de5\\u5355\\u8bbe\\u7f6e":7,"\\u7528\\u6237\\u7ba1\\u7406":21,"\\u7cfb\\u7edf\\u8bbe\\u7f6e":43,"\\u6a21\\u578b\\u7ba1\\u7406":58,"\\u6742\\u9879\\u8282\\u70b9":11}', '本选项仅用于布置当前权限节点显示于何方。', '', 1, 1, 0, 1, 1),
+(137, 13, 'parent', '所属菜单', 'select', '{"\\u8bf7\\u9009\\u62e9":"","\\u9876\\u5c42\\u83dc\\u5355":"0","\\u9996\\u9875":1,"\\u5de5\\u5355\\u5217\\u8868":2,"\\u5de5\\u5355\\u8bbe\\u7f6e":7,"\\u7528\\u6237\\u7ba1\\u7406":21,"\\u5206\\u7c7b\\u7ba1\\u7406":76,"\\u7cfb\\u7edf\\u8bbe\\u7f6e":43,"\\u6a21\\u578b\\u7ba1\\u7406":58,"\\u6742\\u9879\\u8282\\u70b9":11}', '本选项仅用于布置当前权限节点显示于何方。', '', 1, 1, 0, 1, 1),
 (138, 13, 'verify', '是否验证', 'radio', '{&quot;\\u4e0d\\u9a8c\\u8bc1&quot;:&quot;0&quot;,&quot;\\u9a8c\\u8bc1&quot;:&quot;1&quot;}', '', '', 0, 4, 0, 1, 1),
 (139, 13, 'msg', '提示信息', 'text', '', '', '', 0, 5, 0, 1, 1),
 (140, 13, 'method_type', '请求方法', 'select', '{&quot;GET&quot;:&quot;GET&quot;,&quot;POST&quot;:&quot;POST&quot;,&quot;PUT&quot;:&quot;PUT&quot;,&quot;DELETE&quot;:&quot;DELETE&quot;}', '', '', 0, 6, 0, 1, 1),
@@ -130,7 +130,7 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (174, 4, 'hash', '路由哈希值', 'text', '', '', '', 1, 99, 0, 0, 1),
 (175, 4, 'listsort', '排序', 'text', '', '', '', 0, 100, 1, 1, 1),
 (176, 4, 'status', '启用状态', 'radio', '{&quot;\\u542f\\u7528&quot;:&quot;1&quot;,&quot;\\u7981\\u7528&quot;:&quot;0&quot;}', '', '', 1, 7, 1, 1, 1),
-(177, 13, 'controller', '父类节点', 'select', '{"\\u8bf7\\u9009\\u62e9":"","\\u9876\\u5c42\\u8282\\u70b9":"0","\\u975e\\u6743\\u9650\\u8282\\u70b9":"-1","\\u5b57\\u6bb5\\u7ba1\\u7406":59,"\\u5de5\\u5355\\u6a21\\u578b":8,"\\u5de5\\u5355\\u8868\\u5355":9,"\\u5de5\\u5355\\u5217\\u8868":2,"\\u7528\\u6237\\u7ec4":22,"\\u8282\\u70b9\\u7ba1\\u7406":23,"\\u7528\\u6237\\u7ba1\\u7406":21,"\\u83dc\\u5355\\u8bbe\\u7f6e":46,"\\u7cfb\\u7edf\\u8bbe\\u7f6e":43,"\\u8def\\u7531\\u89c4\\u5219":52,"\\u90ae\\u4ef6\\u6a21\\u677f":70,"\\u6a21\\u578b\\u7ba1\\u7406":58}', '', '', 1, 2, 1, 1, 1),
+(177, 13, 'controller', '父类节点', 'select', '{"\\u8bf7\\u9009\\u62e9":"","\\u9876\\u5c42\\u8282\\u70b9":"0","\\u975e\\u6743\\u9650\\u8282\\u70b9":"-1","\\u5b57\\u6bb5\\u7ba1\\u7406":59,"\\u5de5\\u5355\\u6a21\\u578b":8,"\\u5de5\\u5355\\u8868\\u5355":9,"\\u5de5\\u5355\\u5217\\u8868":2,"\\u7528\\u6237\\u7ec4":22,"\\u8282\\u70b9\\u7ba1\\u7406":23,"\\u7528\\u6237\\u7ba1\\u7406":21,"\\u5206\\u7c7b\\u7ba1\\u7406":76,"\\u83dc\\u5355\\u8bbe\\u7f6e":46,"\\u8def\\u7531\\u89c4\\u5219":52,"\\u7cfb\\u7edf\\u8bbe\\u7f6e":43,"\\u90ae\\u4ef6\\u6a21\\u677f":70,"\\u6a21\\u578b\\u7ba1\\u7406":58}', '', '', 1, 2, 1, 1, 1),
 (178, 13, 'listsort', '排序', 'text', '', '', '', 0, 99, 1, 1, 1),
 (179, 3, 'type', '链接类型', 'radio', '{&quot;\\u7ad9\\u5185\\u94fe\\u63a5&quot;:&quot;0&quot;,&quot;\\u7ad9\\u5916\\u8fde\\u63a5&quot;:&quot;1&quot;}', '', '', 1, 3, 1, 1, 1),
 (183, 17, 'type', '模板类型', 'select', '{&quot;\\u65b0\\u5de5\\u5355&quot;:&quot;1&quot;,&quot;\\u53d7\\u7406\\u5de5\\u5355&quot;:&quot;2&quot;,&quot;\\u56de\\u590d\\u5de5\\u5355&quot;:&quot;3&quot;,&quot;\\u8f6c\\u4ea4\\u5ba2\\u670d&quot;:&quot;4&quot;,&quot;\\u5de5\\u5355\\u5b8c\\u6210&quot;:&quot;5&quot;,&quot;\\u5de5\\u5355\\u5173\\u95ed&quot;:&quot;6&quot;}', '', '', 1, 1, 1, 1, 1),
@@ -237,7 +237,7 @@ INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_l
 (6, '基础设置', 9, 'am-icon-tv', 'Ticket-Setting-action', 1, 0),
 (7, '菜单设置', 9, 'am-icon-map-signs', 'Ticket-Menu-index', 2, 0),
 (9, '系统设置', 0, 'am-icon-cog', '', 10, 0),
-(10, '帮助文档', 9, 'am-icon-leanpub', 'http://www.pescms.com/d/index/22', 5, 1),
+(10, '帮助文档', 9, 'am-icon-leanpub', 'https://www.pescms.com/d/index/22', 5, 1),
 (11, '反馈建议', 9, 'am-icon-twitch', 'https://forum.pescms.com/list/22.html', 6, 1),
 (12, '仪表盘', 0, 'am-icon-tachometer', 'Ticket-Index-index', 1, 0),
 (13, '工单列表', 0, 'am-icon-yelp', '', 2, 0),
@@ -303,7 +303,7 @@ CREATE TABLE IF NOT EXISTS `pes_node` (
   `node_controller` int(11) NOT NULL DEFAULT '0',
   `node_listsort` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`node_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=76 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=82 ;
 
 --
 -- 转存表中的数据 `pes_node`
@@ -352,7 +352,7 @@ INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `n
 (40, '提交新增节点', 21, 1, '', 'POST', 'action', 'TicketPOSTNodeaction', 23, 170),
 (41, '提交更新节点', 21, 1, '', 'PUT', 'action', 'TicketPUTNodeaction', 23, 180),
 (42, '提交删除节点', 21, 1, '', 'DELETE', 'action', 'TicketDELETENodeaction', 23, 190),
-(43, '系统设置', 0, 0, '', 'GET', 'Setting', '', 0, 5),
+(43, '系统设置', 0, 0, '', 'GET', 'Setting', '', 0, 6),
 (44, '查看基础设置', 43, 1, '', 'GET', 'action', 'TicketGETSettingaction', 43, 10),
 (45, '更新基础设置', 43, 1, '', 'PUT', 'action', 'TicketPUTSettingaction', 43, 20),
 (46, '菜单设置', 11, 0, '', 'GET', 'Menu', '', 0, 5),
@@ -384,7 +384,13 @@ INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `n
 (72, '新增/编辑邮件模板', 43, 1, '', 'GET', 'action', 'TicketGETMail_templateaction', 70, 0),
 (73, '添加邮件模板', 43, 1, '', 'POST', 'action', 'TicketPOSTMail_templateaction', 70, 0),
 (74, '更新邮件模板', 43, 1, '', 'PUT', 'action', 'TicketPUTMail_templateaction', 70, 0),
-(75, '删除邮件模板', 43, 1, '', 'DELETE', 'action', 'TicketDELETEMail_templateaction', 70, 0);
+(75, '删除邮件模板', 43, 1, '', 'DELETE', 'action', 'TicketDELETEMail_templateaction', 70, 0),
+(76, '分类管理', 0, 0, '', 'GET', 'Category', '', 0, 5),
+(77, '新增/编辑分类', 76, 1, '', 'GET', 'action', 'TicketGETCategoryaction', 76, 2),
+(78, '提交新增分类', 76, 1, '', 'POST', 'action', 'TicketPOSTCategoryaction', 76, 3),
+(79, '提交分类更新', 76, 1, '', 'PUT', 'action', 'TicketPUTCategoryaction', 76, 4),
+(80, '提交分类删除', 76, 1, '', 'DELETE', 'action', 'TicketDELETECategoryaction', 76, 5),
+(81, '分类列表', 76, 1, '', 'DELETE', 'index', 'TicketGETCategoryindex', 76, 1);
 
 -- --------------------------------------------------------
 
@@ -397,7 +403,82 @@ CREATE TABLE IF NOT EXISTS `pes_node_group` (
   `user_group_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户组ID',
   `node_id` int(11) NOT NULL DEFAULT '0' COMMENT '节点ID',
   PRIMARY KEY (`node_group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户组权限节点' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='用户组权限节点' AUTO_INCREMENT=70 ;
+
+--
+-- 转存表中的数据 `pes_node_group`
+--
+
+INSERT INTO `pes_node_group` (`node_group_id`, `user_group_id`, `node_id`) VALUES
+(1, 2, 1),
+(2, 2, 2),
+(3, 2, 3),
+(4, 2, 4),
+(5, 2, 5),
+(6, 2, 6),
+(7, 1, 1),
+(8, 1, 2),
+(9, 1, 3),
+(10, 1, 4),
+(11, 1, 5),
+(12, 1, 6),
+(13, 1, 7),
+(14, 1, 12),
+(15, 1, 10),
+(16, 1, 13),
+(17, 1, 14),
+(18, 1, 15),
+(19, 1, 16),
+(20, 1, 17),
+(21, 1, 18),
+(22, 1, 19),
+(23, 1, 20),
+(24, 1, 21),
+(25, 1, 24),
+(26, 1, 25),
+(27, 1, 26),
+(28, 1, 27),
+(29, 1, 28),
+(30, 1, 29),
+(31, 1, 30),
+(32, 1, 31),
+(33, 1, 32),
+(34, 1, 33),
+(35, 1, 34),
+(36, 1, 35),
+(37, 1, 36),
+(38, 1, 37),
+(39, 1, 38),
+(40, 1, 39),
+(41, 1, 40),
+(42, 1, 41),
+(43, 1, 42),
+(44, 1, 43),
+(45, 1, 75),
+(46, 1, 74),
+(47, 1, 73),
+(48, 1, 72),
+(49, 1, 71),
+(50, 1, 44),
+(51, 1, 45),
+(52, 1, 47),
+(53, 1, 49),
+(54, 1, 48),
+(55, 1, 50),
+(56, 1, 51),
+(57, 1, 53),
+(58, 1, 54),
+(59, 1, 55),
+(60, 1, 56),
+(61, 1, 57),
+(62, 1, 11),
+(63, 1, 8),
+(64, 1, 9),
+(65, 1, 22),
+(66, 1, 23),
+(67, 1, 46),
+(68, 1, 52),
+(69, 1, 70);
 
 -- --------------------------------------------------------
 
@@ -412,7 +493,7 @@ CREATE TABLE IF NOT EXISTS `pes_option` (
   `value` text NOT NULL,
   `option_range` varchar(128) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
 -- 转存表中的数据 `pes_option`
@@ -425,7 +506,7 @@ INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) 
 (4, 'openindex', '开启首页', '1', 'system'),
 (5, 'customstatus', '工单状态', '[{"color":"#dd514c","name":"\\u5f85\\u89e3\\u51b3"},{"color":"#F37B1D","name":"\\u5df2\\u53d7\\u7406"},{"color":"#3bb4f2","name":"\\u5f85\\u56de\\u590d"},{"color":"#5eb95e","name":"\\u5b8c\\u6210"}]', ''),
 (6, 'mail', '邮箱设置', '', ''),
-(7, 'notice_way', '通知方式', '1', 'system'),
+(7, 'notice_way', '通知方式', '2', 'system'),
 (8, 'upload_img', '图片格式', '[".jpg",".jpge",".bmp",".gif",".png"]', 'upload'),
 (9, 'upload_file', '文件格式', '[".zip",".rar",".7z",".doc",".docx",".pdf",".xls",".xlsx",".ppt",".pptx",".txt"]', 'upload'),
 (10, 'interior_ticket', '站内工单', '1', 'system'),
@@ -615,7 +696,8 @@ CREATE TABLE IF NOT EXISTS `pes_user_group` (
 --
 
 INSERT INTO `pes_user_group` (`user_group_id`, `user_group_status`, `user_group_createtime`, `user_group_name`, `user_group_menu`) VALUES
-(1, 1, 0, '管理员', '');
+(1, 1, 0, '管理员', '12,13,17,18,1,2,21,3,4,14,15,23,9,6,7,16,19,10,11'),
+(2, 1, 0, '客服人员', '12,13,17,18');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

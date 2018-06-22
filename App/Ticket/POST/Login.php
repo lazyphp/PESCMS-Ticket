@@ -18,7 +18,7 @@ class Login extends \Core\Controller\Controller{
         $data['user_account'] = $data['user_mail'] = $this->isP('account', '请提交账号信息');
         $login = $this->db('user')->where('(user_account = :user_account OR user_mail = :user_mail) AND user_status = 1 ')->find($data);
         if(empty($login)){
-            $this->error('帐号或者密码错误，也可能您的账号被禁止登录鸟!');
+            $this->error('帐号或者密码错误，也可能您的账号被禁止登录!');
         }
 
         $data['user_password'] = \Core\Func\CoreFunc::generatePwd($login['user_account'].$this->isP('passwd', '请提交密码'));

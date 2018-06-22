@@ -19,7 +19,7 @@
                                     <label class="am-block">网站URL<i class="am-text-danger">*</i></label>
                                     <input name="domain" placeholder="网站URL" type="text" value="<?= $domain['value']; ?>" required="">
                                     <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
-                                        <i class="am-icon-lightbulb-o"></i> 请填写正确的域名，以便工单能够正确地提交！
+                                        <i class="am-icon-lightbulb-o"></i> 请填写正确的域名，以便工单能够正确地提交！域名需要带http或者https，按照服务器实际情况填写。
                                     </div>
                                 </div>
                             </div>

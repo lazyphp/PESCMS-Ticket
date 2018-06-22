@@ -22,7 +22,7 @@ class Login extends \Core\Slice\Slice{
 
     public function before() {
         if(empty($this->session()->get('ticket')['user_id'])){
-            $this->jump($this->url('Ticket-Login-index'));
+            $this->jump($this->url('Ticket-Login-index', ['back_url' => base64_encode($_SERVER['REQUEST_URI'])]));
         }
     }
 

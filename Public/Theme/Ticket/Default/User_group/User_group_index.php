@@ -11,6 +11,7 @@
             var d = dialog({
                 id: 'dialog-setting',
                 quickClose: true,
+                zIndex: 100,
                 width: 300,
                 ok: function () {
                     this.title('提交中…');

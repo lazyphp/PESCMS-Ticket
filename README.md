@@ -37,6 +37,6 @@ IE浏览器不保证兼容
 ## 反馈和建议  
 邮箱：sale#pescms.com  
 演示地址：[http://ticket.pescms.com](http://ticket.pescms.com)  
-反馈问题: [https://www.pescms.com/page/11.html](https://www.pescms.com/page/11.html)  
+反馈问题：[https://www.pescms.com/page/11.html](https://www.pescms.com/page/11.html)  
 开发文档：[https://www.pescms.com/d/index](https://www.pescms.com/d/index)  
 QQ群：451828934 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=70b9d382c5751b7b64117191a71d083fbab885f1fb7c009f0dc427851300be3a"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="PESCMS TEAM官方群" title="PESCMS TEAM官方群"></a> 

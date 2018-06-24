@@ -1,4 +1,6 @@
+<?php if(ACTION != 'createJS'): ?>
 <hr class="am-margin-top-0" />
+<?php endif;?>
 <h3>新工单 > <?= $ticketInfo['title'] ?></h3>
 <form action="<?=$domain?><?= $label->url('Submit-ticket') ?>" method="POST" class="am-form ajax-submit am-form-horizontal" data-am-validator>
     <input type="hidden" name="number" value="<?= $ticketInfo['number'] ?>">

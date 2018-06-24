@@ -33,7 +33,10 @@ class Mail {
         $this->PHPMailer->SMTPAuth = true;
         $this->PHPMailer->Username = $mail['account'];
         $this->PHPMailer->Password = $mail['passwd'];
-        $this->PHPMailer->SMTPSecure = 'tls';
+	    if($mail['port'] != '25'){
+		    $this->PHPMailer->SMTPSecure = 'tls';
+	    }
+	    $this->PHPMailer->FromName =  empty($mail['formname']) ? 'system' : $mail['formname'];
         $this->PHPMailer->Port = $mail['port'];
         $this->PHPMailer->From = $mail['account'];
     }
@@ -66,4 +69,29 @@ class Mail {
         }
 
     }
+
+	/**
+	 * 邮件发送测试
+	 * @throws \Exception
+	 * @throws \phpmailerException
+	 */
+	public function test($email){
+		$this->PHPMailer->addAddress($email);
+
+		$this->PHPMailer->WordWrap = 50;
+		$this->PHPMailer->isHTML(true);
+
+		//开启调试模式
+		$this->PHPMailer->SMTPDebug = 2;
+
+		$this->PHPMailer->Subject = '邮件发送测试';
+		$this->PHPMailer->Body = '007!007!这里是002，听到请回答!听到请回答，over٩(๑`н´๑)۶';
+
+		if ($this->PHPMailer->send() !== false) {
+			echo '<h1>邮件发送成功!</h1>';
+		}else{
+			echo '<h1>这里是002，无法联系到007，兹……</h1>';
+		}
+		$this->PHPMailer->ClearAddresses();
+	}
 }

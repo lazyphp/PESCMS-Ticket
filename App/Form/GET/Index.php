@@ -22,11 +22,27 @@ class Index extends \Core\Controller\Controller{
         $this->layout();
     }
 
+    /**
+     * 验证码
+     */
     public function verify(){
         $verify = new \Expand\Verify();
         $verify->createVerify('7');
     }
 
+    /**
+     * 发送通知
+     */
+    public function notice(){
+        $system = \Core\Func\CoreFunc::$param['system'];
+        if (in_array($system['notice_way'], ['1', '3'])) {
+            \Model\Extra::actionNoticeSend();
+        }
+    }
+
+    /**
+     * 获取session id
+     */
     public function getSession(){
         echo json_encode($this->session()->getId());
         exit;

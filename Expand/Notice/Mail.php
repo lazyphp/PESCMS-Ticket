@@ -44,29 +44,28 @@ class Mail {
     /**
      * 发送邮件
      */
-    public function send() {
-        foreach(\Model\Content::listContent(['table' => 'send', 'condition' => 'send_type = 1 AND send_time = 0 ']) as $value){
+    public function send(array $email) {
 
-            if(\Model\Extra::checkInputValueType($value['send_account'], 1) === false){
-                return false;
-            }
-
-            $this->PHPMailer->addAddress($value['send_account']);
-
-            $this->PHPMailer->WordWrap = 50;
-            $this->PHPMailer->isHTML(true);
-
-            $this->PHPMailer->Subject = $value['sned_title'];
-            $this->PHPMailer->Body = $value['send_content'];
-
-            if ($this->PHPMailer->send() !== false) {
-                //发送成功，那么它就没有存在的价值了！干掉它！
-                \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->delete([
-                    'send_id' => $value['send_id']
-                ]);
-            }
-            $this->PHPMailer->ClearAddresses();
+        if(\Model\Extra::checkInputValueType($email['send_account'], 1) === false){
+            return false;
         }
+
+        $this->PHPMailer->addAddress($email['send_account']);
+
+        $this->PHPMailer->WordWrap = 50;
+        $this->PHPMailer->isHTML(true);
+
+        $this->PHPMailer->Subject = $email['send_title'];
+        $this->PHPMailer->Body = $email['send_content'];
+
+        if ($this->PHPMailer->send() !== false) {
+            //发送成功，移除成功记录
+            \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->delete([
+                'send_id' => $email['send_id']
+            ]);
+        }
+        $this->PHPMailer->ClearAddresses();
+
 
     }
 

@@ -96,7 +96,7 @@ class Extra extends \Core\Model\Model {
             //@todo 目前仅有邮件发送，日后再慢慢完善其他通知方式
             switch ($value['send_type']) {
                 case '1':
-                    (new \Expand\Notice\Mail())->send();
+                    (new \Expand\Notice\Mail())->send($value);
                     break;
             }
         }

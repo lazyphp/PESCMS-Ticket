@@ -546,7 +546,7 @@ INSERT INTO `pes_route` (`route_id`, `route_controller`, `route_param`, `route_r
 CREATE TABLE IF NOT EXISTS `pes_send` (
   `send_id` int(11) NOT NULL AUTO_INCREMENT,
   `send_account` varchar(255) NOT NULL DEFAULT '',
-  `sned_title` varchar(255) NOT NULL DEFAULT '' COMMENT '待发送标题',
+  `send_title` varchar(255) NOT NULL DEFAULT '' COMMENT '待发送标题',
   `send_content` text NOT NULL COMMENT '待发送的内容',
   `send_time` int(11) NOT NULL DEFAULT '0' COMMENT '发送时间',
   `send_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1:邮箱 2:手机 ..',

@@ -34,9 +34,9 @@ class Login extends \Core\Slice\Slice{
      * 检测系统设置
      */
     private function option(){
-        $open_register = \Model\Content::findContent('option', 'open_register', 'option_name');
+        $system = \Core\Func\CoreFunc::$param['system'];
 
-        if($open_register['value'] == 0 && MODULE == 'Login'){
+        if($system['open_register'] == 0 && MODULE == 'Login'){
             $this->_404();
         }
 

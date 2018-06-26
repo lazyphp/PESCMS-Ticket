@@ -28,38 +28,122 @@
 |--------------------------------------------------------------------------
 |
 */
+
 use \Core\Slice\InitSlice as InitSlice;
 
-//注册全局的工单状态输出
-InitSlice::get(['Ticket-Index-', 'Ticket-Ticket', 'Form-View', 'Form-Member-index'], ['\Common\TicketStatus'], ['Ticket-Ticket-Login']);
+$SLICE_ARRYR = [
 
-//注册后台登录验证
-InitSlice::any('Ticket', ['\Ticket\Login', '\Ticket\Auth'], ['Ticket-Login']);
-//注册前台登录验证
-InitSlice::any(['Form-Member-', 'Form-Login'], ['\Form\Login'], ['Form-Login-logout']);
-//注册后台菜单get请求的输出
-InitSlice::get('Ticket', ['\Ticket\Menu'], ['Ticket-Login']);
+    /*----------------全局设置部分----------------*/
 
-//注册自动更新用户组字段的信息
-InitSlice::any(['Ticket-User', 'Ticket-User_group'], ['\Ticket\UpdateField\UpdateUserGroupField']);
-//注册自动更新用户组字段的信息
-InitSlice::any(['Ticket-Node'], ['\Ticket\UpdateField\UpdateNodeParentField']);
+    //全局切片
+    'GLOBAL-SLICE' => [
+        'any',
+        ['Ticket-', 'Form-'],
+        //注册系统设置
+        ['\Common\Option']
+    ],
 
+    //全局的工单状态get请求输出
+    'TICKET-STATUS' => [
+        'get',
+        ['Ticket-Index-', 'Ticket-Ticket', 'Form-View', 'Form-Member-index'],
+        ['\Common\TicketStatus'],
+        ['Ticket-Ticket-Login']
+    ],
 
-//注册自动处理后台用户提交的用户密码表单
-InitSlice::any(['Ticket-User-action'], ['\Ticket\HandleForm\HandleUser']);
-//注册自动处理后台会员提交的会员密码表单
-InitSlice::any(['Ticket-Member-action'], ['\Ticket\HandleForm\HandleMember']);
-//注册处理工单表单管理 添加/编辑 提交的表单内容
-InitSlice::any(['Ticket-Ticket_form-action'], ['\Ticket\HandleForm\HandleModelTicket_form']);
-//注册处理节点管理 添加/编辑 提交的表单内容
-InitSlice::any(['Ticket-Node-action'], ['\Ticket\HandleForm\HandleNode']);
-//注册处理后台 工单模型添加/编辑提交过来的密码表单
-InitSlice::any(['Ticket-Ticket_model-action'], ['\Ticket\HandleForm\HandleTicket_model']);
-//注册理路由规则 添加/编辑 提交的表单内容
-InitSlice::any(['Ticket-Route-action'], ['\Ticket\HandleForm\HandleRoute', '\Common\UpdateRoute']);
-//注册自动更新路由规则和发送通知
-InitSlice::get(['Ticket-', 'Form-'], ['\Common\UpdateRoute', '\Common\SendNotice', '\Common\Option']);
+    /*----------------前台部分----------------*/
 
-//注册跨域的设置
-InitSlice::any(['Form-Submit-ticket', 'Form-Index-getSession', 'Form-Index-verify', 'Form-Upload-ueditor'], ['\Form\CrossDomain']);
+    //前台登录验证
+    'FORM-ACCESS' => [
+        'any',
+        ['Form-Member-', 'Form-Login'],
+        ['\Form\Login'],
+        ['Form-Login-logout']
+    ],
+
+    //跨域的设置
+    'CROSSDOMAIN' => [
+        'any',
+        ['Form-Submit-ticket', 'Form-Index-getSession', 'Form-Index-verify', 'Form-Upload-ueditor'], ['\Form\CrossDomain']
+    ],
+
+    /*----------------后台部分----------------*/
+
+    //后台登录验证、权限管理、后台菜单输出
+    'TICKET-ACCESS' => [
+        'any',
+        'Ticket-',
+        ['\Ticket\Login', '\Ticket\Auth', '\Ticket\Menu'],
+        ['Ticket-Login']
+    ],
+
+    //后台菜单get请求的输出
+    'TICKET-MENU' => [
+        'get',
+        'Ticket-',
+        ['\Ticket\Menu'],
+        ['Ticket-Login']
+    ],
+
+    //注册自动更新用户组字段的信息
+    'TICKET-UPDATE-USERGROUP' => [
+        'any',
+        ['Ticket-User', 'Ticket-User_group'],
+        ['\Ticket\UpdateField\UpdateUserGroupField']
+    ],
+
+    //注册自动更新用户组字段的信息
+    'TICKET-NODE-PARENT' => [
+        'any',
+        ['Ticket-Node'],
+        ['\Ticket\UpdateField\UpdateNodeParentField']
+    ],
+
+    //注册处理节点管理 添加/编辑 提交的表单内容
+    'TICKET-NODE-ACTION' => [
+        'any',
+        ['Ticket-Node-action'], ['\Ticket\HandleForm\HandleNode']
+    ],
+
+    //注册自动处理后台用户提交的用户密码表单
+    'TICKET-UPDATE-USER-PWD' => [
+        'any',
+        ['Ticket-User-action'], ['\Ticket\HandleForm\HandleUser']
+    ],
+
+    //注册自动处理后台会员提交的会员密码表单
+    'TICKET-UPDATE-MEMBER-PWD' => [
+        'any',
+        ['Ticket-Member-action'],
+        ['\Ticket\HandleForm\HandleMember']
+    ],
+
+    //注册处理工单表单管理 添加/编辑 提交的表单内容
+    'TICKET-FORM-ACTION' => [
+        'any',
+        ['Ticket-Ticket_form-action'],
+        ['\Ticket\HandleForm\HandleModelTicket_form']
+    ],
+
+    //注册处理后台 工单模型添加/编辑提交过来的密码表单
+    'TICKET-MODEL-ACTION' => [
+        'any',
+        ['Ticket-Ticket_model-action'],
+        ['\Ticket\HandleForm\HandleTicket_model']
+    ],
+
+    //注册理路由规则 添加/编辑 提交的表单内容
+    'TICKET-ROUTE-ACTION' => [
+        'any',
+        ['Ticket-Route-action'],
+        ['\Ticket\HandleForm\HandleRoute', '\Common\UpdateRoute']
+    ],
+
+];
+
+//执行切片注册
+foreach ($SLICE_ARRYR as $item){
+    $method = $item['0'];
+    $exclude = empty($item['3']) ? [] : $item['3'];
+    InitSlice::$method($item[1], $item[2], $exclude);
+}

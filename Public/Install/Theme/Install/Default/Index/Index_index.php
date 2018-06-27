@@ -11,14 +11,13 @@
 
 
         $.ajax({
-            url:'http://app.pescms.com/?m=Bulletin&a=index&id=1&type=1',
-            dataType:'JSONP',
-            jsonpCallback:'receive',
+            url:'https://www.pescms.com/UserProtocol',
+            dataType:'JSON',
             beforeSend:function(){
                 progress.start();
             },
             success:function(data){
-                $(".agree").html(data.replace(/\{program\}/g, "PESCMS Ticket"));
+                $(".agree").html(data.data.replace(/\{program\}/g, "PESCMS Ticket"));
                 progress.done();
             },
             complete:function(){

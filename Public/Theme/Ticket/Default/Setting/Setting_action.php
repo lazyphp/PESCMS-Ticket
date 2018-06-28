@@ -16,6 +16,16 @@
                         <div class="am-g am-g-collapse">
                             <div class="am-u-sm-12 am-u-sm-centered">
                                 <div class="am-form-group">
+                                    <label class="am-block">检查更新<i class="am-text-danger">*</i></label>
+                                    <a class="am-btn am-btn-sm am-btn-warning" href="<?= $label->url(GROUP . '-Setting-upgrade') ?>"><i class="am-icon-refresh"></i> <?= $version['value'] ?>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="am-g am-g-collapse">
+                            <div class="am-u-sm-12 am-u-sm-centered">
+                                <div class="am-form-group">
                                     <label class="am-block">网站URL<i class="am-text-danger">*</i></label>
                                     <input name="domain" placeholder="网站URL" type="text" value="<?= $domain['value']; ?>" required="">
                                     <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>

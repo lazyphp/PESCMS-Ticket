@@ -40,4 +40,9 @@ class Setting extends \Core\Controller\Controller {
 		(new \Expand\Notice\Mail())->test($email);
 	}
 
+    public function upgrade(){
+        $this->assign('title', '检查更新');
+        $this->layout();
+    }
+
 }

@@ -42,7 +42,66 @@ class Setting extends \Core\Controller\Controller {
 
         $this->success('保存设置成功!', $this->url('Ticket-Setting-action'));
 
+    }
 
+    /**
+     * 手动更新
+     */
+    public function mtUpgrade() {
+        $file = $_FILES['zip'];
+        if (pathinfo($file['name'])['extension'] != 'zip') {
+            $this->error('请导入zip的更新补丁');
+        }
+
+        /**
+         * 解压出错
+         */
+        $info = (new \Expand\zip())->unzip($file['tmp_name']);
+
+        $info = $this->actionsql();
+
+        if ($info === true) {
+            $info = ['升级完成'];
+        }
+
+        $this->assign('info', $info);
+        $this->layout('Setting_upgrade_info');
+    }
+
+    /**
+     * 执行数据库更新
+     * @return bool|string
+     */
+    private function actionsql() {
+        $version = \Core\Func\CoreFunc::$param['system']['version'];
+
+        $ini = APP_PATH . 'Upgrade/actionsql.ini';
+        if (!file_exists($ini)) {
+            return ['升级配置数据库文件不存在'];
+        }
+
+        $ini_array = parse_ini_file($ini, true);
+
+        foreach ($ini_array as $iniversion => $value) {
+            if (str_replace('.', '', $iniversion) > str_replace('.', '', $version) ) {
+                if (!empty($value['sql'])) {
+                    foreach ($value['sql'] as $sql) {
+                        $this->db()->query($sql);
+                    }
+                }
+
+                $this->db('option')->where('option_name = :option_name')->update([
+                    'value' => $iniversion,
+                    'noset' => [
+                        'option_name' => 'version'
+                    ]
+                ]);
+                $version = $iniversion;
+            }
+        }
+        //移除天网杀人的配置意识
+        unlink($ini);
+        return true;
     }
 
 }

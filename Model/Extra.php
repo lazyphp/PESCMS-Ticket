@@ -81,7 +81,7 @@ class Extra extends \Core\Model\Model {
     public static function insertSend($account, $title = '', $content, $type){
         return self::db('send')->insert([
             'send_account' => $account,
-            'sned_title' => $title,
+            'send_title' => $title,
             'send_content' => $content,
             'send_time' => '0',
             'send_type' => $type

@@ -223,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `pes_menu` (
   `menu_type` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`menu_id`),
   KEY `menu_pid` (`menu_pid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
 
 --
 -- 转存表中的数据 `pes_menu`
@@ -237,18 +237,20 @@ INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_l
 (6, '基础设置', 9, 'am-icon-tv', 'Ticket-Setting-action', 1, 0),
 (7, '菜单设置', 9, 'am-icon-map-signs', 'Ticket-Menu-index', 2, 0),
 (9, '系统设置', 0, 'am-icon-cog', '', 10, 0),
-(10, '帮助文档', 9, 'am-icon-leanpub', 'https://www.pescms.com/d/index/22', 5, 1),
-(11, '反馈建议', 9, 'am-icon-twitch', 'https://forum.pescms.com/list/22.html', 6, 1),
+(10, '帮助文档', 9, 'am-icon-leanpub', 'https://www.pescms.com/d/index/22', 6, 1),
+(11, '反馈建议', 9, 'am-icon-twitch', 'https://forum.pescms.com/list/22.html', 7, 1),
 (12, '仪表盘', 0, 'am-icon-tachometer', 'Ticket-Index-index', 1, 0),
 (13, '工单列表', 0, 'am-icon-yelp', '', 2, 0),
 (14, '用户组', 3, 'am-icon-steam', 'Ticket-User_group-index', 2, 0),
 (15, '节点管理', 3, 'am-icon-toggle-off', 'Ticket-Node-index', 3, 0),
-(16, '路由规则', 9, 'am-icon-map-o', 'Ticket-Route-index', 3, 0),
+(16, '路由规则', 9, 'am-icon-map-o', 'Ticket-Route-index', 4, 0),
 (17, '工单列表', 13, 'am-icon-fire', 'Ticket-Ticket-index', 1, 0),
 (18, '我的工单', 13, 'am-icon-coffee', 'Ticket-Ticket-myTicket', 2, 0),
-(19, '邮件模板', 9, 'am-icon-paint-brush', 'Ticket-Mail_template-index', 4, 0),
+(19, '邮件模板', 9, 'am-icon-paint-brush', 'Ticket-Mail_template-index', 5, 0),
 (21, '分类管理', 0, 'am-icon-list-alt', 'Ticket-Category-index', 4, 0),
-(23, '客户列表', 3, 'am-icon-street-view', 'Ticket-Member-index', 4, 0);
+(23, '客户列表', 3, 'am-icon-street-view', 'Ticket-Member-index', 4, 0),
+(24, '应用商店', 9, 'am-icon-cogs', 'Ticket-Application-index', 3, 0),
+(25, '商业授权', 9, 'am-icon-registered', 'https://www.pescms.com/Page/Authorization.html', 99, 1);
 
 -- --------------------------------------------------------
 
@@ -500,9 +502,9 @@ CREATE TABLE IF NOT EXISTS `pes_option` (
 --
 
 INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) VALUES
-(1, 'domain', '网站URL', '', ''),
-(2, 'crossdomain', '跨域列表', '', ''),
-(3, 'version', '系统版本', '1.1.0', ''),
+(1, 'domain', '网站URL', '', 'system'),
+(2, 'crossdomain', '跨域列表', '', 'system'),
+(3, 'version', '系统版本', '1.1.0', 'system'),
 (4, 'openindex', '开启首页', '1', 'system'),
 (5, 'customstatus', '工单状态', '[{"color":"#dd514c","name":"\\u5f85\\u89e3\\u51b3"},{"color":"#F37B1D","name":"\\u5df2\\u53d7\\u7406"},{"color":"#3bb4f2","name":"\\u5f85\\u56de\\u590d"},{"color":"#5eb95e","name":"\\u5b8c\\u6210"}]', ''),
 (6, 'mail', '邮箱设置', '', ''),

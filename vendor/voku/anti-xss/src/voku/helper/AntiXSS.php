@@ -1789,8 +1789,6 @@ final class AntiXSS
       'seekSegmentTime',
       'ev:handler',
       'ev:event',
-      '&lt;script&gt;',
-      '&lt;/script&gt;',
   );
 
   /**

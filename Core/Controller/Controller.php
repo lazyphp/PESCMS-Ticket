@@ -95,7 +95,10 @@ class Controller {
             return $data;
         }
         if ((bool)$htmlentities) {
-            $name = htmlspecialchars((new \voku\helper\AntiXSS()) -> xss_clean($data));
+            $antiXss = new \voku\helper\AntiXSS();
+            //允许内联样式
+            $antiXss->removeEvilAttributes(array('style'));
+            $name = htmlspecialchars($antiXss-> xss_clean($data));
         } else {
             $name = trim($data);
         }

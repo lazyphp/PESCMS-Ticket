@@ -13,10 +13,21 @@ namespace App\Install\GET;
 
 class Index extends \Core\Controller\Controller {
 
+    private $version;
+
     public function __init() {
         if (is_file(APP_PATH . 'install.txt')) {
             $this->error('不能再次执行安装程序！');
         }
+
+        if(is_file(APP_PATH.'version')){
+            $this->version = file(APP_PATH.'version')[0];
+        }else{
+            $this->version = 'Unknown Version';
+        }
+
+        $this->assign('version', $this->version);
+
     }
 
     /**
@@ -117,7 +128,7 @@ class Index extends \Core\Controller\Controller {
      * 导入数据库
      */
     public function import() {
-		$domain = $this->isP('domain', '请填写域名');
+		$option['domain'] = $this->isP('domain', '请填写域名');
         $data['user_account'] = $this->isP('account', '请填写管理员帐号');
         $data['user_password'] = \Core\Func\CoreFunc::generatePwd($data['user_account'].$this->isP('passwd', '请填写管理员密码'), 'PRIVATE_KEY');
         $data['user_name'] = $this->isP('name', '请填写管理员名称');
@@ -158,19 +169,22 @@ class Index extends \Core\Controller\Controller {
 
         //安装数据库文件
         $db->exec($sqlFile);
+	
+        $option['version'] = $this->version;//设置系统版本
+        //更新配置信息
+        foreach($option as $optionkey => $optionvalue){
+            $this->db('option')->where('option_name = :option_name')->update([
+                'value' => $optionvalue,
+                'noset' => [
+                    'option_name' => $optionkey
+                ]
+            ]);
+        }
 
         $data['user_status'] = '1';
 
         //写入管理员帐号
         $this->db('user')->insert($data);
-		
-		//更新网站域名
-		$this->db('option')->where('option_name = :option_name')->update([
-			'value' => $domain,
-			'noset' => [
-				'option_name' => 'domain'
-			]
-		]);
 
         //读取临时配置文件
         $config = require CONFIG_PATH . 'config_tmp.php';

@@ -6,3 +6,5 @@
 .DS_Store
 .idea
 /Public/upload
+/Public/Install/index.html
+/Public/Install/install.txt

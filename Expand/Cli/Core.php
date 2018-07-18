@@ -14,7 +14,7 @@ abstract class Core {
             exit("Only run in cmd!");
         }
         header("Content-type: text/html; charset=utf-8");
-        defined('CONFIG_PATH') or define('CONFIG_PATH', dirname(dirname(dirname(__FILE__))) . '/');
+        defined('CONFIG_PATH') or define('CONFIG_PATH', dirname(dirname(dirname(__FILE__))) . '/Config/');
         defined('PES_PATH') or define('PES_PATH', dirname(dirname(dirname(__FILE__))) . '/');
         /**
          * 配置原因，
@@ -40,8 +40,8 @@ abstract class Core {
      */
     private function loader($className) {
         $unixPath = str_replace("\\", "/", $className);
-        if (file_exists(PES_PATH . $unixPath . '.class.php')) {
-            require PES_PATH . $unixPath . '.class.php';
+        if (file_exists(PES_PATH . $unixPath . '.php')) {
+            require PES_PATH . $unixPath . '.php';
         }
     }
 

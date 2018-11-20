@@ -59,18 +59,22 @@ class CoreFunc {
 
     /**
      * 获取系统配置信息
-     * @param type $name
-     * @return type
+     * @param type $name 要读取的配置名称
+     * @param bool $overload 是否要重载
+     * @return mixed 存在则返回对应的配置，反之返回所有配置信息
      */
-    final public static function loadConfig($name = NULL) {
+    final public static function loadConfig($name = '', $overload = false) {
         static $config;
-        if (empty($config)) {
+        if (empty($config) || $overload === true ) {
             $config = require CONFIG_PATH . 'config.php';
         }
-        if (empty($config[$name])) {
+
+        if(empty($name)){
             return $config;
-        } else {
+        }elseif(!empty($config[$name])){
             return $config[$name];
+        }else{
+            return NULL;
         }
     }
 

@@ -195,6 +195,8 @@ class Mysql {
      * @return str 返回最后插入的ID
      */
     public function insert($param = '', $fieldType = '') {
+        $param = array_merge($this->tableFieldParam(), $param);
+
         $this->dealParam($param, $fieldType);
         foreach ($this->param as $key => $value) {
             $field[] = "`{$key}`";
@@ -210,6 +212,105 @@ class Mysql {
             return $this->dbh->lastInsertId();
         }
     }
+
+
+    /**
+     * 获取对应表的缺省字段，仅在严格模式下运行。
+     * @return array 返回处理好的字段默认值
+     */
+    private function tableFieldParam() {
+        if($this->checkSqlTransTable() == false){
+            return [];
+        }
+
+        $fields = $this->getAll("DESC {$this->tableName}");
+        $param = [];
+        foreach ($fields as $field) {
+            $param[$field['Field']] = $this->handleFiledType($field['Type'], $field['Default']);
+        }
+        return $param;
+    }
+
+    /**
+     * 处理字段类型
+     * @param $type 传递的字段类型
+     * @param $defualt 字段预设的默认值
+     * @return false|int|string 返回相应符合的数据格式
+     */
+    private function handleFiledType($type, $defualt) {
+        $type = trim(preg_replace('/[\(\),\d+]/', '', $type));
+        switch (strtolower($type)) {
+            case 'tinyint':
+            case 'smallint':
+            case 'mediumint':
+            case 'int':
+            case 'bigint':
+            case 'decimal':
+            case 'float':
+            case 'double':
+            case 'time':
+            case 'year':
+                $value = is_numeric($defualt) ? $defualt : 0;
+                break;
+            case 'tinytext':
+            case 'text':
+            case 'mediumtext':
+            case 'longtext':
+                $value = '';
+                break;
+            case 'date':
+            case 'datetime':
+            case 'timestamp':
+                $value = empty($defualt) ? date('Y-m-d H:i:s') : $defualt;
+                break;
+            case 'char':
+            case 'varchar':
+            default:
+                $value = empty($defualt) ? '' : $defualt;
+        }
+        return $value;
+
+    }
+
+    /**
+     * 检查当前环境MYSQL的数据SQL MODEL。
+     * @return bool 严格模式则返回TRUE 反之 FALSE
+     */
+    private function checkSqlTransTable(){
+        $sqlModel = CoreFunc::loadConfig('SQL_MODEL', true);
+        if(empty($sqlModel)){
+            $configFile = CONFIG_PATH.'config.php';
+
+            if(!is_file($configFile)){
+                $this->returnError([
+                    'msg' => '验证SQL MODEL时，获取程序配置文件失败',
+                    'string' => '验证SQL MODEL时，获取程序配置文件失败'
+                ]);
+            }
+
+            $sql = "SELECT @@sql_mode AS model";
+            $model = $this->fetch($sql);
+            if (strpos(strtoupper($model['model']), 'STRICT_TRANS_TABLES') !== false) {
+                $sqlModel = 'STRICT_TRANS_TABLES';
+            }else{
+                $sqlModel = 'EASY_TRANS_TABLES';
+            }
+
+            $config = file($configFile);
+
+            $f = fopen($configFile, 'w+');
+            foreach ($config as $line => $value){
+                fwrite($f, $value);
+                if($line == '8'){
+                    fwrite($f, "'SQL_MODEL' => '{$sqlModel}',\n");
+                }
+            }
+            fclose($f);
+        }
+
+        return $sqlModel == 'STRICT_TRANS_TABLES' ? true : false;
+    }
+
 
     /**
      * 数据保存

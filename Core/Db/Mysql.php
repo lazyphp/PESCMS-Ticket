@@ -24,7 +24,7 @@ class Mysql {
 
     public $dbh, $getLastSql, $getLastInsert, $prefix, $errorInfo = array(), $param = array();
     private $defaultDb, $tableName, $field = '*', $where = '', $join = array(), $order = '',
-            $group = '', $limit = '', $transaction = false;
+        $group = '', $limit = '', $transaction = false;
 
     public function __construct() {
         try {
@@ -194,8 +194,11 @@ class Mysql {
      * @param str $fieldType 字段类型
      * @return str 返回最后插入的ID
      */
-    public function insert($param = '', $fieldType = '') {
-        $param = array_merge($this->tableFieldParam(), $param);
+    public function insert($param = [], $fieldType = '') {
+
+        $param = $this->tableFieldParam($param);
+
+
 
         $this->dealParam($param, $fieldType);
         foreach ($this->param as $key => $value) {
@@ -216,19 +219,22 @@ class Mysql {
 
     /**
      * 获取对应表的缺省字段，仅在严格模式下运行。
+     * @param array $param 插入参数(一维数组)
      * @return array 返回处理好的字段默认值
      */
-    private function tableFieldParam() {
+    private function tableFieldParam($param) {
         if($this->checkSqlTransTable() == false){
             return [];
         }
 
         $fields = $this->getAll("DESC {$this->tableName}");
-        $param = [];
+        $newParam = [];
         foreach ($fields as $field) {
-            $param[$field['Field']] = $this->handleFiledType($field['Type'], $field['Default']);
+            $newParam[$field['Field']] = !empty($param[$field['Field']]) ? $param[$field['Field']] : $this->handleFiledType($field['Type'], $field['Default']);
         }
-        return $param;
+
+
+        return $newParam;
     }
 
     /**

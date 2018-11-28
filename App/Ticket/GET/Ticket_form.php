@@ -71,7 +71,7 @@ class Ticket_form extends Content {
         $bindResult = $this->db('ticket_form')->where(" ticket_form_model_id = :ticket_model_id AND  ticket_form_type in ('radio', 'select') {$condition}")->select($param);
 
         //列出绑定值
-        $bind = [ '正常' => 'normal' ];
+        $bind = [ '正常' => '0' ];
         $bindValue = [];
         if (!empty($bindResult)) {
             foreach ($bindResult as $value) {

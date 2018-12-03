@@ -224,7 +224,7 @@ class Mysql {
      */
     private function tableFieldParam($param) {
         if($this->checkSqlTransTable() == false){
-            return [];
+            return $param;
         }
 
         $fields = $this->getAll("DESC {$this->tableName}");

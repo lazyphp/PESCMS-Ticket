@@ -244,6 +244,9 @@ class Mysql {
      * @return false|int|string 返回相应符合的数据格式
      */
     private function handleFiledType($type, $defualt) {
+        
+        $type = str_replace(['unsigned zerofill', 'binary', 'unsigned', 'on update current_timestamp', 'UNSIGNED ZEROFILL', 'BINARY', 'UNSIGNED', 'ON UPDATE CURRENT_TIMESTAMP'], '', $type);
+        
         $type = trim(preg_replace('/[\(\),\d+]/', '', $type));
         switch (strtolower($type)) {
             case 'tinyint':

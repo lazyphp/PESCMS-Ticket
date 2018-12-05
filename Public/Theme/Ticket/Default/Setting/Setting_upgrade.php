@@ -23,7 +23,7 @@
                 <input type="hidden" name="method" value="PUT">
 
                 <div class="am-form-group am-form-file">
-                    <button type="button" class="am-btn am-btn-danger am-btn-sm">
+                    <button type="button" class="am-btn am-radius am-btn-danger am-btn-sm">
                         <i class="am-icon-cloud-upload"></i> 导入zip升级包
                     </button>
                     <input id="doc-form-file" type="file" name="zip" multiple>
@@ -40,7 +40,7 @@
                         });
                     });
                 </script>
-                <button type="submit" id="btn-submit" class="am-btn am-btn-default am-btn-xs">
+                <button type="submit" id="btn-submit" class="am-btn am-radius am-btn-default am-btn-xs">
                     安装更新
                 </button>
             </form>
@@ -49,11 +49,10 @@
 </div>
 <script>
     $(function(){
-        var PESCMS_URL = 'https://www.pescms.com';
 
         $.getJSON(PESCMS_URL+'/patch/5/<?= $system['version'] ?>', function(data){
             if(data.status == 200){
-                var update_patch_file = data.data.update_patch_file ? ' <a class="am-btn am-btn-primary am-radius am-btn-xs" href="'+PESCMS_URL+data.data.update_patch_file +'" >下载更新</a>' : '';
+                var update_patch_file = data.data.update_patch_file ? ' <a class="am-btn am-radius am-btn-primary am-radius am-btn-xs" href="' + PESCMS_URL + data.data.update_patch_file + '" >下载更新</a>' : '';
                 $('#patch').html('有新版本发布: '+data.data.new_version + update_patch_file);
                 $('.am-article').html('<h3>更新内容:</h3>'+data.data.update_content).removeClass('am-hide')
             }else{

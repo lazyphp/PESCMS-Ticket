@@ -117,7 +117,11 @@ class Ticket extends \Core\Controller\Controller {
             $back_url = $_POST['back_url'];
         }
 
-        $this->success('工单处理成功!', $this->url('Ticket-Ticket-handle', ['number' => $ticket['ticket_number'], 'back_url' => $back_url]));
+        $this->success(
+            '工单处理成功!',
+            $this->url('Ticket-Ticket-handle', ['number' => $ticket['ticket_number'], 'back_url' => $back_url]),
+            -1
+        );
 
     }
 

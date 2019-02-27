@@ -197,8 +197,6 @@ class Ticket extends \Core\Model\Model {
         if (empty($ticket)) {
             header('HTTP/1.1 404');
             self::error('工单不存在');
-        }elseif($ticket['ticket_model_login'] == 1 && empty(self::session()->get('member'))){
-            self::jump(self::url('Login-index', ['back_url' => base64_encode($_SERVER['REQUEST_URI'])]));
         }
 
 

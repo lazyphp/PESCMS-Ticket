@@ -20,6 +20,11 @@ class View extends \Core\Controller\Controller{
      */
     public function ticket(){
         $content = \Model\Ticket::view();
+
+        if($content['ticket']['ticket_model_login'] == 1 && empty($this->session()->get('member'))){
+            $this->jump($this->url('Login-index', ['back_url' => base64_encode($_SERVER['REQUEST_URI'])]));
+        }
+
         $this->assign($content['ticket']);
         $this->assign('form', $content['form']);
         $this->assign('chat', $content['chat']['list']);

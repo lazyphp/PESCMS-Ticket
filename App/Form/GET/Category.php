@@ -63,6 +63,7 @@ class Category extends \Core\Controller\Controller{
             $ticketInfo = [
                 'title' => $value['ticket_model_name'],
                 'number' => $value['ticket_model_number'],
+                'login' => $value['ticket_model_login'],
                 'verify' => $value['ticket_model_verify']
             ];
             $field[$value['ticket_form_id']] = [
@@ -76,6 +77,11 @@ class Category extends \Core\Controller\Controller{
                 'field_bind' => $value['ticket_form_bind'],
                 'field_bind_value' => $value['ticket_form_bind_value']
             ];
+        }
+
+        //检查是否开启登录验证
+        if($ticketInfo['login'] == 1 && empty($this->session()->get('member'))){
+            $this->jump($this->url('Login-index', ['back_url' => base64_encode($_SERVER['REQUEST_URI'])]));
         }
 
         $this->assign('title', $ticketInfo['title']);

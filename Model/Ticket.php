@@ -38,11 +38,11 @@ class Ticket extends \Core\Model\Model {
         $param['ticket_number'] = \Model\Extra::getOnlyNumber();
         $param['ticket_model_id'] = $firstContent['ticket_model_id'];
         $param['ticket_submit_time'] = time();
-        $param['member_id'] = empty(self::session(PHPSESSIONID)->get('member')) ? '-1' : self::session(PHPSESSIONID)->get('member')['member_id'];
+        $param['member_id'] = empty(self::session()->get('member')) ? '-1' : self::session()->get('member')['member_id'];
 
         if ($firstContent['ticket_model_verify'] == '1') {
             $verify = self::isP('verify', '请填写验证码');
-            if (md5($verify) != self::session(PHPSESSIONID)->get('verify')) {
+            if (md5($verify) != self::session()->get('verify')) {
                 self::error('验证码错误');
             }
         }
@@ -72,11 +72,14 @@ class Ticket extends \Core\Model\Model {
         self::db()->commit();
         $domain = \Model\Content::findContent('option', 'domain', 'option_name');
 
-        $msg = '<p>工单提交成功,您的受理编号为：'.$param['ticket_number'].'</p>
-                <a href="'.$domain['value'] .self::url('Form-View-ticket', ['number' => $param['ticket_number']]).'" target="_blank">点击查看</a>
-                ';
+//        $msg = '<p>工单提交成功,您的受理编号为：'.$param['ticket_number'].'</p>
+//                <a href="'.$domain['value'] .self::url('Form-View-ticket', ['number' => $param['ticket_number']]).'" target="_blank">点击查看</a>
+//                ';
+//        self::success($msg, '', -1);
 
-        self::success($msg, '', '10');
+        return $param;
+
+
 
 
     }
@@ -188,11 +191,16 @@ class Ticket extends \Core\Model\Model {
      */
     public static function view() {
         $number = self::isG('number', '请选择您要查看的工单');
-        $ticket = \Model\Content::findContent('ticket', $number, 'ticket_number');
+        $ticket = self::db('ticket AS t')->join(self::$modelPrefix.'ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id')->where('ticket_number = :ticket_number')->find([
+            'ticket_number' => $number
+        ]);
         if (empty($ticket)) {
             header('HTTP/1.1 404');
             self::error('工单不存在');
+        }elseif($ticket['ticket_model_login'] == 1 && empty(self::session()->get('member'))){
+            self::jump(self::url('Login-index', ['back_url' => base64_encode($_SERVER['REQUEST_URI'])]));
         }
+
 
         $form = self::getTicketContent($ticket['ticket_id']);
         $chat = self::getTicketChat($ticket['ticket_id']);

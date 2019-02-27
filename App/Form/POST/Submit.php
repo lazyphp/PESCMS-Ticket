@@ -17,7 +17,15 @@ class Submit extends \Core\Controller\Controller{
      * 提交工单
      */
     public function ticket(){
-        \Model\Ticket::insert();
+        $result = \Model\Ticket::insert();
+        if(!empty($result) && is_array($result)){
+            $this->success(
+                "工单提交成功,您的受理编号为:{$result['ticket_number']}",
+                $this->url('Form-View-ticket', ['number' => $result['ticket_number']]),
+                -1);
+        }else{
+            $this->error('提交工单出错，请尝试再次提交或者联系客服。');
+        }
     }
 
     /**

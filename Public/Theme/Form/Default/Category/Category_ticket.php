@@ -2,7 +2,7 @@
 <hr class="am-margin-top-0" />
 <?php endif;?>
 <h3>新工单 > <?= $ticketInfo['title'] ?></h3>
-<form action="<?=$domain?><?= $label->url('Submit-ticket') ?>" method="POST" class="am-form ajax-submit am-form-horizontal" data-am-validator>
+<form action="<?= $label->url('Submit-ticket') ?>" method="POST" class="am-form ajax-submit am-form-horizontal" data-am-validator>
     <input type="hidden" name="number" value="<?= $ticketInfo['number'] ?>">
     <input type="hidden" name="PHPSESSIONID" value="">
     <?= $label->token() ?>
@@ -88,38 +88,6 @@
                 </div>
             </div>
         </div>
-        <script>
-            var TICKETSESSIONID;
-            function getSession() {
-                $.getJSON('<?=$domain?>/?m=Index&a=getSession', function (data) {
-                    TICKETSESSIONID = data;
-                    $(".display-verify").remove();
-                    $(".refresh-verify").removeClass("am-hide").attr("src", "<?=$domain?>/?m=Index&a=verify&PHPSESSIONID=" + TICKETSESSIONID + "&" + Date.parse(new Date()) + Math.random());
-                    $('input[name=PHPSESSIONID]').val(TICKETSESSIONID)
-                })
-            }
-
-            $(function () {
-                getSession();
-                $(".display-verify").on("click", function () {
-                    if ($(this).hasClass("am-active")) {
-                        if (typeof TICKETSESSIONID != 'undefined' && TICKETSESSIONID != '') {
-                            $(this).remove();
-                            $(".refresh-verify").removeClass("am-hide").attr("src", "<?=$domain?>/?m=Index&a=verify&PHPSESSIONID=" + TICKETSESSIONID + "&" + Date.parse(new Date()) + Math.random());
-                        }
-                    } else {
-                        getSession();
-                        $(this).addClass("am-active");
-                    }
-
-                });
-
-                $(".refresh-verify").on("click", function () {
-                    $(this).attr("src", "<?=$domain?>/?m=Index&a=verify&PHPSESSIONID=" + TICKETSESSIONID + "&" + Date.parse(new Date()) + Math.random());
-                })
-
-            })
-        </script>
     <?php endif; ?>
     <div class="am-g am-g-collapse am-margin-bottom">
         <div class="am-u-sm-6">

@@ -175,4 +175,13 @@ $(function () {
         var src = $(this).attr('src')
         $(this).attr('src', src + '&time=' + Math.random());
     });
+
+    /**
+     * 点击打开验证码
+     */
+    $(".display-verify").on("click", function () {
+        $(this).remove();
+        $(".refresh-verify").removeClass("am-hide").attr("src", "/?m=Index&a=verify&time=" + Date.parse(new Date()) + Math.random());
+    });
+
 })

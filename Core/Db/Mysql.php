@@ -560,6 +560,15 @@ class Mysql {
     }
 
     /**
+     * 暴露PDO的exec执行方法 | 本方法不推荐使用。
+     * @param $sql 要执行的SQL语句
+     * @return int
+     */
+    public function exec($sql){
+        return $this->dbh->exec($sql);
+    }
+
+    /**
      * 启动事务
      */
     public function transaction() {

@@ -94,7 +94,7 @@ class Setting extends \Core\Controller\Controller {
                     foreach ($value['sql'] as $file) {
                         $sql = file_get_contents(APP_PATH.'/Upgrade/sql/'.$file);
                         if(!empty($sql)){
-                            $this->db()->query($sql);
+                            $this->db()->exec($sql);
                         }else{
                             //更新SQL文件失败，则记录起来
                             $this->info[] = "更新SQL文件出错: ".APP_PATH.'/Upgrade/sql/'.$file;

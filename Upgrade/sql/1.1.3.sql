@@ -1,0 +1,2 @@
+UPDATE `pes_field` SET `field_default` = 1, `field_required` =1, `field_list` = 1, `field_form`  = 1, `field_status` = 1 WHERE `field_id` = 168;
+UPDATE `pes_field` SET `field_default` = 1 WHERE `field_id` = 169;

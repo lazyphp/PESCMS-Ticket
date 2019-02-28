@@ -215,6 +215,30 @@
                     </div>
                 </div>
 
+                <div class="am-panel am-panel-default">
+                    <div class="am-panel-hd">微信设置</div>
+                    <div class="am-panel-bd">
+                        <div class="am-g am-g-collapse">
+                            <div class="am-u-sm-12 am-u-sm-centered">
+                                <div class="am-form-group">
+                                    <label class="am-block">appID<i class="am-text-danger">*</i></label>
+                                    <input name="weixin_api[appID]" placeholder="" type="text" value="<?= $weixin_api['appID']; ?>" required="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="am-g am-g-collapse">
+                            <div class="am-u-sm-12 am-u-sm-centered">
+                                <div class="am-form-group">
+                                    <label class="am-block">appsecret<i class="am-text-danger">*</i></label>
+                                    <input name="weixin_api[appsecret]" placeholder="" type="text" value="<?= $weixin_api['appsecret']; ?>" required="">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
                 <div class="am-g am-g-collapse am-margin-bottom">
                     <div class="am-u-sm-12 am-u-sm-centered">
                         <button type="submit" class="am-btn am-btn-primary am-btn-xs" >提交保存</button>

@@ -52,4 +52,41 @@ class Login extends \Core\Controller\Controller {
         $this->jump($this->url('Login-index'));
     }
 
+    /**
+     * 微信公众号登录入口
+     */
+    public function weixinAgree(){
+        $weixin = new \Expand\weixin();
+
+        $this->assign('login', $weixin->agree('https://ticket.pescms.com/?m=Login&a=weixin'));
+        $this->display();
+    }
+
+    public function weixin(){
+        if(empty($_GET['code'])){
+            $this->error('获取参数失败');
+        }
+
+        $weixin = new \Expand\weixin();
+
+        $openid = $weixin->user_access_token($_GET['code']);
+
+        $user = $weixin->getUser($openid);
+
+        //检查是否已绑定账号，已存在则直接执行登录
+        $member = \Model\Content::findContent('member', $user['openid'], 'member_weixin');
+        if(!empty($member)){
+            $this->session()->set('member', $member);
+            $this->session()->set('login_expire', time());
+            $this->success('登录成功', $this->url('Member-index'), -1);
+        }
+
+        $this->assign('user', $user);
+
+        $this->assign('title', '注册帐号');
+        $this->layout('', 'Login_layout');
+
+
+    }
+
 }

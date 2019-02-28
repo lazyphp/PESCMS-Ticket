@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2018-06-22 06:17:18
+-- Generation Time: 2019-02-28 08:46:54
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -34,8 +34,7 @@ CREATE TABLE IF NOT EXISTS `pes_category` (
   `category_parent` int(11) NOT NULL DEFAULT '0',
   `category_description` text NOT NULL,
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -121,8 +120,8 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (165, 16, 'listsort', '工单表单排序值', 'text', '', '升序', '', 0, 11, 0, 1, 1),
 (166, 16, 'bind', '联动显示', 'select', '', '若需联动显示，请设置绑定的表单选项，当用户选择该选项时会触发本表单的显示。\r\n注：仅限单选、单选下拉框。', '', 0, 1, 0, 1, 1),
 (167, 16, 'bind_value', '联动触发值', 'checkbox', '', '此处填写用户选择了绑定的表单的触发值。', '', 0, 1, 0, 1, 1),
-(168, 15, 'login', '登录验证', 'radio', '{&quot;\\u4e0d\\u9a8c\\u8bc1&quot;:&quot;0&quot;,&quot;\\u9a8c\\u8bc1&quot;:&quot;1&quot;}', '', 1, 1, 4, 1, 1, 1),
-(169, 15, 'verify', '开启验证码', 'radio', '{"\\u5173\\u95ed":"0","\\u5f00\\u542f":"1"}', '', 1, 1, 5, 1, 1, 1),
+(168, 15, 'login', '登录验证', 'radio', '{&quot;\\u4e0d\\u9a8c\\u8bc1&quot;:&quot;0&quot;,&quot;\\u9a8c\\u8bc1&quot;:&quot;1&quot;}', '', '1', 1, 4, 1, 1, 1),
+(169, 15, 'verify', '开启验证码', 'radio', '{"\\u5173\\u95ed":"0","\\u5f00\\u542f":"1"}', '', '1', 1, 5, 1, 1, 1),
 (170, 4, 'controller', '路由控制器', 'text', '', '控制器填写以‘-’为分隔符，分别以：组-控制器名称-方法 形式填写。若是默认组的控制器，那么可以忽略填写组参数。', '', 1, 2, 1, 1, 1),
 (171, 4, 'param', '显式参数', 'text', '', '若URL存在GET参数，填写上该参数，以半角逗号隔开。如有三个参数a，b，c。那么填写为：a,b,c', '', 0, 3, 1, 1, 1),
 (172, 4, 'rule', '路由规则', 'text', '', '若链接中存在显式参数，那么用左右大括号包围着。如参数number，那么路由规则这样写：route/{number}。同时规则开头不要添加任何字符，且分隔符只能为''/''', '', 1, 4, 1, 1, 1),
@@ -206,10 +205,15 @@ CREATE TABLE IF NOT EXISTS `pes_member` (
   `member_phone` varchar(255) NOT NULL DEFAULT '',
   `member_status` tinyint(4) NOT NULL DEFAULT '0',
   `member_createtime` int(11) NOT NULL DEFAULT '0',
+  `member_weixin` varchar(255) DEFAULT NULL COMMENT '微信openid',
   PRIMARY KEY (`member_id`),
-  UNIQUE KEY `member_email` (`member_email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  UNIQUE KEY `member_email` (`member_email`),
+  UNIQUE KEY `member_weixin` (`member_weixin`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `pes_menu`
 --
 
@@ -691,7 +695,7 @@ CREATE TABLE IF NOT EXISTS `pes_user_group` (
   `user_group_name` varchar(255) NOT NULL DEFAULT '',
   `user_group_menu` text NOT NULL,
   PRIMARY KEY (`user_group_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- 转存表中的数据 `pes_user_group`

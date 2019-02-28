@@ -7,7 +7,10 @@ class Login extends \Core\Controller\Controller {
     public function __init() {
         parent::__init();
         $this->checkToken();
-        $this->checkVerify();
+        if(!in_array(ACTION, ['weixin'])){
+            $this->checkVerify();
+        }
+
     }
 
     /**
@@ -140,6 +143,47 @@ class Login extends \Core\Controller\Controller {
         ]);
 
         $this->success('密码修改成功!', $loginUrl);
+    }
+
+    /**
+     * 微信登录
+     */
+    public function weixin(){
+        $param['member_weixin'] = $this->isP('openid', '获取openid失败');
+        $param['member_name'] = $this->isP('name', '获取用户名失败');
+
+        //邮件地址没有填写，则直接随机创建帐号
+        if(empty($_POST['email'])){
+            $param['member_email'] = "{$param['member_weixin']}@{$param['member_weixin']}.wx";
+            $param['member_password'] = md5(\Model\Extra::getOnlyNumber());//随机写入一些字符，随机帐号无法使用滴
+            $param['member_status'] = 1;
+            $param['member_createtime'] = time();
+            $memberID = $this->db('member')->insert($param);
+
+            $member = $param;
+            $member['member_id'] = $memberID;
+        }else{
+            $data['member_email'] = $this->isP('email', '请填写邮箱地址');
+            $password = $this->isP('password', '请填密码');
+            $data['member_password'] = \Core\Func\CoreFunc::generatePwd($password, 'USER_KEY');
+
+            $member = $this->db('member')->where('member_email = :member_email AND member_password = :member_password AND member_status = 1 AND member_weixin IS NULL ')->find($data);
+            if (empty($member)) {
+                $this->error('帐号绑定失败!帐号不存在,密码错误,或已绑定!');
+            }
+
+            $this->db('member')->where('member_id = :member_id')->update([
+                'noset' => [
+                    'member_id' => $member['member_id']
+                ],
+                'member_weixin' => $param['member_weixin']
+            ]);
+        }
+
+        $this->session()->set('member', $member);
+        $this->session()->set('login_expire', time());
+        $this->success('登录成功', $this->url('Member-index'), -1);
+
     }
 
 }

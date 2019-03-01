@@ -26,3 +26,7 @@
 		<?php endforeach; ?>
 	</ul>
 <?php endif;?>
+<?php if(empty($category) && empty($ticket) ): ?>
+    <hr class="am-margin-top-0" />
+    <p class="am-text-center">没有可选择内容</p>
+<?php endif; ?>

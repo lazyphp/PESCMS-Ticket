@@ -1,2 +1,2 @@
 ALTER TABLE `pes_member` ADD `member_weixin` VARCHAR(255) NULL DEFAULT NULL COMMENT '微信openid' , ADD UNIQUE (`member_weixin`) ;
-INSERT INTO `pes_ticket`.`pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) VALUES (NULL, 'weixin_api', '微信接口', '', 'system');
+INSERT INTO `pes_option` (`option_name`, `name`, `value`, `option_range`) VALUES ('weixin_api', '微信接口', '', 'system');

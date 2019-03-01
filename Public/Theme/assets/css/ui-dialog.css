@@ -11,21 +11,30 @@
     *zoom:1;
     _float: left;
     position: relative;
-    background-color: #FFF;
-    border: 1px solid #999;
-    border-radius: 6px;
+    background-color: #000;
+    background-color: rgba(0,0,0,.618);
+    border: 3px solid rgb(76, 76, 76);
+    border-color: rgba(76, 76, 76, 0.3);
     outline: 0;
     background-clip: padding-box;
     font-family: Helvetica, arial, sans-serif;
     font-size: 14px;
     line-height: 1.428571429;
-    color: #333;
+    color: #fff;
     opacity: 0;
     -webkit-transform: scale(0);
     transform: scale(0);
     -webkit-transition: -webkit-transform .15s ease-in-out, opacity .15s ease-in-out;
     transition: transform .15s ease-in-out, opacity .15s ease-in-out;
 }
+.ui-dialog .am-table-striped>tbody>tr>td, .ui-dialog .am-table-striped>tbody>tr>th{
+    background-color: #000;
+    background-color: rgba(0,0,0,.618);
+}
+.ui-dialog .am-table-hover>tbody>tr:hover>td, .ui-dialog .am-table-hover>tbody>tr:hover>th{
+    background-color: rgba(52,59,78,.618);
+}
+
 .ui-popup-show .ui-dialog {
     opacity: 1;
     -webkit-transform: scale(1);
@@ -61,16 +70,16 @@
     position: relative;
     _position: absolute;
     float: right;
-    top: 13px;
-    right: 13px;
+    top: 5px;
+    right: 7px;
     _height: 26px;
     padding: 0 4px;
-    font-size: 21px;
+    font-size: 37px;
     font-weight: bold;
     line-height: 1;
-    color: #000;
-    text-shadow: 0 1px 0 #FFF;
-    opacity: .2;
+    color: #f00;
+    text-shadow: 0 1px 0 #fff;
+    opacity: 0.8;
     filter: alpha(opacity=20);
     cursor: pointer;
     background: transparent;
@@ -80,11 +89,11 @@
 }
 .ui-dialog-close:hover,
 .ui-dialog-close:focus {
-    color: #000000;
+    color: #ff6363;
     text-decoration: none;
     cursor: pointer;
     outline: 0;
-    opacity: 0.5;
+    opacity: 0.8;
     filter: alpha(opacity=50);
 }
 .ui-dialog-title {
@@ -215,17 +224,16 @@
 }
 
 .ui-dialog-footer button.ui-dialog-autofocus {
-  color: #ffffff;
-  background-color: #428bca;
-  border-color: #357ebd;
+    border-color: #1E9FFF;
+    background-color: #1E9FFF;
+    color: #fff;
 }
 
 .ui-dialog-footer button.ui-dialog-autofocus:hover,
 .ui-dialog-footer button.ui-dialog-autofocus:focus,
 .ui-dialog-footer button.ui-dialog-autofocus:active {
-  color: #ffffff;
-  background-color: #3276b1;
-  border-color: #285e8e;
+    opacity: .9;
+    text-decoration: none;
 }
 
 .ui-dialog-footer button.ui-dialog-autofocus:active {
@@ -303,6 +311,7 @@
 .ui-popup-bottom-right .ui-dialog-arrow-b {
     top: -15px;
     border-bottom:8px solid #fff;
+    border-bottom-color: rgba(76, 76, 76, 0.3);
 }
 .ui-popup-bottom-left .ui-dialog-arrow-a,
 .ui-popup-bottom-left .ui-dialog-arrow-b {

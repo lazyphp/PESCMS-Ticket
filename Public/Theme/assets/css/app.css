@@ -2,32 +2,149 @@ html,body{
     background-color: #f7f8f8 !important;
 }
 /*---------------页眉---------------*/
+.am-topbar .am-nav.am-nav>li>a:hover, .am-topbar .am-nav.am-nav>li>a:focus {
+    background: none !important;
+}
 .am-topbar{
-    background-color: #fff !important;
-    height: 60px !important;
-    padding-top: 0.3rem;
+    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid rgba(0,0,0,.15);
+    background-color: #fff;
+    background-clip: padding-box;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 1px 10px rgba(0,0,0,.175);
 }
-.am-topbar .am-btn{
-    color: #fff !important;
-}
+/*大屏幕时菜单展示样式*/
+@media only screen and (min-width: 1025px) {
+    .am-topbar .am-dropdown:hover>.am-dropdown-content{
+        background-color: rgba(0,0,0,.618);
+        display: block !important;
+        animation-duration:0s !important;
+        -webkit-animation-duration: 0s !important;
+    }
+    .am-topbar .am-dropdown:hover>.am-dropdown-content a{
+        color: #fff;
+    }
+    .am-topbar .am-dropdown:hover>.am-dropdown-content a:hover{
+        background-color: rgba(52,59,78,.618);
+    }
+    /*.am-topbar .am-dropdown-toggle{*/
+    /*color: #eee !important;*/
+    /*}*/
 
-.am-topbar .am-text-ir {
-    display: block;
-    margin-right: 10px;
-    height: 50px;
-    width: 125px;
-    background: url('../i/pescms_logo.png') no-repeat left center;
-    -webkit-background-size: 49px 49px;
-    background-size: 49px 49px;
-    padding-left: 51px;
-    font: 1.8rem/50px "Segoe UI","Lucida Grande",Helvetica,Arial,"Microsoft YaHei",FreeSans,Arimo,"Droid Sans","wenquanyi micro hei","Hiragino Sans GB","Hiragino Sans GB W3",FontAwesome,sans-serif;
+    .am-topbar-nav>li.am-active>a{
+        color: #666 !important;
+        background: none !important;
+    }
+    .am-topbar-nav>li.am-active>a:hover{
+        color: #666 !important;
+        background: none !important;
+    }
+    .am-topbar .am-active>.am-dropdown-content{
+        display: none;
+    }
+    .am-topbar .am-dropdown-content{
+        padding: 0px;
+        font-size: 14px;
+        position: absolute;
+        z-index: 1000;
+        top: 99%;
+        display: none;
+        min-width: 160px;
+        margin: 1px 0 0;
+        border: 1px solid #ccc;
+        border: 1px solid rgba(0,0,0,.15);
+        border-radius: 4px;
+        background-color: #fff;
+        background-clip: padding-box;
+        -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+        box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    }
+    .am-topbar .am-dropdown .am-dropdown-content:before, .am-topbar .am-dropdown .am-dropdown-content:after{
+        border: none;
+    }
 }
-.am-topbar .am-nav.am-nav>li>a:hover, .am-topbar .am-nav.am-nav>li>a:focus{
-    background:none !important;
-    color: rgb(63, 169, 245);
-}
-.am-topbar .am-nav.am-nav>li>a:hover:after{
-    border-bottom-color: rgb(63, 169, 245) !important;
+/*小屏幕菜单展示样式*/
+@media only screen and (max-width: 640px){
+    /*UL层的背景色*/
+    .am-topbar-collapse{
+        background: #343131;
+        padding: 0px 0px;
+    }
+
+    /*隐藏展示效果*/
+    .am-topbar .am-dropdown:hover>.am-dropdown-content, .am-topbar .am-dropdown:focus>.am-dropdown-content{
+        display: block !important;
+        position: relative;
+        float: none;
+        -webkit-animation-duration: .0s;
+        animation-duration: .0s;
+        padding: 0;
+        margin: 0;
+        background: #e3e3e3;
+    }
+
+    .am-topbar .am-active>.am-dropdown-content{
+        display: none;
+    }
+    /*隐藏展示效果*/
+
+    /*第一层*/
+    .am-topbar .am-nav{
+        margin: 0;
+    }
+    .am-topbar .am-topbar-nav>li:first-child{
+        border-top: 2px solid #343131;
+    }
+    .am-topbar .am-topbar-nav>li, .am-topbar .am-dropdown-content>li{
+        margin-bottom: -1px;
+        border: 1px solid #dedede;
+        border-width: 1px 0;
+        margin-top: -1px !important;
+    }
+    .am-topbar .am-topbar-nav>li:last-child{
+        border-bottom: none !important;
+    }
+    .am-topbar .am-nav.am-nav>li>a{
+        color: #b3b3b3 !important;
+    }
+    /*第一层LI*/
+
+    /*选中状态的背景*/
+    .am-topbar .am-dropdown:hover, .am-topbar .am-dropdown:focus{
+        background: #fcfcfc;
+    }
+    .am-topbar .am-dropdown:hover>.am-dropdown-toggle, .am-topbar .am-dropdown:focus.am-dropdown-toggle{
+        color: #404040 !important;
+    }
+    .am-topbar .am-dropdown-toggle{
+        background: none !important;
+    }
+    /*选中状态的背景*/
+
+    /*展开层样式*/
+    .am-topbar .am-dropdown-content:before{
+        display: none;
+        padding: 0;
+        border:none;
+        margin-top: -1px !important;
+    }
+    .am-topbar .am-dropdown-content:after{
+        display: none;
+    }
+    .am-topbar .am-dropdown-content>li{
+        border-color: #cecece !important;
+    }
+    .am-topbar .am-dropdown-content>li a{
+        padding-left: 36px;
+        color: gray;
+    }
+    .am-topbar .am-dropdown-content>li a:hover, .am-topbar .am-dropdown-content>li a:focus{
+        text-decoration: none;
+        color: #262626 !important;
+        background-color: #f5f5f5;
+    }
+    /*展开层样式*/
+
 }
 /*---------------内容---------------*/
 #wrapper{

@@ -12,7 +12,7 @@ ul {
 
 .admin-header {
   font-size: 1.4rem;
-  background-color: #1bacf5 !important;
+  margin-bottom: 0;
 }
 
 .admin-header-list a:hover :after {
@@ -20,7 +20,7 @@ ul {
 }
 
 .admin-main {
-
+  background: #f3f3f3;
 }
 
 .admin-menu {
@@ -275,6 +275,9 @@ ul {
 
 .table-id {
   width: 50px;
+}
+.table-sort{
+    width: 70px;
 }
 
 @media only screen and (max-width: 640px) {

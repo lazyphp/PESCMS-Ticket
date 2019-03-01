@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-3">
+            <div class="am-u-sm-12 am-u-md-4">
                 <form>
                     <div class="am-input-group am-input-group-sm">
                         <input type="hidden" name="g" value="<?= GROUP; ?>"/>
@@ -48,12 +48,12 @@
         <div class="am-panel am-panel-default">
             <table class="am-table">
                 <tr>
-                    <th>工单编号</th>
-                    <th>相关产品</th>
+                    <th class="am-show-lg-only">工单编号</th>
+                    <th class="am-show-lg-only">相关产品</th>
                     <th>问题内容</th>
-                    <th>状态</th>
-                    <th>提交时间</th>
-                    <th>操作</th>
+                    <th class="am-show-lg-only">状态</th>
+                    <th class="am-show-lg-only">提交时间</th>
+                    <th class="am-show-lg-only">操作</th>
                 </tr>
                 <?php if(empty($list)): ?>
                     <tr>
@@ -62,12 +62,16 @@
                 <?php else: ?>
                     <?php foreach($list as $key => $value): ?>
                         <tr>
-                            <td><?= $value['ticket_number'] ?></td>
-                            <td><?= $value['ticket_model_name'] ?>	</td>
-                            <td><?= $value['ticket_title'] ?></td>
-                            <td style="color: <?= $ticketStatus[$value['ticket_status']]['color']; ?>"><?= $ticketStatus[$value['ticket_status']]['name']; ?></td>
-                            <td><?= date('Y-m-d H:i', $value['ticket_submit_time']) ?></td>
+                            <td class="am-show-lg-only">
+                                <?= $value['ticket_number'] ?>
+                            </td>
+                            <td class="am-show-lg-only"><?= $value['ticket_model_name'] ?>	</td>
                             <td>
+                                <a href="<?= $label->url('View-ticket', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>"><?= $value['ticket_title'] ?></a>
+                            </td>
+                            <td class="am-show-lg-only" style="color: <?= $ticketStatus[$value['ticket_status']]['color']; ?>"><?= $ticketStatus[$value['ticket_status']]['name']; ?></td>
+                            <td class="am-show-lg-only"><?= date('Y-m-d H:i', $value['ticket_submit_time']) ?></td>
+                            <td class="am-show-lg-only">
                                 <a href="<?= $label->url('View-ticket', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>">查看详情</a>
                             </td>
                         </tr>

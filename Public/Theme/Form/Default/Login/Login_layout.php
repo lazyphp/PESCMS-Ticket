@@ -2,10 +2,10 @@
 <?php include THEME_PATH.'/Topbar.php'; ?>
 <div class="login">
     <div class="am-g am-container login-form-wrap">
-	    <div class="am-u-sm-8 am-u-md-4 am-u-lg-3">
+	    <div class="am-u-lg-3 am-hide-md-dow">
 
 	    </div>
-        <div class="am-u-sm-4 am-u-lg-4">
+        <div class="am-u-sm-12 am-u-lg-4">
             <div class="am-panel am-panel-default login-form">
                 <div class="am-panel-bd am-text-center">
                     <h2 class="login-text-danger"><?= $title ?></h2>

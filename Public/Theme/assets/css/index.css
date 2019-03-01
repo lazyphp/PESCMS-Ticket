@@ -1,3 +1,27 @@
+/*首页搜索*/
+@media only screen and (max-width: 640px){
+    .index-search .am-input-group{
+        display: block !important;
+    }
+    .index-search .am-input-group-btn{
+        padding-top: 2rem;
+        text-align: center;
+    }
+
+}
+/*面包屑*/
+@media only screen and (max-width: 640px){
+    .am-breadcrumb li{
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+    .am-breadcrumb li:before{
+        display: none;
+    }
+}
+
+
+/*工单分类*/
 .ticket-category{
     display: block;
     height: 110px;
@@ -28,13 +52,16 @@
 }
 
 /*登录界面*/
+@media only screen and (min-width: 1025px) {
+    .login-form{
+        width: 430px;
+    }
+}
 .login{
     min-height: 46rem;
     padding: 50px 0 10px 0;
 }
-.login-form{
-    width: 430px;
-}
+
 
 .login-verify{
     width: 44% !important;

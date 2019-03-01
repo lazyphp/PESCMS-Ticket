@@ -9,6 +9,7 @@ class Member extends \Core\Controller\Controller {
     public function update(){
         $param['noset']['member_id'] = $this->session()->get('member')['member_id'];
         $param['member_phone'] = $this->isP('phone', '请提交手机号码');
+        $param['member_name'] = $this->isP('name', '请提交用户昵称');
         if(\Model\Extra::checkInputValueType($param['member_phone'], 5) === false){
             $this->error('请填写正确的手机号码');
         }
@@ -45,6 +46,34 @@ class Member extends \Core\Controller\Controller {
         }
 
         $this->success('更新个人信息完成', $url);
+
+    }
+
+    /**
+     * 更新当前登录帐号的邮箱地址
+     */
+    public function changeEmail(){
+        $email = $this->isP('email', '请填写新邮箱地址！');
+
+        $member = $this->session()->get('member');
+        if($member['member_email'] === $email){
+            $this->error('您填写的邮箱地址并没有变化。');
+        }
+
+        $checkRepeat = \Model\Content::findContent('member', $email, 'member_email', 'member_id');
+        if(!empty($checkRepeat)){
+            $this->error("邮箱地址已注册，请更换别的邮箱地址");
+        }
+
+        $this->db('member')->where('member_id = :member_id')->update([
+            'noset' => [
+                'member_id' => $member['member_id']
+            ],
+            'member_email' => $email
+        ]);
+
+        $this->session()->destroy();
+        $this->success('邮箱更改成功！您需要重新登录', $this->url('Login-index'));
 
     }
 

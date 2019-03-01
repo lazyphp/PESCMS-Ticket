@@ -1,6 +1,6 @@
 <?php if(!empty($category)): ?>
 	<hr class="am-margin-top-0" />
-	<ul class="am-avg-sm-4 am-thumbnails">
+	<ul class="am-avg-sm-1 am-avg-lg-4 am-thumbnails">
 		<?php foreach($category as $item ): ?>
 			<li >
 				<a href="<?= $label->url('Category-index', ['id' => $item['category_id'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>" class="ticket-category">
@@ -16,7 +16,7 @@
 	<?php if(!empty($category)): ?>
 		<h4>可选择工单:</h4>
 	<?php endif;?>
-	<ul class="am-avg-sm-4 am-thumbnails">
+	<ul class="am-avg-sm-1 am-avg-lg-4 am-thumbnails">
 		<?php foreach($ticket as $item ): ?>
 			<li >
 				<a href="<?= $label->url('Category-ticket', ['id' => $item['ticket_model_cid'], 'number' => $item['ticket_model_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>" class="ticket-category ticket-list">

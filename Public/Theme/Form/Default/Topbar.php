@@ -1,9 +1,13 @@
-<header class="am-topbar am-padding-bottom-xl">
+<header class="am-topbar">
     <h1 class="am-topbar-brand">
         <a href="/">PESCMS Ticket</a>
     </h1>
 
-    <div class="am-topbar-right am-text-sm">
+    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+            data-am-collapse="{target: '#ticket-topbar-collapse'}">
+        <span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+    <div class="am-collapse am-topbar-collapse am-topbar-right am-text-sm" id="ticket-topbar-collapse">
         <ul class="am-nav am-nav-pills am-topbar-nav admin-header-list">
             <?php if ((MODULE != 'Index' || ACTION != 'index') && $system['interior_ticket'] == 1 ): ?>
                 <li>

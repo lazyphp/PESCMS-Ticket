@@ -65,7 +65,8 @@ class Ticket extends \Core\Controller\Controller {
                         $this->error('转派的用户不存在');
                     }
                     \Model\Ticket::setUser($ticket['ticket_id'], $checkUser['user_id'], $checkUser['user_name']);
-
+                    $csContent = "{$this->session()->get('ticket')['user_name']}将工单《{$ticket['ticket_title']}》指派给了您，单号：{$number}，请您协助他/她尽快解决该工单问题。";
+                    \Model\Notice::addCSNotice($checkUser, ['title' => $csContent, 'content'=> $csContent]);
 
                     $sendTitle = \Model\MailTemplate::matchTitle($ticket['ticket_number'], '4');
                     $sendContent = \Model\MailTemplate::matchContent([

@@ -1,0 +1,72 @@
+<?php
+
+namespace Expand;
+
+/**
+ * 企业微信接口
+ */
+class weixinWork {
+
+    public $access_token = '';
+    private $corpid, $AgentId, $Secret;
+
+    public function __construct() {
+        $weixinWork_api = json_decode(\Core\Func\CoreFunc::$param['system']['weixinWork_api'], true);
+        if(empty($weixinWork_api)){
+            die('未配置企业微信接口信息');
+        }
+        //企业ID
+        $this->corpid = $weixinWork_api['corpid'];
+        //应用序号
+        $this->AgentId = $weixinWork_api['AgentId'];
+        //应用Secret
+        $this->Secret = $weixinWork_api['Secret'];
+
+        $FileCache = new FileCache();
+        $FileCache->setTime = 7200;
+        $result = $FileCache->loadCache('weixinWork_access_token');
+        if(empty($result)){
+            $result = (new cURL())->init("https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={$this->corpid}&corpsecret=$this->Secret");
+
+            if(empty($result)){
+                die('获取企业微信access_token失败');
+            }
+            $FileCache->creatCache('weixinWork_access_token', $result);
+        }
+        $this->access_token = json_decode($result, true)['access_token'];
+        if(empty($this->access_token)){
+            die('解析企业微信access_token失败');
+        }
+    }
+
+    /**
+     * 通知对应的微信号
+     * @param $param 发送内容
+     */
+    public function send_notice($param) {
+        $result = (new cURL())->init("https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={$this->access_token}", json_encode([
+            "touser" => $param['send_account'],
+            "msgtype" => "text",
+            "agentid" => $this->AgentId,
+            "text" => [
+                "content" => $param['send_content']
+            ]
+        ]));
+        //发送成功，删除消息
+        if(json_decode($result, true)['errmsg'] == 'ok'){
+            \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->delete([
+                'send_id' => $param['send_id']
+            ]);
+        }
+    }
+
+    /**
+     * 企业微信用户登录授权页面
+     * @deprecated 废弃
+     */
+    public function agree($redirect_uri, $scope = 'snsapi_base'){
+        $url = urlencode($redirect_uri);
+        return "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$this->corpid}&redirect_uri={$url}&response_type=code&scope=SCOPE&agentid={$this->AgentId}&state=STATE#wechat_redirect";
+    }
+
+}

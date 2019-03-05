@@ -14,7 +14,7 @@
 namespace Slice\Ticket\HandleForm;
 
 /**
- * 处理后台 工单模型添加/编辑提交过来的密码表单
+ * 处理后台 工单模型添加/编辑提交过来的表单
  * @package Slice\Ticket
  */
 class HandleTicket_model extends \Core\Slice\Slice {

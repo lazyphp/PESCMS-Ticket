@@ -20,16 +20,32 @@ class View extends \Core\Controller\Controller{
      */
     public function ticket(){
         $content = \Model\Ticket::view();
-
-        if($content['ticket']['ticket_model_login'] == 1 && empty($this->session()->get('member'))){
-            $this->jump($this->url('Login-index', ['back_url' => base64_encode($_SERVER['REQUEST_URI'])]));
+        if($content == false){
+            $this->_404();
         }
 
-        $this->assign($content['ticket']);
-        $this->assign('form', $content['form']);
-        $this->assign('chat', $content['chat']['list']);
-        $this->assign('page', $content['chat']['page']);
-        $this->layout();
+        //判断工单模型是否设置登录验证.
+        if($content['ticket']['ticket_model_login'] == 1 && empty(self::session()->get('member'))){
+            self::jump(self::url('Login-index', ['back_url' => base64_encode($_SERVER['REQUEST_URI'])]));
+        }
+
+        //非匿名工单判断用户所属，非此用户所属则返回false
+        if($content['ticket']['member_id'] != '-1' && $content['ticket']['member_id'] != self::session()->get('member')['member_id'] ){
+            $this->_404();
+        }
+
+        //查询工单是否有新回复。
+        if(!empty($_GET['replyRefresh'])){
+            echo $content['chat']['pageObj']->totalRow;
+            exit;
+        }else{
+            $this->assign($content['ticket']);
+            $this->assign('form', $content['form']);
+            $this->assign('chat', $content['chat']['list']);
+            $this->assign('page', $content['chat']['page']);
+            $this->assign('pageObj', $content['chat']['pageObj']);
+            $this->layout();
+        }
     }
 
 }

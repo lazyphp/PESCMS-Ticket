@@ -79,11 +79,18 @@ class Ticket extends \Core\Controller\Controller {
                     $this->session()->get('ticket')['user_id']
             ]
         ]));
-        $this->assign('form', $content['form']);
-        $this->assign('chat', $content['chat']['list']);
-        $this->assign('page', $content['chat']['page']);
 
-        $this->layout();
+        //查询工单是否有新回复。
+        if(!empty($_GET['replyRefresh'])){
+            echo $content['chat']['pageObj']->totalRow;
+            exit;
+        }else {
+            $this->assign('form', $content['form']);
+            $this->assign('chat', $content['chat']['list']);
+            $this->assign('page', $content['chat']['page']);
+            $this->assign('pageObj', $content['chat']['pageObj']);
+            $this->layout();
+        }
 
     }
 

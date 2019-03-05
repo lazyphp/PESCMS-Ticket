@@ -14,7 +14,8 @@
                 <span class="am-input-group-label"><i class="am-icon-lock am-icon-fw"></i></span>
                 <input name="passwd" class="am-form-field" type="password" placeholder="密码" required>
             </div>
-
+            
+            <?php if(json_decode($system['login_verify'])[1] == '2'): ?>
             <div class="am-input-group am-margin-bottom">
                 <span class="am-input-group-label"><i class="am-icon-shield am-icon-fw"></i></span>
                 <input type="text" class="am-form-field" name="verify">
@@ -22,6 +23,7 @@
                     <img src="/?m=Index&a=verify" class="refresh-verify am-padding-left-sm">
                 </span>
             </div>
+            <?php endif; ?>
 
             <button class="am-btn am-btn-primary am-btn-block">登录</button>
         </form>

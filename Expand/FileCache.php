@@ -21,9 +21,9 @@ class FileCache {
     private function checkPath() {
         $this->config = require CONFIG_PATH . 'config.php';
 
-        \Expand\CreatePath::action($this->config['FILE_CACHE_PATH'], PES_CORE);
+        \Expand\CreatePath::action($this->config['FILE_CACHE_PATH'], PES_PATH);
 
-        $this->cachePath = PES_CORE . $this->config['FILE_CACHE_PATH'];
+        $this->cachePath = PES_PATH . $this->config['FILE_CACHE_PATH'];
 
     }
 
@@ -59,8 +59,10 @@ class FileCache {
         if (!is_file($cacheFile)) {
             return FALSE;
         }
+        
         $file = file($cacheFile);
-        if (time() - $file[0] > $time) {
+        if (time() - intval($file[0]) > $time) {
+            exit;
             return false;
         } else {
             return $file['1'];

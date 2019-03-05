@@ -56,7 +56,7 @@ class Mail {
         $this->PHPMailer->isHTML(true);
 
         $this->PHPMailer->Subject = $email['send_title'];
-        $this->PHPMailer->Body = $email['send_content'];
+        $this->PHPMailer->Body = htmlspecialchars_decode($email['send_content']);
 
         if ($this->PHPMailer->send() !== false) {
             //发送成功，移除成功记录

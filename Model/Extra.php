@@ -98,6 +98,9 @@ class Extra extends \Core\Model\Model {
                 case '1':
                     (new \Expand\Notice\Mail())->send($value);
                     break;
+                case '4':
+                    (new \Expand\weixinWork())->send_notice($value);
+                    break;
             }
         }
     }

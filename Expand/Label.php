@@ -193,12 +193,21 @@ class Label {
         }
 
         $option = json_decode(htmlspecialchars_decode($this->fieldOption[$fieldId]['field_option']), true);
-        $search = array_search($value, $option);
-        if (empty($search)) {
-            return '未知值';
-        } else {
-            return $search;
+        
+        $splitValue = explode(',', $value);
+
+        $search = [];
+        foreach ($splitValue as $item){
+            $search[] = array_search($item, $option);
         }
+
+        if(empty($search[0])){
+            return '-';
+        }else{
+            return implode(', ', $search);
+        }
+
+
     }
 
     /**

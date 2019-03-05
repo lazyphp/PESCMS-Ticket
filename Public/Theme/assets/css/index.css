@@ -69,4 +69,6 @@
 }
 .login-form .refresh-verify{
     width: 54% !important;
+    height: 38px;
+    padding-top: 1px;
 }

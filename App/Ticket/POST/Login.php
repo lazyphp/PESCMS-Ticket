@@ -17,8 +17,10 @@ class Login extends \Core\Controller\Controller{
     public function index(){
         $this->checkToken();
 
-        $this->checkVerify();
-
+        if(json_decode(\Core\Func\CoreFunc::$param['system']['login_verify'])[1] == 2){
+            $this->checkVerify();
+        }
+        
         $data['user_account'] = $data['user_mail'] = $this->isP('account', '请提交账号信息');
         $login = $this->db('user')->where('(user_account = :user_account OR user_mail = :user_mail) AND user_status = 1 ')->find($data);
         if(empty($login)){

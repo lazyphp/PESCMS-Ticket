@@ -1,8 +1,12 @@
+<?php
+$itemValue = explode(',', $field['value']);
+$itemDefault = explode(',', $field['field_default']);
+?>
 <?php if (is_array(json_decode(htmlspecialchars_decode($field['field_option']), true))): ?>
-    <?php foreach (json_decode(htmlspecialchars_decode($field['field_option']), true) as $key => $value) : ?>
+    <?php foreach (json_decode(htmlspecialchars_decode($field['field_option']), true) as $key => $item) : ?>
         <label class="form-checkbox-label am-checkbox-inline">
             <input class="form-checkbox" type="checkbox" name="<?= $field['field_name'] ?>[]"
-                   value="<?= $value ?>" <?= $field['field_required'] == '1' ? 'required' : '' ?>  <?= in_array($value, explode(',', $field['value'])) ? 'checked="checked"' : empty($field['value']) && $field['field_default'] == $value ? 'checked="checked"' : '' ?> />
+                   value="<?= $item ?>" <?= $field['field_required'] == '1' ? 'required' : '' ?>  <?= in_array($item, $itemValue) ? 'checked="checked"' : empty($field['value']) && in_array($item, $itemDefault) ? 'checked="checked"' : '' ?> />
         <span>
             <?= $key ?>
         </span>

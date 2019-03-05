@@ -10,11 +10,14 @@
 </div>
 
 <div class="account" style="display: none">
-    <div class="am-form-group">
-        <input type="email" name="email" placeholder="邮箱地址" required="required">
+    <div class="am-input-group am-margin-bottom">
+        <span class="am-input-group-label"><i class="am-icon-envelope am-icon-fw"></i></span>
+        <input type="email" name="email" class="am-form-field" placeholder="要绑定的已注册邮箱地址" required="required">
     </div>
-    <div class="am-form-group">
-        <input type="password" name="password" placeholder="密码" required="required">
+
+    <div class="am-input-group am-margin-bottom">
+        <span class="am-input-group-label"><i class="am-icon-lock am-icon-fw"></i></span>
+        <input type="password" name="password" class="am-form-field" placeholder="密码" required="required">
     </div>
 </div>
 <script>

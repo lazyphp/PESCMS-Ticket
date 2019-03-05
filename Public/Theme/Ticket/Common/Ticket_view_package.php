@@ -79,9 +79,38 @@
                     </div>
                 </li>
             <?php endforeach; ?>
+
         <?php endif; ?>
+        <li class="replyRefresh" data="<?= $pageObj->totalRow ?>" style="display: none">
+            <a href="#reply" onClick="window.location.reload()" class="am-padding-0">
+                <div class="am-alert am-alert-warning am-margin-0 am-text-center">
+                    有新回复
+                </div>
+            </a>
+        </li>
     </ul>
 </div>
+<?php if($pageObj->totalRow >= $pageObj->listRows): ?>
+    <ul class="am-pagination am-pagination-centered am-text-sm">
+        <?= $page; ?>
+    </ul>
+<?php endif; ?>
+<script>
+    $(function(){
+        var siteTitle = $('title').html()
+        setInterval(function(){
+            $.get('<?= $label->url(GROUP.'-'.MODULE.'-'.ACTION, ['number' => $ticket_number, 'replyRefresh' => 'checked']) ?>', function(data){
+                var replyRefresh = parseInt($('.replyRefresh').attr('data'))
+                var newReply = parseInt(data)
+                if(newReply > replyRefresh){
+                    $('.replyRefresh').show();
+                    $('title').html('[有新回复]'+siteTitle)
+                }
+            })
+        }, 60000)
+    })
+
+</script>
 
 
 

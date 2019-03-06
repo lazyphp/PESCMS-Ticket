@@ -111,6 +111,7 @@ class Field extends \Core\Model\Model {
             case 'thumb':
             case 'theme':
             case 'author':
+            case 'multiple':
                 return ['TYPE' => ' VARCHAR( 255 ) ', 'DEFAULT' => " DEFAULT '' "];
             case 'color':
                 return ['TYPE' => ' VARCHAR( 8 ) ', 'DEFAULT' => " DEFAULT '' "];

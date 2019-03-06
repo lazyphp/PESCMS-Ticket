@@ -10,6 +10,7 @@
 <?php case 'radio': ?>
 <?php case 'checkbox': ?>
 <?php case 'select': ?>
+<?php case 'multiple': ?>
         <?= $this->getFieldOptionToMatch($field['field_id'], $value[$prefix . $field['field_name']]); ?>
 <?php break;?>
 

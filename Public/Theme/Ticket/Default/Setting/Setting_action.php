@@ -149,7 +149,7 @@
                             <div class="am-u-sm-12 am-u-sm-centered">
                                 <div class="am-form-group">
                                     <label class="am-block">邮箱账号<i class="am-text-danger">*</i></label>
-                                    <input name="mail[account]" placeholder="" type="text" value="<?= $mail['account']; ?>" required="">
+                                    <input name="mail[account]" placeholder="" type="text" value="<?= $mail['account']; ?>">
                                 </div>
                             </div>
                         </div>
@@ -158,7 +158,7 @@
                             <div class="am-u-sm-12 am-u-sm-centered">
                                 <div class="am-form-group">
                                     <label class="am-block">邮箱密码<i class="am-text-danger">*</i></label>
-                                    <input name="mail[passwd]" placeholder="" type="password" value="<?= $mail['passwd']; ?>" required="">
+                                    <input name="mail[passwd]" placeholder="" type="password" value="<?= $mail['passwd']; ?>">
                                 </div>
                             </div>
                         </div>
@@ -167,7 +167,7 @@
                             <div class="am-u-sm-12 am-u-sm-centered">
                                 <div class="am-form-group">
                                     <label class="am-block">SMTP地址<i class="am-text-danger">*</i></label>
-                                    <input name="mail[address]" placeholder="" type="text" value="<?= $mail['address']; ?>" required="">
+                                    <input name="mail[address]" placeholder="" type="text" value="<?= $mail['address']; ?>">
 	                                <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
 		                                <i class="am-icon-lightbulb-o"></i> 不需要添加http://或者https://前缀。常见的邮件服务商smtp地址：<a href="https://www.pescms.com/d/v/1.0/10/56.html#%E5%B8%B8%E8%A7%81%E9%82%AE%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9C%B0%E5%9D%80" target="_blank" style="color: blue">查看</a>
 	                                </div>
@@ -179,7 +179,7 @@
                             <div class="am-u-sm-12 am-u-sm-centered">
                                 <div class="am-form-group">
                                     <label class="am-block">SMTP端口<i class="am-text-danger">*</i></label>
-                                    <input name="mail[port]" placeholder="" type="text" value="<?= $mail['port']; ?>" required="">
+                                    <input name="mail[port]" placeholder="" type="text" value="<?= $mail['port']; ?>">
 	                                <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
 		                                <i class="am-icon-lightbulb-o"></i> 一般填写25端口，加密端口请填写587。具体发送端口，请参考您的邮件服务提供商文档。
 	                                </div>
@@ -191,7 +191,7 @@
 		                    <div class="am-u-sm-12 am-u-sm-centered">
 			                    <div class="am-form-group">
 				                    <label class="am-block">邮件发送名称<i class="am-text-danger">*</i></label>
-				                    <input name="mail[formname]" placeholder="" type="text" value="<?= empty($mail['formname']) ? 'system' : $mail['formname']; ?>" required="">
+				                    <input name="mail[formname]" placeholder="" type="text" value="<?= empty($mail['formname']) ? 'system' : $mail['formname']; ?>">
 				                    <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
 					                    <i class="am-icon-lightbulb-o"></i> 用户查收邮件时看到的发送人名称，默认为system。
 				                    </div>
@@ -222,7 +222,7 @@
                             <div class="am-u-sm-12 am-u-sm-centered">
                                 <div class="am-form-group">
                                     <label class="am-block">appID<i class="am-text-danger">*</i></label>
-                                    <input name="weixin_api[appID]" placeholder="" type="text" value="<?= $weixin_api['appID']; ?>" required="">
+                                    <input name="weixin_api[appID]" placeholder="" type="text" value="<?= $weixin_api['appID']; ?>" >
                                 </div>
                             </div>
                         </div>
@@ -231,7 +231,7 @@
                             <div class="am-u-sm-12 am-u-sm-centered">
                                 <div class="am-form-group">
                                     <label class="am-block">appsecret<i class="am-text-danger">*</i></label>
-                                    <input name="weixin_api[appsecret]" placeholder="" type="text" value="<?= $weixin_api['appsecret']; ?>" required="">
+                                    <input name="weixin_api[appsecret]" placeholder="" type="text" value="<?= $weixin_api['appsecret']; ?>" >
                                 </div>
                             </div>
                         </div>
@@ -247,7 +247,7 @@
                             <div class="am-u-sm-12 am-u-sm-centered">
                                 <div class="am-form-group">
                                     <label class="am-block">企业ID<i class="am-text-danger">*</i></label>
-                                    <input name="weixinWork_api[corpid]" placeholder="" type="text" value="<?= $weixinWork_api['corpid']; ?>" required="">
+                                    <input name="weixinWork_api[corpid]" placeholder="" type="text" value="<?= $weixinWork_api['corpid']; ?>">
                                 </div>
                                 <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
                                     <i class="am-icon-lightbulb-o"></i> 登录企业微信WEB管理端，在 我的企业 - 企业信息，最下方可以看到企业ID。将此ID信息填入。
@@ -259,7 +259,7 @@
                             <div class="am-u-sm-12 am-u-sm-centered">
                                 <div class="am-form-group">
                                     <label class="am-block">AgentId<i class="am-text-danger">*</i></label>
-                                    <input name="weixinWork_api[AgentId]" placeholder="" type="text" value="<?= $weixinWork_api['AgentId']; ?>" required="">
+                                    <input name="weixinWork_api[AgentId]" placeholder="" type="text" value="<?= $weixinWork_api['AgentId']; ?>" >
                                 </div>
                             </div>
                         </div>
@@ -268,7 +268,7 @@
                             <div class="am-u-sm-12 am-u-sm-centered">
                                 <div class="am-form-group">
                                     <label class="am-block">Secret<i class="am-text-danger">*</i></label>
-                                    <input name="weixinWork_api[Secret]" placeholder="" type="text" value="<?= $weixinWork_api['Secret']; ?>" required="">
+                                    <input name="weixinWork_api[Secret]" placeholder="" type="text" value="<?= $weixinWork_api['Secret']; ?>" >
                                 </div>
                             </div>
                         </div>

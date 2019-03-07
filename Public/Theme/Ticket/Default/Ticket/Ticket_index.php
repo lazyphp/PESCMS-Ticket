@@ -94,7 +94,11 @@
                                     <a href="<?= $label->url('Ticket-Ticket-close', ['number' => $value['ticket_number'], 'method' => 'POST', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>" class="am-text-danger ajax-click ajax-dialog" msg="确定要关闭本工单吗？">关闭工单</a>
                                 <?php else: ?>
                                     <a href="javascript:;" class="am-text-warning"><?= $value['ticket_status'] == '3' ? '已结束' : '已关闭' ?></a>
+
                                 <?php endif; ?>
+                                <i class="am-margin-left-xs am-margin-right-xs">|</i>
+                                <a class="am-text-danger ajax-click ajax-dialog"  msg="确定删除吗？将无法恢复的！" href="<?= $label->url(GROUP . '-' . MODULE . '-action', array('id' => $value["ticket_id"], 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI']))); ?>"><span class="am-icon-trash-o"></span></a>
+
                             </td>
 
                         </tr>

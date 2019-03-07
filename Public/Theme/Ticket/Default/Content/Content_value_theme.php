@@ -4,7 +4,7 @@
 <?php break;?>
 
 <?php case 'date': ?>
-        <?= date('Y-m-d H:i', $value[$prefix . $field['field_name']]); ?>
+        <?= empty($value[$prefix . $field['field_name']]) ? '' : date('Y-m-d H:i', $value[$prefix . $field['field_name']]); ?>
 <?php break;?>
 
 <?php case 'radio': ?>

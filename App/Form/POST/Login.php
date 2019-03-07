@@ -7,7 +7,9 @@ class Login extends \Core\Controller\Controller {
     public function __init() {
         parent::__init();
         $this->checkToken();
-        if(!in_array(ACTION, ['weixin'])){
+        if( !in_array(ACTION, ['weixin', 'index'])  ||
+            (ACTION == 'index' &&  json_decode(\Core\Func\CoreFunc::$param['system']['login_verify'])[0] == 1)
+        ){
             $this->checkVerify();
         }
 

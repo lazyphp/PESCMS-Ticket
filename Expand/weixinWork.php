@@ -39,14 +39,34 @@ class weixinWork {
         }
     }
 
-    public function user(){
-        $a = (new cURL())->init("https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token={$this->access_token}&id=ID");
-        echo '<pre>';
-        print_r($a);
-        echo '</pre>';
-        echo '<br/>';
-        exit;
+    /**
+     * 通知对应的微信号
+     * @param $param 发送内容
+     */
+    public function send_notice($param) {
+        $result = (new cURL())->init("https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={$this->access_token}", json_encode([
+            "touser" => $param['send_account'],
+            "msgtype" => "text",
+            "agentid" => $this->AgentId,
+            "text" => [
+                "content" => $param['send_content']
+            ]
+        ]));
+        //发送成功，删除消息
+        if(json_decode($result, true)['errmsg'] == 'ok'){
+            \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->delete([
+                'send_id' => $param['send_id']
+            ]);
+        }
+    }
 
+    /**
+     * 企业微信用户登录授权页面
+     * @deprecated 废弃
+     */
+    public function agree($redirect_uri, $scope = 'snsapi_base'){
+        $url = urlencode($redirect_uri);
+        return "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$this->corpid}&redirect_uri={$url}&response_type=code&scope=SCOPE&agentid={$this->AgentId}&state=STATE#wechat_redirect";
     }
 
 }

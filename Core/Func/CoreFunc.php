@@ -176,7 +176,6 @@ class CoreFunc {
      * 生成密码
      * @param type $pwd 密码
      * @param type $key 混淆配置
-     * @todo 需要升级加密方法, 2016年PESCMS系列软件将淘汰MD5加密用户的密码的方式
      */
     public static function generatePwd($pwd, $key = 'PRIVATE_KEY') {
         $config = self::loadConfig();

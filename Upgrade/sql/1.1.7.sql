@@ -29,3 +29,8 @@ INSERT INTO `pes_option` (`option_name`, `name`, `value`, `option_range`) VALUES
   ('login_verify', '登录验证码', '["1"]', 'system');
 
 
+INSERT INTO `pes_option` (`option_name`, `name`, `value`, `option_range`) VALUES
+  ('cs_notice_type', '客服人员接收通知方式', '{"1":"1"}', 'system');
+
+
+

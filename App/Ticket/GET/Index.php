@@ -18,10 +18,6 @@ class Index extends \Core\Controller\Controller {
      * 系统首页
      */
     public function index() {
-
-        $weixinWord = new \Expand\weixinWork();
-        $weixinWord->user();
-
         //显示简单得统计信息
         $countCondition = [
             'new' => 'ticket_submit_time BETWEEN :begin AND :end',

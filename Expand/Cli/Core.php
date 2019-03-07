@@ -19,10 +19,11 @@ abstract class Core {
         /**
          * 配置原因，
          */
-        define('GROUP', 'Team');
+        define('GROUP', 'Ticket');
         define('DEBUG', TRUE);
 
         spl_autoload_register(array($this, 'loader'));
+        $this->system();
     }
 
     /**
@@ -43,6 +44,21 @@ abstract class Core {
         if (file_exists(PES_PATH . $unixPath . '.php')) {
             require PES_PATH . $unixPath . '.php';
         }
+    }
+
+    /**
+     * 配置全局系统变量
+     */
+    private function system(){
+        $list = \Model\Content::listContent([
+            'table' => 'option',
+            'condition' => "option_range = 'system'"
+        ]);
+        $system = [];
+        foreach($list as $value){
+            $system[$value['option_name']] = $value['value'];
+        }
+        \Core\Func\CoreFunc::$param['system'] = $system;
     }
 
     abstract public function index();

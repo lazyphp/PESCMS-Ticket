@@ -32,16 +32,21 @@ class Submit extends \Core\Controller\Controller{
      * 回复工单
      */
     public function reply(){
+        $this->checkToken();
+
         $number = $this->isP('number', '请选择您要查看的工单');
         $content = $this->isP('content', '请提交回复内容');
-        $ticket = \Model\Content::findContent('ticket', $number, 'ticket_number');
+        $ticket = \Model\Ticket::getTicketBaseInfo($number);
+
         if (empty($ticket) || $ticket['ticket_status'] == '4') {
             $this->error('该工单不存在或者已经关闭');
         }
 
-        $verify = $this->isP('verify', '请填写验证码');
-        if (md5($verify) != $this->session()->get('verify')) {
-            $this->error('验证码错误');
+        if($ticket['ticket_model_verify'] == 1){
+            $verify = $this->isP('verify', '请填写验证码');
+            if (md5($verify) != $this->session()->get('verify')) {
+                $this->error('验证码错误');
+            }
         }
 
         \Model\Ticket::updateReferTime($ticket['ticket_id']);
@@ -51,6 +56,12 @@ class Submit extends \Core\Controller\Controller{
         ]);
         \Model\Ticket::addReply($ticket['ticket_id'], $content, 'custom');
 
+        if($ticket['user_id'] > 0){
+            $user = \Model\Content::findContent('user', $ticket['user_id'], 'user_id');
+
+            $content = "工单《{$ticket['ticket_title']}》有新回复! 单号:{$ticket['ticket_number']},请跟进!";
+            \Model\Notice::addCSNotice($user,['title' => $content, 'content' => $content]);
+        }
 
         $this->success('回复工单成功!', $this->url('Form-View-ticket', ['number' => $ticket['ticket_number']]));
 

@@ -50,38 +50,18 @@ class Ticket extends \Core\Model\Model {
 
         self::db()->transaction();
 
-        $creatTicket = self::db('ticket')->insert($param);
-        if ($creatTicket === false) {
+        $createTicket = self::db('ticket')->insert($param);
+        if ($createTicket === false) {
             self::db()->rollback();
             self::error('创建工单失败');
         }
 
-        self::insertContent($creatTicket, $field);
-
-        \Model\Extra::insertSend(
-            $param['ticket_contact_account'],
-            \Model\MailTemplate::matchTitle($param['ticket_number'], '1'),
-            \Model\MailTemplate::matchContent([
-                'number' => $param['ticket_number'],
-                'view' => \Model\MailTemplate::getViewLink($param['ticket_number'])
-            ], '1'),
-            $param['ticket_contact']
-        );
-
+        self::insertContent($createTicket, $field);
+        self::newTicketNotice($firstContent, $param);
 
         self::db()->commit();
         $domain = \Model\Content::findContent('option', 'domain', 'option_name');
-
-//        $msg = '<p>工单提交成功,您的受理编号为：'.$param['ticket_number'].'</p>
-//                <a href="'.$domain['value'] .self::url('Form-View-ticket', ['number' => $param['ticket_number']]).'" target="_blank">点击查看</a>
-//                ';
-//        self::success($msg, '', -1);
-
         return $param;
-
-
-
-
     }
 
     /**
@@ -121,6 +101,36 @@ class Ticket extends \Core\Model\Model {
 
         }
 
+    }
+
+    /**
+     * 新工单消息
+     * @param $ticket 工单基础信息
+     * @param $param 内容参数
+     */
+    private static function newTicketNotice($ticket, $param){
+        //将工单单号发给发起者
+        \Model\Extra::insertSend(
+            $param['ticket_contact_account'],
+            \Model\MailTemplate::matchTitle($param['ticket_number'], '1'),
+            \Model\MailTemplate::matchContent([
+                'number' => $param['ticket_number'],
+                'view' => \Model\MailTemplate::getViewLink($param['ticket_number'])
+            ], '1'),
+            $param['ticket_contact']
+        );
+
+        //企业微信通知
+        if(!empty($ticket['ticket_model_group_id'])){
+            $userList = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']})")->select();
+            if(!empty($userList)){
+                foreach ($userList as $user){
+                    $content = "工单《{$ticket['ticket_model_name']}》有新工单: {$param['ticket_number']},请及时处理!";
+
+                    \Model\Notice::addCSNotice($user,['title' => $content, 'content' => $content]);
+                }
+            }
+        }
     }
 
     /**
@@ -191,20 +201,26 @@ class Ticket extends \Core\Model\Model {
      */
     public static function view() {
         $number = self::isG('number', '请选择您要查看的工单');
-        $ticket = self::db('ticket AS t')->join(self::$modelPrefix.'ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id')->where('ticket_number = :ticket_number')->find([
-            'ticket_number' => $number
-        ]);
+        $ticket = self::getTicketBaseInfo($number);
         if (empty($ticket)) {
-            header('HTTP/1.1 404');
-            self::error('工单不存在');
+            return false;
         }
-
-
         $form = self::getTicketContent($ticket['ticket_id']);
         $chat = self::getTicketChat($ticket['ticket_id']);
 
         return ['ticket' => $ticket, 'form' => $form, 'chat' => $chat];
 
+    }
+
+    /**
+     * 获取工单的基础信息
+     * @param $number
+     * @return mixed
+     */
+    public static function getTicketBaseInfo($number){
+        return self::db('ticket AS t')->join(self::$modelPrefix.'ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id')->where('ticket_number = :ticket_number')->find([
+            'ticket_number' => $number
+        ]);
     }
 
     /**
@@ -214,7 +230,7 @@ class Ticket extends \Core\Model\Model {
      */
     public static function getTicketChat($id) {
         $sql = "SELECT %s FROM " . self::$modelPrefix . "ticket_chat WHERE ticket_id = :ticket_id ORDER BY ticket_chat_id ASC";
-        return \Model\Content::quickListContent(['count' => sprintf($sql, 'count(*)'), 'normal' => sprintf($sql, '*'), 'param' => ['ticket_id' => $id]]);
+        return \Model\Content::quickListContent(['count' => sprintf($sql, 'count(*)'), 'normal' => sprintf($sql, '*'), 'param' => ['ticket_id' => $id], 'page' => 30]);
     }
 
     /**
@@ -245,7 +261,6 @@ class Ticket extends \Core\Model\Model {
     public static function setUser($id, $userID, $userName) {
         return self::inTicketIdWithUpdate(['user_id' => $userID, 'user_name' => $userName, 'noset' => ['ticket_id' => $id]]);
     }
-
 
     /**
      * 更改任务状态

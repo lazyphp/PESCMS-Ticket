@@ -1,12 +1,17 @@
-<div class="am-form-group">
-    <input type="email" name="email" placeholder="邮箱地址" required="required">
+<div class="am-input-group am-margin-bottom">
+    <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
+    <input type="email" name="email" class="am-form-field" placeholder="邮箱地址" required="required">
 </div>
-<div class="am-form-group">
-    <input type="password" name="password" placeholder="登录密码" required="required">
+
+<div class="am-input-group am-margin-bottom">
+    <span class="am-input-group-label"><i class="am-icon-lock am-icon-fw"></i></span>
+    <input type="password" name="password" class="am-form-field" placeholder="登录密码" required="required">
 </div>
+
 <?php if(json_decode($system['login_verify'])[0] == '1'): ?>
-    <div class="am-form-group">
-        <input type="text" class="login-verify" maxlength="7" name="verify" placeholder="验证码" required="">
+    <div class="am-input-group am-margin-bottom">
+        <span class="am-input-group-label"><i class="am-icon-shield am-icon-fw"></i></span>
+        <input type="text" class="am-form-field login-verify" name="verify" placeholder="验证码" maxlength="7">
         <img src="<?= $label->url('Index-verify') ?>" class="refresh-verify">
     </div>
 <?php endif; ?>

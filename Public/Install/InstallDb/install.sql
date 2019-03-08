@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2019-02-28 08:46:54
+-- Generation Time: 2019-03-08 01:35:19
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `pes_field` (
   PRIMARY KEY (`field_id`),
   UNIQUE KEY `modle_id` (`field_model_id`,`field_name`),
   KEY `field_name` (`field_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=211 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=218 ;
 
 --
 -- 转存表中的数据 `pes_field`
@@ -72,7 +72,7 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (4, 1, 'attr', '模型属性', 'radio', '{"\\u524d\\u53f0":"1","\\u540e\\u53f0":"2"}', '', '', 1, 4, 1, 1, 1),
 (5, 1, 'status', '模型状态', 'radio', '{"\\u542f\\u7528":"1","\\u7981\\u7528":"0"}', '', '', 1, 5, 1, 1, 1),
 (6, 2, 'model_id', '模型ID', 'text', '', '', '', 1, 0, 0, 0, 1),
-(7, 2, 'type', '字段类型', 'select', '{&quot;\\u5206\\u7c7b&quot;:&quot;category&quot;,&quot;\\u5355\\u884c\\u8f93\\u5165\\u6846&quot;:&quot;text&quot;,&quot;\\u5355\\u9009\\u6309\\u94ae&quot;:&quot;radio&quot;,&quot;\\u590d\\u9009\\u6846&quot;:&quot;checkbox&quot;,&quot;\\u5355\\u9009\\u4e0b\\u62c9\\u6846&quot;:&quot;select&quot;,&quot;\\u591a\\u884c\\u8f93\\u5165\\u6846&quot;:&quot;textarea&quot;,&quot;\\u7f16\\u8f91\\u5668&quot;:&quot;editor&quot;,&quot;\\u7565\\u7f29\\u56fe&quot;:&quot;thumb&quot;,&quot;\\u4e0a\\u4f20\\u56fe\\u7ec4&quot;:&quot;img&quot;,&quot;\\u4e0a\\u4f20\\u6587\\u4ef6&quot;:&quot;file&quot;,&quot;\\u65e5\\u671f&quot;:&quot;date&quot;,&quot;\\u7c7b\\u578b&quot;:&quot;types&quot;}', '', '', 1, 1, 1, 1, 1),
+(7, 2, 'type', '字段类型', 'select', '{&quot;\\u5206\\u7c7b&quot;:&quot;category&quot;,&quot;\\u5355\\u884c\\u8f93\\u5165\\u6846&quot;:&quot;text&quot;,&quot;\\u591a\\u884c\\u8f93\\u5165\\u6846&quot;:&quot;textarea&quot;,&quot;\\u5355\\u9009\\u6309\\u94ae&quot;:&quot;radio&quot;,&quot;\\u590d\\u9009\\u6846&quot;:&quot;checkbox&quot;,&quot;\\u5355\\u9009\\u4e0b\\u62c9\\u6846&quot;:&quot;select&quot;,&quot;\\u591a\\u9009\\u4e0b\\u62c9\\u6846&quot;:&quot;multiple&quot;,&quot;\\u7f16\\u8f91\\u5668&quot;:&quot;editor&quot;,&quot;\\u7565\\u7f29\\u56fe&quot;:&quot;thumb&quot;,&quot;\\u4e0a\\u4f20\\u56fe\\u7ec4&quot;:&quot;img&quot;,&quot;\\u4e0a\\u4f20\\u6587\\u4ef6&quot;:&quot;file&quot;,&quot;\\u65e5\\u671f&quot;:&quot;date&quot;,&quot;\\u7c7b\\u578b&quot;:&quot;types&quot;}', '', '', 1, 1, 1, 1, 1),
 (8, 2, 'name', '字段名称', 'text', '', '', '', 1, 2, 1, 1, 1),
 (9, 2, 'display_name', '显示名称', 'text', '', '', '', 1, 3, 1, 1, 1),
 (10, 2, 'option', '选项值', 'textarea', '', '选填， 选填， 此处若没有特殊说明，必须 名称|值 填写、且一行一个选项值，否则将导致数据异常!  注意:目前选项适用于单选，复选，下拉菜单。其余功能填写也不会产生任何实际效果。', '', 0, 4, 0, 1, 1),
@@ -148,7 +148,14 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (207, 20, 'email', '邮箱地址', 'text', '', '', '', 1, 1, 1, 1, 1),
 (208, 20, 'password', '用户密码', 'text', '', '', '', 0, 2, 0, 1, 1),
 (209, 20, 'name', '用户名称', 'text', '', '', '', 1, 3, 1, 1, 1),
-(210, 20, 'phone', '手机号码', 'text', '', '', '', 1, 4, 1, 1, 1);
+(210, 20, 'phone', '手机号码', 'text', '', '', '', 1, 4, 1, 1, 1),
+(211, 15, 'group_id', '管辖用户组', 'multiple', '', '绑定对应的用户组，当前工单模型有新工单，将会发送通知给该用户组下的所有成员。', '', 1, 7, 1, 1, 1),
+(212, 21, 'account', '接收帐号', 'text', '', '', '', 1, 1, 1, 1, 1),
+(213, 21, 'title', '发送标题', 'text', '', '', '', 1, 2, 1, 1, 1),
+(214, 21, 'content', '发送内容', 'editor', '', '', '', 1, 3, 0, 1, 1),
+(215, 21, 'time', '生成时间', 'date', '', '', '', 1, 5, 1, 1, 1),
+(216, 21, 'type', '发送方式', 'select', '{&quot;\\u90ae\\u7bb1&quot;:&quot;1&quot;,&quot;\\u624b\\u673a&quot;:&quot;2&quot;,&quot;\\u5fae\\u4fe1&quot;:&quot;3&quot;,&quot;\\u4f01\\u4e1a\\u5fae\\u4fe1&quot;:&quot;4&quot;}', '', '', 1, 4, 1, 1, 1),
+(217, 7, 'weixinWork', '企业微信ID', 'text', '', '', '', 0, 6, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -227,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `pes_menu` (
   `menu_type` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`menu_id`),
   KEY `menu_pid` (`menu_pid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
 
 --
 -- 转存表中的数据 `pes_menu`
@@ -254,7 +261,8 @@ INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_l
 (21, '分类管理', 0, 'am-icon-list-alt', 'Ticket-Category-index', 4, 0),
 (23, '客户列表', 3, 'am-icon-street-view', 'Ticket-Member-index', 4, 0),
 (24, '应用商店', 9, 'am-icon-cogs', 'Ticket-Application-index', 3, 0),
-(25, '商业授权', 9, 'am-icon-registered', 'https://www.pescms.com/Page/Authorization.html', 99, 1);
+(25, '商业授权', 9, 'am-icon-registered', 'https://www.pescms.com/Page/Authorization.html', 99, 1),
+(26, '发送列表', 9, 'am-icon-send', 'Ticket-Send-index', 5, 0);
 
 -- --------------------------------------------------------
 
@@ -271,7 +279,7 @@ CREATE TABLE IF NOT EXISTS `pes_model` (
   `model_attr` tinyint(1) NOT NULL DEFAULT '0' COMMENT '模型属性 1:前台(含前台) 2:后台',
   PRIMARY KEY (`model_id`),
   UNIQUE KEY `model_name` (`model_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
 
 --
 -- 转存表中的数据 `pes_model`
@@ -289,7 +297,8 @@ INSERT INTO `pes_model` (`model_id`, `model_name`, `model_title`, `model_status`
 (16, 'ticket_form', '工单表单', 1, 1, 2),
 (17, 'mail_template', '邮件模板', 1, 0, 2),
 (18, 'Category', '分类', 1, 1, 1),
-(20, 'Member', '会员管理', 1, 1, 1);
+(20, 'Member', '会员管理', 1, 1, 1),
+(21, 'Send', '发送列表', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -499,7 +508,7 @@ CREATE TABLE IF NOT EXISTS `pes_option` (
   `value` text NOT NULL,
   `option_range` varchar(128) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
 --
 -- 转存表中的数据 `pes_option`
@@ -516,7 +525,11 @@ INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) 
 (8, 'upload_img', '图片格式', '[".jpg",".jpge",".bmp",".gif",".png"]', 'upload'),
 (9, 'upload_file', '文件格式', '[".zip",".rar",".7z",".doc",".docx",".pdf",".xls",".xlsx",".ppt",".pptx",".txt"]', 'upload'),
 (10, 'interior_ticket', '站内工单', '1', 'system'),
-(11, 'open_register', '开启注册', '1', 'system');
+(11, 'open_register', '开启注册', '1', 'system'),
+(12, 'weixin_api', '微信接口', '', 'system'),
+(13, 'weixinWork_api', '企业微信接口', '', 'system'),
+(14, 'login_verify', '登录验证码', '["1"]', 'system'),
+(15, 'cs_notice_type', '客服人员接收通知方式', '{"1":"1"}', 'system');
 
 -- --------------------------------------------------------
 
@@ -534,14 +547,7 @@ CREATE TABLE IF NOT EXISTS `pes_route` (
   `route_listsort` int(11) NOT NULL DEFAULT '0',
   `route_status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`route_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='路由表' AUTO_INCREMENT=2 ;
-
---
--- 转存表中的数据 `pes_route`
---
-
-INSERT INTO `pes_route` (`route_id`, `route_controller`, `route_param`, `route_rule`, `route_title`, `route_hash`, `route_listsort`, `route_status`) VALUES
-(1, 'Ticket-Login-index', '', 'Login', '后台登录页', 'c230404240c92c276e9a42b0ab4f0679', 0, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='路由表' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -659,6 +665,7 @@ CREATE TABLE IF NOT EXISTS `pes_ticket_model` (
   `ticket_model_cid` int(11) NOT NULL DEFAULT '0',
   `ticket_model_listsort` int(11) NOT NULL DEFAULT '0',
   `ticket_model_explain` text NOT NULL,
+  `ticket_model_group_id` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`ticket_model_id`),
   UNIQUE KEY `ticket_model_number` (`ticket_model_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='工单模型' AUTO_INCREMENT=1 ;
@@ -679,7 +686,9 @@ CREATE TABLE IF NOT EXISTS `pes_user` (
   `user_status` tinyint(4) NOT NULL DEFAULT '0',
   `user_createtime` int(11) NOT NULL DEFAULT '0',
   `user_last_login` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`user_id`)
+  `user_weixinWork` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_weixinWork` (`user_weixinWork`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------

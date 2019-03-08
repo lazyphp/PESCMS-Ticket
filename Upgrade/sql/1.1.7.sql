@@ -32,5 +32,7 @@ INSERT INTO `pes_option` (`option_name`, `name`, `value`, `option_range`) VALUES
 INSERT INTO `pes_option` (`option_name`, `name`, `value`, `option_range`) VALUES
   ('cs_notice_type', '客服人员接收通知方式', '{"1":"1"}', 'system');
 
+INSERT INTO `pes_node` (`node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES
+  ('删除工单', 2, 1, '当前权限不足，无法删除工单。', 'DELETE', 'action', 'TicketDELETETicketaction', 2, 5);
 
 

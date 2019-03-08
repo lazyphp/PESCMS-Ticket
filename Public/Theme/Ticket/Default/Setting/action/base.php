@@ -121,10 +121,10 @@
                 <div class="am-form-group">
                     <label class="am-block">登录验证码<i class="am-text-danger">*</i></label>
                     <label class="am-checkbox-inline">
-                        <input type="checkbox" value="1" name="login_verify[]" required="" <?= $login_verify['0'] == '1' ? 'checked="checked"' : '' ?>> 前台开启
+                        <input type="checkbox" value="1" name="login_verify[]"  <?= $login_verify['0'] == '1' ? 'checked="checked"' : '' ?>> 前台开启
                     </label>
                     <label class="am-checkbox-inline">
-                        <input type="checkbox" value="2" name="login_verify[]" required="" <?= $login_verify['1'] == '2' ? 'checked="checked"' : '' ?>> 后台开启
+                        <input type="checkbox" value="2" name="login_verify[]"  <?= $login_verify['1'] == '2' ? 'checked="checked"' : '' ?>> 后台开启
                     </label>
                     <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
                         <i class="am-icon-lightbulb-o"></i> 前后台用户登录是否需要验证码

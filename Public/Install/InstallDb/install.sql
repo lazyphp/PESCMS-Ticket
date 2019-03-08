@@ -318,7 +318,7 @@ CREATE TABLE IF NOT EXISTS `pes_node` (
   `node_controller` int(11) NOT NULL DEFAULT '0',
   `node_listsort` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`node_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=82 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=83 ;
 
 --
 -- 转存表中的数据 `pes_node`
@@ -405,7 +405,8 @@ INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `n
 (78, '提交新增分类', 76, 1, '', 'POST', 'action', 'TicketPOSTCategoryaction', 76, 3),
 (79, '提交分类更新', 76, 1, '', 'PUT', 'action', 'TicketPUTCategoryaction', 76, 4),
 (80, '提交分类删除', 76, 1, '', 'DELETE', 'action', 'TicketDELETECategoryaction', 76, 5),
-(81, '分类列表', 76, 1, '', 'DELETE', 'index', 'TicketGETCategoryindex', 76, 1);
+(81, '分类列表', 76, 1, '', 'DELETE', 'index', 'TicketGETCategoryindex', 76, 1),
+(82, '删除工单', 2, 1, '当前权限不足，无法删除工单。', 'DELETE', 'action', 'TicketDELETETicketaction', 2, 5);
 
 -- --------------------------------------------------------
 

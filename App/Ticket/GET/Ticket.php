@@ -19,17 +19,20 @@ namespace App\Ticket\GET;
  */
 class Ticket extends \Core\Controller\Controller {
 
-    public $condition = 'WHERE 1 = 1', $param = [];
+    public $condition = 'WHERE 1 = 1', $param = [], $category = [];
 
     /**
-     * 工单列表
+     * 工单列表(默认按管辖组)
      */
     public function index() {
+
+        //搜索
         if (!empty($_GET['keyword'])) {
             $this->param['ticket_number'] = $this->param['ticket_title'] = '%' . urldecode($this->g('keyword')) . '%';
             $this->condition .= ' AND (t.ticket_title LIKE :ticket_title OR t.ticket_number LIKE :ticket_number )';
         }
 
+        //状态筛选
         foreach (['model_id', 'status', 'close', 'read'] as $key => $value) {
             if ((!empty($_GET[$value]) || is_numeric($_GET[$value])) && $_GET[$value] != '-1') {
                 $this->param["ticket_{$value}"] = (int)$_GET[$value];
@@ -37,24 +40,66 @@ class Ticket extends \Core\Controller\Controller {
             }
         }
 
+        //方法index的工单列表，默认是筛选管辖组的
+        if(ACTION == 'index'){
+            $this->condition .= ' AND tm.ticket_model_group_id LIKE :group_id';
+            $this->param['group_id'] = "%,{$this->session()->get('ticket')['user_group_id']},%";
+        }
+
         $sql = "SELECT %s
                 FROM {$this->prefix}ticket AS t
                 LEFT JOIN {$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id
                 {$this->condition}
                 ORDER BY t.ticket_close ASC, t.ticket_status ASC, t.ticket_id DESC ";
-        $result = \Model\Content::quickListContent(['count' => sprintf($sql, 'count(*)'), 'normal' => sprintf($sql, 't.*, tm.ticket_model_name'), 'param' => $this->param]);
+
+        $result = \Model\Content::quickListContent([
+            'count' => sprintf($sql, 'count(*)'),
+            'normal' => sprintf($sql, 't.*, tm.ticket_model_name, tm.ticket_model_cid'),
+            'param' => $this->param
+        ]);
 
         $this->assign('ticketModel', \Model\Content::listContent(['table' => 'ticket_model']));
         $this->assign('list', $result['list']);
         $this->assign('page', $result['page']);
 
+        $this->category = \Model\Category::getAllCategoryCidPrimaryKey();
+        $this->assign('category', $this->category);
+
         $this->layout('Ticket_index');
     }
 
+    /**
+     * 所有工单
+     */
+    public function all(){
+        $this->index();
+    }
+
+    /**
+     * 我的工单
+     */
     public function myTicket(){
         $this->param['user_id'] = $this->session()->get('ticket')['user_id'];
         $this->condition .= ' AND t.user_id = :user_id';
         $this->index();
+    }
+
+    /**
+     * 依据用户组ID查询最新工单
+     */
+    public function getNewTicketWithGroupID(){
+        $groupID = '%,'.$this->session()->get('ticket')['user_group_id'].',%';
+
+        $time = time() - 3600;
+        $list = $this->db('ticket AS t')
+                ->field('ticket_id')
+                ->join("{$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id")
+                ->where('t.ticket_status = 0 AND t.user_id = 0 AND t.ticket_close = 0 AND t.ticket_submit_time > :time AND tm.ticket_model_group_id LIKE :groupID  ')
+                ->select([
+                    'time' => $time,
+                    'groupID' => $groupID
+                ]);
+        $this->success(['msg' => '获取成功', data=> $list]);
     }
 
     /**

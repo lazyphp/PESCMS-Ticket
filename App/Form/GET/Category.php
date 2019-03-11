@@ -64,7 +64,8 @@ class Category extends \Core\Controller\Controller{
                 'title' => $value['ticket_model_name'],
                 'number' => $value['ticket_model_number'],
                 'login' => $value['ticket_model_login'],
-                'verify' => $value['ticket_model_verify']
+                'verify' => $value['ticket_model_verify'],
+                'cid' => $value['ticket_model_cid'],
             ];
             $field[$value['ticket_form_id']] = [
                 'field_name' => $value['ticket_form_name'],
@@ -84,6 +85,7 @@ class Category extends \Core\Controller\Controller{
             $this->jump($this->url('Login-index', ['back_url' => base64_encode($_SERVER['REQUEST_URI'])]));
         }
 
+        $ticketInfo['category'] = \Model\Content::findContent('category', $ticketInfo['cid'], 'category_id');
         $this->assign('title', $ticketInfo['title']);
         $this->assign('ticketInfo', $ticketInfo);
         $this->assign('field', $field);

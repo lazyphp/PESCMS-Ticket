@@ -21,10 +21,11 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div><span class="pt-text-explode">问题标题 : </span> <?= $ticket_title; ?></div>
                 <div class="am-g am-g-collapse">
-                    <div class="am-u-sm-4"><span class="pt-text-explode">工单编号 : </span><?= $ticket_number; ?></div>
-                    <div class="am-u-sm-4">
+                    <div class="am-u-sm-3"><span class="pt-text-explode">工单编号 : </span><?= $ticket_number; ?></div>
+                    <div class="am-u-sm-3"><span class="pt-text-explode">工单类型 : </span><?= $ticket_model_name; ?></div>
+                    <div class="am-u-sm-3">
                         <span class="pt-text-explode">提交时间 : </span><?= date('Y-m-d H:i:s', $ticket_submit_time); ?></div>
-                    <div class="am-u-sm-4"><span
+                    <div class="am-u-sm-3"><span
                                 class="pt-text-explode">工单状态 : </span><?= $ticket_close == '0' ? $ticketStatus[$ticket_status]['name'] : '工单关闭'; ?>
                     </div>
                 </div>

@@ -17,7 +17,9 @@
                                 data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}">
                             <option value="-1">所有类型</option>
                             <?php foreach ($ticketModel as $value): ?>
-                                <option value="<?= $value['ticket_model_id']; ?>" <?= $value['ticket_model_id'] == $_GET['model_id'] ? 'selected="selected"' : '' ?> ><?= $value['ticket_model_name']; ?></option>
+                                <option value="<?= $value['ticket_model_id']; ?>" <?= $value['ticket_model_id'] == $_GET['model_id'] ? 'selected="selected"' : '' ?> >
+                                    <?= $category[$value['ticket_model_cid']]['category_name']; ?> - <?= $value['ticket_model_name']; ?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
 
@@ -57,39 +59,41 @@
                     <p>本页面没有数据 :-(</p>
                 </div>
             <?php else: ?>
-                <table class="am-table am-table-bordered am-table-striped am-table-hover am-text-sm">
-                    <tr>
-                        <th>工单No.</th>
-                        <th>工单类型</th>
-                        <th>问题内容</th>
-                        <th class="am-text-center">状态</th>
-                        <th class="am-text-center">查看</th>
-                        <th class="am-text-center">提交时间</th>
-                        <th class="am-text-center">反馈时长</th>
-                        <th class="am-text-center">责任人</th>
-                        <th class="am-text-center">操作</th>
-                    </tr>
+                <table class="am-table  am-table-striped am-table-hover am-text-sm">
                     <?php foreach ($list as $key => $value): ?>
                         <tr>
-                            <td class="am-text-middle"><?= $value['ticket_number'] ?></td>
-                            <td class="am-text-middle">
-                                <?= $value['ticket_model_name']; ?>
+                            <td class="">
+                                <div class="admin-task-meta">
+                                    <span class="am-badge" style="background-color: <?= $ticketStatus[$value['ticket_status']]['color']; ?>"><?= $ticketStatus[$value['ticket_status']]['name']; ?></span>
+                                    [<?= $category[$value['ticket_model_cid']]['category_name'] ?> - <?= $value['ticket_model_name'] ?>]
+                                    <?= $value['ticket_number'] ?>
+                                    <i class="am-margin-left-xs am-margin-right-xs">|</i>
+                                    <span>
+                                        发布于: <?= date('Y-m-d H:i', $value['ticket_submit_time']); ?>
+                                    </span>
+
+                                </div>
+                                <div class="admin-task-bd">
+                                    <a href="<?= $label->url(GROUP . '-Ticket-handle', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>">
+                                        <span class="am-text-primary"><?= $value['ticket_read'] == '0' ? '[未读]' : ''; ?></span>
+                                        <?= $value['ticket_title'] ?>
+                                    </a>
+                                </div>
                             </td>
-                            <td class="am-text-middle"
-                                title="<?= $value['ticket_title'] ?>"><?= mb_substr($value['ticket_title'], 0, 25, 'UTF-8'); ?></td>
-                            <td class="am-text-center am-text-middle"><span class="am-badge"
-                                                                            style="background-color: <?= $ticketStatus[$value['ticket_status']]['color']; ?>"><?= $ticketStatus[$value['ticket_status']]['name']; ?></span>
-                            </td>
-                            <td class="am-text-center am-text-middle"><?= $value['ticket_read'] == '0' ? '未' : '已'; ?></td>
-                            <td class="am-text-center am-text-middle"><?= date('Y-m-d H:i', $value['ticket_submit_time']); ?></td>
-                            <td class="am-text-center am-text-middle"><?= empty($value['ticket_run_time']) ? '未处理' : $label->timing($value['ticket_run_time']); ?></td>
-                            <td class="am-text-center am-text-middle">
-                                <?= $value['user_id'] > 0 ? $value['user_name'] : '<span class="am-text-danger">无人问津</span>'; ?>
-                            </td>
-                            <td class="am-text-center am-text-middle">
+                            <td class="am-show-lg-only am-text-bottom am-text-right">
+                                <span>
+                                        耗时: <?= empty($value['ticket_run_time']) ? '未处理' : $label->timing($value['ticket_run_time']); ?>
+                                    </span>
+                                <i class="am-margin-left-xs am-margin-right-xs">|</i>
+                                <span>
+                                        责任人: <?= $value['user_id'] > 0 ? $value['user_name'] : '<span class="am-text-danger">暂无</span>'; ?>
+                                </span>
+                                <i class="am-margin-left-xs am-margin-right-xs">|</i>
+
                                 <a href="<?= $label->url('Ticket-Ticket-handle', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>"
                                    class="am-text-primary">处理</a>
                                 <i class="am-margin-left-xs am-margin-right-xs">|</i>
+
                                 <?php if ($value['ticket_close'] == '0' && $value['ticket_status'] < 3): ?>
                                     <a href="<?= $label->url('Ticket-Ticket-close', ['number' => $value['ticket_number'], 'method' => 'POST', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>" class="am-text-danger ajax-click ajax-dialog" msg="确定要关闭本工单吗？">关闭工单</a>
                                 <?php else: ?>
@@ -98,10 +102,9 @@
                                 <?php endif; ?>
                                 <i class="am-margin-left-xs am-margin-right-xs">|</i>
                                 <a class="am-text-danger ajax-click ajax-dialog"  msg="确定删除吗？将无法恢复的！" href="<?= $label->url(GROUP . '-' . MODULE . '-action', array('id' => $value["ticket_id"], 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI']))); ?>"><span class="am-icon-trash-o"></span></a>
-
                             </td>
-
                         </tr>
+
                     <?php endforeach; ?>
                 </table>
                 <ul class="am-pagination am-pagination-right am-text-sm">

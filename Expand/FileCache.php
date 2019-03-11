@@ -62,7 +62,6 @@ class FileCache {
         
         $file = file($cacheFile);
         if (time() - intval($file[0]) > $time) {
-            exit;
             return false;
         } else {
             return $file['1'];

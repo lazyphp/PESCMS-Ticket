@@ -1,0 +1,30 @@
+/*消息提示小红点*/
+.msg-tips {
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: #f65645;
+    border-radius: 5px;
+    left: 28px;
+    top: 13px;
+    position: absolute;
+}
+
+@media only screen and (min-width: 1025px) {
+    .ticket-index-table tr td:last-child{
+        width: 10rem;
+    }
+}
+.admin-task-meta{
+    color: #888888;
+}
+.admin-task-bd{
+    /*font-size: 1.6rem;*/
+    margin-top: 0.5rem;
+}
+.admin-task-bd a{
+    color: #333;
+}
+.admin-task-bd a:hover{
+    color: #a9a9a9;
+}

@@ -193,15 +193,20 @@ class Label {
         }
 
         $option = json_decode(htmlspecialchars_decode($this->fieldOption[$fieldId]['field_option']), true);
-        
-        $splitValue = explode(',', $value);
+
+        $splitValue = explode(',', trim($value, ','));
 
         $search = [];
+        $isNull = true;
         foreach ($splitValue as $item){
+            if(empty($item) && !is_numeric($item) ){
+                continue;
+            }
+            $isNull = false;
             $search[] = array_search($item, $option);
         }
 
-        if(empty($search[0])){
+        if($isNull){
             return '-';
         }else{
             return implode(', ', $search);

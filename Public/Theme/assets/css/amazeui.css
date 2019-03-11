@@ -7876,8 +7876,6 @@ img.am-thumbnail,
   tr.am-show-lg-down {
     display: table-row !important;
   }
-  th.am-show-sm-only,
-  td.am-show-sm-only,
   th.am-show-sm-up,
   td.am-show-sm-up,
   th.am-show-sm,
@@ -7902,6 +7900,12 @@ img.am-thumbnail,
   td.am-show-lg-down {
     display: table-cell !important;
   }
+}
+@media only screen and (max-width:641px) {
+    th.am-show-sm-only,
+    td.am-show-sm-only {
+        display: table-cell !important;
+    }
 }
 /* medium displays */
 @media only screen and (min-width:641px) {

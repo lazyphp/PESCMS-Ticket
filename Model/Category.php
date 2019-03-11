@@ -5,6 +5,20 @@ namespace Model;
 class Category extends \Core\Model\Model {
 
     /**
+     * 获取所有分类且cid作为主键
+     * @return 返回cid作为主键的完整分类信息
+     */
+    public static function getAllCategoryCidPrimaryKey(){
+        $categoryList = \Model\Content::listContent(['table' => 'category']);
+        if(!empty($categoryList)){
+            foreach ($categoryList as $item){
+                $category[$item['category_id']] = $item;
+            }
+        }
+        return $category;
+    }
+
+    /**
      * 递归获取分类
      * @param string $cid 分类ID
      * @param bool $isSelect 是否选项表单

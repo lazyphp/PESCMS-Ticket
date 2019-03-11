@@ -19,6 +19,8 @@ namespace App\Ticket\GET;
  */
 class Ticket_form extends Content {
 
+    private $ticket = [], $category = [];
+
     public function __init() {
         parent::__init();
 
@@ -31,8 +33,9 @@ class Ticket_form extends Content {
         $checkType = ['不验证' => 'noVerify', '电子邮箱' => 'email', '网址' => 'url', '国内手机号码' => 'phone', '数字' => 'number', '英文' => 'english', '英文数字' => 'alphanumeric'];
         $this->assign('checkType', $checkType);
 
-
         $this->ticket = \Model\TicketModel::numberFind($_GET['number']);
+
+        $this->category = \Model\Content::findContent('category', $_GET['cid'], 'category_id');
 
     }
 
@@ -41,14 +44,18 @@ class Ticket_form extends Content {
      */
     public function index($display = false) {
 
-        $this->assign('addUrl', $this->url(GROUP . '-' . MODULE . '-action', array('number' => $_GET['number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI']))));
+        $this->assign('addUrl', $this->url(GROUP . '-' . MODULE . '-action', array('number' => $_GET['number'], 'cid' => $_GET['cid'], 'back_url' => base64_encode($_SERVER['REQUEST_URI']))));
 
         $sql = "SELECT %s FROM {$this->prefix}ticket_form WHERE ticket_form_model_id = :ticket_model_id ORDER BY ticket_form_listsort ASC, ticket_form_id DESC ";
-        $result = \Model\Content::quickListContent(['count' => sprintf($sql, 'count(*)'), 'normal' => sprintf($sql, '*'), 'param' => ['ticket_model_id' => $this->ticket['ticket_model_id']] ]);
+        $result = \Model\Content::quickListContent([
+            'count' => sprintf($sql, 'count(*)'),
+            'normal' => sprintf($sql, '*'),
+            'param' => ['ticket_model_id' => $this->ticket['ticket_model_id']]
+            ]);
 
         $this->assign('list', $result['list']);
         $this->assign('page', $result['page']);
-        $this->assign('title', $this->model['model_title']);
+        $this->assign('title', "[{$this->category['category_name']}] - {$this->ticket['ticket_model_name']} - {$this->model['model_title']}");
 
         $this->assign('field', $this->field);
 
@@ -87,7 +94,12 @@ class Ticket_form extends Content {
         $this->assign('bind', $bind);
         $this->assign('bindValue', $bindValue);
 
-        parent::action($display);
+        parent::action(false);
+
+        $actionType = empty($_GET['id']) ? '新增' : '编辑';
+
+        $this->assign('title', "{$actionType} - [{$this->category['category_name']}] - {$this->ticket['ticket_model_name']} - {$this->model['model_title']}");
+        $this->layout();
     }
 
 }

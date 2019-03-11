@@ -158,6 +158,11 @@ html,body{
 .table-sort{
     width: 60px;
 }
+/*---------------移除分页外边距---------------*/
+.am-pagination>li>a, .am-pagination>li>span {
+    margin-bottom: 0!important;
+}
+
 /*---------------面板---------------*/
 .am-panel{
     box-shadow: 4px 5px 0px rgba(0,0,0,.05);

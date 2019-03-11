@@ -122,6 +122,9 @@ class Ticket extends \Core\Model\Model {
 
         //企业微信通知
         if(!empty($ticket['ticket_model_group_id'])){
+            //移除手尾,
+            $ticket['ticket_model_group_id'] = trim($ticket['ticket_model_group_id'], ',');
+
             $userList = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']})")->select();
             if(!empty($userList)){
                 foreach ($userList as $user){

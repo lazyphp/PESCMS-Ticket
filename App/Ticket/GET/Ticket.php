@@ -58,6 +58,24 @@ class Ticket extends \Core\Controller\Controller {
     }
 
     /**
+     * 依据用户组ID查询最新工单
+     */
+    public function getNewTicketWithGroupID(){
+        $groupID = '%,'.$this->session()->get('ticket')['user_group_id'].',%';
+
+        $time = time() - 3600;
+        $list = $this->db('ticket AS t')
+                ->field('ticket_id')
+                ->join("{$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id")
+                ->where('t.ticket_status = 0 AND t.user_id = 0 AND t.ticket_close = 0 AND t.ticket_submit_time > :time AND tm.ticket_model_group_id LIKE :groupID  ')
+                ->select([
+                    'time' => $time,
+                    'groupID' => $groupID
+                ]);
+        $this->success(['msg' => '获取成功', data=> $list]);
+    }
+
+    /**
      * 处理工单
      */
     public function handle() {

@@ -20,6 +20,11 @@ namespace Slice\Ticket\HandleForm;
 class HandleTicket_model extends \Core\Slice\Slice {
 
     public function before() {
+
+        if(in_array(METHOD, ['POST', 'PUT'])){
+            $_POST['group_id'] = ','.implode(',', $_POST['group_id']).',';
+        }
+
         if (METHOD == 'GET') {
             if (!empty($_GET['id'])) {
                 $number = $this->g('id');

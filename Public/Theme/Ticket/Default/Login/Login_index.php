@@ -38,9 +38,9 @@
 <script>
     $(function(){
         var background = {
-            'morning': 'http://s.cn.bing.net/az/hprichbg/rb/PalmTreePantanal_ZH-CN12515523449_1920x1080.jpg',
-            'noon': 'http://s.cn.bing.net/az/hprichbg/rb/MourningDoves_ZH-CN10786728372_1920x1080.jpg',
-            'nightfall': 'http://s.cn.bing.net/az/hprichbg/rb/CemoroLawangCrater_ZH-CN10441912392_1920x1080.jpg',
+            'morning': 'https://s.cn.bing.net/az/hprichbg/rb/PalmTreePantanal_ZH-CN12515523449_1920x1080.jpg',
+            'noon': 'https://s.cn.bing.net/az/hprichbg/rb/MourningDoves_ZH-CN10786728372_1920x1080.jpg',
+            'nightfall': 'https://s.cn.bing.net/az/hprichbg/rb/CemoroLawangCrater_ZH-CN10441912392_1920x1080.jpg',
             'night' : 'http://s.amazeui.org/media/i/demos/bing-1.jpg'};
         var mydate = new Date();
         var hover = mydate.getHours();

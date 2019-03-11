@@ -54,5 +54,6 @@
 
 
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/app.js"></script>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/ticket.js"></script>
 </head>
 <body>

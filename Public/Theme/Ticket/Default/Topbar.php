@@ -30,6 +30,15 @@
         <div class="am-topbar-right">
             <ul class="am-nav am-nav-pills am-topbar-nav admin-header-list">
                 <li><a href="javascript:;">您好,<?= $this->session()->get('ticket')['user_name']; ?></a></li>
+                <li class="am-dropdown am-dropdown-flip" data-am-dropdown>
+                    <a href="javascript:;">
+                        <i class="am-icon-envelope-o am-icon-sm"></i>
+                        <span class="msg-tips" style="display: none"></span>
+                    </a>
+                    <ul class="am-dropdown-content">
+                        <li><a href="javascript:;" class="close-tips">暂无新工单</a></li>
+                    </ul>
+                </li>
                 <li><a href="<?= $label->url('Ticket-Login-logout'); ?>"><i class="am-icon-sign-out"></i> 退出</a></li>
             </ul>
         </div>

@@ -9,3 +9,12 @@
     top: 13px;
     position: absolute;
 }
+
+@media only screen and (min-width: 1025px) {
+    .ticket-index-table tr td:nth-child(2){
+        width: 20rem;
+    }
+    .ticket-index-table tr td:nth-child(4){
+        width: 10rem;
+    }
+}

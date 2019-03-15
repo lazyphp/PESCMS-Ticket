@@ -21,6 +21,7 @@
 			<li >
 				<a href="<?= $label->url('Category-ticket', ['id' => $item['ticket_model_cid'], 'number' => $item['ticket_model_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>" class="ticket-category ticket-list">
 					<h4 class="am-margin-0"><?= $item['ticket_model_name'] ?></h4>
+                    <p class="am-margin-top-0"><?= htmlspecialchars_decode($item['ticket_model_explain']) ?></p>
 				</a>
 			</li>
 		<?php endforeach; ?>

@@ -52,13 +52,18 @@
                         </tr>
                     <?php endforeach; ?>
                 </table>
-                <ul class="am-pagination am-pagination-right am-text-sm">
-                    <?= $page; ?>
-                </ul>
-                <?php if ($listsort): ?>
-                    <div class="am-margin-top">
-                        <button type="submit" class="am-btn am-btn-primary am-btn-xs">排序</button>
+
+                <div class="am-g am-g-collapse">
+                    <div class="am-u-sm-12 am-u-lg-6">
+                        <?php if ($listsort): ?>
+                        <button type="submit" class="am-btn am-btn-primary am-btn-sm">排序</button>
+                        <?php endif; ?>
                     </div>
-                <?php endif; ?>
+                    <div class="am-u-sm-12 am-u-lg-6">
+                        <ul class="am-pagination am-pagination-right am-text-sm am-margin-0">
+                            <?= $page; ?>
+                        </ul>
+                    </div>
+                </div>
             </form>
         <?php endif; ?>

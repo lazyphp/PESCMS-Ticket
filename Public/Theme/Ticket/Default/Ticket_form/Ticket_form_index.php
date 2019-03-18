@@ -1,13 +1,24 @@
 <?php include THEME_PATH . "/Content/Content_index_header.php"; ?>
 
-<?php include THEME_PATH . "/Content/Content_index_tool.php"; ?>
+<div class="am-g am-margin-bottom-xs am-g-collapse">
+    <div class="am-u-sm-12 am-u-md-6 am-padding-top-xs">
+        <div class="am-btn-toolbar">
+            <div class="am-btn-group am-btn-group-xs">
+                <a href="<?= $addUrl ?>" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</a>
+                <a class="am-btn am-btn-primary" href="<?= $label->url('Category-ticket', array('number' => $_GET['number'])); ?>" target="_blank"><span class="am-icon-pencil-square-o"></span> 预览工单</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+<hr data-am-widget="divider" style="" class="am-divider am-divider-dashed" />
 
 <?php if (empty($list)): ?>
     <div class="am-alert am-alert-secondary am-margin-top am-margin-bottom am-text-center" data-am-alert>
         <p>本页面没有数据 :-(</p>
     </div>
 <?php else: ?>
-    <form class="am-form" action="<?= $label->url(GROUP . '-' . MODULE . '-listsort'); ?>" method="POST">
+    <form class="am-form ajax-submit" action="<?= $label->url(GROUP . '-' . MODULE . '-listsort'); ?>" method="POST">
         <input type="hidden" name="method" value="PUT"/>
         <table class="am-table am-table-bordered am-table-striped am-table-hover am-text-sm">
             <tr>
@@ -52,7 +63,7 @@
                     <td class="am-text-middle">
                         <?php
                         //设置按钮地址
-                        $param = ['id' => $value["{$fieldPrefix}id"], 'number' => $_GET['number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])];
+                        $param = ['id' => $value["{$fieldPrefix}id"], 'number' => $_GET['number'], 'cid' => $_GET['cid'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])];
 
                         $editUrl = $label->url(GROUP . '-' . MODULE . '-action', $param);
 
@@ -65,14 +76,20 @@
                 </tr>
             <?php endforeach; ?>
         </table>
-        <ul class="am-pagination am-pagination-right am-text-sm">
-            <?= $page; ?>
-        </ul>
-        <?php if ($listsort): ?>
-            <div class="am-margin">
-                <button type="submit" class="am-btn am-btn-primary am-btn-xs">排序</button>
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-lg-6">
+                <button type="submit" class="am-btn am-btn-primary am-btn-sm">排序</button>
             </div>
-        <?php endif; ?>
+            <div class="am-u-sm-12 am-u-lg-6">
+                <ul class="am-pagination am-pagination-right am-text-sm am-margin-0">
+                    <?= $page; ?>
+                </ul>
+            </div>
+        </div>
+
+        <div>
+
+        </div>
     </form>
 <?php endif; ?>
 

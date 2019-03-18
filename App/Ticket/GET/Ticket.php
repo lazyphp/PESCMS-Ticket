@@ -19,10 +19,10 @@ namespace App\Ticket\GET;
  */
 class Ticket extends \Core\Controller\Controller {
 
-    public $condition = 'WHERE 1 = 1', $param = [];
+    public $condition = 'WHERE 1 = 1', $param = [], $category = [];
 
     /**
-     * 工单列表(莫名按管辖组)
+     * 工单列表(默认按管辖组)
      */
     public function index() {
 
@@ -52,11 +52,18 @@ class Ticket extends \Core\Controller\Controller {
                 {$this->condition}
                 ORDER BY t.ticket_close ASC, t.ticket_status ASC, t.ticket_id DESC ";
 
-        $result = \Model\Content::quickListContent(['count' => sprintf($sql, 'count(*)'), 'normal' => sprintf($sql, 't.*, tm.ticket_model_name'), 'param' => $this->param]);
+        $result = \Model\Content::quickListContent([
+            'count' => sprintf($sql, 'count(*)'),
+            'normal' => sprintf($sql, 't.*, tm.ticket_model_name, tm.ticket_model_cid'),
+            'param' => $this->param
+        ]);
 
         $this->assign('ticketModel', \Model\Content::listContent(['table' => 'ticket_model']));
         $this->assign('list', $result['list']);
         $this->assign('page', $result['page']);
+
+        $this->category = \Model\Category::getAllCategoryCidPrimaryKey();
+        $this->assign('category', $this->category);
 
         $this->layout('Ticket_index');
     }

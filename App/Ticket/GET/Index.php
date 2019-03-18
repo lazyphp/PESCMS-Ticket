@@ -46,8 +46,8 @@ class Index extends \Core\Controller\Controller {
 
         $today = strtotime(date('Y-m-d') . ' 00:00:00');
         $param = [
-            '今天' => ['begin' => $today, 'end' => $today + 86399, 'user_id' => $this->session()->get('ticket')['user_group_id'],],
-            '昨天' => ['begin' => $today - 86400, 'end' => $today - 1, 'user_id' => $this->session()->get('ticket')['user_group_id'],]
+            '今天' => ['begin' => $today, 'end' => $today + 86399, 'user_id' => $this->session()->get('ticket')['user_id'],],
+            '昨天' => ['begin' => $today - 86400, 'end' => $today - 1, 'user_id' => $this->session()->get('ticket')['user_id'],]
         ];
 
         foreach ($countCondition as $key => $value) {

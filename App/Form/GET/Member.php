@@ -12,9 +12,20 @@ class Member extends \Core\Controller\Controller {
      */
     public function index(){
 
-        $statistics = $this->db('ticket')->field('count(ticket_id) AS total, ticket_status')->where('member_id = :member_id')->group('ticket_status')->select([
+        foreach (range(0,3) as $item){
+            $statistics[$item] = [
+                'total' => 0,
+                'ticket_status' => $item
+            ];
+        }
+
+        $statisticsResult = $this->db('ticket')->field('count(ticket_id) AS total, ticket_status')->where('member_id = :member_id')->group('ticket_status')->select([
             'member_id' => $this->session()->get('member')['member_id']
         ]);
+
+        foreach ($statisticsResult as $item){
+            $statistics[$item['ticket_status']]['total'] = $item['total'];
+        }
 
         $this->ticketList();
         $this->assign('statistics', $statistics);

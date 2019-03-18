@@ -14,10 +14,15 @@ namespace App\Ticket\GET;
 
 class Index extends \Core\Controller\Controller {
 
+    private $category = [];
+
     /**
      * 系统首页
      */
     public function index() {
+
+        $this->category = \Model\Category::getAllCategoryCidPrimaryKey();
+        $this->assign('category', $this->category);
 
         $this->statistics();
 
@@ -63,10 +68,29 @@ class Index extends \Core\Controller\Controller {
      */
     private function memberInfo() {
         //计算当前用户所在组的工单数量(关闭不计算)
-        $obligations = $this->db('ticket_model AS tm')->field('count(ticket_id) AS total, ticket_model_name')->join("{$this->prefix}ticket AS t ON t.ticket_model_id = tm.ticket_model_id")->where('t.user_id = :user_id AND t.ticket_close = 0  AND tm.ticket_model_group_id LIKE :group_id')->group('tm.ticket_model_id')->select([
-            'user_id' => $this->session()->get('ticket')['user_group_id'],
+        $obligationsList = $this->db('ticket_model AS tm')
+            ->field('t.ticket_id, t.user_id, tm.ticket_model_name, tm.ticket_model_id, tm.ticket_model_cid')
+            ->join("{$this->prefix}ticket AS t ON t.ticket_model_id = tm.ticket_model_id")
+            ->where('t.ticket_close = 0  AND tm.ticket_model_group_id LIKE :group_id')
+            ->select([
             'group_id' => "%,{$this->session()->get('ticket')['user_group_id']},%"
         ]);
+
+        $obligations = [];
+        foreach ($obligationsList as $item){
+            if(empty($obligations[$item['ticket_model_id']]['total'])){
+                $obligations[$item['ticket_model_id']]['total'] = 0;
+            }
+            if(empty($obligations[$item['ticket_model_id']]['userTotal'])){
+                $obligations[$item['ticket_model_id']]['userTotal'] = 0;
+            }
+            $obligations[$item['ticket_model_id']]['name'] = "{$this->category[$item['ticket_model_cid']]['category_name']} - {$item['ticket_model_name']}";
+            $obligations[$item['ticket_model_id']]['total'] += 1;
+
+            if($item['user_id'] == $this->session()->get('ticket')['user_id']){
+                $obligations[$item['ticket_model_id']]['userTotal'] += 1;
+            }
+        }
         $this->assign('obligations', $obligations);
 
         //14天前和过去7天的工单耗时对比(关闭不计算)
@@ -98,8 +122,10 @@ class Index extends \Core\Controller\Controller {
         $type = [
             'am-panel-primary' => [
                 'title' => '新提交工单',
-                'condition' => 't.ticket_status = 0 AND t.user_id = 0 AND t.ticket_close = 0 ',
-                'param' => [],
+                'condition' => 't.ticket_status = 0 AND t.user_id = 0 AND t.ticket_close = 0 AND tm.ticket_model_group_id LIKE :group_id ',
+                'param' => [
+                    'group_id' => "%,{$this->session()->get('ticket')['user_group_id']},%"
+                ],
                 'url' => $this->url('Ticket-Ticket-index', ['status' => 0, 'close' => '0']),
             ],
             'am-panel-default' => [
@@ -128,7 +154,7 @@ class Index extends \Core\Controller\Controller {
             $list[$key]['url'] = $value['url'];
             $list[$key]['list'] = \Model\Content::listContent([
                 'table' => 'ticket AS t',
-                'field' => 't.*, tm.ticket_model_name',
+                'field' => 't.*, tm.ticket_model_name, tm.ticket_model_cid',
                 'join' => "{$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id",
                 'condition' => $value['condition'],
                 'param' => $value['param'],

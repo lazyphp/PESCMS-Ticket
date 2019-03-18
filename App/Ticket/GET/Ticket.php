@@ -22,14 +22,17 @@ class Ticket extends \Core\Controller\Controller {
     public $condition = 'WHERE 1 = 1', $param = [];
 
     /**
-     * 工单列表
+     * 工单列表(莫名按管辖组)
      */
     public function index() {
+
+        //搜索
         if (!empty($_GET['keyword'])) {
             $this->param['ticket_number'] = $this->param['ticket_title'] = '%' . urldecode($this->g('keyword')) . '%';
             $this->condition .= ' AND (t.ticket_title LIKE :ticket_title OR t.ticket_number LIKE :ticket_number )';
         }
 
+        //状态筛选
         foreach (['model_id', 'status', 'close', 'read'] as $key => $value) {
             if ((!empty($_GET[$value]) || is_numeric($_GET[$value])) && $_GET[$value] != '-1') {
                 $this->param["ticket_{$value}"] = (int)$_GET[$value];
@@ -37,11 +40,18 @@ class Ticket extends \Core\Controller\Controller {
             }
         }
 
+        //方法index的工单列表，默认是筛选管辖组的
+        if(ACTION == 'index'){
+            $this->condition .= ' AND tm.ticket_model_group_id LIKE :group_id';
+            $this->param['group_id'] = "%,{$this->session()->get('ticket')['user_group_id']},%";
+        }
+
         $sql = "SELECT %s
                 FROM {$this->prefix}ticket AS t
                 LEFT JOIN {$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id
                 {$this->condition}
                 ORDER BY t.ticket_close ASC, t.ticket_status ASC, t.ticket_id DESC ";
+
         $result = \Model\Content::quickListContent(['count' => sprintf($sql, 'count(*)'), 'normal' => sprintf($sql, 't.*, tm.ticket_model_name'), 'param' => $this->param]);
 
         $this->assign('ticketModel', \Model\Content::listContent(['table' => 'ticket_model']));
@@ -51,6 +61,16 @@ class Ticket extends \Core\Controller\Controller {
         $this->layout('Ticket_index');
     }
 
+    /**
+     * 所有工单
+     */
+    public function all(){
+        $this->index();
+    }
+
+    /**
+     * 我的工单
+     */
     public function myTicket(){
         $this->param['user_id'] = $this->session()->get('ticket')['user_id'];
         $this->condition .= ' AND t.user_id = :user_id';

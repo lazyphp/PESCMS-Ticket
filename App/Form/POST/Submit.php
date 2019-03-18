@@ -51,6 +51,7 @@ class Submit extends \Core\Controller\Controller{
 
         \Model\Ticket::updateReferTime($ticket['ticket_id']);
         \Model\Ticket::inTicketIdWithUpdate([
+            'ticket_status' => '1',
             'ticket_read' => '0',
             'noset' => ['ticket_id' => $ticket['ticket_id']]
         ]);

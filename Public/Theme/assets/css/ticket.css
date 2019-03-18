@@ -11,10 +11,20 @@
 }
 
 @media only screen and (min-width: 1025px) {
-    .ticket-index-table tr td:nth-child(2){
-        width: 20rem;
-    }
-    .ticket-index-table tr td:nth-child(4){
+    .ticket-index-table tr td:last-child{
         width: 10rem;
     }
+}
+.admin-task-meta{
+    color: #888888;
+}
+.admin-task-bd{
+    /*font-size: 1.6rem;*/
+    margin-top: 0.5rem;
+}
+.admin-task-bd a{
+    color: #333;
+}
+.admin-task-bd a:hover{
+    color: #a9a9a9;
 }

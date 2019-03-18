@@ -31,7 +31,7 @@
                         <span class="am-fl"><strong><?= $item['title'] ?></strong></span>
                         <a href="<?= $item['url'] ?>" class="am-fr">更多>></a>
                     </div>
-                    <table class="am-table am-table-striped am-table-hover am-text-sm ticket-index-table">
+                    <table class="am-table am-table-striped am-table-hover ticket-index-table">
                         <?php if(empty($item['list'])): ?>
                             <tr class="am-text-center">
                                 <td>当前没有<?= $item['title'] ?>工单!</td>
@@ -39,10 +39,10 @@
                         <?php else: ?>
                             <?php foreach($item['list'] as $value): ?>
                                 <tr>
-                                    <td class="am-show-sm-only">
+                                    <td class="">
                                         <div class="admin-task-meta">
                                             <span class="am-badge" style="background-color: <?= $ticketStatus[$value['ticket_status']]['color']; ?>"><?= $ticketStatus[$value['ticket_status']]['name']; ?></span>
-                                            [<?= $value['ticket_model_name'] ?>]
+                                            [<?= $category[$value['ticket_model_cid']]['category_name'] ?> - <?= $value['ticket_model_name'] ?>]
                                             <?= $value['ticket_number'] ?>
                                         </div>
                                         <div class="admin-task-bd">
@@ -51,14 +51,7 @@
                                             </a>
                                         </div>
                                     </td>
-                                    <td class="am-show-lg-only">
-                                        <span class="am-badge" style="background-color: <?= $ticketStatus[$value['ticket_status']]['color']; ?>"><?= $ticketStatus[$value['ticket_status']]['name']; ?></span>
-                                        <?= $value['ticket_number'] ?>
-                                    </td>
-                                    <td class="am-show-lg-only">
-                                        <?= "{$value['ticket_model_name']} - {$value['ticket_title']}" ?>
-                                    </td>
-                                    <td class="am-show-lg-only">
+                                    <td class="am-show-lg-only am-text-bottom am-text-right">
                                         <a href="<?= $label->url(GROUP . '-Ticket-handle', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>">处理</a>
                                         <i class="am-margin-left-xs am-margin-right-xs">|</i>
                                         <a href="">删除</a>
@@ -99,10 +92,16 @@
                 </div>
                 <table class="am-table am-table-hover am-text-sm am-text-center">
                     <?php if(!empty($obligations)): ?>
+                        <tr>
+                            <td></td>
+                            <td>合计工单</td>
+                            <td>我</td>
+                        </tr>
                         <?php foreach($obligations as $key => $value): ?>
                         <tr>
-                            <td><?= $value['ticket_model_name'] ?></td>
-                            <td class="am-text-left"><?= $value['total'] ?></td>
+                            <td><?= $value['name'] ?></td>
+                            <td><?= $value['total'] ?></td>
+                            <td><?= $value['userTotal'] ?></td>
                         </tr>
                         <?php endforeach; ?>
                     <?php else: ?>

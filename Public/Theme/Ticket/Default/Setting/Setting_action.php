@@ -32,7 +32,7 @@
     </div>
 </div>
 <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/spectrum.js"></script>
-<link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Themec/Theme/assets/css/spectrum.css"/>
+<link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/spectrum.css"/>
 <script>
     $(".custom").spectrum({
         preferredFormat: "hex",
@@ -40,13 +40,24 @@
     });
 	$(function(){
 		$('.email-test').on('click', function(){
-			var email = $('.test_email').val();
-			var url = $(this).attr('data')
-			if(email == ''){
-				return false;
-			}
-			window.open(url + '&email='+email);
-			return false;
-		})
+            var email = $('.test_email').val();
+            var url = $(this).attr('data')
+            if(email == ''){
+                return false;
+            }
+            window.open(url + '&email='+email);
+            return false;
+        })
+
+        $('.mobile-test').on('click', function(){
+            var mobile = $('.test_mobile').val();
+            var template = $('select[name=template]').val();
+            var url = $(this).attr('data')
+            if(mobile == '' || template == '' ){
+                return false;
+            }
+            window.open(url + '&mobile='+mobile+'&template='+template);
+            return false;
+        })
 	})
 </script>

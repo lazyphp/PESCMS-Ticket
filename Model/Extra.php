@@ -84,7 +84,7 @@ class Extra extends \Core\Model\Model {
         $param = [
             'send_account' => $account,
             'send_title' => $title,
-            'send_time' => '0',
+            'send_time' => time(),
             'send_type' => $type
         ];
 
@@ -112,6 +112,9 @@ class Extra extends \Core\Model\Model {
             switch ($value['send_type']) {
                 case '1':
                     (new \Expand\Notice\Mail())->send($value);
+                    break;
+                case '2':
+                    (new \Expand\sms())->send($value);
                     break;
                 case '4':
                     (new \Expand\weixinWork())->send_notice($value);

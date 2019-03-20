@@ -29,7 +29,7 @@ class Ticket extends \Core\Controller\Controller {
             $this->error('该工单不存在');
         }
 
-        $viewTicketLinke = \Model\MailTemplate::getViewLink($ticket['ticket_number']);
+        $viewTicketLink = \Model\MailTemplate::getViewLink($ticket['ticket_number']);
 
         switch ($ticket['ticket_status']) {
             case '0':
@@ -39,7 +39,7 @@ class Ticket extends \Core\Controller\Controller {
 
                 $sendTitle = \Model\MailTemplate::matchTitle($ticket['ticket_number'], '2');
                 $sendContent = \Model\MailTemplate::matchContent([
-                    'view' => $viewTicketLinke,
+                    'view' => $viewTicketLink,
                 ], '2');
 
                 $referTime = $ticket['ticket_submit_time'];
@@ -55,7 +55,7 @@ class Ticket extends \Core\Controller\Controller {
                     $sendContent = \Model\MailTemplate::matchContent([
                         'number' => $ticket['ticket_number'],
                         'content' => $content,
-                        'view' => $viewTicketLinke,
+                        'view' => $viewTicketLink,
                     ], '3');
 
                 } elseif ($_POST['assign'] == '3') {
@@ -66,12 +66,12 @@ class Ticket extends \Core\Controller\Controller {
                     }
                     \Model\Ticket::setUser($ticket['ticket_id'], $checkUser['user_id'], $checkUser['user_name']);
                     $csContent = "{$this->session()->get('ticket')['user_name']}将工单《{$ticket['ticket_title']}》指派给了您，单号：{$number}，请您协助他/她尽快解决该工单问题。";
-                    \Model\Notice::addCSNotice($checkUser, ['title' => $csContent, 'content'=> $csContent]);
+                    \Model\Notice::addCSNotice($checkUser, ['title' => $csContent, 'content'=> $csContent], $ticket['ticket_number']);
 
                     $sendTitle = \Model\MailTemplate::matchTitle($ticket['ticket_number'], '4');
                     $sendContent = \Model\MailTemplate::matchContent([
                         'number' => $ticket['ticket_number'],
-                        'view' => $viewTicketLinke,
+                        'view' => $viewTicketLink,
                     ], '4');
                     $content = '当前问题需要移交给其他客服人员，请耐心等待';
 
@@ -82,7 +82,7 @@ class Ticket extends \Core\Controller\Controller {
                     $sendTitle = \Model\MailTemplate::matchTitle($ticket['ticket_number'], '5');
                     $sendContent = \Model\MailTemplate::matchContent([
                         'number' => $ticket['ticket_number'],
-                        'view' => $viewTicketLinke,
+                        'view' => $viewTicketLink,
                     ], '5');
 
                     \Model\Ticket::inTicketIdWithUpdate([
@@ -105,12 +105,16 @@ class Ticket extends \Core\Controller\Controller {
         \Model\Ticket::changeStatus($ticket['ticket_id'], $status);
         \Model\Ticket::addReply($ticket['ticket_id'], $content);
 
-        \Model\Extra::insertSend(
-            $ticket['ticket_contact_account'],
-            $sendTitle,
-            $sendContent,
-            $ticket['ticket_contact']
-        );
+        //只有勾选告知客户才生成通知(完成工单不受影响)，尽量减少对客户的滋扰。
+        if($_POST['notice'] == 1 || $_POST['assign'] == '4' ){
+            \Model\Extra::insertSend(
+                $ticket['ticket_contact_account'],
+                $sendTitle,
+                $sendContent,
+                $ticket['ticket_contact']
+            );
+        }
+
 
         if (empty($_POST['back_url'])) {
             $back_url = base64_encode($this->url('Ticket-Ticket-index'));

@@ -46,6 +46,14 @@
                             <option value="1" <?= '1' == $_GET['close'] ? 'selected="selected"' : '' ?>>已关闭</option>
                         </select>
 
+                        <?php if(!empty($member[$_GET['member']])): ?>
+                        <select name="member" class="am-form-field" placeholder=""
+                                data-am-selected="{btnSize: 'sm', dropUp: 0}">
+                            <option value="-1" >不筛选用户</option>
+                            <option value="<?= $_GET['member'] ?>" selected="selected" ><?= $member[$_GET['member']]['member_name'] ?></option>
+                        </select>
+                        <?php endif; ?>
+
                         <input type="text" name="keyword" value="<?= urldecode($_GET['keyword']) ?>"
                                class=" am-input-lg">
 
@@ -68,10 +76,15 @@
                                     [<?= $category[$value['ticket_model_cid']]['category_name'] ?> - <?= $value['ticket_model_name'] ?>]
                                     <?= $value['ticket_number'] ?>
                                     <i class="am-margin-left-xs am-margin-right-xs">|</i>
+                                    <?php if($value['member_id'] == -1 ): ?>
+                                        匿名用户
+                                    <?php else: ?>
+                                        <a href="<?= $label->url('Ticket-Ticket-'.ACTION, ['member' => $value['member_id']]) ?>"><?= $member[$value['member_id']]['member_name'] ?></a>
+                                    <?php endif; ?>
+
                                     <span>
                                         发布于: <?= date('Y-m-d H:i', $value['ticket_submit_time']); ?>
                                     </span>
-
                                 </div>
                                 <div class="admin-task-bd">
                                     <a href="<?= $label->url(GROUP . '-Ticket-handle', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>">

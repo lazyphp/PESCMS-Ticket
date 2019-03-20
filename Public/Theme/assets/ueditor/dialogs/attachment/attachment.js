@@ -566,6 +566,7 @@
 
     /* 在线附件 */
     function OnlineFile(target) {
+        return false;
         this.container = utils.isString(target) ? document.getElementById(target) : target;
         this.init();
     }

@@ -25,6 +25,14 @@
             </div>
             <?php endif; ?>
 
+            <div class="am-form-group am-form-group-sm">
+                <div class="am-checkbox">
+                    <label>
+                        <input type="checkbox" class="remember-password" value="1"> 记住登录信息
+                    </label>
+                </div>
+            </div>
+
             <button class="am-btn am-btn-primary am-btn-block">登录</button>
         </form>
     </div>
@@ -56,6 +64,37 @@
         }else{
             $("html, body").css('background' ,'url('+background.morning+')');
         }
+
+        /**
+         * 记住登录信息
+         */
+        var taccount = localStorage.getItem('taccount')
+        var tpassword = localStorage.getItem('tpassword')
+        if(tpassword && taccount ){
+            $('.remember-password').prop('checked', true)
+            $('input[name=account]').val(atob(taccount))
+            $('input[name=passwd]').val(atob(tpassword))
+        }else{
+            localStorage.removeItem('taccount')
+            localStorage.removeItem('tpassword')
+        }
+
+        $('.am-btn').on('click', function(){
+            if($('.remember-password').prop('checked') == false){
+                localStorage.removeItem('taccount')
+                localStorage.removeItem('tpassword')
+            }else{
+                var account = $('input[name=account]').val()
+                if(account){
+                    localStorage.setItem('taccount', btoa(account))
+                }
+                var password = $('input[name=passwd]').val()
+                if(password){
+                    localStorage.setItem('tpassword', btoa(password))
+                }
+            }
+        })
+
 
     })
 </script>

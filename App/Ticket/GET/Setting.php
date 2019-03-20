@@ -45,4 +45,29 @@ class Setting extends \Core\Controller\Controller {
         $this->layout();
     }
 
+    /**
+     * 短信测试
+     */
+    public function mobileTest(){
+        $mobile = $this->isG('mobile', '请输入手机号码');
+        $id = $this->isG('template', '请选择模板');
+
+        $viewTicketLinke = \Model\MailTemplate::getViewLink('123456');
+
+        $template = \Model\MailTemplate::matchContent(['number' => '123456', 'content' => '测试的内容', 'view' => $viewTicketLinke], $id);
+
+        $result = (new \Expand\sms())->send([
+            'send_id' => -1,
+            'send_account' => $mobile,
+            'send_title' => $template['sms']
+        ]);
+        echo "<p>当前发送模板: {$template['sms']}</p>";
+        echo '<pre>';
+        print_r($result);
+        echo '</pre>';
+        echo '<br/>';
+        exit;
+
+    }
+
 }

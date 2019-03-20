@@ -130,7 +130,7 @@ class Ticket extends \Core\Model\Model {
                 foreach ($userList as $user){
                     $content = "工单《{$ticket['ticket_model_name']}》有新工单: {$param['ticket_number']},请及时处理!";
 
-                    \Model\Notice::addCSNotice($user,['title' => $content, 'content' => $content]);
+                    \Model\Notice::addCSNotice($user,['title' => $content, 'content' => $content], $param['ticket_number']);
                 }
             }
         }
@@ -185,8 +185,20 @@ class Ticket extends \Core\Model\Model {
                     $imgStr .= '</ul>';
                     $form[$value['ticket_form_id']]['ticket_value'] = $imgStr;
                     break;
+                case 'file':
+                    //@todo 待优化
+                    $splitImg = explode(',', $value['ticket_form_content']);
+                    $imgStr = '<ul class="am-avg-sm-4 am-thumbnails">';
+                    if(!empty($value['ticket_form_content'])){
+                        foreach ($splitImg as $key => $item){
+                            $imgStr .= '<li><a href="'.$item.'">下载附件'.($key +1) .'</a></li>';
+                        }
+                    }
+                    $imgStr .= '</ul>';
+                    $form[$value['ticket_form_id']]['ticket_value'] = $imgStr;
+                    break;
                 default:
-                    $form[$value['ticket_form_id']]['ticket_value'] = $value['ticket_form_content'];
+                    $form[$value['ticket_form_id']]['ticket_value'] = (new \voku\helper\AntiXSS())->xss_clean(htmlspecialchars_decode( $value['ticket_form_content'] ));
             }
 
             if ($value['ticket_form_bind'] > 0) {

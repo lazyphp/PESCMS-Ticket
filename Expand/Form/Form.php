@@ -40,6 +40,10 @@ class Form {
                 $category = \Model\Category::recursion(true);
                 require 'theme/category.php';
                 break;
+            case 'ticket':
+                $ticketModel = \Model\TicketModel::getTicketModelList();
+                require 'theme/ticket.php';
+                break;
             case $field['field_type']:
                 require "theme/{$field['field_type']}.php";
                 break;

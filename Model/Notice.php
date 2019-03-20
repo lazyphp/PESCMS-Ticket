@@ -21,7 +21,7 @@ class Notice extends \Core\Model\Model {
      * @param array $user
      * @param array $content
      */
-    public static function addCSNotice(array $user, array $content){
+    public static function addCSNotice(array $user, array $content, $number = ''){
         $cs_notice_type = json_decode(\Core\Func\CoreFunc::$param['system']['cs_notice_type'], true);
         foreach ($cs_notice_type as $type){
             if($type == 4 && empty($user['user_weixinWork']) ){
@@ -35,7 +35,8 @@ class Notice extends \Core\Model\Model {
                     $account = $user['user_weixinWork'];
                     break;
             }
-            \Model\Extra::insertSend($account, $content['title'], $content['content'], $type);
+            $linkStr = "详情: ".\Model\MailTemplate::getCSViewLink($number);
+            \Model\Extra::insertSend($account, $content['title'], $content['content'].$linkStr, $type);
         }
     }
 

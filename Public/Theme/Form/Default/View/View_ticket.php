@@ -16,7 +16,12 @@
 
                                 <div class="am-form-group pt-reply-content">
                                     <label for="">回复内容</label>
-                                    <textarea name="content" rows="5" required></textarea>
+                                    <script type="text/plain" id="content" style="height:250px;"></script>
+                                    <script>
+                                    var ue = UE.getEditor('content', {
+                                        textarea: 'content'
+                                    });
+                                    </script>
                                 </div>
                                 <?php if($ticket_model_verify == 1): ?>
                                 <div class="am-form-group pt-reply-content">

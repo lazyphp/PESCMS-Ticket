@@ -14,10 +14,19 @@ namespace App\Ticket\PUT;
 
 class Setting extends \Core\Controller\Controller {
 
+    /**
+     * @todo 需要优化代码
+     */
     public function action() {
+
+        foreach (['upload_img', 'upload_file'] as $value) {
+            $data[$value] = json_encode(explode(',', str_replace(["\r\n", "\r", " "], '', $_POST[$value])));
+        }
+
         $data['domain'] = $this->isP('domain', '请提交网站域名');
         $data['openindex'] = $this->p('openindex');
         $data['notice_way'] = $this->p('notice_way');
+        $data['open_register'] = $this->p('open_register');
         $data['crossdomain'] = !empty($_POST['crossdomain']) ? json_encode(explode("\n", str_replace("\r", "", $this->p('crossdomain')))) : '';
 
         if(count($_POST['customstatus']) != '4' && count($_POST['customcolor']) != '4'){
@@ -36,6 +45,7 @@ class Setting extends \Core\Controller\Controller {
         $data['weixinWork_api'] = json_encode($this->p('weixinWork_api'));
         $data['login_verify'] = json_encode($this->p('login_verify'));
         $data['cs_notice_type'] = json_encode($this->p('cs_notice_type'));
+        $data['sms'] = json_encode($this->p('sms'));
 
         foreach($data as $key => $value){
             $this->db('option')->where('option_name = :option_name')->update([

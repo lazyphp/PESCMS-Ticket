@@ -38,7 +38,7 @@ class Submit extends \Core\Controller\Controller{
         $content = $this->isP('content', '请提交回复内容');
         $ticket = \Model\Ticket::getTicketBaseInfo($number);
 
-        if (empty($ticket) || $ticket['ticket_status'] == '4') {
+        if (empty($ticket) || in_array($ticket['ticket_status'], [3, 4])) {
             $this->error('该工单不存在或者已经关闭');
         }
 
@@ -49,9 +49,11 @@ class Submit extends \Core\Controller\Controller{
             }
         }
 
+        $status = $ticket['ticket_status'] == 0 ? 0 : 1;
+
         \Model\Ticket::updateReferTime($ticket['ticket_id']);
         \Model\Ticket::inTicketIdWithUpdate([
-            'ticket_status' => '1',
+            'ticket_status' => $status,
             'ticket_read' => '0',
             'noset' => ['ticket_id' => $ticket['ticket_id']]
         ]);
@@ -61,7 +63,8 @@ class Submit extends \Core\Controller\Controller{
             $user = \Model\Content::findContent('user', $ticket['user_id'], 'user_id');
 
             $content = "工单《{$ticket['ticket_title']}》有新回复! 单号:{$ticket['ticket_number']},请跟进!";
-            \Model\Notice::addCSNotice($user,['title' => $content, 'content' => $content]);
+
+            \Model\Notice::addCSNotice($user,['title' => $content, 'content' => $content], $ticket['ticket_number']);
         }
 
         $this->success('回复工单成功!', $this->url('Form-View-ticket', ['number' => $ticket['ticket_number']]));

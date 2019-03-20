@@ -61,7 +61,7 @@ class Login extends \Core\Controller\Controller {
         if (\Model\Extra::checkInputValueType($param['member_email'], 1) == false) {
             $this->error('请输入正确的邮箱地址');
         }
-        if (\Model\Extra::checkInputValueType($param['member_phone'], 5) == false) {
+        if (\Model\Extra::checkInputValueType($param['member_phone'], 2) == false) {
             $this->error('请输入正确的手机号码');
         }
 

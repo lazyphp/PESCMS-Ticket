@@ -787,6 +787,7 @@
 
     /* 在线图片 */
     function OnlineImage(target) {
+        return false
         this.container = utils.isString(target) ? document.getElementById(target) : target;
         this.init();
     }

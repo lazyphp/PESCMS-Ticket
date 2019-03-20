@@ -12,7 +12,7 @@
                 <ul class="am-list am-list-static am-text-sm">
                     <li>
                         <div class="am-g am-g-collapse">
-                            <div class="am-u-lg-8">
+                            <div class="am-u-lg-12">
 
                                 <?php if ($ticket_status == '0'): ?>
                                     <div class="am-form-group">
@@ -54,11 +54,41 @@
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
+
+                                    <?php if(!empty($phrase)): ?>
+                                        <div class="am-form-group">
+                                            <label for="">我的回复短语</label>
+                                            <select id="phrase">
+                                                <option value="">请选择</option>
+                                                <?php foreach ($phrase as $value): ?>
+                                                    <option value="<?= $value['phrase_id']; ?>"><?= $value['phrase_name']; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                    <?php endif; ?>
+
                                     <div class="am-form-group pt-reply-content">
                                         <label for="">回复内容</label>
-                                        <textarea name="content" rows="5"></textarea>
+                                        <script type="text/plain" id="content" style="height:250px;"></script>
+                                        <script>
+                                        var ue = UE.getEditor('content', {
+                                            textarea: 'content'
+                                        });
+                                        </script>
                                     </div>
                                 <?php endif; ?>
+
+                                <div class="am-form-group">
+                                    <label class="am-form-label am-margin-bottom-0">是否通知 : </label>
+                                    <label class="form-checkbox-label am-checkbox-inline">
+                                        <input type="checkbox" name="notice" value="1">
+                                        告知客户
+                                    </label>
+                                    <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
+                                        <i class="am-icon-lightbulb-o"></i> 若回复内容非常重要，请勾选告知客户，以便客户知道业务解决情况。
+                                    </div>
+                                </div>
+
                                 <button type="submit" id="btn-submit" class="am-btn am-btn-primary am-btn-xs" data-am-loading="{spinner: 'circle-o-notch', loadingText: '提交中...', resetText: '再次提交'}">提交
                                 </button>
 
@@ -69,7 +99,16 @@
         </div>
     </form>
     <?php endif; ?>
+</div>
 
+<div class="phrase_list am-hide">
+    <?php if(!empty($phrase)): ?>
+        <?php foreach ($phrase as $value): ?>
+            <div id="phrase_<?=$value['phrase_id']?>">
+                <?= htmlspecialchars_decode($value['phrase_content']) ?>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
 </div>
 
 <script>
@@ -95,5 +134,19 @@
         $("input[name=assign]").change(function () {
             assign($(this).val());
         })
+
+        /**
+         * 回复短语
+         */
+        $('#phrase').change(function(){
+            var id = $(this).val()
+            if(id == ''){
+                return false;
+            }
+            var content = $('#phrase_'+id).html().trim();
+            ue.setContent(content);
+
+        })
+
     })
 </script>

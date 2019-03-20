@@ -12,8 +12,12 @@
             <div class="am-form-group">
                 <label class="am-block">联系方式<i class="am-text-danger">*</i></label>
                 <label class="form-radio-label am-radio-inline">
-                    <input class="form-radio" type="radio" name="contact" value="1" required="required"  checked="checked" />
+                    <input class="form-radio" type="radio" name="contact" value="1" required="required"  checked="checked" data="<?= !empty($member) ? $member['member_email'] : '' ?>" />
                     <span>邮件</span>
+                </label>
+                <label class="form-radio-label am-radio-inline">
+                    <input class="form-radio" type="radio" name="contact" value="2" required="required"   data="<?= !empty($member) ? $member['member_phone'] : '' ?>" />
+                    <span>手机号码</span>
                 </label>
             </div>
         </div>
@@ -98,3 +102,10 @@
         </div>
     </div>
 </form>
+<script>
+    $(function(){
+        $('input[name=contact]').click(function(){
+            $('input[name=contact_account]').val($(this).attr('data'))
+        })
+    })
+</script>

@@ -42,7 +42,19 @@ class MailTemplate extends \Core\Model\Model {
      * @return string
      */
     public static function getViewLink($number) {
-        $link = \Model\Content::findContent('option', 'domain', 'option_name')['value'] . self::url('Form-View-ticket', ['number' => $number]);
+        $system = \Core\Func\CoreFunc::$param['system'];
+        $link = $system['domain'] . self::url('Form-View-ticket', ['number' => $number]);
+        return '<a href="' . $link . '">' . $link . '</a>';
+    }
+
+    /**
+     * 快速生成客服查看工单的链接
+     * @param $number 工单号
+     * @return string
+     */
+    public static function getCSViewLink($number) {
+        $system = \Core\Func\CoreFunc::$param['system'];
+        $link = $system['domain'] . self::url('Ticket-Ticket-handle', ['number' => $number]);
         return '<a href="' . $link . '">' . $link . '</a>';
     }
 
@@ -66,19 +78,26 @@ class MailTemplate extends \Core\Model\Model {
     public static function matchContent(array $param, $type) {
         $param = array_merge(['number' => '', 'content' => '', 'view' => ''], $param);
         $template = self::getTemplate($type);
-        return str_replace(
-            '{number}',
-            $param['number'],
-            str_replace(
-                '{content}',
-                $param['content'],
+        foreach (['mail' => 'mail_template_content', 'sms' => 'mail_template_sms'] as $key => $item){
+            if($key == 'sms'){
+                $param['view'] = strip_tags($param['view']);
+            }
+            $content[$key] = str_replace(
+                '{number}',
+                $param['number'],
                 str_replace(
-                    '{view}',
-                    $param['view'],
-                    $template['mail_template_content']
+                    '{content}',
+                    $param['content'],
+                    str_replace(
+                        '{view}',
+                        $param['view'],
+                        $template[$item]
+                    )
                 )
-            )
-        );
+            );
+        }
+
+        return $content;
     }
 
 }

@@ -51,7 +51,12 @@ class Extra extends \Core\Model\Model {
             case 1:
                 return filter_var($value, FILTER_VALIDATE_EMAIL);
             case 2:
-                return filter_var($value, FILTER_VALIDATE_URL);
+                $preg = "/^1[3456789]\d{9}$/";
+                if (!preg_match($preg, $value)) {
+                    return false;
+                }
+
+                break;
             case 3:
                 if (!is_numeric($value)) {
                     return false;
@@ -63,10 +68,7 @@ class Extra extends \Core\Model\Model {
                 }
                 break;
             case 5:
-                if(strlen($value) != 11 && substr($value, 0) != '1'){
-                    return false;
-                }
-                break;
+                return filter_var($value, FILTER_VALIDATE_URL);
         }
         return true;
     }
@@ -79,13 +81,26 @@ class Extra extends \Core\Model\Model {
      * @return mixed
      */
     public static function insertSend($account, $title = '', $content, $type){
-        return self::db('send')->insert([
+        $param = [
             'send_account' => $account,
             'send_title' => $title,
-            'send_content' => $content,
-            'send_time' => '0',
+            'send_time' => time(),
             'send_type' => $type
-        ]);
+        ];
+
+
+        if(is_array($content)){
+            $param['send_content'] =  $content['mail'];
+            //为了兼容短信
+            if($type == 2){
+                $param['send_title'] = $content['sms'];
+                $param['send_content'] = $content['sms'];
+            }
+        }else{
+            $param['send_content'] = $content;
+        }
+
+        return self::db('send')->insert($param);
     }
 
     /**
@@ -97,6 +112,9 @@ class Extra extends \Core\Model\Model {
             switch ($value['send_type']) {
                 case '1':
                     (new \Expand\Notice\Mail())->send($value);
+                    break;
+                case '2':
+                    (new \Expand\sms())->send($value);
                     break;
                 case '4':
                     (new \Expand\weixinWork())->send_notice($value);

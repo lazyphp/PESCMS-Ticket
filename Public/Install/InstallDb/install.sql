@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2019-03-19 01:28:15
+-- Generation Time: 2019-03-25 02:24:33
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `pes_field` (
   PRIMARY KEY (`field_id`),
   UNIQUE KEY `modle_id` (`field_model_id`,`field_name`),
   KEY `field_name` (`field_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=219 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=232 ;
 
 --
 -- 转存表中的数据 `pes_field`
@@ -73,7 +73,7 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (4, 1, 'attr', '模型属性', 'radio', '{"\\u524d\\u53f0":"1","\\u540e\\u53f0":"2"}', '', '', 1, 4, 1, 1, 1, 0),
 (5, 1, 'status', '模型状态', 'radio', '{"\\u542f\\u7528":"1","\\u7981\\u7528":"0"}', '', '', 1, 5, 1, 1, 1, 0),
 (6, 2, 'model_id', '模型ID', 'text', '', '', '', 1, 0, 0, 0, 1, 0),
-(7, 2, 'type', '字段类型', 'select', '{&quot;\\u5206\\u7c7b&quot;:&quot;category&quot;,&quot;\\u5355\\u884c\\u8f93\\u5165\\u6846&quot;:&quot;text&quot;,&quot;\\u591a\\u884c\\u8f93\\u5165\\u6846&quot;:&quot;textarea&quot;,&quot;\\u5355\\u9009\\u6309\\u94ae&quot;:&quot;radio&quot;,&quot;\\u590d\\u9009\\u6846&quot;:&quot;checkbox&quot;,&quot;\\u5355\\u9009\\u4e0b\\u62c9\\u6846&quot;:&quot;select&quot;,&quot;\\u591a\\u9009\\u4e0b\\u62c9\\u6846&quot;:&quot;multiple&quot;,&quot;\\u7f16\\u8f91\\u5668&quot;:&quot;editor&quot;,&quot;\\u7565\\u7f29\\u56fe&quot;:&quot;thumb&quot;,&quot;\\u4e0a\\u4f20\\u56fe\\u7ec4&quot;:&quot;img&quot;,&quot;\\u4e0a\\u4f20\\u6587\\u4ef6&quot;:&quot;file&quot;,&quot;\\u65e5\\u671f&quot;:&quot;date&quot;,&quot;\\u7c7b\\u578b&quot;:&quot;types&quot;}', '', '', 1, 1, 1, 1, 1, 0),
+(7, 2, 'type', '字段类型', 'select', '{"\\u5206\\u7c7b":"category","\\u5355\\u884c\\u8f93\\u5165\\u6846":"text","\\u591a\\u884c\\u8f93\\u5165\\u6846":"textarea","\\u5355\\u9009\\u6309\\u94ae":"radio","\\u590d\\u9009\\u6846":"checkbox","\\u5355\\u9009\\u4e0b\\u62c9\\u6846":"select","\\u591a\\u9009\\u4e0b\\u62c9\\u6846":"multiple","\\u7f16\\u8f91\\u5668":"editor","\\u7565\\u7f29\\u56fe":"thumb","\\u4e0a\\u4f20\\u56fe\\u7ec4":"img","\\u4e0a\\u4f20\\u6587\\u4ef6":"file","\\u65e5\\u671f":"date","\\u5de5\\u5355\\u6a21\\u578b":"ticket","\\u7c7b\\u578b":"types"}', '', '', 1, 1, 1, 1, 1, 0),
 (8, 2, 'name', '字段名称', 'text', '', '', '', 1, 2, 1, 1, 1, 0),
 (9, 2, 'display_name', '显示名称', 'text', '', '', '', 1, 3, 1, 1, 1, 0),
 (10, 2, 'option', '选项值', 'textarea', '', '选填， 选填， 此处若没有特殊说明，必须 名称|值 填写、且一行一个选项值，否则将导致数据异常!  注意:目前选项适用于单选，复选，下拉菜单。其余功能填写也不会产生任何实际效果。', '', 0, 4, 0, 1, 1, 0),
@@ -157,7 +157,18 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (215, 21, 'time', '生成时间', 'date', '', '', '', 1, 5, 1, 1, 1, 0),
 (216, 21, 'type', '发送方式', 'select', '{&quot;\\u90ae\\u7bb1&quot;:&quot;1&quot;,&quot;\\u624b\\u673a&quot;:&quot;2&quot;,&quot;\\u5fae\\u4fe1&quot;:&quot;3&quot;,&quot;\\u4f01\\u4e1a\\u5fae\\u4fe1&quot;:&quot;4&quot;}', '', '', 1, 4, 1, 1, 1, 0),
 (217, 7, 'weixinWork', '企业微信ID', 'text', '', '', '', 0, 6, 1, 1, 1, 1),
-(218, 2, 'is_null', '是否为空', 'radio', '{&quot;\\u5426&quot;:&quot;0&quot;,&quot;\\u662f&quot;:&quot;1&quot;}', '', '', 0, 7, 1, 1, 1, 0);
+(218, 2, 'is_null', '是否为空', 'radio', '{&quot;\\u5426&quot;:&quot;0&quot;,&quot;\\u662f&quot;:&quot;1&quot;}', '', '', 0, 7, 1, 1, 1, 0),
+(219, 17, 'sms', '短信模板内容', 'textarea', '', '在短信模板内容，输入如下变量可以动态输出对应的值：{number}为工单号码，{view}为工单查询的链接地址。另外请到短信平台按照要求添加一致的模板。', '', 1, 4, 0, 1, 1, 0),
+(221, 22, 'listsort', '排序', 'text', '', '', '', 0, 98, 1, 1, 1, 0),
+(223, 22, 'name', '短语名称', 'text', '', '', '', 0, 1, 1, 1, 1, 0),
+(224, 22, 'content', '内容', 'editor', '', '', '', 1, 2, 0, 1, 1, 0),
+(225, 22, 'user_id', '所属者', 'text', '', '', '', 0, 90, 0, 0, 1, 0),
+(226, 23, 'status', '状态', 'radio', '{"\\u7981\\u7528":"0","\\u542f\\u7528":"1"}', '', '1', 1, 100, 1, 1, 1, 0),
+(227, 23, 'listsort', '排序', 'text', '', '', '', 0, 98, 1, 1, 1, 0),
+(228, 23, 'createtime', '创建时间', 'date', '', '', '', 0, 99, 1, 1, 1, 0),
+(229, 23, 'ticket_model_id', '对应工单', 'ticket', '', '', '', 1, 1, 1, 1, 1, 0),
+(230, 23, 'title', '标题', 'text', '', '', '', 1, 2, 1, 1, 1, 0),
+(231, 23, 'content', '详细内容', 'editor', '', '', '', 1, 3, 0, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -177,6 +188,25 @@ CREATE TABLE IF NOT EXISTS `pes_findpassword` (
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `pes_fqa`
+--
+
+CREATE TABLE IF NOT EXISTS `pes_fqa` (
+  `fqa_id` int(11) NOT NULL AUTO_INCREMENT,
+  `fqa_listsort` int(11) NOT NULL DEFAULT '0',
+  `fqa_status` tinyint(4) NOT NULL DEFAULT '0',
+  `fqa_url` varchar(255) NOT NULL DEFAULT '',
+  `fqa_createtime` int(11) NOT NULL DEFAULT '0',
+  `fqa_ticket_model_id` int(11) NOT NULL DEFAULT '0',
+  `fqa_title` varchar(255) NOT NULL DEFAULT '',
+  `fqa_content` text NOT NULL,
+  PRIMARY KEY (`fqa_id`),
+  KEY `fqa_ticket_model_id` (`fqa_ticket_model_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `pes_mail_template`
 --
 
@@ -185,6 +215,7 @@ CREATE TABLE IF NOT EXISTS `pes_mail_template` (
   `mail_template_type` int(11) NOT NULL,
   `mail_template_title` varchar(255) NOT NULL,
   `mail_template_content` text NOT NULL,
+  `mail_template_sms` varchar(500) NOT NULL DEFAULT '',
   PRIMARY KEY (`mail_template_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
@@ -192,13 +223,13 @@ CREATE TABLE IF NOT EXISTS `pes_mail_template` (
 -- 转存表中的数据 `pes_mail_template`
 --
 
-INSERT INTO `pes_mail_template` (`mail_template_id`, `mail_template_type`, `mail_template_title`, `mail_template_content`) VALUES
-(1, 1, '工单提交成功！您的工单编号为：{number}', '我们已经收到您提交的工单，单号为：{number} 。我们将会尽快对您的问题进行处理，请耐心等待。此外，您可以通过如下链接对工单的进度查询：{view}'),
-(2, 2, '工单:{number}已经受理', '您的工单已经受理，我们将会尽快解决您的问题，请耐心等待。\r\n查看工单进度，可以点击如下链接访问：{view}'),
-(3, 3, '工单:{number}有新的回复', '您好，您的工单:{number} 有新的回复：\n{content}\n点击如下链接可以查看工单的进度:{view}'),
-(4, 4, '工单:{number}需要转交客服处理', '您好，您的工单{number}需要转交客服处理，请耐心等待。\n点击如下链接可以查看工单的进度:{view}'),
-(5, 5, '工单:{number}已经完成', '您好，您的工单:{number}已经被客服标记为完成状态。该工单将无法继续操作。若您的问题仍旧无法解决，请重新发起新的工单，感谢您的耐心等待。\n查看工单的详情，请点击如下链接:{view}'),
-(6, 6, '工单:{number}被关闭', '您好，非常抱歉地告诉您，您的工单:{number}已经被客服标关闭。该工单将无法继续操作。若您的问题仍旧无法解决，请重新发起新的工单，感谢您的反馈。\r\n查看工单的详情，请点击如下链接:{view}');
+INSERT INTO `pes_mail_template` (`mail_template_id`, `mail_template_type`, `mail_template_title`, `mail_template_content`, `mail_template_sms`) VALUES
+(1, 1, '工单提交成功！您的工单编号为：{number}', '我们已经收到您提交的工单，单号为：{number} 。我们将会尽快对您的问题进行处理，请耐心等待。此外，您可以通过如下链接对工单的进度查询：{view}', '我们已经收到您提交的工单，我们将尽快安排人员为您解疑释惑。您的工单编号为：{number}。请不要把工单号码泄露给其他人。'),
+(2, 2, '工单:{number}已经受理', '您的工单已经受理，我们将会尽快解决您的问题，请耐心等待。\r\n查看工单进度，可以点击如下链接访问：{view}', '您的工单已经受理，我们将会尽快解决您的问题，请耐心等待。 查看工单进度，可以点击如下链接访问：{view}'),
+(3, 3, '工单:{number}有新的回复', '您好，您的工单:{number} 有新的回复：\n{content}\n点击如下链接可以查看工单的进度:{view}', '您好，您的工单:{number} 有新的回复。点击如下链接可以查看工单的进度:{view}'),
+(4, 4, '工单:{number}需要转交客服处理', '您好，您的工单{number}需要转交客服处理，请耐心等待。\n点击如下链接可以查看工单的进度:{view}', '您好，您的工单{number}需要转交客服处理，请耐心等待。'),
+(5, 5, '工单:{number}已经完成', '您好，您的工单:{number}已经被客服标记为完成状态。该工单将无法继续操作。若您的问题仍旧无法解决，请重新发起新的工单，感谢您的耐心等待。\n查看工单的详情，请点击如下链接:{view}', '您好，您的工单:{number}已经被客服标记为完成状态。该工单将无法继续操作。若您的问题仍旧无法解决，请重新发起新的工单，感谢您的耐心等待。'),
+(6, 6, '工单:{number}被关闭', '您好，非常抱歉地告诉您，您的工单:{number}已经被客服标关闭。该工单将无法继续操作。若您的问题仍旧无法解决，请重新发起新的工单，感谢您的反馈。\r\n查看工单的详情，请点击如下链接:{view}', '您好，非常抱歉地告诉您，您的工单:{number}已经被客服标关闭。该工单将无法继续操作。若您的问题仍旧无法解决，请重新发起新的工单，感谢您的反馈。');
 
 -- --------------------------------------------------------
 
@@ -236,7 +267,7 @@ CREATE TABLE IF NOT EXISTS `pes_menu` (
   `menu_type` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`menu_id`),
   KEY `menu_pid` (`menu_pid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=33 ;
 
 --
 -- 转存表中的数据 `pes_menu`
@@ -265,7 +296,8 @@ INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_l
 (24, '应用商店', 9, 'am-icon-cogs', 'Ticket-Application-index', 3, 0),
 (25, '商业授权', 9, 'am-icon-registered', 'https://www.pescms.com/Page/Authorization.html', 99, 1),
 (26, '发送列表', 9, 'am-icon-send', 'Ticket-Send-index', 5, 0),
-(27, '全部工单', 13, 'am-icon-list', 'Ticket-Ticket-all', 1, 0);
+(27, '全部工单', 13, 'am-icon-list', 'Ticket-Ticket-all', 1, 0),
+(32, '常见问题解答', 1, 'am-icon-question-circle', 'Ticket-Fqa-index', 20, 0);
 
 -- --------------------------------------------------------
 
@@ -282,7 +314,7 @@ CREATE TABLE IF NOT EXISTS `pes_model` (
   `model_attr` tinyint(1) NOT NULL DEFAULT '0' COMMENT '模型属性 1:前台(含前台) 2:后台',
   PRIMARY KEY (`model_id`),
   UNIQUE KEY `model_name` (`model_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
 
 --
 -- 转存表中的数据 `pes_model`
@@ -301,7 +333,9 @@ INSERT INTO `pes_model` (`model_id`, `model_name`, `model_title`, `model_status`
 (17, 'mail_template', '邮件模板', 1, 0, 2),
 (18, 'Category', '分类', 1, 1, 1),
 (20, 'Member', '会员管理', 1, 1, 1),
-(21, 'Send', '发送列表', 1, 1, 1);
+(21, 'Send', '发送列表', 1, 1, 1),
+(22, 'Phrase', '回复短语', 1, 0, 2),
+(23, 'Fqa', '常见问题解答', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -321,7 +355,7 @@ CREATE TABLE IF NOT EXISTS `pes_node` (
   `node_controller` int(11) NOT NULL DEFAULT '0',
   `node_listsort` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`node_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=84 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=90 ;
 
 --
 -- 转存表中的数据 `pes_node`
@@ -410,7 +444,13 @@ INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `n
 (80, '提交分类删除', 76, 1, '', 'DELETE', 'action', 'TicketDELETECategoryaction', 76, 5),
 (81, '分类列表', 76, 1, '', 'DELETE', 'index', 'TicketGETCategoryindex', 76, 1),
 (82, '删除工单', 2, 1, '当前权限不足，无法删除工单。', 'DELETE', 'action', 'TicketDELETETicketaction', 2, 5),
-(83, '全部工单', 2, 1, '', 'GET', 'all', 'TicketGETTicketall', 2, 5);
+(83, '全部工单', 2, 1, '', 'GET', 'all', 'TicketGETTicketall', 2, 5),
+(84, '常见问题', 11, 1, '', 'GET', 'Fqa', '', 0, 8),
+(85, 'FQA列表', 7, 1, '', 'GET', 'index', 'TicketGETFqaindex', 84, 110),
+(86, 'FQA编辑', 7, 1, '', 'GET', 'action', 'TicketGETFqaaction', 84, 111),
+(87, 'FQA添加', 7, 1, '', 'POST', 'action', 'TicketPOSTFqaaction', 84, 112),
+(88, 'FQA更新', 7, 1, '', 'PUT', 'action', 'TicketPUTFqaaction', 84, 113),
+(89, 'FQA删除', 7, 1, '', 'DELETE', 'action', 'TicketDELETEFqaaction', 84, 114);
 
 -- --------------------------------------------------------
 
@@ -513,7 +553,7 @@ CREATE TABLE IF NOT EXISTS `pes_option` (
   `value` text NOT NULL,
   `option_range` varchar(128) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
 --
 -- 转存表中的数据 `pes_option`
@@ -534,7 +574,23 @@ INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) 
 (12, 'weixin_api', '微信接口', '', 'system'),
 (13, 'weixinWork_api', '企业微信接口', '', 'system'),
 (14, 'login_verify', '登录验证码', '["1"]', 'system'),
-(15, 'cs_notice_type', '客服人员接收通知方式', '{"1":"1"}', 'system');
+(15, 'cs_notice_type', '客服人员接收通知方式', '{"1":"1"}', 'system'),
+(16, 'sms', '短信接口', '', 'system');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `pes_phrase`
+--
+
+CREATE TABLE IF NOT EXISTS `pes_phrase` (
+  `phrase_id` int(11) NOT NULL AUTO_INCREMENT,
+  `phrase_listsort` int(11) NOT NULL DEFAULT '0',
+  `phrase_name` varchar(255) NOT NULL DEFAULT '',
+  `phrase_content` text NOT NULL,
+  `phrase_user_id` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`phrase_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 

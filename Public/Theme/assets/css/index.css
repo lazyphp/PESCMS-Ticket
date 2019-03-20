@@ -24,14 +24,29 @@
 /*工单分类*/
 .ticket-category{
     display: block;
-    height: 110px;
+    min-heightheight: 110px;
     background-color: #f2f2f2;
     padding: 20px 0 20px 20px;
     box-sizing: border-box;
     color: #333;
 }
+@media only screen and (min-width: 1025px) {
+    .ticket-ul{
+        display: flex;
+        align-items: stretch;
+    }
+}
+
 .ticket-list{
-    height: auto !important;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+.ticket-list-active, .ticket-list-active:hover{
+    background-color:#FFB800 !important;
+}
+.ticket-list-active, .ticket-list-active a,.ticket-list-active:hover, .ticket-list-active a:hover{
+    color: #FFFFFF !important;
 }
 .ticket-category:hover{
     color: #333;
@@ -71,4 +86,25 @@
     width: 54% !important;
     height: 38px;
     padding-top: 1px;
+}
+
+.ticket-fqa{
+    /*border: 1px solid #ddd;*/
+}
+.fqa-list{
+    border-top: 1px solid #ddd;
+    padding: 1rem 1.5rem;
+}
+
+.fqa-list>li{
+    margin: 0.5rem 0;
+}
+.fqa-list a{
+    padding: 0.2rem 0;
+    color: #333333;
+    line-height: 20px;
+}
+.fqa-list a:hover{
+    background: #e1e6eb;
+    text-decoration: none;
 }

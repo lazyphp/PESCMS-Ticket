@@ -112,21 +112,25 @@ $(function () {
          * 声明简易版的上传组件
          */
         $('[data-am-webuploader-simple]').each(function () {
-            var options = AMUIwebuploader.options($(this).attr('data-am-webuploader-simple'));
-            //初始化简易版的上传样式
-            $(this).html(AMUIwebuploader.template(options.id, options.type, options.pick.multiple, options.gallery));
+            var options = AMUI.utils.parseOptions($(this).attr('data-am-webuploader-simple'));
+
+
+            //初始化简易版的上传按钮
+            $(this).html(AMUIwebuploader.template(options));
 
             //输出预设内容
-            // @todo还要修改遍历方法
             if (options.content) {
-                var inputName = options.content.split(',').length == 1 ? options.name : options.name + '[]';
-
                 $("#before" + options.id).prevAll().remove();
-                $.each(options.content.split(','), function (key, value) {
+
+                var img_content = options.content.replace(/base64,/g, "{base64}");
+
+                $.each(img_content.split(','), function (key, value) {
+                    var img_src = value.replace(/\{base64\}/g, "base64,")
                     AMUIwebuploader.append({
                         id:options.id,
-                        src:value,
-                        name:inputName
+                        src:img_src,
+                        name:options.name,
+                        type:options.type
                     });
                 });
             }
@@ -134,76 +138,13 @@ $(function () {
         });
 
         /**
-         * 依次为 初始化弹窗的对象 、 图库的选项
-         * @type {{}}
+         * 移除简易版上传队列中的文件
          */
-        var gallery_dialog = {}, gallery_option = {};
-
-        /**
-         * 弹出图库选择框
-         */
-        $(document).on('click', '.commonly', function () {
-            //读取必要的配置信息
-            gallery_option = {
-                id:$(this).attr('data'),
-                name:$(this).attr('data'),
-                multiple: $(this).attr('data-multiple') == 'true' ? true : false
-            };
-
-            gallery_dialog = dialog({
-                id: 'commonly-gallery',
-                title: '打开图库'
-            });
-
-            //加载请求
-            $.get(api.gallery_url, function (data) {
-                gallery_dialog.content('<div id="commonly-gallery-content">' + data + '</div>');
-                gallery_dialog.show();
-            })
-
-        });
-
-        /**
-         * 切换上下页
-         */
-        $(document).on('click', '#commonly-gallery-content .am-pagination a', function(){
-            var url = $(this).attr('href');
-            if(!url || url == 'javascript:;'){
-                return false;
+        $(document).on('click', "[data-am-webuploader-simple] li", function () {
+            if (!$(this).attr('id').match('before')) {
+                $(this).remove();
             }
-            $.get(url, function (data) {
-                gallery_dialog.content('<div id="commonly-gallery-content">' + data + '</div>');
-            });
-            return false;
-        });
-
-        $(document).on('click', '#commonly-gallery-content .search', function(){
-            var url = $(this).parents('form').attr('action');
-            var keyword = $(this).parents('form').find('input[name=keyword]').val();
-            $.get(url+keyword, function (data) {
-                gallery_dialog.content('<div id="commonly-gallery-content">' + data + '</div>');
-            });
-            return false;
-        });
-
-        /**
-         * 选择图片
-         */
-        $(document).on('click', '#commonly-gallery-content .am-gallery a', function(){
-            if (gallery_option.multiple == true) {
-                var name = gallery_option.name + '[]';
-            } else {
-                var name = gallery_option.name;
-                $("#before" + gallery_option.id).prevAll().remove();
-            }
-
-            AMUIwebuploader.append({
-                id: gallery_option.id,
-                src: $(this).find('img').attr('src'),
-                name: name
-            });
-            gallery_dialog.close();
-        });
+        })
 
     };
 
@@ -218,29 +159,22 @@ $(function () {
  */
 var AMUIwebuploader = {
     /**
-     * 上传按钮的模板
+     * 初始化百度上传按钮
      * @param id 上传按钮绑定的ID名称
-     * @returns {string} 返回模板
+     * @returns {string} 返回初始化成的上传点击按钮模板
      */
-    template: function (id, type, multiple, gallery) {
-        var str = '';
-        if (type != 'file' && gallery == true) {
-            str = '<li class="am-margin-top" id="commonly' + id + '">' +
-                '<a href="javascript:;" class="am-padding-top-lg commonly" data="' + id + '" data-multiple="'+multiple+'">' +
-                '<i class=" am-danger am-icon-hand-o-right am-margin-top-lg am-icon-lg"></i> 打开图库' +
-                '</a>' +
-                '</li>';
-        }
+    template: function (options) {
+
+        //若上传文件，则通过css进行更改上传按钮的图片
+        var upload_icon = options.type == 'file' ? 'upload_file_icon' : ''
 
         return (
         '<ul class="am-gallery am-avg-lg-10 am-gallery-overlay am-webuploader-ul" >' +
-        '<li id="before' + id + '">' +
-        '<div class="am-gallery-item webuploader-item am-img-thumbnail webuploader-background-img">' +
-        '<a href="javascript:;" id="' + id + '">' +
-        '</a>' +
-        '</div>' +
-        '</li>' +
-        str +
+            '<li id="before' + options.id + '">' +
+                '<div class="am-gallery-item webuploader-item am-img-thumbnail webuploader-background-img">' +
+                    '<a href="javascript:;" id="' + options.id + '" class="'+upload_icon+'"></a>' +
+                '</div>' +
+            '</li>' +
         '</ul>');
     },
 
@@ -249,41 +183,37 @@ var AMUIwebuploader = {
      * @param 必要的参数 param:{id:'', src:'', name:''}
      */
     append:function(param){
+
+        if(param.type == 'file'){
+            var icon =
+                '<a href="javascript:;" class="file-preview-other" title="' + param.src + '"   >' +
+                '<i class="am-icon-file-o am-icon-lg am-block"></i>' +
+                '<h3 class="am-gallery-title am-text-center am-hide"></h3>' +
+                '</a>'+
+                '<div class="am-text-truncate am-text-xs file-preview-other-text am-text-center" >' + param.src + '</div>';
+        }else{
+            var icon =
+                '<a href="javascript:;" >' +
+                '<img src="' + param.src + '"  alt="点击上传图片"/>' +
+                '<h3 class="am-gallery-title am-text-center am-hide"></h3>' +
+                '</a>';
+        }
+
         $li = '<div class="am-gallery-item webuploader-item am-img-thumbnail">' +
-            '<a href="javascript:;" >' +
-            '<img src="' + param.src + '"  alt="点击上传图片"/>' +
-            '<h3 class="am-gallery-title am-text-center am-hide"></h3>' +
-            '</a>' +
-            '</div>' +
-            '<input type="hidden" name="' + param.name + '" value="' + param.src + '">';
+            icon +
+            '</div>';
+
+        $li += '<input type="hidden" name="' + param.name + '" value="' + param.src + '">';
         $("#before" + param.id).before('<li id="' + Math.random() + '">' + $li + '</li>');
     },
+
     /**
      * 初始化上传按钮
      * @param dom 手动追加上传按钮放置的位置。DOM为该标签的ID名称。
      * @param obj 上传组件的对象。最少填入对象内容为：{id:'按钮的ID名称', name:'上传成功返回的隐藏域名称', pick:{id:'#按钮的ID名称 '}}
      */
     init: function (dom, obj) {
-        $('#' + dom).html(this.template(obj.id, obj.type, obj.pick.multiple, obj.gallery));
+        $('#' + dom).html(this.template(obj));
         $.webuploader_for_amazeui(obj);
-    },
-
-    options : function(string) {
-        if ($.isPlainObject(string)) {
-            return string;
-        }
-        var start = (string ? string.indexOf('{') : -1);
-        var options = {};
-
-        if (start != -1) {
-            try {
-                options = (new Function('',
-                    'var json = ' + string.substr(start) +
-                    '; return JSON.parse(JSON.stringify(json));'))();
-            } catch (e) {
-            }
-        }
-
-        return options;
     }
 }

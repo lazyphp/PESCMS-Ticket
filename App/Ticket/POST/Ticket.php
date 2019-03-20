@@ -105,12 +105,16 @@ class Ticket extends \Core\Controller\Controller {
         \Model\Ticket::changeStatus($ticket['ticket_id'], $status);
         \Model\Ticket::addReply($ticket['ticket_id'], $content);
 
-        \Model\Extra::insertSend(
-            $ticket['ticket_contact_account'],
-            $sendTitle,
-            $sendContent,
-            $ticket['ticket_contact']
-        );
+        //只有勾选告知客户才生成通知(完成工单不受影响)，尽量减少对客户的滋扰。
+        if($_POST['notice'] == 1 || $_POST['assign'] == '4' ){
+            \Model\Extra::insertSend(
+                $ticket['ticket_contact_account'],
+                $sendTitle,
+                $sendContent,
+                $ticket['ticket_contact']
+            );
+        }
+
 
         if (empty($_POST['back_url'])) {
             $back_url = base64_encode($this->url('Ticket-Ticket-index'));

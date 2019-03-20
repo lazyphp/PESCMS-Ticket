@@ -36,6 +36,7 @@ class Setting extends \Core\Controller\Controller {
         $data['weixinWork_api'] = json_encode($this->p('weixinWork_api'));
         $data['login_verify'] = json_encode($this->p('login_verify'));
         $data['cs_notice_type'] = json_encode($this->p('cs_notice_type'));
+        $data['sms'] = json_encode($this->p('sms'));
 
         foreach($data as $key => $value){
             $this->db('option')->where('option_name = :option_name')->update([

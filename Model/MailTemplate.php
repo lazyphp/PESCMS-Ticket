@@ -66,19 +66,26 @@ class MailTemplate extends \Core\Model\Model {
     public static function matchContent(array $param, $type) {
         $param = array_merge(['number' => '', 'content' => '', 'view' => ''], $param);
         $template = self::getTemplate($type);
-        return str_replace(
-            '{number}',
-            $param['number'],
-            str_replace(
-                '{content}',
-                $param['content'],
+        foreach (['mail' => 'mail_template_content', 'sms' => 'mail_template_sms'] as $key => $item){
+            if($key == 'sms'){
+                $param['view'] = strip_tags($param['view']);
+            }
+            $content[$key] = str_replace(
+                '{number}',
+                $param['number'],
                 str_replace(
-                    '{view}',
-                    $param['view'],
-                    $template['mail_template_content']
+                    '{content}',
+                    $param['content'],
+                    str_replace(
+                        '{view}',
+                        $param['view'],
+                        $template[$item]
+                    )
                 )
-            )
-        );
+            );
+        }
+
+        return $content;
     }
 
 }

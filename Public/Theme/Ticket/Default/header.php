@@ -43,7 +43,7 @@
 
 
     <script>var path = '<?= DOCUMENT_ROOT; ?>';</script>
-    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.config.js"></script>
+    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor_ticket.config.js"></script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.all.js"></script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/lang/zh-cn/zh-cn.js"></script>
 

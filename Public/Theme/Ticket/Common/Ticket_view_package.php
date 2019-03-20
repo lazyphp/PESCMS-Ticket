@@ -10,8 +10,7 @@
         <div class="console-step row am-margin-bottom-sm">
             <?php foreach ($ticketStatus as $key => $value): ?>
 
-                <div
-                        class="step am-u-sm-3 <?= $key == 0 ? 'step-first' : ($key == '3' ? 'step-end ' : '') ?>  <?= $ticket_status == $key ? 'step-active' : 'step-pass' ?>">
+                <div class="step am-u-sm-3 <?= $key == 0 ? 'step-first' : ($key == '3' ? 'step-end ' : '') ?>  <?= $ticket_status == $key ? 'step-active' : 'step-pass' ?>">
                     <span class="ng-binding  "><?= $value['name']; ?></span>
                 </div>
             <?php endforeach; ?>
@@ -21,12 +20,27 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div><span class="pt-text-explode">问题标题 : </span> <?= $ticket_title; ?></div>
                 <div class="am-g am-g-collapse">
-                    <div class="am-u-sm-3"><span class="pt-text-explode">工单编号 : </span><?= $ticket_number; ?></div>
-                    <div class="am-u-sm-3"><span class="pt-text-explode">工单类型 : </span><?= $ticket_model_name; ?></div>
-                    <div class="am-u-sm-3">
+                    <div class="am-u-sm-12 am-u-lg-3"><span class="pt-text-explode">工单编号 : </span><?= $ticket_number; ?></div>
+                    <div class="am-u-sm-12 am-u-lg-3"><span class="pt-text-explode">工单类型 : </span><?= $ticket_model_name; ?></div>
+                    <div class="am-u-sm-12 am-u-lg-3">
                         <span class="pt-text-explode">提交时间 : </span><?= date('Y-m-d H:i:s', $ticket_submit_time); ?></div>
-                    <div class="am-u-sm-3"><span
+                    <div class="am-u-sm-12 am-u-lg-3"><span
                                 class="pt-text-explode">工单状态 : </span><?= $ticket_close == '0' ? $ticketStatus[$ticket_status]['name'] : '工单关闭'; ?>
+                    </div>
+                    <div class="am-u-sm-12 am-u-lg-3"><span class="pt-text-explode">联系方式 : </span><?= $ticket_contact == 1 ? '邮件' : '电话'; ?></div>
+                    <div class="am-u-sm-12 am-u-lg-3"><span class="pt-text-explode">联系信息 : </span>
+                        <?php if(!empty($this->session()->get('ticket')['user_id'])): ?>
+                            <?= $ticket_contact_account ?>
+                        <?php else: ?>
+                            <?= str_replace(substr($ticket_contact_account, 3, 6), '******', $ticket_contact_account); ?>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="am-u-sm-12 am-u-lg-3">
+                        <!--信息预留-->
+                    </div>
+                    <div class="am-u-sm-12 am-u-lg-3">
+                        <!--信息预留-->
                     </div>
                 </div>
             </div>
@@ -72,8 +86,8 @@
                                  class="am-comment-avatar" width="48" height="48">
                         </div>
                         <div class="am-u-sm-11">
-                            <div class="am-block">
-                                <?= $value['user_id'] == '-1' ? '' : "{$value['user_name']} : " ?><?= $value['ticket_chat_content'] ?>
+                            <div class="am-block am-nbfc">
+                                <?= $value['user_id'] == '-1' ? '' : "{$value['user_name']} : " ?><?=  (new \voku\helper\AntiXSS())->xss_clean(htmlspecialchars_decode($value['ticket_chat_content'])) ?>
                             </div>
                             <div class="am-block"><?= date('Y-m-d H:i:s', $value['ticket_chat_time']); ?></div>
                         </div>

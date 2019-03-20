@@ -16,6 +16,8 @@
 
                 <?php include 'action/email.php';?>
 
+                <?php include 'action/sms.php';?>
+
                 <?php include 'action/weixin.php';?>
 
                 <div class="am-g am-g-collapse am-margin-bottom">

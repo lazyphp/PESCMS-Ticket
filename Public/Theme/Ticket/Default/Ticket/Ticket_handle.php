@@ -56,9 +56,26 @@
                                     </div>
                                     <div class="am-form-group pt-reply-content">
                                         <label for="">回复内容</label>
-                                        <textarea name="content" rows="5"></textarea>
+                                        <script type="text/plain" id="content" style="height:250px;"></script>
+                                        <script>
+                                        var ue = UE.getEditor('content', {
+                                            textarea: 'content'
+                                        });
+                                        </script>
                                     </div>
                                 <?php endif; ?>
+
+                                <div class="am-form-group">
+                                    <label class="am-form-label am-margin-bottom-0">是否通知 : </label>
+                                    <label class="form-checkbox-label am-checkbox-inline">
+                                        <input type="checkbox" name="notice" value="1">
+                                        告知客户
+                                    </label>
+                                    <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
+                                        <i class="am-icon-lightbulb-o"></i> 若回复内容非常重要，请勾选告知客户，以便客户知道业务解决情况。
+                                    </div>
+                                </div>
+
                                 <button type="submit" id="btn-submit" class="am-btn am-btn-primary am-btn-xs" data-am-loading="{spinner: 'circle-o-notch', loadingText: '提交中...', resetText: '再次提交'}">提交
                                 </button>
 

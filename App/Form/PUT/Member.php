@@ -10,7 +10,7 @@ class Member extends \Core\Controller\Controller {
         $param['noset']['member_id'] = $this->session()->get('member')['member_id'];
         $param['member_phone'] = $this->isP('phone', '请提交手机号码');
         $param['member_name'] = $this->isP('name', '请提交用户昵称');
-        if(\Model\Extra::checkInputValueType($param['member_phone'], 5) === false){
+        if(\Model\Extra::checkInputValueType($param['member_phone'], 2) === false){
             $this->error('请填写正确的手机号码');
         }
 

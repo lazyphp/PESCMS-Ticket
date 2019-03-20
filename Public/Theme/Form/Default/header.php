@@ -37,6 +37,12 @@
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/amazeui.datetimepicker.min.js"></script>
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/spectrum.js"></script>
 
+    <!--编辑器-->
+    <script>var path = '<?= DOCUMENT_ROOT; ?>';</script>
+    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.config.js"></script>
+    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.all.js"></script>
+    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/lang/zh-cn/zh-cn.js"></script>
+
     <!--百度上传控件-->
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/webuploader.css"/>
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/webuploader.js"></script>

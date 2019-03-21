@@ -139,6 +139,13 @@ $SLICE_ARRYR = [
         ['\Ticket\HandleForm\HandleRoute', '\Common\UpdateRoute']
     ],
 
+    //注册理路由规则 添加/编辑 提交的表单内容
+    'TICKET-PHRASE-ACTION' => [
+        'any',
+        ['Ticket-Phrase-action'],
+        ['\Ticket\HandleForm\HandlePhrase']
+    ],
+
 ];
 
 //执行切片注册

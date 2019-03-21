@@ -40,6 +40,11 @@ class Ticket extends \Core\Controller\Controller {
             }
         }
 
+        if(!empty($_GET['member']) && $_GET['member'] != '-1' ){
+            $this->condition .= ' AND member_id = :member_id ';
+            $this->param['member_id'] = $this->g('member');
+        }
+
         //方法index的工单列表，默认是筛选管辖组的
         if(ACTION == 'index'){
             $this->condition .= ' AND tm.ticket_model_group_id LIKE :group_id';
@@ -64,6 +69,8 @@ class Ticket extends \Core\Controller\Controller {
 
         $this->category = \Model\Category::getAllCategoryCidPrimaryKey();
         $this->assign('category', $this->category);
+
+        $this->assign('member', \Model\Member::getMemberWithID());
 
         $this->layout('Ticket_index');
     }
@@ -108,6 +115,8 @@ class Ticket extends \Core\Controller\Controller {
     public function handle() {
         $content = \Model\Ticket::view();
 
+        $userID = $this->session()->get('ticket')['user_id'];
+
         /**
          * ticket_read为0则标记为已读
          */
@@ -120,8 +129,7 @@ class Ticket extends \Core\Controller\Controller {
             'condition' => 'user_id != :user_id AND user_status = 1',
             'order' => 'user_group_id ASC',
             'param' => [
-                'user_id' =>
-                    $this->session()->get('ticket')['user_id']
+                'user_id' => $userID
             ]
         ]));
 
@@ -130,6 +138,16 @@ class Ticket extends \Core\Controller\Controller {
             echo $content['chat']['pageObj']->totalRow;
             exit;
         }else {
+
+            $this->assign('phrase', \Model\Content::listContent([
+                'table' => 'phrase',
+                'condition' => 'phrase_user_id = :user_id',
+                'order' => 'phrase_listsort ASC, phrase_id DESC',
+                'param' => [
+                    'user_id' => $userID
+                ]
+            ]));
+
             $this->assign('form', $content['form']);
             $this->assign('chat', $content['chat']['list']);
             $this->assign('page', $content['chat']['page']);

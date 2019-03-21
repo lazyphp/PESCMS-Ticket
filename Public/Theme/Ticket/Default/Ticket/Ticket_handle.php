@@ -12,7 +12,7 @@
                 <ul class="am-list am-list-static am-text-sm">
                     <li>
                         <div class="am-g am-g-collapse">
-                            <div class="am-u-lg-8">
+                            <div class="am-u-lg-12">
 
                                 <?php if ($ticket_status == '0'): ?>
                                     <div class="am-form-group">
@@ -54,6 +54,19 @@
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
+
+                                    <?php if(!empty($phrase)): ?>
+                                        <div class="am-form-group">
+                                            <label for="">我的回复短语</label>
+                                            <select id="phrase">
+                                                <option value="">请选择</option>
+                                                <?php foreach ($phrase as $value): ?>
+                                                    <option value="<?= $value['phrase_id']; ?>"><?= $value['phrase_name']; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                    <?php endif; ?>
+
                                     <div class="am-form-group pt-reply-content">
                                         <label for="">回复内容</label>
                                         <script type="text/plain" id="content" style="height:250px;"></script>
@@ -86,7 +99,16 @@
         </div>
     </form>
     <?php endif; ?>
+</div>
 
+<div class="phrase_list am-hide">
+    <?php if(!empty($phrase)): ?>
+        <?php foreach ($phrase as $value): ?>
+            <div id="phrase_<?=$value['phrase_id']?>">
+                <?= htmlspecialchars_decode($value['phrase_content']) ?>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
 </div>
 
 <script>
@@ -112,5 +134,19 @@
         $("input[name=assign]").change(function () {
             assign($(this).val());
         })
+
+        /**
+         * 回复短语
+         */
+        $('#phrase').change(function(){
+            var id = $(this).val()
+            if(id == ''){
+                return false;
+            }
+            var content = $('#phrase_'+id).html().trim();
+            ue.setContent(content);
+
+        })
+
     })
 </script>

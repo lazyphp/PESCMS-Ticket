@@ -16,9 +16,13 @@
     </div>
 <?php endif; ?>
 <div class="am-g">
+
     <div class="am-u-sm-6 am-u-md-6 am-u-lg-6" style="border-right: 1px solid silver">
+        <?php if($system['open_register'] == 1): ?>
         <a href="<?= $label->url('Login-signup') ?>">注册帐号</a>
+        <?php endif; ?>
     </div>
+
     <div class="am-u-sm-6 am-u-md-6 am-u-lg-6">
         <a href="<?= $label->url('Login-findpw') ?>">忘记密码</a>
     </div>

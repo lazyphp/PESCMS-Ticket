@@ -36,7 +36,7 @@ class Login extends \Core\Slice\Slice{
     private function option(){
         $system = \Core\Func\CoreFunc::$param['system'];
 
-        if($system['open_register'] == 0 && MODULE == 'Login'){
+        if($system['open_register'] == 0 && MODULE == 'Login' && in_array(ACTION , ['signup', '']) ){
             $this->_404();
         }
 

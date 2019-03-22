@@ -32,6 +32,10 @@ class User extends Content {
             }
         }
 
+        if(strcmp($data['user_account'], $this->session()->get('ticket')['user_account']) != 0 && ( empty($_POST['password']) || empty($_POST['repassword']) ) ){
+            $this->error('修改登录帐号需要填写新密码');
+        }
+
         if (!empty($_POST['password']) && !empty($_POST['repassword'])) {
             if (strcmp(trim($_POST['password']), trim($_POST['repassword'])) != 0) {
                 $this->error('两次输入的密码不一致');

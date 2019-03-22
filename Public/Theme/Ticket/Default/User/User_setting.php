@@ -13,13 +13,6 @@
                 <div class="am-g am-g-collapse">
                     <div class="am-u-sm-12 am-u-sm-centered">
                         <div class="am-form-group">
-                            <label class="am-block">帐号<i class="am-text-danger">*</i></label>
-                            <input class="form-text-input input-leng3" name="account" placeholder="会员帐号" type="text" value="<?= $user_account ?>" required=""></div>
-                    </div>
-                </div>
-                <div class="am-g am-g-collapse">
-                    <div class="am-u-sm-12 am-u-sm-centered">
-                        <div class="am-form-group">
                             <label class="am-block">邮箱地址<i class="am-text-danger">*</i></label>
                             <input class="form-text-input input-leng3" name="mail" placeholder="邮箱地址" type="text"  value="<?= $user_mail ?>" required=""></div>
                     </div>
@@ -27,7 +20,7 @@
                 <div class="am-g am-g-collapse">
                     <div class="am-u-sm-12 am-u-sm-centered">
                         <div class="am-form-group">
-                            <label class="am-block">会员名称<i class="am-text-danger">*</i></label>
+                            <label class="am-block">昵称<i class="am-text-danger">*</i></label>
                             <input class="form-text-input input-leng3" name="name" placeholder="会员名称" type="text" value="<?= $user_name ?>" required=""></div>
                     </div>
                 </div>
@@ -39,6 +32,13 @@
                     </div>
                 </div>
                 <hr data-am-widget="divider" style="" class="am-divider am-divider-default am-margin-top-xs" />
+                <div class="am-g am-g-collapse">
+                    <div class="am-u-sm-12 am-u-sm-centered">
+                        <div class="am-form-group">
+                            <label class="am-block">登录帐号<i class="am-text-danger">*</i></label>
+                            <input class="form-text-input input-leng3" name="account" placeholder="会员帐号" type="text" value="<?= $user_account ?>" required=""></div>
+                    </div>
+                </div>
                 <div class="am-g am-g-collapse">
                     <div class="am-u-sm-12 am-u-sm-centered">
                         <div class="am-form-group">

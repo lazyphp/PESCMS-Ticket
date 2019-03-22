@@ -1,5 +1,4 @@
 <div class="am-panel am-panel-default">
-    <div class="am-panel-hd">基础信息</div>
     <div class="am-panel-bd">
         <div class="am-g am-g-collapse">
             <div class="am-u-sm-12 am-u-sm-centered">
@@ -59,25 +58,7 @@
         <div class="am-g am-g-collapse">
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
-                    <label class="am-block">开启站内工单<i class="am-text-danger">*</i></label>
-                    <label class="am-radio-inline">
-                        <input type="radio" value="1" name="interior_ticket" required="" <?= $interior_ticket['value'] == '1' ? 'checked="checked"' : '' ?>> 开启
-                    </label>
-                    <label class="am-radio-inline">
-                        <input type="radio" value="0" name="interior_ticket" required="" <?= $interior_ticket['value'] == '0' ? 'checked="checked"' : '' ?>> 关闭
-                    </label>
-                    <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
-                        <i class="am-icon-lightbulb-o"></i> 若允许在站内提交工单请开启，反之禁止。
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <hr class="am-margin-top-0 am-divider-default"/>
-        <div class="am-g am-g-collapse">
-            <div class="am-u-sm-12 am-u-sm-centered">
-                <div class="am-form-group">
-                    <label class="am-block">开启注册和登录<i class="am-text-danger">*</i></label>
+                    <label class="am-block">开放注册<i class="am-text-danger">*</i></label>
                     <label class="am-radio-inline">
                         <input type="radio" value="1" name="open_register" required="" <?= $open_register['value'] == '1' ? 'checked="checked"' : '' ?>> 开启
                     </label>
@@ -85,7 +66,7 @@
                         <input type="radio" value="0" name="open_register" required="" <?= $open_register['value'] == '0' ? 'checked="checked"' : '' ?>> 关闭
                     </label>
                     <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
-                        <i class="am-icon-lightbulb-o"></i> 开启则用户可以进行登录和注册，站内提交工单将自动填充必要的信息。
+                        <i class="am-icon-lightbulb-o"></i> 关闭注册需要手动添加客户。(微信公众号登录注册不受影响)
                     </div>
                 </div>
             </div>
@@ -152,6 +133,33 @@
                     </label>
                     <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
                         <i class="am-icon-lightbulb-o"></i> 勾选上述选项，当系统有消息通知，将按照勾选的写入发送列表。建议只选用一种常用的接收方式，以免给内部人员造成消息接收压力。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="am-margin-top-0 am-divider-default"/>
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">上传图片格式</label>
+                    <textarea name="upload_img"><?= implode(',', $upload_img) ?></textarea>
+
+                    <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
+                        <i class="am-icon-lightbulb-o"></i> 填写您要支持的图片格式，英文逗号分隔。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">上传文件格式</label>
+                    <textarea name="upload_file"><?= implode(',', $upload_file) ?></textarea>
+
+                    <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
+                        <i class="am-icon-lightbulb-o"></i> 填写您要支持的文件格式，英文逗号分隔。
                     </div>
                 </div>
             </div>

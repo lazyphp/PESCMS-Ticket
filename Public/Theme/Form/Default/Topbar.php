@@ -16,10 +16,10 @@
             <?php endif; ?>
 
             <?php if (empty($this->session()->get('member'))): ?>
-                <?php if($system['open_register'] == 1): ?>
                 <li>
                     <a href="<?= $label->url('Login-index') ?>"><i class="am-icon-sign-in"></i> 登录</a>
                 </li>
+                <?php if($system['open_register'] == 1): ?>
                 <li>
                     <a href="<?= $label->url('Login-signup') ?>"><i class="am-icon-user-plus"></i> 注册</a>
                 </li>

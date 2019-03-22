@@ -14,6 +14,8 @@ namespace Model;
 
 class TicketModel extends \Core\Model\Model {
 
+    private static $ticketModelList = [];
+
     /**
      * 依据工单模型的number查找信息
      */
@@ -23,6 +25,27 @@ class TicketModel extends \Core\Model\Model {
             self::error('该工单模型不存在');
         }
         return $result;
+    }
+
+    public static function getTicketModelList($id = NULL){
+        if(empty(self::$ticketModelList)){
+            $result = \Model\Content::listContent([
+                'table' => 'ticket_model AS tm',
+                'field' => 'tm.*, c.category_name',
+                'join' => self::$modelPrefix.'category AS c ON c.category_id = tm.ticket_model_cid',
+                'order' => 'tm.ticket_model_listsort ASC, tm.ticket_model_id DESC'
+            ]);
+            foreach ($result as $item){
+                self::$ticketModelList[$item['ticket_model_id']] = $item;
+            }
+        }
+
+        if(empty($id)){
+            return self::$ticketModelList;
+        }else{
+            return self::$ticketModelList[$id];
+        }
+
     }
 
 }

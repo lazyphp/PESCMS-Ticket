@@ -3,6 +3,12 @@
     <?= \Model\Content::findContent('category', $value[$prefix . $field['field_name']], 'category_id', 'category_name')['category_name'] ?>
 <?php break;?>
 
+<?php case 'ticket': ?>
+    <?= \Model\TicketModel::getTicketModelList($value[$prefix . $field['field_name']])['category_name']?>
+        -
+        <?= \Model\TicketModel::getTicketModelList($value[$prefix . $field['field_name']])['ticket_model_name']?>
+<?php break;?>
+
 <?php case 'date': ?>
         <?= empty($value[$prefix . $field['field_name']]) ? '' : date('Y-m-d H:i', $value[$prefix . $field['field_name']]); ?>
 <?php break;?>

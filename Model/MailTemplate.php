@@ -42,7 +42,19 @@ class MailTemplate extends \Core\Model\Model {
      * @return string
      */
     public static function getViewLink($number) {
-        $link = \Model\Content::findContent('option', 'domain', 'option_name')['value'] . self::url('Form-View-ticket', ['number' => $number]);
+        $system = \Core\Func\CoreFunc::$param['system'];
+        $link = $system['domain'] . self::url('Form-View-ticket', ['number' => $number]);
+        return '<a href="' . $link . '">' . $link . '</a>';
+    }
+
+    /**
+     * 快速生成客服查看工单的链接
+     * @param $number 工单号
+     * @return string
+     */
+    public static function getCSViewLink($number) {
+        $system = \Core\Func\CoreFunc::$param['system'];
+        $link = $system['domain'] . self::url('Ticket-Ticket-handle', ['number' => $number]);
         return '<a href="' . $link . '">' . $link . '</a>';
     }
 

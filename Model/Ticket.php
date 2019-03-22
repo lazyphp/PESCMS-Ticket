@@ -130,7 +130,7 @@ class Ticket extends \Core\Model\Model {
                 foreach ($userList as $user){
                     $content = "工单《{$ticket['ticket_model_name']}》有新工单: {$param['ticket_number']},请及时处理!";
 
-                    \Model\Notice::addCSNotice($user,['title' => $content, 'content' => $content]);
+                    \Model\Notice::addCSNotice($user,['title' => $content, 'content' => $content], $param['ticket_number']);
                 }
             }
         }

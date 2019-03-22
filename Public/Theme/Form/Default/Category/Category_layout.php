@@ -19,6 +19,9 @@
 					<?php include $file; ?>
 				</div>
 			</div>
+
+            <?php require 'Ticket_fqa.php'?>
+
 		</div>
 	</div>
 </div>

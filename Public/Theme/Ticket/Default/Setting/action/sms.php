@@ -20,7 +20,7 @@
         </div>
 
         <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
-            <i class="am-icon-lightbulb-o"></i> 使用短信业务，需要先进性注册：<a href="https://www.pescms.com/?m=Index&a=sms" target="_blank" style="color:#0e90d2 "><b>点击注册</b></a>
+            <i class="am-icon-lightbulb-o"></i> 使用短信业务，需要先进行注册：<a href="https://www.pescms.com/?m=Index&a=sms" target="_blank" style="color:#0e90d2 "><b>点击注册</b></a>。短信的设置教程:<a href="https://www.pescms.com/d/v//22/127.html" target="_blank" style="color:#0e90d2 "> <b>教程</b></a>
         </div>
 
         <div class="am-g am-g-collapse">

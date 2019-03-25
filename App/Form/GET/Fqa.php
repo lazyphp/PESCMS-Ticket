@@ -29,7 +29,7 @@ class Fqa extends \Core\Controller\Controller{
                 'model_id' => $ticket['ticket_model_id']
             ]
         ]);
-        if(empty($list) || $ticket['ticket_model_login'] == 1 ){
+        if(empty($list) || ($ticket['ticket_model_login'] == 1 && empty($this->session()->getId('member')) ) ){
             $this->error('没有FQA');
         }else{
             $this->success(['msg' => '获取FQA成功', 'data' => $list]);

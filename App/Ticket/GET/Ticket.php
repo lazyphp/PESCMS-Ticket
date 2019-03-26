@@ -24,7 +24,7 @@ class Ticket extends \Core\Controller\Controller {
     /**
      * 工单列表(默认按管辖组)
      */
-    public function index() {
+    public function index($template = 'Ticket_index') {
 
         //搜索
         if (!empty($_GET['keyword'])) {
@@ -33,7 +33,7 @@ class Ticket extends \Core\Controller\Controller {
         }
 
         //状态筛选
-        foreach (['model_id', 'status', 'close', 'read'] as $key => $value) {
+        foreach (['model_id', 'status', 'close', 'read', 'fix'] as $key => $value) {
             if ((!empty($_GET[$value]) || is_numeric($_GET[$value])) && $_GET[$value] != '-1') {
                 $this->param["ticket_{$value}"] = (int)$_GET[$value];
                 $this->condition .= " AND t.ticket_{$value} = :ticket_{$value}";
@@ -60,7 +60,8 @@ class Ticket extends \Core\Controller\Controller {
         $result = \Model\Content::quickListContent([
             'count' => sprintf($sql, 'count(*)'),
             'normal' => sprintf($sql, 't.*, tm.ticket_model_name, tm.ticket_model_cid'),
-            'param' => $this->param
+            'param' => $this->param,
+            'page' => '20'
         ]);
 
         $this->assign('ticketModel', \Model\Content::listContent(['table' => 'ticket_model']));
@@ -69,10 +70,10 @@ class Ticket extends \Core\Controller\Controller {
 
         $this->category = \Model\Category::getAllCategoryCidPrimaryKey();
         $this->assign('category', $this->category);
-
         $this->assign('member', \Model\Member::getMemberWithID());
+        $this->assign('title', \Model\Menu::getTitleWithMenu()['menu_name']);
 
-        $this->layout('Ticket_index');
+        $this->layout($template);
     }
 
     /**
@@ -152,10 +153,28 @@ class Ticket extends \Core\Controller\Controller {
             $this->assign('chat', $content['chat']['list']);
             $this->assign('page', $content['chat']['page']);
             $this->assign('pageObj', $content['chat']['pageObj']);
-            $this->layout();
+            $this->assign('title', '工单详情');
+            $this->layout('Ticket_handle');
         }
 
     }
+
+    /**
+     * 工单投诉列表
+     */
+    public function complain(){
+        $this->condition .= ' AND t.ticket_status = 3 AND t.ticket_score_time > 0';
+        $this->index('ticket_complain');
+    }
+
+    /**
+     * 工单投诉详情
+     */
+    public function complainDetail(){
+        $this->handle();
+    }
+
+
 
 
 }

@@ -44,18 +44,26 @@ class weixinWork {
      * @param $param 发送内容
      */
     public function send_notice($param) {
-        $result = (new cURL())->init("https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={$this->access_token}", json_encode([
+        $result = json_decode((new cURL())->init("https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={$this->access_token}", json_encode([
             "touser" => $param['send_account'],
             "msgtype" => "text",
             "agentid" => $this->AgentId,
             "text" => [
                 "content" => $param['send_content']
             ]
-        ]));
+        ])), true);
+
         //发送成功，删除消息
-        if(json_decode($result, true)['errmsg'] == 'ok'){
+        if($result['errmsg'] == 'ok'){
             \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->delete([
                 'send_id' => $param['send_id']
+            ]);
+        }else{
+            \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->update([
+                'noset' => [
+                    'send_id' => $param['send_id']
+                ],
+                'send_result' => $result['errmsg']
             ]);
         }
     }

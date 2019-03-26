@@ -12,11 +12,11 @@
 
 namespace App\Form\GET;
 
-class Index extends \Core\Controller\Controller{
+class Index extends \Core\Controller\Controller {
 
-    public function index(){
+    public function index() {
         $openindex = \Model\Content::findContent('option', 'openindex', 'option_name');
-        if($openindex['value'] == '0'){
+        if ($openindex['value'] == '0') {
             $this->_404();
         }
         $this->layout();
@@ -25,7 +25,7 @@ class Index extends \Core\Controller\Controller{
     /**
      * 验证码
      */
-    public function verify(){
+    public function verify() {
         $verify = new \Expand\Verify();
         $verify->createVerify('7');
     }
@@ -33,7 +33,19 @@ class Index extends \Core\Controller\Controller{
     /**
      * 发送通知
      */
-    public function notice(){
+    public function notice() {
+        $list = \Model\Content::listContent(['table' => 'ticket_notice_action']);
+        if (!empty($list)) {
+            foreach ($list as $item) {
+                //大于0的，则为发送给客户的，反之是给客服
+                if ($item['template_type'] > 0) {
+                    \Model\Notice::insertMemberNoticeSendTemplate($item);
+                } else {
+                    \Model\Notice::insertCSNoticeSendTemplate($item);
+                }
+            }
+        }
+
         $system = \Core\Func\CoreFunc::$param['system'];
         if (in_array($system['notice_way'], ['1', '3'])) {
             \Model\Extra::actionNoticeSend();
@@ -43,7 +55,7 @@ class Index extends \Core\Controller\Controller{
     /**
      * 获取session id
      */
-    public function getSession(){
+    public function getSession() {
         echo json_encode($this->session()->getId());
         exit;
     }

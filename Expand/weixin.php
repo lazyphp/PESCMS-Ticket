@@ -68,4 +68,64 @@ class weixin {
         return json_decode($result, true);
     }
 
+    /**
+     * 获取模版消息列表
+     * @return mixed 返回json解析过的模板列表
+     */
+    public function getTemplateList(){
+        //TM00017 订单状态
+        $result =(new cURL())->init("https://api.weixin.qq.com/cgi-bin/template/get_all_private_template?access_token={$this->access_token}");
+        return json_decode($result, true);
+    }
+
+    /**
+     * 添加模板
+     * @param $id 模板库中模板的编号，有“TM**”和“OPENTMTM**”等形式
+     * @return mixed
+     */
+    public function addTemplate($id){
+        return (new cURL())->init("https://api.weixin.qq.com/cgi-bin/template/api_add_template?access_token={$this->access_token}", json_encode(['template_id_short' => $id]));
+    }
+
+    /**
+     * 删除模板
+     * @param $id 公众帐号下模板消息ID
+     * @return mixed
+     */
+    public function deleteTemplate($id){
+        return (new cURL())->init("https://api.weixin.qq.com/cgi-bin/template/del_private_template?access_token={$this->access_token}", json_encode(['template_id' => $id]));
+    }
+
+    /**
+     * 发送模板消息
+     */
+    public function sendTemplate($param){
+
+        $content = json_decode($param['send_content'], true);
+
+        $data = [
+            'touser' => $param['send_account'],
+            'template_id' => $param['send_title'],
+            'url' => $content['link'],
+            'data' => $content['data']
+        ];
+
+        $result = json_decode((new cURL())->init("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={$this->access_token}", json_encode($data)), true);
+
+        if($result['errcode'] == 0){
+            \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->delete([
+                'send_id' => $param['send_id']
+            ]);
+        }else{
+            \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->update([
+                'noset' => [
+                    'send_id' => $param['send_id']
+                ],
+                'send_result' => $result['errcode']
+            ]);
+        }
+
+
+    }
+
 }

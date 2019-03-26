@@ -56,7 +56,7 @@
                                     </div>
 
                                     <?php if(!empty($phrase)): ?>
-                                        <div class="am-form-group">
+                                        <div class="am-form-group phrase_list">
                                             <label for="">我的回复短语</label>
                                             <select id="phrase">
                                                 <option value="">请选择</option>
@@ -99,9 +99,14 @@
         </div>
     </form>
     <?php endif; ?>
+    
+    <?php if(ACTION == 'complainDetail' && $ticket_score_time > 0 ): ?>
+        <?php require THEME . '/Ticket/Common/Ticket_score.php'; ?>
+    <?php endif; ?>
+
 </div>
 
-<div class="phrase_list am-hide">
+<div class="am-hide">
     <?php if(!empty($phrase)): ?>
         <?php foreach ($phrase as $value): ?>
             <div id="phrase_<?=$value['phrase_id']?>">
@@ -115,7 +120,7 @@
     function assign(val) {
         if (val == '3') {
             $(".assign-user").removeClass("am-hide");
-            $(".pt-reply-content").addClass("am-hide");
+            $(".phrase_list, .pt-reply-content").addClass("am-hide");
         } else if (val == '4') {
             if (confirm('确定要设置工单为完成吗?') == false) {
                 $("input[name=assign]").removeAttr("checked");
@@ -125,7 +130,7 @@
             }
         } else {
             $(".assign-user").addClass("am-hide");
-            $(".pt-reply-content").removeClass("am-hide");
+            $(".phrase_list, .pt-reply-content").removeClass("am-hide");
         }
     }
 

@@ -21,7 +21,12 @@ namespace Slice\Ticket;
 class Login extends \Core\Slice\Slice{
 
     public function before() {
-        if(empty($this->session()->get('ticket')['user_id'])){
+        //已登录引导回首页
+        if(MODULE == 'Login' && ACTION == 'index' && !empty($this->session()->get('ticket')['user_id']) ){
+            $this->jump($this->url('Ticket-Ticket-index'));
+        }
+
+        if(MODULE != 'Login' && empty($this->session()->get('ticket')['user_id'])){
             $this->jump($this->url('Ticket-Login-index', ['back_url' => base64_encode($_SERVER['REQUEST_URI'])]));
         }
     }

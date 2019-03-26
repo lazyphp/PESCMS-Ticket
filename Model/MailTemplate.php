@@ -66,7 +66,13 @@ class MailTemplate extends \Core\Model\Model {
      */
     public static function matchTitle($number, $type) {
         $template = self::getTemplate($type);
-        return str_replace('{number}', $number, $template['mail_template_title']);
+        $title = str_replace('{number}', $number, $template['mail_template_title']);
+        $data = [
+            '1' => $title,
+            '2' => $title,
+            '3' => $template['mail_template_weixin_template_id']
+        ];
+        return $data;
     }
 
     /**
@@ -76,23 +82,34 @@ class MailTemplate extends \Core\Model\Model {
      * @return mixed
      */
     public static function matchContent(array $param, $type) {
-        $param = array_merge(['number' => '', 'content' => '', 'view' => ''], $param);
+        $param = array_merge(['number' => '', 'view' => ''], $param);
         $template = self::getTemplate($type);
-        foreach (['mail' => 'mail_template_content', 'sms' => 'mail_template_sms'] as $key => $item){
-            if($key == 'sms'){
+        foreach ([
+                    '1' => 'mail_template_content',
+                    '2' => 'mail_template_sms',
+                    '3' => 'mail_template_weixin_template'
+                 ] as $key => $item){
+
+            if(in_array($key, [2, 3])){
                 $param['view'] = strip_tags($param['view']);
             }
+
+            //微信通知需要先将内容格式化，补充通知的超链接。
+            if($key == 3){
+                $newFormat = [
+                    'data' => json_decode(htmlspecialchars_decode($template[$item]), true),
+                    'link' => strip_tags($param['view'])
+                ];
+                $template[$item] = json_encode($newFormat);
+            }
+
             $content[$key] = str_replace(
                 '{number}',
                 $param['number'],
                 str_replace(
-                    '{content}',
-                    $param['content'],
-                    str_replace(
-                        '{view}',
-                        $param['view'],
-                        $template[$item]
-                    )
+                    '{view}',
+                    $param['view'],
+                    $template[$item]
                 )
             );
         }

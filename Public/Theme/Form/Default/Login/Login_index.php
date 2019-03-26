@@ -1,6 +1,6 @@
 <div class="am-input-group am-margin-bottom">
     <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
-    <input type="email" name="email" class="am-form-field" placeholder="邮箱地址" required="required">
+    <input type="email" name="email" class="am-form-field" placeholder="邮箱地址" autofocus required="required">
 </div>
 
 <div class="am-input-group am-margin-bottom">

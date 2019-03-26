@@ -13,6 +13,7 @@
                             <form action="<?= $label->url('Form-Submit-reply'); ?>" class="am-form ajax-submit" method="POST" data-am-validator>
                                 <?= $label->token() ?>
                                 <input type="hidden" name="number" value="<?= $ticket_number; ?>"/>
+                                <input type="hidden" name="back_url" value="<?= base64_encode($_SERVER['REQUEST_URI']); ?>"/>
 
                                 <div class="am-form-group pt-reply-content">
                                     <label for="">回复内容</label>
@@ -43,5 +44,8 @@
         </div>
 
         <?php endif; ?>
+
+        <?php require THEME . '/Ticket/Common/Ticket_score.php'; ?>
+
     </div>
 </div>

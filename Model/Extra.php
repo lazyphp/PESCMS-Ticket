@@ -85,21 +85,9 @@ class Extra extends \Core\Model\Model {
             'send_account' => $account,
             'send_title' => $title,
             'send_time' => time(),
+            'send_content' => $content,
             'send_type' => $type
         ];
-
-
-        if(is_array($content)){
-            $param['send_content'] =  $content['mail'];
-            //为了兼容短信
-            if($type == 2){
-                $param['send_title'] = $content['sms'];
-                $param['send_content'] = $content['sms'];
-            }
-        }else{
-            $param['send_content'] = $content;
-        }
-
         return self::db('send')->insert($param);
     }
 
@@ -115,6 +103,9 @@ class Extra extends \Core\Model\Model {
                     break;
                 case '2':
                     (new \Expand\sms())->send($value);
+                    break;
+                case '3':
+                    (new \Expand\weixin())->sendTemplate($value);
                     break;
                 case '4':
                     (new \Expand\weixinWork())->send_notice($value);

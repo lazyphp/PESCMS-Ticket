@@ -11,6 +11,11 @@
  */
 namespace App\Form\POST;
 
+/**
+ * @todo 这个方法命名得不好，实际应该是Ticket。当时考虑到跨域工单，所以用此命名，未来再结合实际情况进行更改吧。
+ * Class Submit
+ * @package App\Form\POST
+ */
 class Submit extends \Core\Controller\Controller{
 
     /**
@@ -38,6 +43,14 @@ class Submit extends \Core\Controller\Controller{
         $content = $this->isP('content', '请提交回复内容');
         $ticket = \Model\Ticket::getTicketBaseInfo($number);
 
+        if(!empty($_POST['back_url'])){
+            $back_url = base64_decode($this->p('back_url'));
+        }else{
+            $back_url = $this->url('View-ticket', ['number' => $ticket['ticket_number']]);
+        }
+
+        \Model\Ticket::loginCheck($ticket, base64_encode($back_url));
+
         if (empty($ticket) || in_array($ticket['ticket_status'], [3, 4])) {
             $this->error('该工单不存在或者已经关闭');
         }
@@ -63,11 +76,55 @@ class Submit extends \Core\Controller\Controller{
             $user = \Model\Content::findContent('user', $ticket['user_id'], 'user_id');
 
             $content = "工单《{$ticket['ticket_title']}》有新回复! 单号:{$ticket['ticket_number']},请跟进!";
-
-            \Model\Notice::addCSNotice($user,['title' => $content, 'content' => $content], $ticket['ticket_number']);
+            \Model\Notice::addCSNotice($number, $user, -3);
         }
 
-        $this->success('回复工单成功!', $this->url('Form-View-ticket', ['number' => $ticket['ticket_number']]));
+        $this->success('回复工单成功!', $back_url);
+
+    }
+
+    /**
+     * 工单评价
+     */
+    public function score(){
+
+        $score = $this->isP('score', '请为本次评价打分');
+        $number = $this->isP('number', '请选择您要查看的工单');
+        $fix = $this->isP('fix', '请选择问题是否解决');
+        $comment = $this->p('comment');
+        $ticket = \Model\Ticket::getTicketBaseInfo($number);
+
+        if(empty($ticket) || $ticket['ticket_score_time'] >0 ){
+            $this->error('当前工单不存在或已评价.');
+        }
+
+        if(!empty($_POST['back_url'])){
+            $back_url = base64_decode($this->p('back_url'));
+        }else{
+            $back_url = $this->url('View-ticket', ['number' => $ticket['ticket_number']]);
+        }
+        \Model\Ticket::loginCheck($ticket, base64_encode($back_url));
+
+        $this->db()->transaction();
+
+        $this->db('ticket')->where('ticket_id = :ticket_id')->update([
+            'noset' => [
+                'ticket_id' => $ticket['ticket_id']
+            ],
+            'ticket_score' => $score,
+            'ticket_score_time' => time(),
+            'ticket_fix' => $fix,
+            'ticket_comment' => $comment
+        ]);
+
+        $this->db()->query("UPDATE {$this->prefix}user SET user_score = user_score + :user_score, user_score_frequency = user_score_frequency + 1 WHERE user_id = :user_id", [
+            'user_score' => $score,
+            'user_id' => $ticket['user_id']
+        ]);
+
+        $this->db()->commit();
+
+        $this->success('感谢您的评价!我们将继续为您提供更加优质的服务!', $back_url);
 
     }
 

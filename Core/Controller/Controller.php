@@ -98,7 +98,7 @@ class Controller {
             $antiXss = new \voku\helper\AntiXSS();
             //允许内联样式
             $antiXss->removeEvilAttributes(array('style'));
-            $name = htmlspecialchars($antiXss-> xss_clean($data));
+            $name = htmlspecialchars($antiXss-> xss_clean(trim($data)));
         } else {
             $name = trim($data);
         }

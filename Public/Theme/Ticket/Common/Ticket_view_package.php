@@ -27,7 +27,7 @@
                     <div class="am-u-sm-12 am-u-lg-3"><span
                                 class="pt-text-explode">工单状态 : </span><?= $ticket_close == '0' ? $ticketStatus[$ticket_status]['name'] : '工单关闭'; ?>
                     </div>
-                    <div class="am-u-sm-12 am-u-lg-3"><span class="pt-text-explode">联系方式 : </span><?= $ticket_contact == 1 ? '邮件' : '电话'; ?></div>
+                    <div class="am-u-sm-12 am-u-lg-3"><span class="pt-text-explode">联系方式 : </span><?= $ticket_contact == 1 ? '邮件' : ($ticket_contact == 2 ? '手机' : '微信'); ?></div>
                     <div class="am-u-sm-12 am-u-lg-3"><span class="pt-text-explode">联系信息 : </span>
                         <?php if(!empty($this->session()->get('ticket')['user_id'])): ?>
                             <?= $ticket_contact_account ?>
@@ -40,7 +40,9 @@
                         <!--信息预留-->
                     </div>
                     <div class="am-u-sm-12 am-u-lg-3">
-                        <!--信息预留-->
+                        <?php if(GROUP == 'Form' && $ticket_status < 3 && $ticket_close == 0 ): ?>
+                            <a href="<?= $label->url('Ticket-status', ['number' => $ticket_number, 'back_url' => base64_encode($_SERVER['REQUEST_URI']), 'method' => 'PUT']) ?>" class="am-text-warning ajax-click ajax-dialog" msg="您确定要结束本工单吗?">结束工单</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

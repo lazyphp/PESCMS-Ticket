@@ -68,9 +68,13 @@
 
             <div class="am-panel am-panel-default">
                 <div class="am-panel-hd">
-                    <strong>我的平均时间</strong>
+                    <strong>我的信息</strong>
                 </div>
                 <table class="am-table am-table-hover am-text-sm">
+                    <tr>
+                        <td class="am-text-right">总体评价 :</td>
+                        <td><?= $this->session()->get('ticket')['user_score_frequency'] == 0 ? 0 : round($this->session()->get('ticket')['user_score']/$this->session()->get('ticket')['user_score_frequency'], 2) ?></td>
+                    </tr>
                     <?php if(!empty($runTime)): ?>
                         <?php foreach($runTime as $key => $value): ?>
                             <tr>

@@ -74,7 +74,6 @@ $SLICE_ARRYR = [
         'any',
         'Ticket-',
         ['\Ticket\Login', '\Ticket\Auth', '\Ticket\Menu'],
-        ['Ticket-Login']
     ],
 
     //后台菜单get请求的输出

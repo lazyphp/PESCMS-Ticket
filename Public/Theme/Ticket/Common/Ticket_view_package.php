@@ -27,7 +27,7 @@
                     <div class="am-u-sm-12 am-u-lg-3"><span
                                 class="pt-text-explode">工单状态 : </span><?= $ticket_close == '0' ? $ticketStatus[$ticket_status]['name'] : '工单关闭'; ?>
                     </div>
-                    <div class="am-u-sm-12 am-u-lg-3"><span class="pt-text-explode">联系方式 : </span><?= $ticket_contact == 1 ? '邮件' : '电话'; ?></div>
+                    <div class="am-u-sm-12 am-u-lg-3"><span class="pt-text-explode">联系方式 : </span><?= $ticket_contact == 1 ? '邮件' : ($ticket_contact == 2 ? '手机' : '微信'); ?></div>
                     <div class="am-u-sm-12 am-u-lg-3"><span class="pt-text-explode">联系信息 : </span>
                         <?php if(!empty($this->session()->get('ticket')['user_id'])): ?>
                             <?= $ticket_contact_account ?>

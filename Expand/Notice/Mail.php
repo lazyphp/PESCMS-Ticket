@@ -63,6 +63,13 @@ class Mail {
             \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->delete([
                 'send_id' => $email['send_id']
             ]);
+        }else{
+            \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->update([
+                'noset' => [
+                    'send_id' => $email['send_id']
+                ],
+                'send_result' => '邮件发送失败'
+            ]);
         }
         $this->PHPMailer->ClearAddresses();
 

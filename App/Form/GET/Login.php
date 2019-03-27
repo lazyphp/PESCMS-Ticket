@@ -57,12 +57,6 @@ class Login extends \Core\Controller\Controller {
      */
     public function weixinAgree(){
         $weixin = new \Expand\weixin();
-        echo '<pre>';
-        print_r($weixin);
-        echo '</pre>';
-        echo '<br/>';
-        exit;
-
         $this->assign('login', $weixin->agree(\Core\Func\CoreFunc::$param['system']['domain'].$this->url('Login-weixin')));
         $this->display();
     }

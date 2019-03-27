@@ -16,9 +16,15 @@
                     <span>邮件</span>
                 </label>
                 <label class="form-radio-label am-radio-inline">
-                    <input class="form-radio" type="radio" name="contact" value="2" required="required"   data="<?= !empty($member) ? $member['member_phone'] : '' ?>" />
+                    <input class="form-radio" type="radio" name="contact" value="2" required="required"   data="<?= !empty($member['member_phone']) ? $member['member_phone'] : '' ?>" />
                     <span>手机号码</span>
                 </label>
+                <?php if(!empty($member)): ?>
+                <label class="form-radio-label am-radio-inline">
+                    <input class="form-radio" type="radio" name="contact" value="3" required="required"   data="<?= !empty($member['member_weixin']) ? $member['member_weixin'] : '' ?>" />
+                    <span>微信</span>
+                </label>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -105,6 +111,11 @@
 <script>
     $(function(){
         $('input[name=contact]').click(function(){
+            if($(this).val() == '3'){
+                $('input[name=contact_account]').parent().hide()
+            }else{
+                $('input[name=contact_account]').parent().show();
+            }
             $('input[name=contact_account]').val($(this).attr('data'))
         })
     })

@@ -22,9 +22,17 @@ class sms {
     public function send($param){
         $post_data = "account={$this->APIID}&password={$this->APIKEY}&mobile=".$param['send_account']."&content=".rawurlencode($param['send_title']);
         $result=  $this->xml_to_array((new \Expand\cURL())->init('http://106.ihuyi.cn/webservice/sms.php?method=Submit', $post_data));
+
         if($result['SubmitResult']['code'] == 2){
             \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->delete([
                 'send_id' => $param['send_id']
+            ]);
+        }else{
+            \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->update([
+                'noset' => [
+                    'send_id' => $param['send_id']
+                ],
+                'send_result' => $result['SubmitResult']['code']
             ]);
         }
 

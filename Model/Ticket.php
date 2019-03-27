@@ -31,7 +31,9 @@ class Ticket extends \Core\Model\Model {
         //@todo 联系方式此处需要联动查询，匹配用户选择的联系方式是否存在
         $param['ticket_contact'] = self::isP('contact', '请选择联系方式');
         $param['ticket_contact_account'] = self::isP('contact_account', '请填写您的联系信息');
-        if (\Model\Extra::checkInputValueType($param['ticket_contact_account'], $param['ticket_contact']) === false) {
+
+        //微信的值为3，所以不需要验证数据格式
+        if (\Model\Extra::checkInputValueType($param['ticket_contact_account'], $param['ticket_contact']) === false && $param['ticket_contact'] != 3 ) {
             self::error('您填写联系方式的信息格式不正确。');
         }
 
@@ -109,18 +111,11 @@ class Ticket extends \Core\Model\Model {
      * @param $param 内容参数
      */
     private static function newTicketNotice($ticket, $param){
-        //将工单单号发给发起者
-        \Model\Extra::insertSend(
-            $param['ticket_contact_account'],
-            \Model\MailTemplate::matchTitle($param['ticket_number'], '1'),
-            \Model\MailTemplate::matchContent([
-                'number' => $param['ticket_number'],
-                'view' => \Model\MailTemplate::getViewLink($param['ticket_number'])
-            ], '1'),
-            $param['ticket_contact']
-        );
 
-        //企业微信通知
+        //将工单单号发给发起者
+        \Model\Notice::addTicketNoticeAction($param['ticket_number'], $param['ticket_contact_account'], $param['ticket_contact'], 1);
+
+        //新工单后台客服通知
         if(!empty($ticket['ticket_model_group_id'])){
             //移除手尾,
             $ticket['ticket_model_group_id'] = trim($ticket['ticket_model_group_id'], ',');
@@ -128,9 +123,7 @@ class Ticket extends \Core\Model\Model {
             $userList = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']})")->select();
             if(!empty($userList)){
                 foreach ($userList as $user){
-                    $content = "工单《{$ticket['ticket_model_name']}》有新工单: {$param['ticket_number']},请及时处理!";
-
-                    \Model\Notice::addCSNotice($user,['title' => $content, 'content' => $content], $param['ticket_number']);
+                    \Model\Notice::addCSNotice($param['ticket_number'], $user, -1);
                 }
             }
         }

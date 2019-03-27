@@ -63,8 +63,7 @@ class Submit extends \Core\Controller\Controller{
             $user = \Model\Content::findContent('user', $ticket['user_id'], 'user_id');
 
             $content = "工单《{$ticket['ticket_title']}》有新回复! 单号:{$ticket['ticket_number']},请跟进!";
-
-            \Model\Notice::addCSNotice($user,['title' => $content, 'content' => $content], $ticket['ticket_number']);
+            \Model\Notice::addCSNotice($number, $user, -3);
         }
 
         $this->success('回复工单成功!', $this->url('Form-View-ticket', ['number' => $ticket['ticket_number']]));

@@ -29,19 +29,12 @@ class Ticket extends \Core\Controller\Controller {
             $this->error('该工单不存在');
         }
 
-        $viewTicketLink = \Model\MailTemplate::getViewLink($ticket['ticket_number']);
-
         switch ($ticket['ticket_status']) {
             case '0':
                 $status = '1';
+                $templateType = 2;
                 $content = '已收到您的工单，我们将会尽快安排人手进行处理';
                 \Model\Ticket::setUser($ticket['ticket_id'], $this->session()->get('ticket')['user_id'], $this->session()->get('ticket')['user_name']);
-
-                $sendTitle = \Model\MailTemplate::matchTitle($ticket['ticket_number'], '2');
-                $sendContent = \Model\MailTemplate::matchContent([
-                    'view' => $viewTicketLink,
-                ], '2');
-
                 $referTime = $ticket['ticket_submit_time'];
                 break;
             case '1':
@@ -51,12 +44,7 @@ class Ticket extends \Core\Controller\Controller {
 
                 if ($_POST['assign'] == '2') {
                     $content = $this->isP('content', '请提交回复内容');
-                    $sendTitle = \Model\MailTemplate::matchTitle($ticket['ticket_number'], '3');
-                    $sendContent = \Model\MailTemplate::matchContent([
-                        'number' => $ticket['ticket_number'],
-                        'content' => $content,
-                        'view' => $viewTicketLink,
-                    ], '3');
+                    $templateType = 3;
 
                 } elseif ($_POST['assign'] == '3') {
                     $userID = $this->isP('uid', '请选择您要指派的用户');
@@ -65,25 +53,14 @@ class Ticket extends \Core\Controller\Controller {
                         $this->error('转派的用户不存在');
                     }
                     \Model\Ticket::setUser($ticket['ticket_id'], $checkUser['user_id'], $checkUser['user_name']);
-                    $csContent = "{$this->session()->get('ticket')['user_name']}将工单《{$ticket['ticket_title']}》指派给了您，单号：{$number}，请您协助他/她尽快解决该工单问题。";
-                    \Model\Notice::addCSNotice($checkUser, ['title' => $csContent, 'content'=> $csContent], $ticket['ticket_number']);
-
-                    $sendTitle = \Model\MailTemplate::matchTitle($ticket['ticket_number'], '4');
-                    $sendContent = \Model\MailTemplate::matchContent([
-                        'number' => $ticket['ticket_number'],
-                        'view' => $viewTicketLink,
-                    ], '4');
+                    $templateType = 4;
                     $content = '当前问题需要移交给其他客服人员，请耐心等待';
+                    \Model\Notice::addCSNotice($ticket['ticket_number'], $checkUser, -$templateType);
 
                 } elseif ($_POST['assign'] == '4') {
                     $status = '3';
+                    $templateType = 5;
                     $content = "客服已经将本工单结束，如有疑问请重新发起工单咨询，谢谢!";
-
-                    $sendTitle = \Model\MailTemplate::matchTitle($ticket['ticket_number'], '5');
-                    $sendContent = \Model\MailTemplate::matchContent([
-                        'number' => $ticket['ticket_number'],
-                        'view' => $viewTicketLink,
-                    ], '5');
 
                     \Model\Ticket::inTicketIdWithUpdate([
                         'ticket_complete_time' => time(),
@@ -107,12 +84,7 @@ class Ticket extends \Core\Controller\Controller {
 
         //只有勾选告知客户才生成通知(完成工单不受影响)，尽量减少对客户的滋扰。
         if($_POST['notice'] == 1 || $_POST['assign'] == '4' ){
-            \Model\Extra::insertSend(
-                $ticket['ticket_contact_account'],
-                $sendTitle,
-                $sendContent,
-                $ticket['ticket_contact']
-            );
+            \Model\Notice::addTicketNoticeAction($ticket['ticket_number'], $ticket['ticket_contact_account'], $ticket['ticket_contact'], $templateType);
         }
 
 

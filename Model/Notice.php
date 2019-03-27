@@ -16,12 +16,20 @@ namespace Model;
  */
 class Notice extends \Core\Model\Model {
 
-    /**
-     * 添加通知客服的待发送消息
-     * @param array $user
-     * @param array $content
-     */
-    public static function addCSNotice(array $user, array $content, $number = ''){
+    public static function addNotice(){
+
+    }
+
+    public static function addTicketNoticeAction($number, $account, $sendType, $templateType){
+        return self::db('ticket_notice_action')->insert([
+            'ticket_number' => $number,
+            'send_account' => $account,
+            'send_type' => $sendType,
+            'template_type' => $templateType,
+        ]);
+    }
+
+    public static function addCSNotice($number, array $user, $templateType){
         $cs_notice_type = json_decode(\Core\Func\CoreFunc::$param['system']['cs_notice_type'], true);
         foreach ($cs_notice_type as $type){
             if($type == 4 && empty($user['user_weixinWork']) ){
@@ -35,8 +43,11 @@ class Notice extends \Core\Model\Model {
                     $account = $user['user_weixinWork'];
                     break;
             }
-            $linkStr = "详情: ".\Model\MailTemplate::getCSViewLink($number);
-            \Model\Extra::insertSend($account, $content['title'], $content['content'].$linkStr, $type);
+
+            self::addTicketNoticeAction($number, $account, $type, $templateType);
+
+//            $linkStr = "详情: ".\Model\MailTemplate::getCSViewLink($number);
+//            \Model\Extra::insertSend($account, $content['title'], $content['content'].$linkStr, $type);
         }
     }
 

@@ -138,11 +138,18 @@ $SLICE_ARRYR = [
         ['\Ticket\HandleForm\HandleRoute', '\Common\UpdateRoute']
     ],
 
-    //注册理路由规则 添加/编辑 提交的表单内容
+    //注册回复短语 添加/编辑 提交的表单内容
     'TICKET-PHRASE-ACTION' => [
         'any',
         ['Ticket-Phrase-action'],
         ['\Ticket\HandleForm\HandlePhrase']
+    ],
+
+    //注册发送模板 添加/编辑 提交的表单内容
+    'TICKET-MAIL_TEMPLATE-ACTION' => [
+        'any',
+        ['Ticket-Mail_template-action'],
+        ['\Ticket\HandleForm\HandleMail_template']
     ],
 
 ];

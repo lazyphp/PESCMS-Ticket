@@ -65,7 +65,7 @@
                             <td class="am-show-lg-only">
                                 <?= $value['ticket_number'] ?>
                             </td>
-                            <td class="am-show-lg-only"><?= $value['ticket_model_name'] ?>	</td>
+                            <td class="am-show-lg-only"><?= "{$category[$value['ticket_model_cid']]['category_name']} - {$value['ticket_model_name']}" ?>	</td>
                             <td>
                                 <a href="<?= $label->url('View-ticket', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>"><?= $value['ticket_title'] ?></a>
                             </td>

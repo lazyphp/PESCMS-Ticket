@@ -21,3 +21,10 @@ CREATE TABLE IF NOT EXISTS `pes_ticket_notice_action` (
 
 INSERT INTO `pes_node` (`node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES
 ('复制用户组', 21, 1, '', 'POST', 'copy', 'TicketPOSTUser_groupcopy', 22, 141);
+
+ALTER TABLE `pes_ticket` ADD `ticket_score` DECIMAL(10,2) NOT NULL COMMENT '本次工单评分' , ADD `ticket_score_time` INT NOT NULL COMMENT '评分时间' , ADD `ticket_fix` TINYINT(1) NOT NULL COMMENT '工单是否解决' ;
+
+ALTER TABLE `pes_ticket` ADD `ticket_comment` VARCHAR(1000) NOT NULL DEFAULT '' COMMENT '评价留言' ;
+
+ALTER TABLE `pes_user` ADD `user_score` DECIMAL(10,2) NOT NULL DEFAULT '0.00' COMMENT '总体评分' ;
+ALTER TABLE `pes_user` ADD `user_score_frequency` INT NOT NULL DEFAULT '0' COMMENT '评分次数' ;

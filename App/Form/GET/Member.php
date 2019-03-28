@@ -29,6 +29,9 @@ class Member extends \Core\Controller\Controller {
 
         $this->ticketList();
         $this->assign('statistics', $statistics);
+
+        $this->assign('category', \Model\Category::getAllCategoryCidPrimaryKey());
+
         $this->layout();
     }
 
@@ -77,7 +80,7 @@ class Member extends \Core\Controller\Controller {
                 ";
         $result = \Model\Content::quickListContent([
             'count' => sprintf($sql, 'count(*)'),
-            'normal' => sprintf($sql, 't.*, tm.ticket_model_name'),
+            'normal' => sprintf($sql, 't.*, tm.ticket_model_name, tm.ticket_model_cid'),
             'param' => $param,
             'page' => 15
         ]);

@@ -37,7 +37,8 @@ class Ticket extends \Core\Model\Model {
             self::error('您填写联系方式的信息格式不正确。');
         }
 
-        $param['ticket_number'] = \Model\Extra::getOnlyNumber();
+        //工单长度限定为15
+        $param['ticket_number'] = str_pad(substr(\Model\Extra::getOnlyNumber(), 0, 15), 15, 0, STR_PAD_RIGHT);
         $param['ticket_model_id'] = $firstContent['ticket_model_id'];
         $param['ticket_submit_time'] = time();
         $param['member_id'] = empty(self::session()->get('member')) ? '-1' : self::session()->get('member')['member_id'];
@@ -307,4 +308,22 @@ class Ticket extends \Core\Model\Model {
     public static function inTicketIdWithUpdate(array $param) {
         return self::db('ticket')->where('ticket_id = :ticket_id')->update($param);
     }
+
+    public static function loginCheck($ticket, $back_url = ''){
+
+        if(empty($back_url)){
+            $back_url = base64_encode($_SERVER['REQUEST_URI']);
+        }
+
+        //判断工单模型是否设置登录验证.
+        if($ticket['ticket_model_login'] == 1 && empty(self::session()->get('member'))){
+            self::success('需要登录帐号', self::url('Login-index', ['back_url' => $back_url]), -1);
+        }
+
+        //非匿名工单判断用户所属，非此用户所属则跳转至我的工单
+        if($ticket['member_id'] != '-1' && $ticket['member_id'] != self::session()->get('member')['member_id'] ){
+            self::success('获取工单成功，系统将指引您返回工单列表', self::url('Member-index'), -1);
+        }
+    }
+
 }

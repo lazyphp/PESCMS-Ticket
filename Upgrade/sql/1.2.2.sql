@@ -16,3 +16,8 @@ CREATE TABLE IF NOT EXISTS `pes_ticket_notice_action` (
   `template_type` int(11) NOT NULL DEFAULT '0' COMMENT '发送模板类型',
   PRIMARY KEY (`action_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='工作消息通知发送动作' AUTO_INCREMENT=1 ;
+
+
+
+INSERT INTO `pes_node` (`node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES
+('复制用户组', 21, 1, '', 'POST', 'copy', 'TicketPOSTUser_groupcopy', 22, 141);

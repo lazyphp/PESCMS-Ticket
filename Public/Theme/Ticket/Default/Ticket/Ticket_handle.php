@@ -56,7 +56,7 @@
                                     </div>
 
                                     <?php if(!empty($phrase)): ?>
-                                        <div class="am-form-group">
+                                        <div class="am-form-group phrase_list">
                                             <label for="">我的回复短语</label>
                                             <select id="phrase">
                                                 <option value="">请选择</option>
@@ -115,7 +115,7 @@
     function assign(val) {
         if (val == '3') {
             $(".assign-user").removeClass("am-hide");
-            $(".pt-reply-content").addClass("am-hide");
+            $(".phrase_list, .pt-reply-content").addClass("am-hide");
         } else if (val == '4') {
             if (confirm('确定要设置工单为完成吗?') == false) {
                 $("input[name=assign]").removeAttr("checked");
@@ -125,7 +125,7 @@
             }
         } else {
             $(".assign-user").addClass("am-hide");
-            $(".pt-reply-content").removeClass("am-hide");
+            $(".phrase_list, .pt-reply-content").removeClass("am-hide");
         }
     }
 

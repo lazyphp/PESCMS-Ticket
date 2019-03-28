@@ -13,6 +13,16 @@ namespace App\Ticket\GET;
 
 class User_group extends Content {
 
+    public function action($display = false) {
+        parent::action($display);
+        if(!empty($_GET['copy'])){
+            $this->assign('title', "复制 - {$this->model['model_title']}");
+            $this->assign('url', $this->url('Ticket-User_group-copy'));
+            $this->assign('method', 'POST');
+        }
+        $this->layout();
+    }
+
     /**
      * 设置菜单
      */

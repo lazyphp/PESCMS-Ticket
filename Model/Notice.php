@@ -20,6 +20,14 @@ class Notice extends \Core\Model\Model {
 
     }
 
+    /**
+     * 生成工作消息通知发送动作
+     * @param $number 工单单号
+     * @param $account 接收通知的帐号
+     * @param $sendType 发送方式
+     * @param $templateType 发送模版类型 | 负数则表示为 客服用的消息
+     * @return mixed
+     */
     public static function addTicketNoticeAction($number, $account, $sendType, $templateType){
         return self::db('ticket_notice_action')->insert([
             'ticket_number' => $number,
@@ -29,6 +37,12 @@ class Notice extends \Core\Model\Model {
         ]);
     }
 
+    /**
+     * 添加客服消息通知
+     * @param $number 工单单号
+     * @param array $user 客服帐号信息
+     * @param $templateType 模版类型
+     */
     public static function addCSNotice($number, array $user, $templateType){
         $cs_notice_type = json_decode(\Core\Func\CoreFunc::$param['system']['cs_notice_type'], true);
         foreach ($cs_notice_type as $type){
@@ -45,9 +59,63 @@ class Notice extends \Core\Model\Model {
             }
 
             self::addTicketNoticeAction($number, $account, $type, $templateType);
+        }
+    }
 
-//            $linkStr = "详情: ".\Model\MailTemplate::getCSViewLink($number);
-//            \Model\Extra::insertSend($account, $content['title'], $content['content'].$linkStr, $type);
+    /**
+     * 插入客户消息通知
+     * @param array $param 动作参数
+     */
+    public static function insertMemberNoticeSendTemplate(array $param){
+        $title = \Model\MailTemplate::matchTitle($param['ticket_number'], $param['template_type']);
+        $content = \Model\MailTemplate::matchContent([
+            'number' => $param['ticket_number'],
+            'view' => \Model\MailTemplate::getViewLink($param['ticket_number'])
+        ], $param['template_type']);
+
+        if(\Model\Extra::insertSend($param['send_account'], $title[$param['send_type']], $content[$param['send_type']], $param['send_type'])){
+            self::db('ticket_notice_action')->where('action_id = :action_id')->delete([
+                'action_id' => $param['action_id']
+            ]);
+        }
+    }
+
+    /**
+     * 插入客服消息通知
+     * @param array $param 动作参数
+     */
+    public static function insertCSNoticeSendTemplate(array $param){
+        if(empty($ticket[$param['ticket_number']])){
+            $ticket[$param['ticket_number']] = \Model\Ticket::getTicketBaseInfo($param['ticket_number']);
+        }
+
+        switch (abs($param['template_type'])){
+            case '1':
+                $title = '新工单提醒';
+                $content = "工单《{$ticket[$param['ticket_number']]['ticket_model_name']}》有新工单: {$param['ticket_number']},请及时处理!";
+                break;
+            case '2':
+                break;
+            case '3':
+                $title = '客户回复工单提醒';
+                $content = "工单《{$ticket[$param['ticket_number']]['ticket_title']}》有新回复! 单号:{$ticket['ticket_number']},请跟进!";
+                break;
+            case '4':
+                $title = '工单转交通知';
+                $content = self::session()->get('ticket')['user_name']."将工单《{$ticket[$param['ticket_number']]['ticket_title']}》指派给了您，单号：{$param['ticket_number']}，请您协助他/她尽快解决该工单问题。";
+                break;
+            case '5':
+                break;
+            case '6':
+                break;
+        }
+
+        //生成数据完毕，删除动作
+        $linkStr = "详情: ".\Model\MailTemplate::getCSViewLink($param['ticket_number']);
+        if(\Model\Extra::insertSend($param['send_account'], $title, $content.$linkStr, $param['send_type'])){
+            self::db('ticket_notice_action')->where('action_id = :action_id')->delete([
+                'action_id' => $param['action_id']
+            ]);
         }
     }
 

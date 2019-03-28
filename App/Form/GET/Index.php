@@ -39,25 +39,12 @@ class Index extends \Core\Controller\Controller {
             foreach ($list as $item) {
                 //大于0的，则为发送给客户的，反之是给客服
                 if ($item['template_type'] > 0) {
-
-                    $title = \Model\MailTemplate::matchTitle($item['ticket_number'], $item['template_type']);
-                    $content = \Model\MailTemplate::matchContent([
-                        'number' => $item['ticket_number'],
-                        'view' => \Model\MailTemplate::getViewLink($item['ticket_number'])
-                    ], $item['template_type']);
-
-                    if(\Model\Extra::insertSend($item['send_account'], $title[$item['send_type']], $content[$item['send_type']], $item['send_type'])){
-                        $this->db('ticket_notice_action')->where('action_id = :action_id')->delete([
-                            'action_id' => $item['action_id']
-                        ]);
-                    }
-
+                    \Model\Notice::insertMemberNoticeSendTemplate($item);
                 } else {
-
+                    \Model\Notice::insertCSNoticeSendTemplate($item);
                 }
             }
         }
-
 
         $system = \Core\Func\CoreFunc::$param['system'];
         if (in_array($system['notice_way'], ['1', '3'])) {

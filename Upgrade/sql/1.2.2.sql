@@ -7,3 +7,12 @@ ALTER TABLE `pes_mail_template` ADD `mail_template_weixin_template_id` VARCHAR(1
 INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_display_name`, `field_type`, `field_option`, `field_explain`, `field_default`, `field_required`, `field_listsort`, `field_list`, `field_form`, `field_status`, `field_is_null`) VALUES (NULL, '21', 'result', '执行结果', 'text', '', '', '', '1', '2', '1', '1', '1', '0');
 
 ALTER TABLE `pes_send` ADD `send_result` VARCHAR(255) NOT NULL ;
+
+CREATE TABLE IF NOT EXISTS `pes_ticket_notice_action` (
+  `action_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ticket_number` varchar(128) NOT NULL COMMENT '工单单号',
+  `send_account` varchar(255) NOT NULL DEFAULT '' COMMENT '接收帐号',
+  `send_type` int(11) NOT NULL DEFAULT '0' COMMENT '发送方式',
+  `template_type` int(11) NOT NULL DEFAULT '0' COMMENT '发送模板类型',
+  PRIMARY KEY (`action_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='工作消息通知发送动作' AUTO_INCREMENT=1 ;

@@ -115,15 +115,8 @@ class Ticket extends \Core\Controller\Controller {
         \Model\Ticket::addReply($ticket['ticket_id'], '工单已关闭，若还有疑问，请重新发表工单咨询!');
         \Model\Ticket::inTicketIdWithUpdate(['ticket_close' => '1', 'noset' => ['ticket_id' => $ticket['ticket_id']]]);
 
-        \Model\Extra::insertSend(
-            $ticket['ticket_contact_account'],
-            \Model\MailTemplate::matchTitle($number, '6'),
-            \Model\MailTemplate::matchContent([
-                'number' => $number,
-                'view' => \Model\MailTemplate::getViewLink($number)
-            ], '6'),
-            $ticket['ticket_contact']
-        );
+        \Model\Notice::addTicketNoticeAction($number, $ticket['ticket_contact_account'], $ticket['ticket_contact'], 6);
+
 
         if (empty($_POST['back_url'])) {
             $url = $this->url('Ticket-Ticket-index');

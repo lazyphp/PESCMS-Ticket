@@ -99,9 +99,14 @@
         </div>
     </form>
     <?php endif; ?>
+    
+    <?php if(ACTION == 'complainDetail' && $ticket_score_time > 0 ): ?>
+        <?php require THEME . '/Ticket/Common/Ticket_score.php'; ?>
+    <?php endif; ?>
+
 </div>
 
-<div class="phrase_list am-hide">
+<div class="am-hide">
     <?php if(!empty($phrase)): ?>
         <?php foreach ($phrase as $value): ?>
             <div id="phrase_<?=$value['phrase_id']?>">

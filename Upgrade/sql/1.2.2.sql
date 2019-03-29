@@ -28,3 +28,11 @@ ALTER TABLE `pes_ticket` ADD `ticket_comment` VARCHAR(1000) NOT NULL DEFAULT '' 
 
 ALTER TABLE `pes_user` ADD `user_score` DECIMAL(10,2) NOT NULL DEFAULT '0.00' COMMENT '总体评分' ;
 ALTER TABLE `pes_user` ADD `user_score_frequency` INT NOT NULL DEFAULT '0' COMMENT '评分次数' ;
+
+INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_link`, `menu_listsort`, `menu_type`) VALUES
+(33, '工单投诉反馈', 0, 'am-icon-cutlery', 'Ticket-Ticket-complain', 6, 0);
+
+
+INSERT INTO `pes_node` ( `node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES
+('工单投诉列表', 2, 1, '', 'GET', 'complain', 'TicketGETTicketcomplain', 2, 130),
+('工单投诉详情', 2, 1, '', 'GET', 'complainDetail', 'TicketGETTicketcomplainDetail', 2, 131);

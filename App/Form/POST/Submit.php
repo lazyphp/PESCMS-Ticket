@@ -11,6 +11,11 @@
  */
 namespace App\Form\POST;
 
+/**
+ * @todo 这个方法命名得不好，实际应该是Ticket。当时考虑到跨域工单，所以用此命名，未来再结合实际情况进行更改吧。
+ * Class Submit
+ * @package App\Form\POST
+ */
 class Submit extends \Core\Controller\Controller{
 
     /**
@@ -38,7 +43,12 @@ class Submit extends \Core\Controller\Controller{
         $content = $this->isP('content', '请提交回复内容');
         $ticket = \Model\Ticket::getTicketBaseInfo($number);
 
-        $back_url = $this->url('Form-View-ticket', ['number' => $ticket['ticket_number']]);
+        if(!empty($_POST['back_url'])){
+            $back_url = base64_decode($this->p('back_url'));
+        }else{
+            $back_url = $this->url('View-ticket', ['number' => $ticket['ticket_number']]);
+        }
+
         \Model\Ticket::loginCheck($ticket, base64_encode($back_url));
 
         if (empty($ticket) || in_array($ticket['ticket_status'], [3, 4])) {
@@ -84,11 +94,15 @@ class Submit extends \Core\Controller\Controller{
         $comment = $this->p('comment');
         $ticket = \Model\Ticket::getTicketBaseInfo($number);
 
-        if($ticket['ticket_score_time'] >0 ){
-            $this->error('当前工单已评价.');
+        if(empty($ticket) || $ticket['ticket_score_time'] >0 ){
+            $this->error('当前工单不存在或已评价.');
         }
 
-        $back_url = $this->url('Form-View-ticket', ['number' => $ticket['ticket_number']]);
+        if(!empty($_POST['back_url'])){
+            $back_url = base64_decode($this->p('back_url'));
+        }else{
+            $back_url = $this->url('View-ticket', ['number' => $ticket['ticket_number']]);
+        }
         \Model\Ticket::loginCheck($ticket, base64_encode($back_url));
 
         $this->db()->transaction();

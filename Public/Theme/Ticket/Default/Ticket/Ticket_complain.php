@@ -24,34 +24,19 @@
                         </select>
 
 
-                        <select name="status" class="am-form-field" placeholder="所有进度"
+                        <select name="fix" class="am-form-field" placeholder=""
                                 data-am-selected="{btnSize: 'sm', dropUp: 0}">
-                            <option value="-1">所有进度</option>
-                            <?php foreach ($ticketStatus as $key => $value): ?>
-                                <option value="<?= $key; ?>" <?= (string)$key === $_GET['status'] ? 'selected="selected"' : '' ?>><?= $value['name']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-
-                        <select name="read" class="am-form-field" placeholder=""
-                                data-am-selected="{btnSize: 'sm', dropUp: 0}">
-                            <option value="-1">查看状态</option>
-                            <option value="0" <?= '0' == $_GET['read'] ? 'selected="selected"' : '' ?>>未读</option>
-                            <option value="1" <?= '1' == $_GET['read'] ? 'selected="selected"' : '' ?>>已读</option>
-                        </select>
-
-                        <select name="close" class="am-form-field" placeholder=""
-                                data-am-selected="{btnSize: 'sm', dropUp: 0}">
-                            <option value="-1">关闭状态</option>
-                            <option value="0" <?= '0' == $_GET['close'] ? 'selected="selected"' : '' ?>>正常</option>
-                            <option value="1" <?= '1' == $_GET['close'] ? 'selected="selected"' : '' ?>>已关闭</option>
+                            <option value="-1">问题是否解决</option>
+                            <option value="0" <?= '0' == $_GET['fix'] ? 'selected="selected"' : '' ?>>否</option>
+                            <option value="1" <?= '1' == $_GET['fix'] ? 'selected="selected"' : '' ?>>是</option>
                         </select>
 
                         <?php if(!empty($member[$_GET['member']])): ?>
-                        <select name="member" class="am-form-field" placeholder=""
-                                data-am-selected="{btnSize: 'sm', dropUp: 0}">
-                            <option value="-1" >不筛选用户</option>
-                            <option value="<?= $_GET['member'] ?>" selected="selected" ><?= $member[$_GET['member']]['member_name'] ?></option>
-                        </select>
+                            <select name="member" class="am-form-field" placeholder=""
+                                    data-am-selected="{btnSize: 'sm', dropUp: 0}">
+                                <option value="-1" >不筛选用户</option>
+                                <option value="<?= $_GET['member'] ?>" selected="selected" ><?= $member[$_GET['member']]['member_name'] ?></option>
+                            </select>
                         <?php endif; ?>
 
                         <input type="text" name="keyword" value="<?= urldecode($_GET['keyword']) ?>"
@@ -88,7 +73,6 @@
                                 </div>
                                 <div class="admin-task-bd">
                                     <a href="<?= $label->url(GROUP . '-Ticket-handle', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>">
-                                        <span class="am-text-primary"><?= $value['ticket_read'] == '0' ? '[未读]' : ''; ?></span>
                                         <?= $value['ticket_title'] ?>
                                     </a>
                                 </div>
@@ -103,18 +87,16 @@
                                 </span>
                                 <i class="am-margin-left-xs am-margin-right-xs">|</i>
 
-                                <a href="<?= $label->url('Ticket-Ticket-handle', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>"
-                                   class="am-text-primary">处理</a>
+                                <span>评分: <?= $value['ticket_score'] ?></span>
                                 <i class="am-margin-left-xs am-margin-right-xs">|</i>
 
-                                <?php if ($value['ticket_close'] == '0' && $value['ticket_status'] < 3): ?>
-                                    <a href="<?= $label->url('Ticket-Ticket-close', ['number' => $value['ticket_number'], 'method' => 'POST', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>" class="am-text-danger ajax-click ajax-dialog" msg="确定要关闭本工单吗？">关闭工单</a>
-                                <?php else: ?>
-                                    <a href="javascript:;" class="am-text-warning"><?= $value['ticket_status'] == '3' ? '已结束' : '已关闭' ?></a>
-
-                                <?php endif; ?>
+                                <span>
+                                        是否解决: <?= $value['ticket_fix'] == 1 ? '是' : '<span class="am-text-danger">否</span>' ?>
+                                </span>
                                 <i class="am-margin-left-xs am-margin-right-xs">|</i>
-                                <a class="am-text-danger ajax-click ajax-dialog"  msg="确定删除吗？将无法恢复的！" href="<?= $label->url(GROUP . '-' . MODULE . '-action', array('id' => $value["ticket_id"], 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI']))); ?>"><span class="am-icon-trash-o"></span></a>
+
+                                <a href="<?= $label->url('Ticket-Ticket-complainDetail', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>"
+                                   class="am-text-primary">查看</a>
                             </td>
                         </tr>
 

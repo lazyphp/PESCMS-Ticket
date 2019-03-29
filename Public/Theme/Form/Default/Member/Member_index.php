@@ -22,10 +22,11 @@
             <div class="am-u-sm-12 am-u-md-6">
                 <div class="am-btn-toolbar">
                     <div class="am-btn-group am-btn-group-sm">
-                        <a href="<?= $label->url(MODULE.'-index') ?>" class="am-btn am-btn-white <?= empty($_GET['dataType'])  ? 'am-disabled' : '' ?>">全部</a>
+                        <a href="<?= $label->url(MODULE.'-index') ?>" class="am-btn am-btn-white <?= empty($_GET['dataType']) && empty($_GET['close'])  ? 'am-disabled' : '' ?>">全部</a>
                         <?php foreach (['1' => '今天', '-1' => '昨天', '-7' => '本周'] as $key => $value): ?>
                             <a href="<?= $label->url(MODULE.'-index', ['dataType' => $key, 'keyword' => $keyword]) ?>" class="am-btn am-btn-white <?= $_GET['dataType'] == $key ? 'am-disabled' : '' ?>"><?= $value ?></a>
                         <?php endforeach; ?>
+                        <a href="<?= $label->url(MODULE.'-index', ['close' => 1, 'keyword' => $keyword]) ?>" class="am-btn am-btn-white <?= $_GET['close'] == 1 ? 'am-disabled' : '' ?>">已关闭: <?=$close?></a>
                     </div>
                 </div>
             </div>
@@ -69,7 +70,9 @@
                             <td>
                                 <a href="<?= $label->url('View-ticket', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>"><?= $value['ticket_title'] ?></a>
                             </td>
-                            <td class="am-show-lg-only" style="color: <?= $ticketStatus[$value['ticket_status']]['color']; ?>"><?= $ticketStatus[$value['ticket_status']]['name']; ?></td>
+                            <td class="am-show-lg-only" style="color: <?= $value['ticket_close'] == 1 ? '#000' :$ticketStatus[$value['ticket_status']]['color']; ?>">
+                                <?= $value['ticket_status'] == 3 && $value['ticket_score_time'] == 0 ? '待评价' : ($value['ticket_close'] == 1 ? '已关闭' : $ticketStatus[$value['ticket_status']]['name']); ?>
+                            </td>
                             <td class="am-show-lg-only"><?= date('Y-m-d H:i', $value['ticket_submit_time']) ?></td>
                             <td class="am-show-lg-only">
                                 <a href="<?= $label->url('View-ticket', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>">查看详情</a>

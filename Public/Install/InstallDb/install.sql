@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2019-03-25 02:24:33
+-- Generation Time: 2019-03-29 03:39:31
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `pes_field` (
   PRIMARY KEY (`field_id`),
   UNIQUE KEY `modle_id` (`field_model_id`,`field_name`),
   KEY `field_name` (`field_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=232 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=235 ;
 
 --
 -- 转存表中的数据 `pes_field`
@@ -96,10 +96,10 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (75, 7, 'password', '会员密码', 'text', '', '新增用户时,密码为必填.编辑用户时为空则表示不修改密码', '', 0, 3, 0, 1, 1, 0),
 (76, 7, 'mail', '邮箱地址', 'text', '', '', '', 1, 4, 1, 1, 1, 0),
 (77, 7, 'name', '会员名称', 'text', '', '', '', 1, 5, 1, 1, 1, 0),
-(78, 7, 'group_id', '用户组', 'select', '{"\\u7ba1\\u7406\\u5458":1,"\\u5ba2\\u670d\\u4eba\\u5458":2}', '', '', 1, 1, 1, 1, 1, 0),
+(78, 7, 'group_id', '用户组', 'select', '{"\\u7ba1\\u7406\\u5458":"1","\\u5ba2\\u670d\\u4eba\\u5458":"2","\\u6295\\u8bc9\\u53cd\\u9988":"3"}', '', '', 1, 1, 1, 1, 1, 0),
 (79, 6, 'name', '用户组名称', 'text', '', '', '', 1, 1, 1, 1, 1, 0),
 (136, 13, 'name', '节点名称', 'text', '', '', '', 1, 3, 0, 1, 1, 0),
-(137, 13, 'parent', '所属菜单', 'select', '{"\\u8bf7\\u9009\\u62e9":"","\\u9876\\u5c42\\u83dc\\u5355":"0","\\u9996\\u9875":1,"\\u5de5\\u5355\\u5217\\u8868":2,"\\u5de5\\u5355\\u8bbe\\u7f6e":7,"\\u7528\\u6237\\u7ba1\\u7406":21,"\\u5206\\u7c7b\\u7ba1\\u7406":76,"\\u7cfb\\u7edf\\u8bbe\\u7f6e":43,"\\u6a21\\u578b\\u7ba1\\u7406":58,"\\u6742\\u9879\\u8282\\u70b9":11}', '本选项仅用于布置当前权限节点显示于何方。', '', 1, 1, 0, 1, 1, 0),
+(137, 13, 'parent', '所属菜单', 'select', '{"\\u8bf7\\u9009\\u62e9":"","\\u9876\\u5c42\\u83dc\\u5355":"0","\\u9996\\u9875":"1","\\u5de5\\u5355\\u5217\\u8868":"2","\\u5de5\\u5355\\u8bbe\\u7f6e":"7","\\u7528\\u6237\\u7ba1\\u7406":"21","\\u5206\\u7c7b\\u7ba1\\u7406":"76","\\u7cfb\\u7edf\\u8bbe\\u7f6e":"43","\\u6a21\\u578b\\u7ba1\\u7406":"58","\\u6742\\u9879\\u8282\\u70b9":"11"}', '本选项仅用于布置当前权限节点显示于何方。', '', 1, 1, 0, 1, 1, 0),
 (138, 13, 'verify', '是否验证', 'radio', '{&quot;\\u4e0d\\u9a8c\\u8bc1&quot;:&quot;0&quot;,&quot;\\u9a8c\\u8bc1&quot;:&quot;1&quot;}', '', '', 0, 4, 0, 1, 1, 0),
 (139, 13, 'msg', '提示信息', 'text', '', '', '', 0, 5, 0, 1, 1, 0),
 (140, 13, 'method_type', '请求方法', 'select', '{&quot;GET&quot;:&quot;GET&quot;,&quot;POST&quot;:&quot;POST&quot;,&quot;PUT&quot;:&quot;PUT&quot;,&quot;DELETE&quot;:&quot;DELETE&quot;}', '', '', 0, 6, 0, 1, 1, 0),
@@ -130,7 +130,7 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (174, 4, 'hash', '路由哈希值', 'text', '', '', '', 1, 99, 0, 0, 1, 0),
 (175, 4, 'listsort', '排序', 'text', '', '', '', 0, 100, 1, 1, 1, 0),
 (176, 4, 'status', '启用状态', 'radio', '{&quot;\\u542f\\u7528&quot;:&quot;1&quot;,&quot;\\u7981\\u7528&quot;:&quot;0&quot;}', '', '', 1, 7, 1, 1, 1, 0),
-(177, 13, 'controller', '父类节点', 'select', '{"\\u8bf7\\u9009\\u62e9":"","\\u9876\\u5c42\\u8282\\u70b9":"0","\\u975e\\u6743\\u9650\\u8282\\u70b9":"-1","\\u5b57\\u6bb5\\u7ba1\\u7406":59,"\\u5de5\\u5355\\u6a21\\u578b":8,"\\u5de5\\u5355\\u8868\\u5355":9,"\\u5de5\\u5355\\u5217\\u8868":2,"\\u7528\\u6237\\u7ec4":22,"\\u8282\\u70b9\\u7ba1\\u7406":23,"\\u7528\\u6237\\u7ba1\\u7406":21,"\\u5206\\u7c7b\\u7ba1\\u7406":76,"\\u83dc\\u5355\\u8bbe\\u7f6e":46,"\\u8def\\u7531\\u89c4\\u5219":52,"\\u7cfb\\u7edf\\u8bbe\\u7f6e":43,"\\u90ae\\u4ef6\\u6a21\\u677f":70,"\\u6a21\\u578b\\u7ba1\\u7406":58}', '', '', 1, 2, 1, 1, 1, 0),
+(177, 13, 'controller', '父类节点', 'select', '{"\\u8bf7\\u9009\\u62e9":"","\\u9876\\u5c42\\u8282\\u70b9":"0","\\u975e\\u6743\\u9650\\u8282\\u70b9":"-1","\\u5b57\\u6bb5\\u7ba1\\u7406":"59","\\u5de5\\u5355\\u6a21\\u578b":"8","\\u5de5\\u5355\\u8868\\u5355":"9","\\u5de5\\u5355\\u5217\\u8868":"2","\\u7528\\u6237\\u7ec4":"22","\\u8282\\u70b9\\u7ba1\\u7406":"23","\\u7528\\u6237\\u7ba1\\u7406":"21","\\u5206\\u7c7b\\u7ba1\\u7406":"76","\\u83dc\\u5355\\u8bbe\\u7f6e":"46","\\u8def\\u7531\\u89c4\\u5219":"52","\\u7cfb\\u7edf\\u8bbe\\u7f6e":"43","\\u90ae\\u4ef6\\u6a21\\u677f":"70","\\u5e38\\u89c1\\u95ee\\u9898":"84","\\u6a21\\u578b\\u7ba1\\u7406":"58"}', '', '', 1, 2, 1, 1, 1, 0),
 (178, 13, 'listsort', '排序', 'text', '', '', '', 0, 99, 1, 1, 1, 0),
 (179, 3, 'type', '链接类型', 'radio', '{&quot;\\u7ad9\\u5185\\u94fe\\u63a5&quot;:&quot;0&quot;,&quot;\\u7ad9\\u5916\\u8fde\\u63a5&quot;:&quot;1&quot;}', '', '', 1, 3, 1, 1, 1, 0),
 (183, 17, 'type', '模板类型', 'select', '{&quot;\\u65b0\\u5de5\\u5355&quot;:&quot;1&quot;,&quot;\\u53d7\\u7406\\u5de5\\u5355&quot;:&quot;2&quot;,&quot;\\u56de\\u590d\\u5de5\\u5355&quot;:&quot;3&quot;,&quot;\\u8f6c\\u4ea4\\u5ba2\\u670d&quot;:&quot;4&quot;,&quot;\\u5de5\\u5355\\u5b8c\\u6210&quot;:&quot;5&quot;,&quot;\\u5de5\\u5355\\u5173\\u95ed&quot;:&quot;6&quot;}', '', '', 1, 1, 1, 1, 1, 0),
@@ -150,7 +150,7 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (208, 20, 'password', '用户密码', 'text', '', '', '', 0, 2, 0, 1, 1, 0),
 (209, 20, 'name', '用户名称', 'text', '', '', '', 1, 3, 1, 1, 1, 0),
 (210, 20, 'phone', '手机号码', 'text', '', '', '', 1, 4, 1, 1, 1, 0),
-(211, 15, 'group_id', '管辖用户组', 'multiple', '', '绑定对应的用户组，当前工单模型有新工单，将会发送通知给该用户组下的所有成员。', '', 1, 7, 1, 1, 1, 0),
+(211, 15, 'group_id', '管辖用户组', 'multiple', '{"\\u7ba1\\u7406\\u5458":"1","\\u5ba2\\u670d\\u4eba\\u5458":"2","\\u6295\\u8bc9\\u53cd\\u9988":"3"}', '绑定对应的用户组，当前工单模型有新工单，将会发送通知给该用户组下的所有成员。', '', 1, 7, 1, 1, 1, 0),
 (212, 21, 'account', '接收帐号', 'text', '', '', '', 1, 1, 1, 1, 1, 0),
 (213, 21, 'title', '发送标题', 'text', '', '', '', 1, 2, 1, 1, 1, 0),
 (214, 21, 'content', '发送内容', 'editor', '', '', '', 1, 3, 0, 1, 1, 0),
@@ -168,7 +168,10 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (228, 23, 'createtime', '创建时间', 'date', '', '', '', 0, 99, 1, 1, 1, 0),
 (229, 23, 'ticket_model_id', '对应工单', 'ticket', '', '', '', 1, 1, 1, 1, 1, 0),
 (230, 23, 'title', '标题', 'text', '', '', '', 1, 2, 1, 1, 1, 0),
-(231, 23, 'content', '详细内容', 'editor', '', '', '', 1, 3, 0, 1, 1, 0);
+(231, 23, 'content', '详细内容', 'editor', '', '', '', 1, 3, 0, 1, 1, 0),
+(232, 17, 'weixin_template_id', '微信模板ID', 'text', '', '', '', 0, 5, 1, 1, 1, 0),
+(233, 17, 'weixin_template', '微信模板内容', 'textarea', '', '微信模板消息，输入如下变量可以动态输出对应的值：{number}为工单号码。请按照微信公众号选择模板的格式填写对应的参数。', '', 0, 6, 0, 1, 1, 0),
+(234, 21, 'result', '执行结果', 'text', '', '', '', 1, 2, 1, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -216,6 +219,8 @@ CREATE TABLE IF NOT EXISTS `pes_mail_template` (
   `mail_template_title` varchar(255) NOT NULL,
   `mail_template_content` text NOT NULL,
   `mail_template_sms` varchar(500) NOT NULL DEFAULT '',
+  `mail_template_weixin_template_id` varchar(128) NOT NULL DEFAULT '',
+  `mail_template_weixin_template` varchar(500) NOT NULL DEFAULT '',
   PRIMARY KEY (`mail_template_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
@@ -223,13 +228,13 @@ CREATE TABLE IF NOT EXISTS `pes_mail_template` (
 -- 转存表中的数据 `pes_mail_template`
 --
 
-INSERT INTO `pes_mail_template` (`mail_template_id`, `mail_template_type`, `mail_template_title`, `mail_template_content`, `mail_template_sms`) VALUES
-(1, 1, '工单提交成功！您的工单编号为：{number}', '我们已经收到您提交的工单，单号为：{number} 。我们将会尽快对您的问题进行处理，请耐心等待。此外，您可以通过如下链接对工单的进度查询：{view}', '我们已经收到您提交的工单，我们将尽快安排人员为您解疑释惑。您的工单编号为：{number}。请不要把工单号码泄露给其他人。'),
-(2, 2, '工单:{number}已经受理', '您的工单已经受理，我们将会尽快解决您的问题，请耐心等待。\r\n查看工单进度，可以点击如下链接访问：{view}', '您的工单已经受理，我们将会尽快解决您的问题，请耐心等待。 查看工单进度，可以点击如下链接访问：{view}'),
-(3, 3, '工单:{number}有新的回复', '您好，您的工单:{number} 有新的回复：\n{content}\n点击如下链接可以查看工单的进度:{view}', '您好，您的工单:{number} 有新的回复。点击如下链接可以查看工单的进度:{view}'),
-(4, 4, '工单:{number}需要转交客服处理', '您好，您的工单{number}需要转交客服处理，请耐心等待。\n点击如下链接可以查看工单的进度:{view}', '您好，您的工单{number}需要转交客服处理，请耐心等待。'),
-(5, 5, '工单:{number}已经完成', '您好，您的工单:{number}已经被客服标记为完成状态。该工单将无法继续操作。若您的问题仍旧无法解决，请重新发起新的工单，感谢您的耐心等待。\n查看工单的详情，请点击如下链接:{view}', '您好，您的工单:{number}已经被客服标记为完成状态。该工单将无法继续操作。若您的问题仍旧无法解决，请重新发起新的工单，感谢您的耐心等待。'),
-(6, 6, '工单:{number}被关闭', '您好，非常抱歉地告诉您，您的工单:{number}已经被客服标关闭。该工单将无法继续操作。若您的问题仍旧无法解决，请重新发起新的工单，感谢您的反馈。\r\n查看工单的详情，请点击如下链接:{view}', '您好，非常抱歉地告诉您，您的工单:{number}已经被客服标关闭。该工单将无法继续操作。若您的问题仍旧无法解决，请重新发起新的工单，感谢您的反馈。');
+INSERT INTO `pes_mail_template` (`mail_template_id`, `mail_template_type`, `mail_template_title`, `mail_template_content`, `mail_template_sms`, `mail_template_weixin_template_id`, `mail_template_weixin_template`) VALUES
+(1, 1, '工单提交成功！您的工单编号为：{number}', '我们已经收到您提交的工单，单号为：{number} 。我们将会尽快对您的问题进行处理，请耐心等待。此外，您可以通过如下链接对工单的进度查询：{view}', '我们已经收到您提交的工单，我们将尽快安排人员为您解疑释惑。您的工单编号为：{number}。请不要把工单号码泄露给其他人。', '', ''),
+(2, 2, '工单:{number}已经受理', '您的工单已经受理，我们将会尽快解决您的问题，请耐心等待。\r\n查看工单进度，可以点击如下链接访问：{view}', '您的工单已经受理，我们将会尽快解决您的问题，请耐心等待。 查看工单进度，可以点击如下链接访问：{view}', '', ''),
+(3, 3, '工单:{number}有新的回复', '您好，您的工单:{number} 有新的回复：\n{content}\n点击如下链接可以查看工单的进度:{view}', '您好，您的工单:{number} 有新的回复。点击如下链接可以查看工单的进度:{view}', '', ''),
+(4, 4, '工单:{number}需要转交客服处理', '您好，您的工单{number}需要转交客服处理，请耐心等待。\n点击如下链接可以查看工单的进度:{view}', '您好，您的工单{number}需要转交客服处理，请耐心等待。', '', ''),
+(5, 5, '工单:{number}已经完成', '您好，您的工单:{number}已经被客服标记为完成状态。该工单将无法继续操作。若您的问题仍旧无法解决，请重新发起新的工单，感谢您的耐心等待。\n查看工单的详情，请点击如下链接:{view}', '您好，您的工单:{number}已经被客服标记为完成状态。该工单将无法继续操作。若您的问题仍旧无法解决，请重新发起新的工单，感谢您的耐心等待。', '', ''),
+(6, 6, '工单:{number}被关闭', '您好，非常抱歉地告诉您，您的工单:{number}已经被客服标关闭。该工单将无法继续操作。若您的问题仍旧无法解决，请重新发起新的工单，感谢您的反馈。\r\n查看工单的详情，请点击如下链接:{view}', '您好，非常抱歉地告诉您，您的工单:{number}已经被客服标关闭。该工单将无法继续操作。若您的问题仍旧无法解决，请重新发起新的工单，感谢您的反馈。', '', '');
 
 -- --------------------------------------------------------
 
@@ -267,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `pes_menu` (
   `menu_type` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`menu_id`),
   KEY `menu_pid` (`menu_pid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=33 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=34 ;
 
 --
 -- 转存表中的数据 `pes_menu`
@@ -277,13 +282,13 @@ INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_l
 (1, '工单设置', 0, 'am-icon-ticket', '', 3, 0),
 (2, '工单模型', 1, 'am-icon-modx', 'Ticket-Ticket_model-index', 1, 0),
 (3, '帐号管理', 0, 'am-icon-users', '', 5, 0),
-(4, '管理员列表', 3, 'am-icon-user', 'Ticket-User-index', 1, 0),
+(4, '客服帐号', 3, 'am-icon-user', 'Ticket-User-index', 1, 0),
 (6, '基础设置', 9, 'am-icon-tv', 'Ticket-Setting-action', 1, 0),
 (7, '菜单设置', 9, 'am-icon-map-signs', 'Ticket-Menu-index', 2, 0),
 (9, '系统设置', 0, 'am-icon-cog', '', 10, 0),
 (10, '帮助文档', 9, 'am-icon-leanpub', 'https://www.pescms.com/d/index/22', 6, 1),
 (11, '反馈建议', 9, 'am-icon-twitch', 'https://forum.pescms.com/list/22.html', 7, 1),
-(12, '仪表盘', 0, 'am-icon-tachometer', 'Ticket-Index-index', 1, 0),
+(12, '工作台', 0, 'am-icon-tachometer', 'Ticket-Index-index', 1, 0),
 (13, '工单列表', 0, 'am-icon-yelp', '', 2, 0),
 (14, '用户组', 3, 'am-icon-steam', 'Ticket-User_group-index', 2, 0),
 (15, '节点管理', 3, 'am-icon-toggle-off', 'Ticket-Node-index', 3, 0),
@@ -292,12 +297,13 @@ INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_l
 (18, '我的工单', 13, 'am-icon-coffee', 'Ticket-Ticket-myTicket', 2, 0),
 (19, '邮件模板', 9, 'am-icon-paint-brush', 'Ticket-Mail_template-index', 5, 0),
 (21, '分类管理', 0, 'am-icon-list-alt', 'Ticket-Category-index', 4, 0),
-(23, '客户列表', 3, 'am-icon-street-view', 'Ticket-Member-index', 4, 0),
+(23, '客户管理', 3, 'am-icon-street-view', 'Ticket-Member-index', 4, 0),
 (24, '应用商店', 9, 'am-icon-cogs', 'Ticket-Application-index', 3, 0),
 (25, '商业授权', 9, 'am-icon-registered', 'https://www.pescms.com/Page/Authorization.html', 99, 1),
 (26, '发送列表', 9, 'am-icon-send', 'Ticket-Send-index', 5, 0),
 (27, '全部工单', 13, 'am-icon-list', 'Ticket-Ticket-all', 1, 0),
-(32, '常见问题解答', 1, 'am-icon-question-circle', 'Ticket-Fqa-index', 20, 0);
+(32, '常见问题解答', 1, 'am-icon-question-circle', 'Ticket-Fqa-index', 20, 0),
+(33, '工单投诉反馈', 0, 'am-icon-cutlery', 'Ticket-Ticket-complain', 6, 0);
 
 -- --------------------------------------------------------
 
@@ -325,14 +331,14 @@ INSERT INTO `pes_model` (`model_id`, `model_name`, `model_title`, `model_status`
 (2, 'field', '字段管理', 1, 1, 2),
 (3, 'menu', '菜单模型', 1, 1, 2),
 (4, 'route', '路由规则', 1, 1, 2),
-(6, 'User_group', '用户组列表', 1, 0, 2),
-(7, 'User', '用户列表', 1, 0, 2),
+(6, 'User_group', '用户组', 1, 0, 2),
+(7, 'User', '客服帐号', 1, 0, 2),
 (13, 'Node', '节点列表', 1, 1, 2),
 (15, 'ticket_model', '工单模型', 1, 1, 2),
 (16, 'ticket_form', '工单表单', 1, 1, 2),
 (17, 'mail_template', '邮件模板', 1, 0, 2),
 (18, 'Category', '分类', 1, 1, 1),
-(20, 'Member', '会员管理', 1, 1, 1),
+(20, 'Member', '客户管理', 1, 1, 1),
 (21, 'Send', '发送列表', 1, 1, 1),
 (22, 'Phrase', '回复短语', 1, 0, 2),
 (23, 'Fqa', '常见问题解答', 1, 1, 1);
@@ -355,7 +361,7 @@ CREATE TABLE IF NOT EXISTS `pes_node` (
   `node_controller` int(11) NOT NULL DEFAULT '0',
   `node_listsort` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`node_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=90 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=93 ;
 
 --
 -- 转存表中的数据 `pes_node`
@@ -450,7 +456,10 @@ INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `n
 (86, 'FQA编辑', 7, 1, '', 'GET', 'action', 'TicketGETFqaaction', 84, 111),
 (87, 'FQA添加', 7, 1, '', 'POST', 'action', 'TicketPOSTFqaaction', 84, 112),
 (88, 'FQA更新', 7, 1, '', 'PUT', 'action', 'TicketPUTFqaaction', 84, 113),
-(89, 'FQA删除', 7, 1, '', 'DELETE', 'action', 'TicketDELETEFqaaction', 84, 114);
+(89, 'FQA删除', 7, 1, '', 'DELETE', 'action', 'TicketDELETEFqaaction', 84, 114),
+(90, '复制用户组', 21, 1, '', 'POST', 'copy', 'TicketPOSTUser_groupcopy', 22, 141),
+(91, '工单投诉列表', 2, 1, '', 'GET', 'complain', 'TicketGETTicketcomplain', 2, 130),
+(92, '工单投诉详情', 2, 1, '', 'GET', 'complainDetail', 'TicketGETTicketcomplainDetail', 2, 131);
 
 -- --------------------------------------------------------
 
@@ -463,7 +472,7 @@ CREATE TABLE IF NOT EXISTS `pes_node_group` (
   `user_group_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户组ID',
   `node_id` int(11) NOT NULL DEFAULT '0' COMMENT '节点ID',
   PRIMARY KEY (`node_group_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='用户组权限节点' AUTO_INCREMENT=70 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='用户组权限节点' AUTO_INCREMENT=73 ;
 
 --
 -- 转存表中的数据 `pes_node_group`
@@ -538,7 +547,10 @@ INSERT INTO `pes_node_group` (`node_group_id`, `user_group_id`, `node_id`) VALUE
 (66, 1, 23),
 (67, 1, 46),
 (68, 1, 52),
-(69, 1, 70);
+(69, 1, 70),
+(70, 3, 2),
+(71, 3, 91),
+(72, 3, 92);
 
 -- --------------------------------------------------------
 
@@ -623,6 +635,7 @@ CREATE TABLE IF NOT EXISTS `pes_send` (
   `send_content` text NOT NULL COMMENT '待发送的内容',
   `send_time` int(11) NOT NULL DEFAULT '0' COMMENT '发送时间',
   `send_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1:邮箱 2:手机 ..',
+  `send_result` varchar(255) NOT NULL,
   PRIMARY KEY (`send_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='待发送列表' AUTO_INCREMENT=1 ;
 
@@ -649,6 +662,10 @@ CREATE TABLE IF NOT EXISTS `pes_ticket` (
   `ticket_contact` tinyint(4) NOT NULL DEFAULT '0' COMMENT '联系方式 1:邮箱 2:手机号码',
   `ticket_contact_account` varchar(128) NOT NULL DEFAULT '' COMMENT '联系账号',
   `ticket_close` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0:正常 1:关闭',
+  `ticket_score` decimal(10,2) NOT NULL COMMENT '本次工单评分',
+  `ticket_score_time` int(11) NOT NULL COMMENT '评分时间',
+  `ticket_fix` tinyint(1) NOT NULL COMMENT '工单是否解决',
+  `ticket_comment` varchar(1000) NOT NULL DEFAULT '' COMMENT '评价留言',
   PRIMARY KEY (`ticket_id`),
   KEY `ticket_number` (`ticket_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -734,6 +751,21 @@ CREATE TABLE IF NOT EXISTS `pes_ticket_model` (
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `pes_ticket_notice_action`
+--
+
+CREATE TABLE IF NOT EXISTS `pes_ticket_notice_action` (
+  `action_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ticket_number` varchar(128) NOT NULL COMMENT '工单单号',
+  `send_account` varchar(255) NOT NULL DEFAULT '' COMMENT '接收帐号',
+  `send_type` int(11) NOT NULL DEFAULT '0' COMMENT '发送方式',
+  `template_type` int(11) NOT NULL DEFAULT '0' COMMENT '发送模板类型',
+  PRIMARY KEY (`action_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='工作消息通知发送动作' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `pes_user`
 --
 
@@ -748,6 +780,8 @@ CREATE TABLE IF NOT EXISTS `pes_user` (
   `user_createtime` int(11) NOT NULL DEFAULT '0',
   `user_last_login` int(11) NOT NULL DEFAULT '0',
   `user_weixinWork` varchar(255) DEFAULT NULL,
+  `user_score` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '总体评分',
+  `user_score_frequency` int(11) NOT NULL DEFAULT '0' COMMENT '评分次数',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_weixinWork` (`user_weixinWork`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -765,7 +799,7 @@ CREATE TABLE IF NOT EXISTS `pes_user_group` (
   `user_group_name` varchar(255) NOT NULL DEFAULT '',
   `user_group_menu` text NOT NULL,
   PRIMARY KEY (`user_group_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- 转存表中的数据 `pes_user_group`
@@ -773,7 +807,8 @@ CREATE TABLE IF NOT EXISTS `pes_user_group` (
 
 INSERT INTO `pes_user_group` (`user_group_id`, `user_group_status`, `user_group_createtime`, `user_group_name`, `user_group_menu`) VALUES
 (1, 1, 0, '管理员', '12,13,17,18,1,2,21,3,4,14,15,23,9,6,7,16,19,10,11'),
-(2, 1, 0, '客服人员', '12,13,17,18');
+(2, 1, 0, '客服人员', '12,13,17,18'),
+(3, 1, 0, '投诉反馈', '33');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

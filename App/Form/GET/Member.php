@@ -19,16 +19,39 @@ class Member extends \Core\Controller\Controller {
             ];
         }
 
-        $statisticsResult = $this->db('ticket')->field('count(ticket_id) AS total, ticket_status')->where('member_id = :member_id')->group('ticket_status')->select([
-            'member_id' => $this->session()->get('member')['member_id']
-        ]);
+        //组装统计数据
+        $statisticsData = [
+            'normal' => [
+                'field' => 'count(ticket_id) AS total, ticket_status',
+                'condition' => ' AND ticket_close = 0',
+                'group' => 'ticket_status'
+            ],
+            'close' => [
+                'field' => 'count(ticket_id) AS total',
+                'condition' => ' AND ticket_close = 1',
+                'group' => ''
+            ]
+        ];
 
-        foreach ($statisticsResult as $item){
+        foreach ($statisticsData as $key => $item){
+            $statisticsResult[$key] = \Model\Content::listContent([
+                'table' => 'ticket',
+                'field' => $item['field'],
+                'condition' => "member_id = :member_id {$item['condition']}",
+                'group' => $item['group'],
+                'param' => [
+                    'member_id' => $this->session()->get('member')['member_id']
+                ]
+            ]);
+        }
+
+        foreach ($statisticsResult['normal'] as $item){
             $statistics[$item['ticket_status']]['total'] = $item['total'];
         }
 
         $this->ticketList();
         $this->assign('statistics', $statistics);
+        $this->assign('close', $statisticsResult['close'][0]['total']);
 
         $this->assign('category', \Model\Category::getAllCategoryCidPrimaryKey());
 
@@ -65,6 +88,10 @@ class Member extends \Core\Controller\Controller {
                     break;
             }
             $condition .= ' AND ticket_submit_time BETWEEN :begin AND :end';
+        }
+
+        if(!empty($_GET['close'])){
+            $condition .= ' AND ticket_close = 1 ';
         }
 
         //状态

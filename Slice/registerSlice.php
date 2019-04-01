@@ -7,8 +7,9 @@
 |--------------------------------------------------------------------------
 | 切片注册
 | 程序提供五个方法声明切片绑定的请求类型: any, get, post, put, delete
-| 参数一：绑定控制器路由规则。为空则对全局控制器路由生效。
-|         不为空，则依次填写 组-模型-方法。 填写组，则绑定组路由下所有方法。如此类推
+| 参数一：绑定控制器路由规则。
+          依次填写 组-控制器-方法。若为泛匹配，提供3个对应的占位符。
+           :g-:m-:a 。如：Ticket-:m-:a 泛匹配组Ticket下任意的控制器以及方法
 |         参数可以为字符串或者数组
 | 参数二：
 |         切片的命名空间。相对于当前Slice目录。不需要填写空间名Slice,如：\Slice\Common\Auto，则填写\Common\Auto
@@ -38,7 +39,7 @@ $SLICE_ARRYR = [
     //全局切片
     'GLOBAL-SLICE' => [
         'any',
-        ['Ticket-', 'Form-'],
+        ['Ticket-:m-:a', 'Form-:m-:a'],
         //注册系统设置
         ['\Common\Option']
     ],
@@ -46,7 +47,7 @@ $SLICE_ARRYR = [
     //全局的工单状态get请求输出
     'TICKET-STATUS' => [
         'get',
-        ['Ticket-Index-', 'Ticket-Ticket', 'Form-View', 'Form-Member-index'],
+        ['Ticket-Index-:a', 'Ticket-Ticket-:a', 'Form-View-:a', 'Form-Member-index'],
         ['\Common\TicketStatus'],
         ['Ticket-Ticket-Login']
     ],
@@ -56,7 +57,7 @@ $SLICE_ARRYR = [
     //前台登录验证
     'FORM-ACCESS' => [
         'any',
-        ['Form-Member-', 'Form-Login'],
+        ['Form-Member-:a', 'Form-Login-:a'],
         ['\Form\Login'],
         ['Form-Login-logout']
     ],
@@ -72,29 +73,29 @@ $SLICE_ARRYR = [
     //后台登录验证、权限管理、后台菜单输出
     'TICKET-ACCESS' => [
         'any',
-        'Ticket-',
+        'Ticket-:m-:a',
         ['\Ticket\Login', '\Ticket\Auth', '\Ticket\Menu'],
     ],
 
     //后台菜单get请求的输出
     'TICKET-MENU' => [
         'get',
-        'Ticket-',
+        'Ticket-:m-:a',
         ['\Ticket\Menu'],
-        ['Ticket-Login']
+        ['Ticket-Login-:a']
     ],
 
     //注册自动更新用户组字段的信息
     'TICKET-UPDATE-USERGROUP' => [
         'any',
-        ['Ticket-User', 'Ticket-User_group'],
+        ['Ticket-User-:a', 'Ticket-User_group-:a'],
         ['\Ticket\UpdateField\UpdateUserGroupField']
     ],
 
     //注册自动更新用户组字段的信息
     'TICKET-NODE-PARENT' => [
         'any',
-        ['Ticket-Node'],
+        ['Ticket-Node-:a'],
         ['\Ticket\UpdateField\UpdateNodeParentField']
     ],
 

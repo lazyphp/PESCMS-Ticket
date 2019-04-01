@@ -60,19 +60,28 @@ class InitSlice {
         if(is_array($route)){
             $goingDown = false;
             foreach($route as $value){
-                if(strpos(GROUP . '-' . MODULE . '-' . ACTION, $value) !== false){
+                if(strpos(GROUP . '-' . MODULE . '-' . ACTION, self::placeholder($value)) !== false){
                     $goingDown = true;
                 }
             }
             return $goingDown;
         }else{
             //匹配控制器路由
-            if(strpos(GROUP . '-' . MODULE . '-' . ACTION, $route) === false){
+            if(strpos(GROUP . '-' . MODULE . '-' . ACTION, self::placeholder($route)) === false){
                 return false;
             }else{
                 return true;
             }
         }
+    }
+
+    /**
+     * 快速处理路由的占位符
+     * @param $str 需要处理的路由规则
+     * @return mixed
+     */
+    private static function placeholder($str){
+        return str_replace([':g', ':m', ':a'], [GROUP, MODULE, ACTION], $str);
     }
 
 

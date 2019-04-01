@@ -10,7 +10,7 @@
                         <form action="<?= $label->url('Form-Submit-score'); ?>" class="am-form ajax-submit" method="POST" data-am-validator>
                             <?= $label->token() ?>
                             <input type="hidden" name="number" value="<?= $ticket_number; ?>"/>
-                            <input type="hidden" name="back_url" value="<?= $_SERVER['REQUEST_URI']; ?>"/>
+                            <input type="hidden" name="back_url" value="<?= base64_encode($_SERVER['REQUEST_URI']); ?>"/>
 
                             <div class="am-form-group">
                                 <label class="am-form-label am-margin-bottom-0 am-vertical-align-middle am-text-sm">整体评价 : </label>

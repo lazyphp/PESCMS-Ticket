@@ -26,6 +26,7 @@ class Ticket_form extends Content {
 
         //输出工单的表单类型
         $form = json_decode(htmlspecialchars_decode(\Model\Content::findContent('field', '7', 'field_id')['field_option']), true);
+        $form['国内地区'] = 'china_regions';
         unset($form['分类']);
         $this->assign('formType', $form);
 

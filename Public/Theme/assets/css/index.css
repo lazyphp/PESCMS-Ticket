@@ -74,7 +74,18 @@
 }
 .login{
     min-height: 46rem;
-    padding: 50px 0 10px 0;
+    padding: 10rem 0 10px 0;
+}
+.login .am-panel{
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+.login a{
+    color: #ffffff;
+}
+
+.login-text-danger{
+    margin: 1.3rem 0 0 0;
 }
 
 
@@ -91,7 +102,12 @@
 .ticket-fqa{
     /*border: 1px solid #ddd;*/
 }
-.fqa-list{
+.ticket-fqa ul{
+    list-style-type: none;
+    padding-bottom: 0 !important;
+    margin-top: 0;
+}
+.ticket-fqa ul, .fqa-list{
     border-top: 1px solid #ddd;
     padding: 1rem 1.5rem;
 }
@@ -105,6 +121,6 @@
     line-height: 20px;
 }
 .fqa-list a:hover{
-    background: #e1e6eb;
+    color: #e1e6eb;
     text-decoration: none;
 }

@@ -106,6 +106,11 @@ class Login extends \Core\Controller\Controller {
             'findpassword_createtime' => time()
         ]);
 
+        //创建邮件
+        $mailContent = "<p>您已提交找回密码的请求，请点击此链接完成操作：" . \Core\Func\CoreFunc::$param['system']['domain'] . $this->url(GROUP . '-Login-resetpw', ['mark' => $mark]);
+
+        \Model\Extra::insertSend($checkmember['member_email'], '重置密码请求', $mailContent, 1);
+
         $this->success('系统已将找回密码的信息发至您的邮箱，请注意查收。', $this->url('Login-index'));
     }
 
@@ -136,7 +141,7 @@ class Login extends \Core\Controller\Controller {
 
         $data['noset']['member_id'] = $checkMark['member_id'];
 
-        $data['member_password'] = \Core\Func\CoreFunc::generatePwd($member['member_email'] . $password);
+        $data['member_password'] = \Core\Func\CoreFunc::generatePwd($password, 'USER_KEY');
 
         $this->db('member')->where('member_id = :member_id')->update($data);
 

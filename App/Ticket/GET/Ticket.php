@@ -164,7 +164,7 @@ class Ticket extends \Core\Controller\Controller {
      */
     public function complain(){
         $this->condition .= ' AND t.ticket_status = 3 AND t.ticket_score_time > 0';
-        $this->index('ticket_complain');
+        $this->index('Ticket_complain');
     }
 
     /**

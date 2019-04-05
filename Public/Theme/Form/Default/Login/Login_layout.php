@@ -20,4 +20,26 @@
         </div>
     </div>
 </div>
+<!--背景版权来自NASA https://www.nasa.gov/multimedia/imagegallery/image_feature_693.html-->
+<style>
+    html, body{
+        -moz-background-size: 100% 100%;
+        background-size: cover;
+        background-image: url('<?= DOCUMENT_ROOT; ?>/Theme/assets/i/162284main_image_feature_693_ys_full.jpg');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    header{
+        opacity: 0.1;
+        transition: opacity 0.3s linear;
+    }
+    header:hover{
+        opacity: 1;
+        transition: opacity 0.3s linear;
+    }
+    .my-footer{
+        display: none;
+    }
+</style>
 <?php include THEME_PATH . '/footer.php'; ?>

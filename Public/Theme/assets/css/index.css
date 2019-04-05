@@ -102,7 +102,12 @@
 .ticket-fqa{
     /*border: 1px solid #ddd;*/
 }
-.fqa-list{
+.ticket-fqa ul{
+    list-style-type: none;
+    padding-bottom: 0 !important;
+    margin-top: 0;
+}
+.ticket-fqa ul, .fqa-list{
     border-top: 1px solid #ddd;
     padding: 1rem 1.5rem;
 }
@@ -116,6 +121,6 @@
     line-height: 20px;
 }
 .fqa-list a:hover{
-    background: #e1e6eb;
+    color: #e1e6eb;
     text-decoration: none;
 }

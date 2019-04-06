@@ -1,17 +1,17 @@
 <div class="am-form-inline">
-    <select class="pes_regions_provinces" <?= $field['field_required'] == '1' ? 'required' : '' ?> data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}" >
+    <select class="pes_regions_<?= $field['field_name'] ?>_provinces" <?= $field['field_required'] == '1' ? 'required' : '' ?> data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}" >
         <option>请选择</option>
     </select>
 
-    <select class="pes_regions_cities" <?= $field['field_required'] == '1' ? 'required' : '' ?> data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}" >
+    <select class="pes_regions_<?= $field['field_name'] ?>_cities" <?= $field['field_required'] == '1' ? 'required' : '' ?> data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}" >
         <option>请选择</option>
     </select>
 
-    <select class="pes_regions_areas" <?= $field['field_required'] == '1' ? 'required' : '' ?> data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}" >
+    <select class="pes_regions_<?= $field['field_name'] ?>_areas" <?= $field['field_required'] == '1' ? 'required' : '' ?> data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}" >
         <option>请选择</option>
     </select>
 
-    <select class="pes_regions_streets" <?= $field['field_required'] == '1' ? 'required' : '' ?> data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}" >
+    <select class="pes_regions_<?= $field['field_name'] ?>_streets" <?= $field['field_required'] == '1' ? 'required' : '' ?> data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}" >
         <option>请选择</option>
     </select>
 
@@ -21,9 +21,9 @@
 <script>
     $(function(){
 
-        $('select[class^="pes_regions_"]').on('change', function(){
+        $('select[class^="pes_regions_<?= $field['field_name'] ?>_"]').on('change', function(){
             var str = '';
-            $('select[class^="pes_regions_"]').each(function(){
+            $('select[class^="pes_regions_<?= $field['field_name'] ?>_"]').each(function(){
                 if($(this).val()){
                     str += $(this).val().trim();
                 }
@@ -44,7 +44,7 @@
             if(noAreaCity.indexOf(id) > -1){
                 name = 'streets'
                 id = id + '00'
-                $('.pes_regions_areas').selected('destroy').hide();
+                $('.pes_regions_<?= $field['field_name'] ?>_areas').selected('destroy').hide();
             }
 
             $.getJSON('/Theme/assets/js/regions/'+name+'.json', function(data){
@@ -59,13 +59,13 @@
                 for(var key in foo){
                     option += '<option value="'+foo[key]['name']+'" data="'+foo[key]['code']+'">'+foo[key]['name']+'</option>'
                 }
-                $('.pes_regions_'+name).html(option).selected('enable')
+                $('.pes_regions_<?= $field['field_name'] ?>_'+name).html(option).selected('enable')
             })
         }
 
         var clearOption = function(obj){
             $.each(obj, function(index, name){
-                $('.pes_regions_'+name).html('<option value="">请选择</option>').selected('destroy').hide()
+                $('.pes_regions_<?= $field['field_name'] ?>_'+name).html('<option value="">请选择</option>').selected('destroy').hide()
             })
         }
 
@@ -73,20 +73,20 @@
         clearOption(['cities', 'areas', 'streets'])
 
 
-        $('body').on('change', '.pes_regions_provinces, .pes_regions_cities, .pes_regions_areas, .pes_regions_streets', function(){
+        $('body').on('change', 'select[class^="pes_regions_<?= $field['field_name'] ?>_"]', function(){
             var name = $(this).attr('class').split(' ');
             var id = $('option:selected', this).attr('data');
             if(id){
                 switch(name[0]){
-                    case 'pes_regions_provinces':
+                    case 'pes_regions_<?= $field['field_name'] ?>_provinces':
                         clearOption(['cities', 'areas', 'streets'])
                         getJsonRegions('cities', id);
                         break;
-                    case 'pes_regions_cities':
+                    case 'pes_regions_<?= $field['field_name'] ?>_cities':
                         clearOption(['areas', 'streets'])
                         getJsonRegions('areas', id);
                         break;
-                    case 'pes_regions_areas':
+                    case 'pes_regions_<?= $field['field_name'] ?>_areas':
                         clearOption(['streets'])
                         getJsonRegions('streets', id);
                         break;

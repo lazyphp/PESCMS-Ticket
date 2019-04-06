@@ -31,7 +31,8 @@ class HandleTicket_model extends \Core\Slice\Slice {
                 $_GET['id'] = \Model\TicketModel::numberFind($number)['ticket_model_id'];
             }
         } elseif (METHOD == 'POST') {
-            $_POST['number'] = (string)\Model\Extra::getOnlyNumber();
+            //统一工单模型的ID号为10个长度
+            $_POST['number'] = (string)str_pad(substr(\Model\Extra::getOnlyNumber(), 0, 10), 10, 0, STR_PAD_RIGHT);
         } elseif (METHOD == 'PUT' || METHOD == 'DELETE') {
             if(METHOD == 'PUT'){
                 $func = 'isP';

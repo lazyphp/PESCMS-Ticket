@@ -16,6 +16,8 @@ namespace Expand;
  */
 class Verify {
 
+    public $height = 30;
+
     /**
      * 字符串长度
      * @param type $length 验证码长度
@@ -45,10 +47,10 @@ class Verify {
         header('Content-Type: image/png');
 
         //设置验证码大小
-        $im = imagecreatetruecolor(200, 30);
+        $im = imagecreatetruecolor($length * 32, $this->height);
         //设置背景颜色
-        $background = imagecolorallocate($im, 130, 242, 75);
-        imagefilledrectangle($im, 0, 0, 399, 29, $background);
+        $background = imagecolorallocate($im, 128, 212, 246);
+        imagefilledrectangle($im, 0, 0, $length * 32, $this->height, $background);
 
         //验证码
         $verify = array_slice($str, 0, $length);
@@ -60,10 +62,10 @@ class Verify {
         $font = PES_CORE.'/Expand/Font/Roboto-Regular.ttf';
 
         //设置验证码颜色
-        imagettftext($im, 24, 0, 11, 24, $this->randImagecolorallocate($im), $font, $text);
+        imagettftext($im, 24, 0, 11, $this->height - 6, $this->randImagecolorallocate($im), $font, $text);
 
         //设置验证码颜色
-        imagettftext($im, 24, 0, 11, 24, $this->randImagecolorallocate($im), $font, $text);
+        imagettftext($im, 24, 0, 11, $this->height - 6, $this->randImagecolorallocate($im), $font, $text);
 
         //添加干扰
         $this->randLine($im);

@@ -1,5 +1,5 @@
 <div class="am-padding-xs am-padding-top-0">
-    <div class="am-panel am-panel-default">
+    <div class="am-panel am-panel-default" id="setting-panel">
         <div class="am-panel-bd am-padding-bottom-0">
             <div class="am-cf">
                 <div class="am-fl am-cf">
@@ -23,6 +23,8 @@
                         <?php include 'action/ticket.php';?>
                     </div>
                     <div class="am-tab-panel am-fade" id="tab2">
+                        <?php include 'action/notice.php';?>
+
                         <?php include 'action/email.php';?>
 
                         <?php include 'action/sms.php';?>
@@ -59,14 +61,15 @@
             return false;
         })
 
-        $('.mobile-test').on('click', function(){
-            var mobile = $('.test_mobile').val();
-            var template = $('select[name=template]').val();
+        $('.send-test').on('click', function(){
+            var parent = $(this).parent()
+            var account = parent.find('.test_account').val();
+            var template = parent.find('select[name=template]').val();
             var url = $(this).attr('data')
-            if(mobile == '' || template == '' ){
+            if(account == '' || template == '' ){
                 return false;
             }
-            window.open(url + '&mobile='+mobile+'&template='+template);
+            window.open(url + '&account='+account+'&template='+template);
             return false;
         })
 	})

@@ -28,3 +28,7 @@
 .admin-task-bd a:hover{
     color: #a9a9a9;
 }
+
+#setting-panel .am-tabs-bd{
+    border: none !important;
+}

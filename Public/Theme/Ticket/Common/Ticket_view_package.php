@@ -89,7 +89,7 @@
                         </div>
                         <div class="am-u-sm-11">
                             <div class="am-block am-nbfc">
-                                <?= $value['user_id'] == '-1' ? '' : "{$value['user_name']} : " ?><?=  (new \voku\helper\AntiXSS())->xss_clean(htmlspecialchars_decode($value['ticket_chat_content'])) ?>
+                                <?= $value['user_id'] == '-1' ? '' : "{$value['user_name']} : " ?><?=  $label->xss(htmlspecialchars_decode($value['ticket_chat_content'])) ?>
                             </div>
                             <div class="am-block"><?= date('Y-m-d H:i:s', $value['ticket_chat_time']); ?></div>
                         </div>

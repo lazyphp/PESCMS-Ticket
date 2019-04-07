@@ -125,7 +125,7 @@ class weixin {
             ]);
         }
 
-
+        return $result;
     }
 
 }

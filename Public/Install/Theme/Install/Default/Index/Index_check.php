@@ -1,9 +1,9 @@
 <div class="am-form-group">
     <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">PHP版本:</label>
     <div class="am-u-sm-10">
-        <button type="button" id="version" class="am-btn am-btn-<?= $version == true ? 'success' : 'danger' ?>"><?= $pdo == true ? phpversion() : '请升级PHP版本' ?></button>
-        <?php if ($version == false): ?>
-            <a href="http://php.net/downloads.php" class="install_tips" target="_blank"><i class="am-icon-frown-o"></i> PESCMS DOC必须运行于PHP5.4或更高级的版本，请升级版本</a>
+        <button type="button" id="version" class="am-btn am-btn-<?= $php_version == true ? 'success' : 'danger' ?>"><?= $pdo == true ? phpversion() : '请升级PHP版本' ?></button>
+        <?php if ($php_version == false): ?>
+            <a href="http://php.net/downloads.php" class="install_tips" target="_blank"><i class="am-icon-frown-o"></i> PESCMS DOC必须运行于PHP5.6或更高级的版本，请升级版本</a>
         <?php endif; ?>
     </div>
 </div>

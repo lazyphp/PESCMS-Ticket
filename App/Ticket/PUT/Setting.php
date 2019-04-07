@@ -74,9 +74,26 @@ class Setting extends \Core\Controller\Controller {
             $this->error('请导入zip的更新补丁');
         }
 
-        /**
-         * @todo 解压安装程序，这里没有做更新文件匹配，日后会补充对应验证，防止非法提权。
-         */
+        //获取文件hash值
+        $getPatch = json_decode((new \Expand\cURL())->init('https://www.pescms.com/patch/5/'.\Core\Func\CoreFunc::$param['system']['version'], [], [
+            CURLOPT_HTTPHEADER => [
+                'X-Requested-With: XMLHttpRequest',
+                'Content-Type: application/json; charset=utf-8',
+                'Accept: application/json',
+            ]
+        ]), true);
+        if(empty($getPatch['status'])){
+            $this->error('连接PESCMS服务器失败!');
+        }
+
+        if($getPatch['status'] != 200){
+            $this->error($getPatch['msg']);
+        }
+
+        if(hash_file('sha256', $file['tmp_name']) !== $getPatch['patch_sha256']){
+            $this->error('非官方更新补丁!请访问<a href="https://www.pescms.com" target="_blank">PESCMS</a>获取最新的补丁', 'javascript:history.go(-1)', '10');
+        }
+
         (new \Expand\zip()) ->unzip($file['tmp_name']);
 
         $this->actionini();

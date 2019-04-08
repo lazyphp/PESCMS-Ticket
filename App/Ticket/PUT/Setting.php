@@ -59,9 +59,49 @@ class Setting extends \Core\Controller\Controller {
 
     /**
      * 自动更新
-     * @todo 日后在弄
      */
     public function atUpgrade() {
+        $getPatch = json_decode((new \Expand\cURL())->init('https://www.pescms.com/patch/5/'.\Core\Func\CoreFunc::$param['system']['version'], [], [
+            CURLOPT_HTTPHEADER => [
+                'X-Requested-With: XMLHttpRequest',
+                'Content-Type: application/json; charset=utf-8',
+                'Accept: application/json',
+            ]
+        ]), true);
+
+        if(empty($getPatch)){
+            $this->error('连接PESCMS服务器失败!');
+        }
+
+        if($getPatch['status'] == 200){
+            $patchSave = APP_PATH.'Upgrade/'.pathinfo($getPatch['data']['update_patch_file'])['basename'];
+
+            $getFile = (new \Expand\cURL())->init("https://www.pescms.com{$getPatch['data']['update_patch_file']}");
+
+            $download = fopen($patchSave, 'w');
+            fwrite($download, $getFile);
+            fclose($download);
+
+            if(hash_file('sha256', $patchSave) !== $getPatch['data']['patch_sha256'] ){
+                exit('哈希值不一致');
+            }
+
+            (new \Expand\zip()) ->unzip($patchSave);
+
+            $this->actionini();
+
+            //更新完毕，删除文件
+            unlink($patchSave);
+
+            //继续跳转至自动更新方法
+            $this->success("{$getPatch['data']['new_version']}升级完毕,自动更新程序正在运行,请勿关闭浏览器", $this->url(GROUP . '-Setting-atUpgrade', ['method' => 'PUT']), '1');
+
+        }elseif($getPatch['status'] == 0){
+            $this->upgradeStatistics(\Core\Func\CoreFunc::$param['system']['version']);
+            $this->layout('Setting_upgrade_info');
+        }else{
+            $this->error('解析接口出错');
+        }
 
     }
 
@@ -82,7 +122,7 @@ class Setting extends \Core\Controller\Controller {
                 'Accept: application/json',
             ]
         ]), true);
-        if(empty($getPatch['status'])){
+        if(empty($getPatch)){
             $this->error('连接PESCMS服务器失败!');
         }
 
@@ -90,15 +130,15 @@ class Setting extends \Core\Controller\Controller {
             $this->error($getPatch['msg']);
         }
 
-        if(hash_file('sha256', $file['tmp_name']) !== $getPatch['patch_sha256']){
+        if(hash_file('sha256', $file['tmp_name']) !== $getPatch['data']['patch_sha256']){
             $this->error('非官方更新补丁!请访问<a href="https://www.pescms.com" target="_blank">PESCMS</a>获取最新的补丁', 'javascript:history.go(-1)', '10');
         }
 
         (new \Expand\zip()) ->unzip($file['tmp_name']);
 
         $this->actionini();
-        
-        $this->assign('info', $this->info);
+
+        $this->upgradeStatistics($getPatch['data']['new_version']);
         $this->layout('Setting_upgrade_info');
     }
 
@@ -153,6 +193,19 @@ class Setting extends \Core\Controller\Controller {
         //移除天网杀人的配置意识
         unlink($ini);
         return true;
+    }
+
+    /**
+     * 官方升级统计
+     * @description 本功能仅用于官方统计程序版本的使用情况
+     * @param $version
+     */
+    private function upgradeStatistics($version){
+        (new \Expand\cURL())->init('https://www.pescms.com/?g=Api&m=Statistics&a=action', [
+            'id' => 3,
+            'type' => 2,
+            'version' => $version
+        ]);
     }
 
 }

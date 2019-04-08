@@ -119,6 +119,7 @@ class Index extends \Core\Controller\Controller {
             $f = fopen(PES_CORE."Public/{$manage}.php", 'w');
             fwrite($f, "<?php\n header('Location:/?g=Ticket&m=Login&a=index');");
             fclose($f);
+            $this->assign('manage', $manage);
         }
 
         //纯粹为了效果

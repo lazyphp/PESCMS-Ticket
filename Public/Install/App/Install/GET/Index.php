@@ -114,6 +114,12 @@ class Index extends \Core\Controller\Controller {
         $data['passwd'] = $this->isP('passwd', '请填写管理员密码');
         $data['name'] = $this->isP('name', '请填写管理员名称');
         $data['mail'] = $this->isP('mail', '请填写管理员邮箱');
+        $manage = $this->p('manage');
+        if(!empty($manage)){
+            $f = fopen(PES_CORE."Public/{$manage}.php", 'w');
+            fwrite($f, "<?php\n header('Location:/?g=Ticket&m=Login&a=index');");
+            fclose($f);
+        }
 
         //纯粹为了效果
         $table = array('创建分类列表', '创建找回密码表', '创建字段列表', '创建菜单列表', '创建模型列表', '创建权限节点列表', '创建用户组权限节点', '创建发送消息列表', '创建选项列表', '创建工单列表', '创建工单模型列表', '创建工单回复内容列表', '创建工单表单列表', '创建路由规则列表', '创建客户列表', '创建用户列表', '创建用户组列表');

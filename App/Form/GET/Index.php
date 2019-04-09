@@ -27,6 +27,9 @@ class Index extends \Core\Controller\Controller {
      */
     public function verify() {
         $verify = new \Expand\Verify();
+        if(!empty($_GET['height'])){
+            $verify->height = intval($this->g('height'));
+        }
         $verify->createVerify('7');
     }
 

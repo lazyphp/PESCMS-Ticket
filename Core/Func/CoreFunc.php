@@ -273,6 +273,7 @@ class CoreFunc {
      * @return string
      */
     public static function token(){
+        self::$token = \Core\Func\CoreFunc::session()->get('token');
         if(empty(self::$token)){
             list($usec, $sec) = explode(" ", microtime());
             self::$token = md5(substr($usec, 2) * rand(1, 100));

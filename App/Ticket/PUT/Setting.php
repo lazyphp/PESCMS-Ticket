@@ -94,9 +94,13 @@ class Setting extends \Core\Controller\Controller {
             unlink($patchSave);
 
             //继续跳转至自动更新方法
-            $this->success("{$getPatch['data']['new_version']}升级完毕,自动更新程序正在运行,请勿关闭浏览器", $this->url(GROUP . '-Setting-atUpgrade', ['method' => 'PUT']), '1');
+            $this->success("{$getPatch['data']['new_version']}升级完毕,自动更新程序正在运行,请勿关闭浏览器", $this->url(GROUP . '-Setting-atUpgrade', ['method' => 'PUT', 'complete' => 1]), '1');
 
         }elseif($getPatch['status'] == 0){
+            //不是从自动更新跳转的，则提示接口信息
+            if(empty($_GET['complete'])){
+                $this->assign('info', [$getPatch['msg']]);
+            }
             $this->upgradeStatistics(\Core\Func\CoreFunc::$param['system']['version']);
             $this->layout('Setting_upgrade_info');
         }else{

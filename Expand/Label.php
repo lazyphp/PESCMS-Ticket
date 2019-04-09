@@ -26,6 +26,8 @@ class Label {
      */
     private $fieldOption = [];
 
+    private $xss;
+
     /**
      * 此是语法糖，将一些写法近似的方法整合一起，减少重复
      * @param type $name
@@ -223,6 +225,19 @@ class Label {
      */
     public function valueTheme($field, $prefix, $value){
         require THEME_PATH.'/Content/Content_value_theme.php';
+    }
+
+    /**
+     * xss过滤
+     * @param $str
+     * @return mixed
+     */
+    public function xss($str){
+        if(empty($this->xss)){
+            $this->xss = new \voku\helper\AntiXSS();
+        }
+
+        return $this->xss->xss_clean($str);
     }
 
 }

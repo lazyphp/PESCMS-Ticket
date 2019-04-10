@@ -87,6 +87,11 @@ class Setting extends \Core\Controller\Controller {
         ]);
 
         echo '<pre>';
+        echo "您使用的模板ID: {$title['3']} <br/>";
+        echo "模板格式: {$template['3']} <br/>";
+        echo "------------下面格式化后的模板格式-------------<br/>";
+        print_r(json_decode($template[3], true));
+        echo "------------下面是微信返回的结果---------------<br/>";
         print_r($result);
         echo '</pre>';
         echo '<br/>';

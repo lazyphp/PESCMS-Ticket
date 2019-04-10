@@ -71,7 +71,7 @@ class Setting extends \Core\Controller\Controller {
     }
     
     public function weixinTest(){
-        $account = $this->isG('account', '请输入手机号码');
+        $account = $this->isG('account', '请填写接收模板消息的微信openid');
         $id = $this->isG('template', '请选择模板');
 
         $title = \Model\MailTemplate::matchTitle('123456', 3);

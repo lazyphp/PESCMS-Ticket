@@ -33,8 +33,8 @@
                             <option value="<?= $value['mail_template_id'] ?>"><?= $label->getFieldOptionToMatch(183, $value['mail_template_type']); ?></option>
                         <?php endforeach; ?>
                     </select>
-                    <input type="text" class="test_mobile am-inline" placeholder="测试手机号码" style="width: 20%">
-                    <a href="javascript:;" data="<?= $label->url(GROUP.'-Setting-mobileTest') ?>" type="submit" class="am-inline am-btn am-btn-secondary mobile-test" >发送短信</a>
+                    <input type="text" class="test_account am-inline" placeholder="测试手机号码" style="width: 20%">
+                    <a href="javascript:;" data="<?= $label->url(GROUP.'-Setting-mobileTest') ?>" type="submit" class="am-inline am-btn am-btn-secondary send-test" >发送短信</a>
                 </div>
             </div>
         </div>

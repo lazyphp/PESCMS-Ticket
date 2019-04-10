@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2019-03-29 03:39:31
+-- Generation Time: 2019-04-10 02:29:38
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `pes_field` (
   PRIMARY KEY (`field_id`),
   UNIQUE KEY `modle_id` (`field_model_id`,`field_name`),
   KEY `field_name` (`field_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=235 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=236 ;
 
 --
 -- 转存表中的数据 `pes_field`
@@ -171,7 +171,8 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (231, 23, 'content', '详细内容', 'editor', '', '', '', 1, 3, 0, 1, 1, 0),
 (232, 17, 'weixin_template_id', '微信模板ID', 'text', '', '', '', 0, 5, 1, 1, 1, 0),
 (233, 17, 'weixin_template', '微信模板内容', 'textarea', '', '微信模板消息，输入如下变量可以动态输出对应的值：{number}为工单号码。请按照微信公众号选择模板的格式填写对应的参数。', '', 0, 6, 0, 1, 1, 0),
-(234, 21, 'result', '执行结果', 'text', '', '', '', 1, 2, 1, 1, 1, 0);
+(234, 21, 'result', '执行结果', 'text', '', '', '', 1, 2, 1, 1, 1, 0),
+(235, 20, 'weixin', '微信OPENID', 'text', '', '', '', 0, 10, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 

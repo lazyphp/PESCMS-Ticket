@@ -42,7 +42,7 @@ class Category extends \Core\Controller\Controller{
 			]);
 			$this->assign('ticket', $ticketList);
 		}
-
+        $this->assign('title', '提交工单');
 		$this->assign('category', $category);
 		$this->layout('Category_index', 'Category_layout');
 	}
@@ -54,7 +54,7 @@ class Category extends \Core\Controller\Controller{
         $number = $this->isG('number', '请提交您要生成的工单');
         $result = \Model\TicketForm::getFormWithNumber($number);
         if(empty($result)){
-            $this->_404();
+            $this->_404(true);
         }
 
         $field = [];

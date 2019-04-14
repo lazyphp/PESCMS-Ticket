@@ -29,3 +29,4 @@
     <input type="text" class="am-form-field login-verify" name="verify" placeholder="验证码" maxlength="7">
     <img src="<?= $label->url('Index-verify') ?>" class="refresh-verify">
 </div>
+<button type="submit" class="am-btn am-btn-secondary am-radius am-btn-sm am-margin-top-sm">注册</button>

@@ -240,4 +240,13 @@ class Label {
         return $this->xss->xss_clean($str);
     }
 
+    /**
+     * 验证权限 | 模板使用，控制某些内容展示
+     * @param $auth
+     * @return bool|\Model\type
+     */
+    public function checkAuth($auth){
+        return \Model\Auth::check($auth);
+    }
+
 }

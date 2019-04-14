@@ -32,8 +32,33 @@
     height: 10rem !important;
 }
 .webuploader-pick{
-    background: url('../i/image.png') no-repeat -1.0rem -0.3rem;
-    background-size: cover; -moz-background-size: cover;
+    /*background: url('../i/image.png') no-repeat -1.0rem -0.3rem;*/
+    /*background-size: cover; -moz-background-size: cover;*/
+}
+.webuploader-background-img:hover{
+    border: 1px solid #868585;
+}
+.webuploader-pick:before{
+    width: 2px;
+    height: 4rem;
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    background-color: #d9d9d9;
+}
+.webuploader-pick:after{
+    width: 4rem;
+    height: 2px;
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    background-color: #d9d9d9;
 }
 .file-preview-other{
     height: 8.38rem !important;

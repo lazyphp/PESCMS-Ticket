@@ -16,6 +16,15 @@ class Setting extends \Core\Controller\Controller {
 
 
     public function action(){
+        //调试获取$_SERVER信息
+        if($_GET['dev']){
+            echo '<pre>';
+            print_r($_SERVER);
+            echo '</pre>';
+            echo '<br/>';
+            exit;
+        }
+        
         $option = [];
         foreach(\Model\Content::listContent(['table' => 'option']) as $key => $value){
             if(is_array(json_decode($value['value'], true)) || $value['option_name'] == 'crossdomain' ){
@@ -24,6 +33,12 @@ class Setting extends \Core\Controller\Controller {
                 $option[$value['option_name']] = $value;
             }
         }
+
+        $license = PES_CORE.'/Core/LICENSE.pes';
+        if(is_file($license)){
+            $this->assign('license', 1);
+        }
+
         $this->assign($option);
         $this->assign('title', '系统设置');
         $this->layout();
@@ -96,8 +111,32 @@ class Setting extends \Core\Controller\Controller {
         echo '</pre>';
         echo '<br/>';
         exit;
+    }
 
+    public function authorize(){
+        $license = PES_CORE.'/Core/LICENSE.pes';
+        $authorize = \Model\Content::findContent('option', 'authorize', 'option_name');
+        $result = (new \Expand\cURL())->init('https://www.pescms.com/?g=Api&m=Authorize&a=check', ['key' => $authorize['value']], [
+            CURLOPT_HTTPHEADER => [
+                'X-Requested-With: XMLHttpRequest',
+                'Accept: application/json',
+            ]
+        ]);
 
+        $authorizeJson = json_decode($result, true);
+        if($authorizeJson['status']  == 200 ){
+            if(strcmp(trim($_SERVER['HTTP_HOST']), trim($authorizeJson['data']['authorize_domain'])) !== 0){
+                is_file($license) ? unlink($license) : '';
+                $this->error('授权域名不一致');
+            }
+            $fopen = fopen($license, 'w+');
+            fwrite($fopen, json_encode($authorizeJson['data']));
+            fclose($fopen);
+            $this->success('授权验证成功');
+        }else{
+            is_file($license) ? unlink($license) : '';
+            $this->error('获取授权失败');
+        }
     }
 
 }

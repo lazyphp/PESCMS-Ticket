@@ -33,9 +33,6 @@
                     <label class="am-checkbox-inline">
                         <input type="checkbox" value="1" name="cs_notice_type[1]" <?= $cs_notice_type['1'] == '1' ? 'checked="checked"' : '' ?>> 邮箱地址
                     </label>
-                    <label class="am-checkbox-inline" data-am-popover="{content: '接口功能努力开发中', trigger: 'hover focus'}">
-                        <input type="checkbox" value="2" name="cs_notice_type[2]" <?= $cs_notice_type['2'] == '2' ? 'checked="checked"' : '' ?> disabled="disabled"> 手机短信
-                    </label>
                     <label class="am-checkbox-inline" data-am-popover="{content: '勾选企业微信，请确保下面企业微信的API填写正确', trigger: 'hover focus'}">
                         <input type="checkbox" value="4" name="cs_notice_type[4]" <?= $cs_notice_type['4'] == '4' ? 'checked="checked"' : '' ?>> 企业微信
                     </label>

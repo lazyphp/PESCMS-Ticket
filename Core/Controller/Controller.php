@@ -208,9 +208,15 @@ class Controller {
     /**
      * 404专用提示
      */
-    protected function _404(){
+    protected function _404($layout = false, $title = '页面被怪兽吃掉了'){
         header("HTTP/1.1 404 Page not found");
-        $this->layout('404');
+        $this->assign('title', $title);
+        if($layout == true){
+            $this->layout('404');
+        }else{
+            $this->display('404');
+        }
+
         exit;
     }
 
@@ -293,7 +299,9 @@ class Controller {
 
         /* 加载标签库 */
         $label = new \Expand\Label();
-
+        if (!empty(\Core\Func\CoreFunc::$param)) {
+            extract(\Core\Func\CoreFunc::$param, EXTR_OVERWRITE);
+        }
         require self::promptPage();
         exit;
     }
@@ -311,7 +319,12 @@ class Controller {
      * @return type 返回模板
      */
     private static function promptPage() {
-        return PES_CORE . 'Core/Theme/jump.php';
+	    if(is_file(THEME_PATH.'/jump.php')){
+		    return THEME_PATH . '/jump.php';
+	    }else{
+		    return PES_CORE . 'Core/Theme/jump.php';
+	    }
+
     }
 
     /**

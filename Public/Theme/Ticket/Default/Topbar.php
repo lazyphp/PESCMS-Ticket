@@ -29,7 +29,7 @@
 
         <div class="am-topbar-right">
             <ul class="am-nav am-nav-pills am-topbar-nav admin-header-list">
-                <li><a href="javascript:;">您好,<?= $this->session()->get('ticket')['user_name']; ?></a></li>
+                <li><a href="javascript:;">您好,<?= self::session()->get('ticket')['user_name']; ?></a></li>
                 <li class="am-dropdown" data-am-dropdown="">
                     <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
                         <i class="am-icon-male"></i> 个人中心 <span class="am-icon-caret-down"></span>

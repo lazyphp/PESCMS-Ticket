@@ -155,7 +155,7 @@ class App {
     }
 
     /**
-     * 获取提示页
+     * 加载失败 获取提示页
      * @return type 返回模板
      */
     private function promptPage($title, $errorMsg, $errorFile) {
@@ -166,9 +166,16 @@ class App {
             $errorFile = 'That’s all we know.';
         }
 
-        if (file_exists(THEME . '/' . GROUP . '/404.php')) {
-            require THEME . '/' . GROUP . '/404.php';
-        } else {
+        $label = new \Expand\Label();
+        if (!empty(\Core\Func\CoreFunc::$param)) {
+            extract(\Core\Func\CoreFunc::$param, EXTR_OVERWRITE);
+        }
+	    //非调试模式加载404页面。
+        if (is_file(THEME_PATH. '/404.php') && DEBUG == false ) {
+            require THEME_PATH. '/404.php';
+        } elseif(is_file(THEME_PATH.'/error.php')){
+            require THEME_PATH.'/error.php';
+        }else{
             require PES_CORE . 'Core/Theme/error.php';
         }
         exit;

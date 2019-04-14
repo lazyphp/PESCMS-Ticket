@@ -8,7 +8,7 @@
 
 <div class="am-g am-g-collapse am-margin-bottom">
     <div class="am-u-sm-12 am-u-sm-centered">
-        <button type="submit" class="am-btn am-btn-primary am-btn-xs" >提交保存</button>
+        <button type="submit" class="am-btn am-btn-secondary am-btn-xs am-radius" >提交保存</button>
     </div>
 </div>
 </form>

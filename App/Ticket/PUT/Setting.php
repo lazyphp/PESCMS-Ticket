@@ -19,20 +19,60 @@ class Setting extends \Core\Controller\Controller {
      */
     public function action() {
 
-        foreach (['upload_img', 'upload_file'] as $value) {
-            $data[$value] = json_encode(explode(',', str_replace(["\r\n", "\r", " "], '', $_POST[$value])));
+        $operate = [
+            //字符串形式的更新设置
+            'str' => [
+                'domain',
+                'siteLogo',
+                'siteTitle',
+                'pescmsIntroduce',
+                'openindex',
+                'open_register',
+                'notice_way',
+                'siteContact',
+                'authorize'
+            ],
+            //基于数组的json更新设置
+            'array' => [
+                'mail',
+                'weixin_api',
+                'weixinWork_api',
+                'sms',
+                'login_verify',
+                'cs_notice_type'
+            ]
+        ];
+        foreach ($operate as $type => $item){
+            foreach ($item as $value){
+                $this->db('option')->where('option_name = :option_name')->update([
+                    'noset' => [
+                        'option_name' => $value
+                    ],
+                    'value' => $type == 'array' ? json_encode($this->p($value, false)) :  $this->p($value, false)
+                ]);
+            }
+
         }
 
-        $data['domain'] = $this->isP('domain', '请提交网站域名');
-        $data['openindex'] = $this->p('openindex');
-        $data['notice_way'] = $this->p('notice_way');
-        $data['open_register'] = $this->p('open_register');
-        $data['crossdomain'] = !empty($_POST['crossdomain']) ? json_encode(explode("\n", str_replace("\r", "", $this->p('crossdomain')))) : '';
+
+        $this->specialOperate();
+
+        $this->success('保存设置成功!', $this->url('Ticket-Setting-action'));
+    }
+
+    /**
+     * 特殊格式更新设置
+     */
+    private function specialOperate(){
+        foreach (['upload_img', 'upload_file'] as $value) {
+            $data[$value] = json_encode(explode(',', str_replace(["\r\n", "\r", "\n", " "], '', $_POST[$value])));
+        }
+
+        //        $data['crossdomain'] = !empty($_POST['crossdomain']) ? json_encode(explode("\n", str_replace("\r", "", $this->p('crossdomain')))) : '';
 
         if(count($_POST['customstatus']) != '4' && count($_POST['customcolor']) != '4'){
             $this->error('请提交工单状态');
         }
-
         $customstatus = [];
         foreach($_POST['customstatus'] as $key => $value){
             $customstatus[$key]['color'] = $_POST['customcolor'][$key];
@@ -40,12 +80,6 @@ class Setting extends \Core\Controller\Controller {
         }
 
         $data['customstatus'] = json_encode($customstatus);
-        $data['mail'] = json_encode($this->p('mail'));
-        $data['weixin_api'] = json_encode($this->p('weixin_api'));
-        $data['weixinWork_api'] = json_encode($this->p('weixinWork_api'));
-        $data['login_verify'] = json_encode($this->p('login_verify'));
-        $data['cs_notice_type'] = json_encode($this->p('cs_notice_type'));
-        $data['sms'] = json_encode($this->p('sms'));
 
         foreach($data as $key => $value){
             $this->db('option')->where('option_name = :option_name')->update([
@@ -53,8 +87,6 @@ class Setting extends \Core\Controller\Controller {
                 'noset' => ['option_name'  => $key]
             ]);
         }
-
-        $this->success('保存设置成功!', $this->url('Ticket-Setting-action'));
     }
 
     /**

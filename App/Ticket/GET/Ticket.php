@@ -115,6 +115,9 @@ class Ticket extends \Core\Controller\Controller {
      */
     public function handle() {
         $content = \Model\Ticket::view();
+        if($content === false){
+            $this->error('工单不存在');
+        }
 
         $userID = $this->session()->get('ticket')['user_id'];
 

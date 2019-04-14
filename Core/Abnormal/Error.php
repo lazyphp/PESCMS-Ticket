@@ -191,7 +191,12 @@ class Error {
      * @return type 返回模板
      */
     private static function promptPage() {
-        return PES_CORE . 'Core/Theme/error.php';
+	    if(is_file(THEME_PATH.'/error.php')){
+		    return THEME_PATH.'/error.php';
+	    }else{
+		    return PES_CORE . 'Core/Theme/error.php';
+	    }
+
     }
 
     /**

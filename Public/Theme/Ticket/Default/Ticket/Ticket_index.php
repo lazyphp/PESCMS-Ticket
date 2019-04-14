@@ -54,8 +54,7 @@
                         </select>
                         <?php endif; ?>
 
-                        <input type="text" name="keyword" value="<?= urldecode($_GET['keyword']) ?>"
-                               class=" am-input-lg">
+                        <input type="text" name="keyword" value="<?= urldecode($_GET['keyword']) ?>" class=" am-input-lg pes_input_radius am-radius">
 
                         <button type="submit" class="am-btn am-btn-default am-btn-sm">搜索</button>
                     </form>
@@ -113,8 +112,10 @@
                                     <a href="javascript:;" class="am-text-warning"><?= $value['ticket_status'] == '3' ? '已结束' : '已关闭' ?></a>
 
                                 <?php endif; ?>
+                                <?php if($label->checkAuth(GROUP . 'DELETETicketaction') === true): ?>
                                 <i class="am-margin-left-xs am-margin-right-xs">|</i>
                                 <a class="am-text-danger ajax-click ajax-dialog"  msg="确定删除吗？将无法恢复的！" href="<?= $label->url(GROUP . '-' . MODULE . '-action', array('id' => $value["ticket_id"], 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI']))); ?>"><span class="am-icon-trash-o"></span></a>
+                                <?php endif; ?>
                             </td>
                         </tr>
 

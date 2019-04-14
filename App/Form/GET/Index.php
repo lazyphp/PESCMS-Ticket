@@ -17,7 +17,7 @@ class Index extends \Core\Controller\Controller {
     public function index() {
         $openindex = \Model\Content::findContent('option', 'openindex', 'option_name');
         if ($openindex['value'] == '0') {
-            $this->_404();
+            $this->_404(true);
         }
         $this->layout();
     }

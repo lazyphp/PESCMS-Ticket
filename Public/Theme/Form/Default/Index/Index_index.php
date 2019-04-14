@@ -1,6 +1,6 @@
 <div class="am-g">
     <!--    logo-->
-    <div class="am-text-center  am-padding-top am-margin-bottom">
+    <div class="am-text-center index-logo am-margin-bottom">
         <img src="<?= DOCUMENT_ROOT; ?>/Theme/assets/i/logo.png" width="180"/>
     </div>
 

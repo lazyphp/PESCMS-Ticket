@@ -53,8 +53,10 @@
                                     </td>
                                     <td class="am-show-lg-only am-text-bottom am-text-right">
                                         <a href="<?= $label->url(GROUP . '-Ticket-handle', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>">处理</a>
+                                        <?php if($label->checkAuth(GROUP . 'DELETETicketaction') === true): ?>
                                         <i class="am-margin-left-xs am-margin-right-xs">|</i>
-                                        <a href="">删除</a>
+                                        <a href="<?= $label->url(GROUP . '-Ticket-action', ['id' => $value['ticket_id'], 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>" class="ajax-click ajax-dialog" msg="确定删除吗？将无法恢复的！">删除</a>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

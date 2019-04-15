@@ -42,7 +42,7 @@ class Category extends \Core\Controller\Controller{
 			]);
 			$this->assign('ticket', $ticketList);
 		}
-
+        $this->assign('title', '提交工单');
 		$this->assign('category', $category);
 		$this->layout('Category_index', 'Category_layout');
 	}

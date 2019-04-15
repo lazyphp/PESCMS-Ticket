@@ -54,7 +54,7 @@ class Member extends \Core\Controller\Controller {
         $this->assign('close', $statisticsResult['close'][0]['total']);
 
         $this->assign('category', \Model\Category::getAllCategoryCidPrimaryKey());
-
+        $this->assign('title', '我的工单');
         $this->layout();
     }
 
@@ -122,6 +122,7 @@ class Member extends \Core\Controller\Controller {
      * 查看和更新个人信息
      */
     public function update(){
+        $this->assign('title', '更新个人信息');
         $this->assign('member', \Model\Content::findContent('member', $this->session()->get('member')['member_id'], 'member_id'));
         $this->layout();
     }

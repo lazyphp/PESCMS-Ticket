@@ -1,5 +1,5 @@
 <div class="am-g">
-    <div class="am-u-sm-12 am-u-sm-centered">
+    <div class="am-u-sm-12 am-u-lg-11 am-u-sm-centered">
         <div class="am-panel am-panel-default">
             <div class="am-panel-bd ">
                 <article class="am-article">

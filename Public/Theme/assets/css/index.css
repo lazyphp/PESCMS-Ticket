@@ -202,6 +202,28 @@
     text-decoration: none;
 }
 
+/*FQA列表*/
+.fqa-search{
+    margin: 2rem auto 5rem auto;
+}
+.fqa-item h2{
+    margin: 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+.fqa-item h3{
+    margin: 1.5rem 0;
+    /*color: #b9b9b9;*/
+}
+
+.fqa-ul{
+    list-style-type: none;
+    margin: 0.5rem 0 1.6rem 0;
+}
+.fqa-ul li{
+    margin: 0.5rem 0;
+}
+
 /*页脚*/
 .my-footer{
     color: #343434;

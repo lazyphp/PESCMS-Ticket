@@ -2,11 +2,11 @@
 <input type="hidden" name="name" value="<?= $user['nickname'] ?>">
 
 <div class="account-bind am-form-group">
-    <a class="am-btn am-btn-danger am-btn-block am-btn-sm am-margin-top-sm">已注册帐号? 绑定账号</a>
+    <a class="am-btn am-btn-danger am-btn-block am-btn-sm am-margin-top-sm am-radius">已注册帐号? 绑定账号</a>
 </div>
 
 <div class="weixin-login am-form-group">
-    <button type="submit" class="am-btn am-btn-success am-btn-block am-btn-sm am-margin-top-sm">直接登录</button>
+    <button type="submit" class="am-btn am-btn-success am-btn-block am-btn-sm am-margin-top-sm am-radius">直接登录</button>
 </div>
 
 <div class="account" style="display: none">
@@ -19,6 +19,9 @@
         <span class="am-input-group-label"><i class="am-icon-lock am-icon-fw"></i></span>
         <input type="password" name="password" class="am-form-field" placeholder="密码" required="required">
     </div>
+
+    <button type="submit" class="am-btn am-btn-secondary am-radius am-btn-sm am-margin-top-sm">提交</button>
+
 </div>
 <script>
     $(function(){

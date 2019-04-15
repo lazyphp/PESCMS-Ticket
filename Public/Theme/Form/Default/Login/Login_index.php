@@ -15,16 +15,9 @@
         <img src="<?= $label->url('Index-verify') ?>" class="refresh-verify">
     </div>
 <?php endif; ?>
-<div class="am-g">
 
-    <div class="am-u-sm-6 am-u-md-6 am-u-lg-6" style="border-right: 1px solid silver">
-        <?php if($system['open_register'] == 1): ?>
-        <a href="<?= $label->url('Login-signup') ?>">注册帐号</a>
-        <?php endif; ?>
-    </div>
-
-    <div class="am-u-sm-6 am-u-md-6 am-u-lg-6">
-        <a href="<?= $label->url('Login-findpw') ?>">忘记密码</a>
-    </div>
-</div>
 <input type="hidden" name="back_url" value="<?= $_GET['back_url'] ?>">
+
+<button type="submit" class="am-btn am-btn-secondary am-radius am-btn-sm am-margin-top-sm">登录</button>
+
+<a href="<?= $label->url('Login-findpw') ?>" class="am-btn am-btn-white am-radius am-btn-sm am-margin-top-sm">忘记密码</a>

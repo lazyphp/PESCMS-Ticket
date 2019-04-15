@@ -54,8 +54,7 @@
                         </select>
                         <?php endif; ?>
 
-                        <input type="text" name="keyword" value="<?= urldecode($_GET['keyword']) ?>"
-                               class=" am-input-lg">
+                        <input type="text" name="keyword" value="<?= urldecode($_GET['keyword']) ?>" class=" am-input-lg pes_input_radius am-radius">
 
                         <button type="submit" class="am-btn am-btn-default am-btn-sm">搜索</button>
                     </form>

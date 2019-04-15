@@ -10,7 +10,7 @@
             <div class="am-btn-group am-btn-group-xs">
                 <?php ?>
                 <?php $addUrl = empty($addUrl) ? $label->url(GROUP . '-' . MODULE . '-action', array('back_url' => base64_encode($_SERVER['REQUEST_URI']))) : $addUrl ?>
-                <a href="<?= $addUrl ?>" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</a>
+                <a href="<?= $addUrl ?>" class="am-btn am-btn-default am-radius"><span class="am-icon-plus"></span> 新增</a>
             </div>
         </div>
     </div>
@@ -22,9 +22,9 @@
                 <input type="hidden" name="g" value="<?= GROUP; ?>"/>
                 <input type="hidden" name="m" value="<?= MODULE ?>"/>
                 <input type="hidden" name="a" value="<?= ACTION ?>"/>
-                <input type="text" name="keyword" value="<?= $_GET['keyword'] ?>" class="am-form-field">
+                <input type="text" name="keyword" value="<?= $_GET['keyword'] ?>" class="am-form-field am-radius">
                     <span class="am-input-group-btn">
-                        <input class="am-btn am-btn-default" type="submit" value="搜索"/>
+                        <input class="am-btn am-btn-default am-radius" type="submit" value="搜索"/>
                     </span>
             </div>
         </form>

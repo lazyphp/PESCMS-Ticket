@@ -20,7 +20,6 @@
     }
 }
 
-
 /*工单分类*/
 .ticket-category{
     display: block;
@@ -28,6 +27,7 @@
     background-color: #f2f2f2;
     padding: 20px 0 20px 20px;
     box-sizing: border-box;
+    border-radius: 4px;
     color: #333;
 }
 @media only screen and (min-width: 1025px) {
@@ -99,6 +99,7 @@
     padding-top: 1px;
 }
 
+/*fqa问答指引*/
 .ticket-fqa{
     /*border: 1px solid #ddd;*/
 }
@@ -125,6 +126,7 @@
     text-decoration: none;
 }
 
+/*页脚*/
 .my-footer{
     color: #343434;
     height: auto;

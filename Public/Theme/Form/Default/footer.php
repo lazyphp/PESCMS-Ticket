@@ -6,9 +6,9 @@
  */
 ?>
 <footer class="my-footer pescms-footer-<?= $system['notice_way'] ?>">
-    <!--这部分关于PESCMS产品简介的可以自行删除-->
+    <!--这部分关于PESCMS产品简介的可以自行修改或删除-->
     <div class="am-g pescms-introduce">
-        <div class="am-u-sm-8 am-u-sm-centered">
+        <div class="am-u-sm-12 am-u-sm-centered">
             <div class="am-g">
                 <div class="am-u-sm-3">
                     <h4>关于PESCMS</h4>
@@ -37,7 +37,7 @@
             </div>
         </div>
     </div>
-    <!--这部分关于PESCMS产品简介的可以自行删除-->
+    <!--这部分关于PESCMS产品简介的可以自行修改或删除-->
 
     <div class="copyright am-text-center">
         <small>© Copyright 2015-<?= date('Y') ?>. Power by <a href="//www.pescms.com" target="_blank">PESCMS Ticket</a>

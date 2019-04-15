@@ -54,7 +54,7 @@ $(function () {
                     //没有缩略图则选用预设的图案
                     if (error) {
                         var $li =
-                            '<div class="am-gallery-item webuploader-item am-img-thumbnail">' +
+                            '<div class="am-gallery-item webuploader-item am-img-thumbnail am-radius">' +
                             '<a href="javascript:;" class="file-preview-other" >' +
                             '<i class="am-icon-file-o am-icon-lg am-block"></i>' +
                             '<h3 class="am-gallery-title am-text-center am-hide"></h3>' +
@@ -63,7 +63,7 @@ $(function () {
                             '</div>';
                     } else {
                         var $li =
-                            '<div class="am-gallery-item webuploader-item am-img-thumbnail">' +
+                            '<div class="am-gallery-item webuploader-item am-img-thumbnail am-radius">' +
                             '<a href="javascript:;" >' +
                             '<img src="' + src + '"  alt="点击上传图片"/>' +
                             '<h3 class="am-gallery-title am-text-center am-hide"></h3>' +
@@ -171,7 +171,7 @@ var AMUIwebuploader = {
         return (
         '<ul class="am-gallery am-avg-lg-10 am-gallery-overlay am-webuploader-ul" >' +
             '<li id="before' + options.id + '">' +
-                '<div class="am-gallery-item webuploader-item am-img-thumbnail webuploader-background-img">' +
+                '<div class="am-gallery-item webuploader-item am-img-thumbnail am-radius webuploader-background-img">' +
                     '<a href="javascript:;" id="' + options.id + '" class="'+upload_icon+'"></a>' +
                 '</div>' +
             '</li>' +

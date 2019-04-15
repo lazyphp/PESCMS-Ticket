@@ -2,7 +2,7 @@
     <div class="am-btn-toolbar">
         <div class="am-btn-group am-btn-group-xs">
             <a href="<?= $label->url(GROUP . '-Menu-action', ['back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>"
-               class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</a>
+               class="am-btn am-btn-default am-radius"><span class="am-icon-plus"></span> 新增</a>
         </div>
     </div>
 
@@ -23,7 +23,7 @@
                     <tr>
                         <td class="am-text-middle">
                             <input type="text" name="id[<?= $topValue['menu_id']; ?>]"
-                                   value="<?= $topValue['menu_listsort']; ?>">
+                                   value="<?= $topValue['menu_listsort']; ?>" class="am-radius">
                         </td>
                         <td class="am-text-middle"><?= $topValue['menu_id']; ?></td>
                         <td class="am-text-middle"><i
@@ -76,6 +76,6 @@
                 <?php endforeach; ?>
             <?php endif; ?>
         </table>
-        <button type="submit" class="am-btn am-btn-primary am-btn-xs">排序</button>
+        <button type="submit" class="am-btn am-btn-primary am-btn-xs am-radius">排序</button>
     </form>
 <?php include THEME_PATH . "/Content/Content_index_footer.php"; ?>

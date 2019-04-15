@@ -33,7 +33,7 @@
         <div class="am-u-sm-12 am-u-sm-centered">
             <div class="am-form-group">
                 <label class="am-block">联系信息<i class="am-text-danger">*</i></label>
-                <input class="form-text-input input-leng3 am-field-valid" name="contact_account" placeholder="请填写您的联系信息,方便我们与您联系" type="text" value="<?= !empty($member) ? $member['member_email'] : '' ?>" required="">
+                <input class="form-text-input input-leng3 am-radius" name="contact_account" placeholder="请填写您的联系信息,方便我们与您联系" type="text" value="<?= !empty($member) ? $member['member_email'] : '' ?>" required="">
             </div>
         </div>
     </div>
@@ -42,7 +42,7 @@
         <div class="am-u-sm-12 am-u-sm-centered">
             <div class="am-form-group">
                 <label class="am-block">工单标题<i class="am-text-danger">*</i></label>
-                <input class="form-text-input input-leng3 am-field-valid" name="title" placeholder="简单扼要描述本次工单遇到的问题" type="text" value="" required="">
+                <input class="form-text-input input-leng3 am-radius" name="title" placeholder="简单扼要描述本次工单遇到的问题" type="text" value="" required="">
             </div>
         </div>
     </div>
@@ -90,7 +90,7 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">验证码<i class="am-text-danger">*</i></label>
-                    <input type="text" name="verify" class="am-inline am-input-sm" style="width: 15%" required/>
+                    <input type="text" name="verify" class="am-inline am-input-sm am-radius" style="width: 15%" required/>
                     <span class="display-verify">
                         <a href="javascript:;">点击显示验证码</a>
                     </span>
@@ -101,7 +101,7 @@
     <?php endif; ?>
     <div class="am-g am-g-collapse am-margin-bottom">
         <div class="am-u-sm-6">
-            <button type="submit" class="am-btn am-btn-primary am-btn-xs" >提交</button>
+            <button type="submit" class="am-btn am-btn-secondary am-btn-xs am-radius" >提交</button>
         </div>
         <div class="am-u-sm-6 am-text-right">
             <span>——本工单系统由<a href="https://www.pescms.com" target="_blank">PESCMS Ticket</a>强力驱动</span>

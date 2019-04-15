@@ -6,12 +6,13 @@ html,body{
     background: none !important;
 }
 .am-topbar{
-    border-bottom: 1px solid #ccc;
-    border-bottom: 1px solid rgba(0,0,0,.15);
+
     background-color: #fff;
     background-clip: padding-box;
-    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
-    box-shadow: 0 1px 10px rgba(0,0,0,.175);
+
+    -webkit-box-shadow: 0 2px 5px 0 rgba(146,146,146,.1);
+    box-shadow: 0 2px 5px 0 rgba(146,146,146,.1);
+
 }
 /*大屏幕时菜单展示样式*/
 @media only screen and (min-width: 1025px) {
@@ -163,9 +164,29 @@ html,body{
     margin-bottom: 0!important;
 }
 
+/*---------------圆角---------------*/
+.am-radius, .am-selected-btn, .am-selected-content{
+    border-radius: 4px !important;
+}
+/*---------------解决某些输入框圆角背景异常问题---------------*/
+.pes_input_radius{
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    -webkit-appearance: none;
+    -webkit-transition: border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+}
+
 /*---------------面板---------------*/
 .am-panel{
-    box-shadow: 4px 5px 0px rgba(0,0,0,.05);
+    background-color: #fff;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 2px 5px 0 rgba(146,146,146,.1);
+    box-shadow: 0 2px 5px 0 rgba(146,146,146,.1);
 }
 /*状态进度标记开始*/
 .console-step .step-pass {

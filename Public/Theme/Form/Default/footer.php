@@ -8,13 +8,13 @@
 <footer class="my-footer pescms-footer-<?= $system['notice_way'] ?>">
     <!--这部分关于PESCMS产品简介的可以自行修改或删除-->
     <div class="am-g pescms-introduce">
-        <div class="am-u-sm-12 am-u-sm-centered">
+        <div class="am-u-sm-12 am-u-lg-11 am-u-sm-centered">
             <div class="am-g">
-                <div class="am-u-sm-3">
+                <div class="am-u-sm-12 am-u-lg-3">
                     <h4>关于PESCMS</h4>
                     <p>PESCMS旗下有TEAM团队任务管理系统，Ticket客服工单系统，DOC文档管理系统以及基于浏览器开发的基金定投助手。</p>
                 </div>
-                <div class="am-u-sm-3">
+                <div class="am-u-sm-12 am-u-lg-3">
                     <h4>产品列表</h4>
                     <ul>
                         <li><a href="https://www.pescms.com/download/2.html">PESCMS TEAM 团队任务管理系统</a></li>
@@ -24,7 +24,7 @@
                         <li><a href="https://www.pescms.com/download/6.html">基金定投助手</a></li>
                     </ul>
                 </div>
-                <div class="am-u-sm-4 am-u-end">
+                <div class="am-u-sm-12 am-u-lg-3 am-u-end">
                     <h4>产品服务</h4>
                     <ul>
                         <li><a href="https://www.pescms.com/Page/Authorization.html">商业授权</a></li>

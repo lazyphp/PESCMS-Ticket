@@ -1,3 +1,58 @@
+/*顶部页眉设置*/
+#ticket-nav{
+    background: linear-gradient(127deg, #19b1f0 0%, #003d7b 100%);
+    margin-bottom: 0px;
+}
+#ticket-nav, #ticket-nav a, #ticket-nav .am-topbar-brand a:hover{
+    color: #fff;
+}
+
+/*次级导航*/
+.tool-container{
+    -webkit-box-shadow: 0 2px 5px 0 rgba(30,30,30,.09);
+    -moz-box-shadow: 0 2px 5px 0 rgba(30,30,30,.09);
+    box-shadow: 0 2px 5px 0 rgba(30,30,30,.09);
+    background: #fff;
+}
+@media only screen and (min-width: 1025px) {
+    .tool-container ul li a{
+        padding: 20px 10px;
+    }
+    .logo a{
+        padding: 20px 20px !important;
+    }
+    .logo img{
+        max-height: 50px !important;
+    }
+}
+.tool-container ul li a{
+    font-size: 1.5rem;
+}
+.logo a{
+    display: block;
+    padding: 0.8rem 1.0rem;
+}
+.logo img{
+    max-height: 30px;
+}
+
+/*解决手机版内边距异常问题*/
+@media only screen and (max-width: 1024px){
+    #ticket-nav .am-u-sm-centered, .tool-container .am-u-sm-centered{
+        padding: 0px !important;
+    }
+}
+
+/*屏蔽链接下标和设置鼠标指针浮动*/
+#ticket-nav .am-topbar-nav>li>a:hover, .tool-container .am-topbar-nav>li>a:hover{
+    color: #32beff;
+    background: transparent;
+}
+#ticket-nav .am-topbar-nav>li>a:hover:after, .tool-container .am-topbar-nav>li>a:hover:after{
+    display: none;
+}
+
+
 /*首页搜索*/
 @media only screen and (max-width: 640px){
     .index-search .am-input-group{
@@ -9,6 +64,11 @@
     }
 
 }
+
+.index-logo{
+    padding-top: 11.6rem;
+}
+
 /*面包屑*/
 @media only screen and (max-width: 640px){
     .am-breadcrumb li{
@@ -154,6 +214,7 @@
     padding: 40px 0;
 }
 .my-footer h4{
+    margin: 20px 0 0 0;
     background-color: #32beff;
     background-image: linear-gradient(45deg,#19b1f0,#0b70d8);
     -webkit-background-clip: text;

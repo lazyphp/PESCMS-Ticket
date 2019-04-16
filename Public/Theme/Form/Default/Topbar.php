@@ -1,8 +1,8 @@
 <header class="am-topbar" id="ticket-nav">
     <div class="am-u-sm-12 am-u-lg-11 am-u-sm-centered">
-        <h1 class="am-topbar-brand">
-            <a href="/">PESCMS Ticket</a>
-        </h1>
+        <div class="am-fl am-padding-top-sm am-padding-bottom-sm am-margin-left">
+            <?= htmlspecialchars_decode($system['siteContact']) ?>
+        </div>
 
         <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
                 data-am-collapse="{target: '#ticket-topbar-collapse'}">
@@ -37,7 +37,8 @@
     <div class="am-u-sm-12 am-u-lg-11 am-u-sm-centered">
         <div class="logo am-fl">
             <a href="/">
-                <img src="http://www.pt.com/Theme/assets/i/logo.png">
+                <img src="<?= $system['siteLogo'] ?>">
+                <h1 class="am-inline am-text-lg am-text-middle"><?= $system['siteTitle'] ?></h1>
             </a>
         </div>
         <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"

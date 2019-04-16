@@ -56,6 +56,12 @@ class Fqa extends \Core\Controller\Controller{
             $param['fqa_title'] = $param['fqa_content'] = '%'.$this->g('keyword').'%';
         }
 
+        //登录可看所有FQA
+        if(empty($this->session()->get('member')['member_id'])){
+            $condtion .= ' AND tm.ticket_model_login = 0 ';
+        }
+
+
         $result = \Model\Content::listContent([
             'table' => 'fqa AS f',
             'field' => 'fqa_id, fqa_url, fqa_title, fqa_ticket_model_id, tm.ticket_model_name, tm.ticket_model_cid',

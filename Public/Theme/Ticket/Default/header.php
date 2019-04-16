@@ -55,5 +55,20 @@
 
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/app.js?v=<?= $system['version'] ?>"></script>
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/ticket.js?v=<?= $system['version'] ?>"></script>
+
+
+    <!--百度上传控件-->
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/webuploader.css?v=<?= $system['version'] ?>"/>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/webuploader.js?v=<?= $system['version'] ?>"></script>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/AMUIwebuploader.js?v=<?= $system['version'] ?>"></script>
+    <script>
+        $(function(){
+            $.webuploaderConfig({
+                server:'<?=$label->url('Upload-ueditor', ['method' => 'POST', 'action' => 'uploadimage'])?>'
+            });
+        })
+    </script>
+    <!--百度上传控件-->
+
 </head>
 <body>

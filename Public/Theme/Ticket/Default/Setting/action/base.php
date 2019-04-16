@@ -23,6 +23,7 @@
             </div>
         </div>
 
+        <!--暂时屏蔽白名单
         <hr class="am-margin-top-0 am-divider-default"/>
         <div class="am-g am-g-collapse">
             <div class="am-u-sm-12 am-u-sm-centered">
@@ -32,6 +33,47 @@
                     <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
                         <i class="am-icon-lightbulb-o"></i> 默认情况下，所有请求可以正常提交工单，若指定域名白名单，请一行一个域名的形式填写
                     </div>
+                </div>
+            </div>
+        </div>
+        -->
+
+        <hr class="am-margin-top-0 am-divider-default"/>
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">网站LOGO<i class="am-text-danger">*</i></label>
+                    <div data-am-webuploader-simple="{id:'siteLogo', name:'siteLogo',pick:{id:'#siteLogo'}, content:'<?= $siteLogo['value']; ?>', type:'thumb'}"></div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="am-margin-top-0 am-divider-default"/>
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">网站名称<i class="am-text-danger">*</i></label>
+                    <input name="siteTitle" placeholder="网站名称" type="text" value="<?= $siteTitle['value']; ?>" required="">
+                </div>
+            </div>
+        </div>
+
+        <hr class="am-margin-top-0 am-divider-default"/>
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">网站联系方式<i class="am-text-danger">*</i></label>
+                    <textarea rows="5" name="siteContact"><?= $siteContact['value']; ?></textarea>
+                </div>
+            </div>
+        </div>
+
+        <hr class="am-margin-top-0 am-divider-default"/>
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">页脚内容<i class="am-text-danger">*</i></label>
+                    <textarea rows="10" name="pescmsIntroduce"><?= $pescmsIntroduce['value']; ?></textarea>
                 </div>
             </div>
         </div>

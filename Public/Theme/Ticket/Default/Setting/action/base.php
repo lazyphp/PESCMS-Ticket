@@ -68,12 +68,14 @@
             </div>
         </div>
 
-        <hr class="am-margin-top-0 am-divider-default"/>
         <div class="am-g am-g-collapse">
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">页脚内容<i class="am-text-danger">*</i></label>
                     <textarea rows="10" name="pescmsIntroduce"><?= $pescmsIntroduce['value']; ?></textarea>
+                    <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
+                        <i class="am-icon-lightbulb-o"></i> 网站联系方式和页脚内容的设置，可以阅读这里查看教程:《<a href="https://www.pescms.com/d/v//22/131.html" target="_blank" style="color:#0e90d2 ">自定义网站设置</a>》
+                    </div>
                 </div>
             </div>
         </div>

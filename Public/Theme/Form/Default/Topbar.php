@@ -11,7 +11,7 @@
         <div class="am-collapse am-topbar-collapse am-topbar-right am-text-sm" id="ticket-topbar-collapse">
             <ul class="am-nav am-nav-pills am-topbar-nav admin-header-list">
 
-                <?php if (empty($this->session()->get('member'))): ?>
+                <?php if (empty(self::session()->get('member'))): ?>
                     <li>
                         <a href="<?= $label->url('Login-index') ?>"><i class="am-icon-sign-in"></i> 登录</a>
                     </li>
@@ -22,7 +22,7 @@
                     <?php endif; ?>
                 <?php else: ?>
                     <li>
-                        <a href="<?= $label->url('Member-update') ?>"><?= $this->session()->get('member')['member_name'] ?> 先生/女士, 您好</a>
+                        <a href="<?= $label->url('Member-update') ?>"><?= self::session()->get('member')['member_name'] ?> 先生/女士, 您好</a>
                     </li>
                     <li>
                         <a href="<?= $label->url('Login-logout'); ?>"><i class="am-icon-sign-out"></i> 退出登录</a>

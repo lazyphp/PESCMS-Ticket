@@ -21,7 +21,7 @@ class View extends \Core\Controller\Controller{
     public function ticket(){
         $content = \Model\Ticket::view();
         if($content == false){
-            $this->_404();
+            $this->_404(true);
         }
 
         \Model\Ticket::loginCheck($content['ticket']);

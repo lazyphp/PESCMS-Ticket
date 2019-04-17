@@ -18,7 +18,7 @@ class Fqa extends \Core\Controller\Controller{
         if($name == 'list'){
             $this->_list();
         }else{
-            $this->_404();
+            $this->_404(true);
         }
 
     }
@@ -90,7 +90,7 @@ class Fqa extends \Core\Controller\Controller{
         $id = $this->isG('id', '请提交您要查看的问题');
         $content = \Model\Content::findContent('fqa', $id, 'fqa_id');
         if(empty($content)){
-            $this->_404();
+            $this->_404(true);
         }
         $this->assign($content);
 

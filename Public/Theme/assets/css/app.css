@@ -346,6 +346,32 @@ a.am-btn-white:visited{
     width: 200px;
     margin: 0 auto;
 }
+/*跳转提示页*/
+.jump-page{
+    position: relative;
+    height: 80vh;
+}
+.jump-page>div{
+    position: relative;
+    top: 33%;
+}
+.jump-page h1{
+    width: 900px;
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 3.5rem;
+    color: rgba(0, 0, 0, 0.8);
+    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.jump-page h2{
+    margin: 0 auto;
+    font-size: 2.0rem;
+    font-weight: 200;
+    line-height: 5rem;
+    color: rgba(0, 0, 0, 0.8);
+    text-shadow: 1px 2px 4px rgba(255,255,255,.5);
+}
 
 /*页脚*/
 .my-footer {

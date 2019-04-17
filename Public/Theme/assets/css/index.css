@@ -71,11 +71,11 @@
 
 /*面包屑*/
 @media only screen and (max-width: 640px){
-    .am-breadcrumb li{
+    .categort-breadcrumb li{
         display: block;
         margin-bottom: 0.5rem;
     }
-    .am-breadcrumb li:before{
+    .categort-breadcrumb li:before{
         display: none;
     }
 }

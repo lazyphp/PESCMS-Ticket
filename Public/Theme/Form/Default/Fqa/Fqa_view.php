@@ -6,7 +6,11 @@
                     <div class="am-article-hd am-margin-bottom">
                         <h1 class="am-article-title"><?= $fqa_title; ?></h1>
                         <div class="am-article-meta am-padding-0">
-                            [<?= "{$ticketModel['category_name']} - {$ticketModel['ticket_model_name']}" ?>]
+                            <ol class="am-breadcrumb am-breadcrumb-slash am-inline">
+                                <li><a href="/">首页</a></li>
+                                <li><a href="<?= $label->url('Form-Fqa-list') ?>">常见问题</a></li>
+                                <li class="am-active"><?= "{$ticketModel['category_name']} - {$ticketModel['ticket_model_name']}" ?></li>
+                            </ol>
                             <time class="date" datetime="<?= date('Y-m-d H:i', $fqa_createtime); ?>"
                                   title="<?= date('Y年m月d日 H:i', $fqa_createtime); ?>">
                                 <?= date('Y年m月d日 H:i', $fqa_createtime); ?></time>

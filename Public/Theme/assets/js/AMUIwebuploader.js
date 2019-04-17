@@ -199,7 +199,7 @@ var AMUIwebuploader = {
                 '</a>';
         }
 
-        $li = '<div class="am-gallery-item webuploader-item am-img-thumbnail">' +
+        $li = '<div class="am-gallery-item webuploader-item am-img-thumbnail am-radius">' +
             icon +
             '</div>';
 

@@ -153,6 +153,13 @@ $SLICE_ARRYR = [
         ['\Ticket\HandleForm\HandleMail_template']
     ],
 
+    //注册系统设置 添加/编辑 提交的表单内容
+    'TICKET-SETTING-ACTION' => [
+        'any',
+        ['Ticket-Setting-action'],
+        ['\Ticket\HandleForm\HandleSetting']
+    ],
+
 ];
 
 //执行切片注册

@@ -72,5 +72,14 @@
             window.open(url + '&account='+account+'&template='+template);
             return false;
         })
+
+        var authorizeKey = $('input[name=authorize]').val()
+
+        $.getJSON('/?g=Ticket&m=Setting&a=authorize', {key:authorizeKey}, function(data){
+            if(data.status == 200){
+                $('input[name=siteTitle], textarea[name=siteContact], textarea[name=pescmsIntroduce]').removeAttr('readonly').unbind('mouseenter mouseleave')
+            }
+        })
+
 	})
 </script>

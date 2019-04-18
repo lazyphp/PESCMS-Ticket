@@ -29,7 +29,8 @@ class Setting extends \Core\Controller\Controller {
                 'openindex',
                 'open_register',
                 'notice_way',
-                'siteContact'
+                'siteContact',
+                'authorize'
             ],
             //基于数组的json更新设置
             'array' => [

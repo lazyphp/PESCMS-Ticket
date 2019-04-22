@@ -3,6 +3,7 @@
         <div class="am-btn-group am-btn-group-xs">
             <a href="<?= $label->url(GROUP . '-Menu-action', ['back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>"
                class="am-btn am-btn-default am-radius"><span class="am-icon-plus"></span> 新增</a>
+            <?php $label->addButton() ?>
         </div>
     </div>
 

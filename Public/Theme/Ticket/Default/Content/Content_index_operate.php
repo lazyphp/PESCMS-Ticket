@@ -14,3 +14,5 @@ $echoDeleteUrl = empty($deleteUrl) ? $label->url(GROUP . '-' . MODULE . '-action
 <i class="am-margin-left-xs am-margin-right-xs">|</i>
 <a class="am-text-danger ajax-click ajax-dialog"  msg="确定删除吗？将无法恢复的！" href="<?= $echoDeleteUrl; ?>"><span class="am-icon-trash-o"></span> 删除</a>
 <?php endif; ?>
+
+<?php $label->opButton(['id' => $value["{$fieldPrefix}id"]]) ?>

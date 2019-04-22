@@ -17,3 +17,5 @@
 <i class="am-margin-left-xs am-margin-right-xs">|</i>
 
 <a class="am-text-danger ajax-click ajax-dialog" msg="确定删除吗?" href="<?= $label->url('Ticket-'.MODULE . '-action', array('id' => $value["ticket_model_number"], 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI']))); ?>" ><span class="am-icon-trash-o"></span></a>
+
+<?php $label->opButton(['id' => $value["ticket_model_number"]]) ?>

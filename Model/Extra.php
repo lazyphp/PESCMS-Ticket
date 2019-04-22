@@ -114,4 +114,45 @@ class Extra extends \Core\Model\Model {
         }
     }
 
+
+    /**
+     * 移除指定目录下所有文件
+     * @param string $dirName 要移除的目录
+     * @param string $stopDir 停止移除的目录
+     * @return array
+     */
+    public static function clearDirAllFile($dirName = PES_CORE.'Temp', $stopDir = PES_CORE.'Temp') {
+        if ($handle = opendir("$dirName")) {
+            while (false !== ($item = readdir($handle))) {
+                if ($item != "." && $item != "..") {
+                    if (is_dir("$dirName/$item")) {
+                        self::clearDirAllFile("$dirName/$item");
+                    } else {
+                        if (!unlink("$dirName/$item")) {
+                            return [
+                                'status' => 0,
+                                'msg' => "移除文件失败： $dirName/$item"
+                            ];
+                        }
+                    }
+                }
+            }
+            closedir($handle);
+            if (!rmdir($dirName)) {
+                return [
+                    'status' => 0,
+                    'msg' => "移除{$dirName}目录失败"
+                ];
+            }
+
+            if ($dirName == $stopDir) {
+                return [
+                    'status' => 200,
+                    'msg' => "{$dirName}目录已清空"
+                ];
+            }
+
+        }
+    }
+
 }

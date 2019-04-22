@@ -44,6 +44,15 @@ $SLICE_ARRYR = [
         ['\Common\Option']
     ],
 
+
+    //后台菜单get请求的输出
+    'TICKET-MENU' => [
+        'get',
+        'Ticket-:m-:a',
+        ['\Ticket\Menu'],
+        ['Ticket-Login-:a']
+    ],
+
     //全局的工单状态get请求输出
     'TICKET-STATUS' => [
         'get',
@@ -75,14 +84,6 @@ $SLICE_ARRYR = [
         'any',
         'Ticket-:m-:a',
         ['\Ticket\Login', '\Ticket\Auth', '\Ticket\Menu'],
-    ],
-
-    //后台菜单get请求的输出
-    'TICKET-MENU' => [
-        'get',
-        'Ticket-:m-:a',
-        ['\Ticket\Menu'],
-        ['Ticket-Login-:a']
     ],
 
     //注册自动更新用户组字段的信息

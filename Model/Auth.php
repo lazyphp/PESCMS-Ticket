@@ -35,7 +35,7 @@ class Auth extends \Core\Model\Model {
             'table' => 'node_group',
             'condition' => 'user_group_id = :user_group_id AND node_id = :node_id',
             'param' => [
-                'user_group_id' => self::session()->get('ticket')['user_id'],
+                'user_group_id' => self::session()->get('ticket')['user_group_id'],
                 'node_id' => $findNode['node_id']
             ]
         ]);

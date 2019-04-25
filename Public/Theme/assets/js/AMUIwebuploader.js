@@ -11,6 +11,8 @@ $(function () {
         $.webuploader_for_amazeui = function (param) {
             //具体参数请参考http://fex.baidu.com/webuploader/doc/index.html
             var obj = {
+                //禁止压缩图片
+                compress: false,
                 //上传表单的名称，默认为file
                 fileVal: 'upfile',
                 // 自动上传。默认为开启 true | false

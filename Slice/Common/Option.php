@@ -31,6 +31,8 @@ class Option extends \Core\Slice\Slice{
         $this->checkInterior($system['interior_ticket']);
 
         $this->assign('system', $system);
+
+        $this->authorize();
     }
 
     /**
@@ -45,6 +47,21 @@ class Option extends \Core\Slice\Slice{
 
     public function after() {
         // TODO: Implement after() method.
+    }
+
+    public function authorize(){
+        $file = PES_CORE.'Core/LICENSE.pes';
+        if(is_file($file)){
+            $type = json_decode(file_get_contents($file), true);
+            if(!empty($type['authorize_type'])){
+                $authorize_type = $type['authorize_type'] == 5 ? 0 : 1;
+            }else{
+                $authorize_type = 0;
+            }
+        }else{
+            $authorize_type = 0;
+        }
+        $this->assign('authorize_type', $authorize_type);
     }
 
 

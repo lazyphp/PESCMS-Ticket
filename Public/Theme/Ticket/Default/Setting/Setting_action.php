@@ -14,7 +14,8 @@
             <div class="am-tabs" data-am-tabs="{noSwipe: 1}">
                 <ul class="am-tabs-nav am-nav am-nav-tabs am-padding-left-sm">
                     <li class="am-active"><a href="#tab1">基础信息</a></li>
-                    <li><a href="#tab2">通知设置</a></li>
+                    <li><a href="#tab2">网站信息</a></li>
+                    <li><a href="#tab3">通知设置</a></li>
                 </ul>
 
                 <div class="am-tabs-bd">
@@ -23,6 +24,9 @@
                         <?php include 'action/ticket.php';?>
                     </div>
                     <div class="am-tab-panel am-fade" id="tab2">
+                        <?php include 'action/site.php';?>
+                    </div>
+                    <div class="am-tab-panel am-fade" id="tab3">
                         <?php include 'action/notice.php';?>
 
                         <?php include 'action/email.php';?>
@@ -77,7 +81,7 @@
 
         $.getJSON('/?g=Ticket&m=Setting&a=authorize', {key:authorizeKey}, function(data){
             if(data.status == 200){
-                $('input[name=siteTitle], textarea[name=siteContact], textarea[name=pescmsIntroduce]').removeAttr('readonly').unbind('mouseenter mouseleave')
+                $('input[name=siteTitle], textarea[name=siteContact], textarea[name=pescmsIntroduce], input[name=siteKeywords], textarea[name=siteDescription]').removeAttr('readonly').unbind('mouseenter mouseleave')
             }
         })
 

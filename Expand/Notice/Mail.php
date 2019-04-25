@@ -33,9 +33,15 @@ class Mail {
         $this->PHPMailer->SMTPAuth = true;
         $this->PHPMailer->Username = $mail['account'];
         $this->PHPMailer->Password = $mail['passwd'];
-	    if($mail['port'] != '25'){
-		    $this->PHPMailer->SMTPSecure = 'tls';
-	    }
+        //修正465发送失败的问题
+        switch ($mail['port']){
+            case '465':
+                $this->PHPMailer->SMTPSecure = 'ssl';
+                break;
+            case '587':
+                $this->PHPMailer->SMTPSecure = 'tls';
+                break;
+        }
 	    $this->PHPMailer->FromName =  empty($mail['formname']) ? 'system' : $mail['formname'];
         $this->PHPMailer->Port = $mail['port'];
         $this->PHPMailer->From = $mail['account'];

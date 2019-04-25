@@ -13,7 +13,7 @@
     <!--这部分关于PESCMS产品简介的可以自行修改或删除-->
 
     <div class="copyright am-text-center">
-        <small>© Copyright 2015-<?= date('Y') ?>. Power by <a href="//www.pescms.com" target="_blank">PESCMS Ticket</a>
+        <small>© Copyright 2015-<?= date('Y') ?>. <?= $authorize_type == 0 ? 'Power by <a href="https://www.pescms.com" target="_blank">PESCMS Ticket</a>' : '' ?>
         </small>
     </div>
 </footer>

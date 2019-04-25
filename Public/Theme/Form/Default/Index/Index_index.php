@@ -1,7 +1,7 @@
 <div class="am-g">
     <!--    logo-->
     <div class="am-text-center index-logo am-margin-bottom">
-        <img src="<?= DOCUMENT_ROOT; ?>/Theme/assets/i/logo.png" width="180"/>
+        <img src="<?= $system['siteLogo'] ?>" width="180"/>
     </div>
 
     <div class="am-u-sm-12 am-u-sm-centered am-u-lg-6 index-search">

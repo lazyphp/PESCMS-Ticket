@@ -30,7 +30,8 @@ class Index extends \Core\Controller\Controller {
         if(!empty($_GET['height'])){
             $verify->height = intval($this->g('height'));
         }
-        $verify->createVerify('7');
+        $verifyLength = \Core\Func\CoreFunc::$param['system']['verifyLength'];
+        $verify->createVerify(empty($verifyLength) ? '4' : $verifyLength);
     }
 
     /**

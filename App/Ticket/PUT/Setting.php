@@ -30,7 +30,10 @@ class Setting extends \Core\Controller\Controller {
                 'open_register',
                 'notice_way',
                 'siteContact',
-                'authorize'
+                'authorize',
+                'siteKeywords',
+                'siteDescription',
+                'verifyLength',
             ],
             //基于数组的json更新设置
             'array' => [

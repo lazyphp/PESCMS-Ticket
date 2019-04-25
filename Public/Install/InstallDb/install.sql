@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2019-04-18 07:14:45
+-- Generation Time: 2019-04-25 15:14:39
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -566,7 +566,7 @@ CREATE TABLE IF NOT EXISTS `pes_option` (
   `value` text NOT NULL,
   `option_range` varchar(128) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 --
 -- 转存表中的数据 `pes_option`
@@ -593,7 +593,10 @@ INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) 
 (18, 'siteTitle', '网站名称', 'PESCMS Ticket', 'system'),
 (19, 'pescmsIntroduce', '页脚内容', '<div class="am-u-sm-12 am-u-lg-11 am-u-sm-centered">\n    <div class="am-g">\n        <div class="am-u-sm-12 am-u-lg-3">\n            <h4>关于PESCMS</h4>\n            <p>PESCMS旗下有TEAM团队任务管理系统，Ticket客服工单系统，DOC文档管理系统以及基于浏览器开发的基金定投助手。</p>\n        </div>\n        <div class="am-u-sm-12 am-u-lg-3">\n            <h4>产品列表</h4>\n            <ul>\n                <li><a href="https://www.pescms.com/download/2.html">PESCMS TEAM 团队任务管理系统</a></li>\n                <li><a href="https://www.pescms.com/download/3.html">PESCMS DOC 文档管理系统</a></li>\n                <li><a href="https://www.pescms.com/download/5.html">PESCMS TICKET 客服工单系统</a></li>\n                <li><a href="https://www.pescms.com/download/4.html">PESCMS LOGIN 网站登录管理</a></li>\n                <li><a href="https://www.pescms.com/download/6.html">基金定投助手</a></li>\n            </ul>\n        </div>\n        <div class="am-u-sm-12 am-u-lg-3 am-u-end">\n            <h4>产品服务</h4>\n            <ul>\n                <li><a href="https://www.pescms.com/Page/Authorization.html">商业授权</a></li>\n                <li><a href="https://www.pescms.com/Authorize-Verify">授权查询</a></li>\n                <li><a href="https://www.pescms.com/service.html">有偿服务</a></li>\n                <li><a href="https://www.pescms.com/Page/ad.html">广告投放</a></li>\n                <li><a href="https://www.pescms.com/Page/donate.html">赞助捐赠</a></li>\n            </ul>\n        </div>\n    </div>\n</div>', 'system'),
 (20, 'siteContact', '网站联系方式', '<span class="am-margin-right-xs"><i class="am-icon-qq"></i> <a href="https://wpa.qq.com/msgrd?v=3&uin=201418824&menu=yes" target="_blank">201418824</a></span>\n<span class="am-margin-right-xs"><i class="am-icon-weixin"></i> <a href="javascript:;" data-am-popover="{content: ''<img src=\\''https://www.pescms.com/Theme/assets/i/IMG_2866.JPG\\'' width=300>'', trigger: ''hover focus''}" >PESCMS</a></span>\n<span class="am-margin-right-xs"><i class="am-icon-thumbs-o-up"></i> <a href="javascript:;" data-am-popover="{content: ''<img src=\\''https://www.pescms.com/Theme/assets/i/zan.png\\'' width=300>'', trigger: ''hover focus''}" >打赏支持</a></span>', 'system'),
-(21, 'authorize', '授权码', '', '');
+(21, 'authorize', '授权码', '', ''),
+(22, 'siteKeywords', '网站Keywords', 'PESCMS Ticket是一款以GPLv2协议发布的开源工单客服系统', 'system'),
+(23, 'siteDescription', '网站Description', 'PESCMS,PESCMS Ticket,开源的工单系统,工单系统,工单客服系统,客服工单系统,GPL工单,GPL客服系统,GPL工单客服系统', 'system'),
+(24, 'verifyLength', '验证码长度', '4', 'system');
 
 -- --------------------------------------------------------
 

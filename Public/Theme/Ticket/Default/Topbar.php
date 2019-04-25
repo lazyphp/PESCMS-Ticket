@@ -1,6 +1,6 @@
 <header class="am-topbar am-text-sm">
     <h1 class="am-topbar-brand">
-        <a href="<?= $label->url('Ticket-Index-index') ?>">PESCMS Ticket</a>
+        <a href="<?= $label->url('Ticket-Index-index') ?>"><?= $authorize_type == 0 ? 'PESCMS Ticket' : $system['siteTitle'] ?></a>
     </h1>
 
     <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
@@ -35,7 +35,7 @@
                         <i class="am-icon-male"></i> 个人中心 <span class="am-icon-caret-down"></span>
                     </a>
                     <ul class="am-dropdown-content">
-                        <li><a href="<?= $label->url('Ticket-User-Setting') ?>"><i class="am-icon-child"></i> 个人信息</a></li>
+                        <li><a href="<?= $label->url('Ticket-User-setting') ?>"><i class="am-icon-child"></i> 个人信息</a></li>
                         <li><a href="<?= $label->url('Ticket-Phrase-index') ?>"><i class="am-icon-tags"></i> 回复短语</a></li>
                     </ul>
                 </li>

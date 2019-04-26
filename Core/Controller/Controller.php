@@ -237,6 +237,7 @@ class Controller {
         \Core\Func\CoreFunc::token();
         $this->beforeInitView();
         if (empty($themeFile)) {
+            $themeFile = MODULE . '_' . ACTION . '.php';
             $file = THEME . '/' . GROUP . '/' . $this->theme . "/" . MODULE . '/' . MODULE . '_' . ACTION . '.php';
         } else {
             $file = THEME . '/' . GROUP . '/' . $this->theme . "/" . MODULE . '/' . $themeFile . '.php';

@@ -8,7 +8,7 @@
             </div>
             <div class="am-g am-margin-bottom-xs am-g-collapse am-margin-top-xs">
                 <div class="am-u-sm-12 am-u-md-12">
-                    <form action="/" class="am-form-inline">
+                    <form action="/" class="am-form am-form-inline">
                         <input type="hidden" name="g" value="<?= GROUP; ?>"/>
                         <input type="hidden" name="m" value="<?= MODULE ?>"/>
                         <input type="hidden" name="a" value="<?= ACTION ?>"/>
@@ -40,9 +40,9 @@
                         <?php endif; ?>
 
                         <input type="text" name="keyword" value="<?= urldecode($_GET['keyword']) ?>"
-                               class=" am-input-lg pes_input_radius am-radius">
+                               class="am-input-sm pes_input_radius fix-input-width am-radius">
 
-                        <button type="submit" class="am-btn am-btn-default am-btn-sm">搜索</button>
+                        <button type="submit" class="am-btn am-btn-default am-btn-sm am-radius">搜索</button>
                     </form>
                 </div>
             </div>

@@ -20,9 +20,16 @@ class Mail {
      */
     public $PHPMailer;
 
+    private $error;
+
     public function __construct() {
         //读取邮件账号信息
         $mail = json_decode(\Model\Content::findContent('option', 'mail', 'option_name')['value'], true);
+
+        if(empty($mail['address']) || empty($mail['passwd']) || empty($mail['port']) ){
+            $this->error = '未配置邮箱接口信息';
+            return false;
+        }
 
         require_once dirname(__FILE__) . '/PHPMailerAutoload.php';
         $this->PHPMailer = new \PHPMailer;
@@ -51,6 +58,10 @@ class Mail {
      * 发送邮件
      */
     public function send(array $email) {
+        if(!empty($this->error)){
+            \Model\Extra::errorSendResult($email['send_id'], $this->error);
+            return false;
+        }
 
         if(\Model\Extra::checkInputValueType($email['send_account'], 1) === false){
             return false;
@@ -70,16 +81,9 @@ class Mail {
                 'send_id' => $email['send_id']
             ]);
         }else{
-            \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->update([
-                'noset' => [
-                    'send_id' => $email['send_id']
-                ],
-                'send_result' => '邮件发送失败'
-            ]);
+            \Model\Extra::errorSendResult($email['send_id'], '邮件发送失败');
         }
         $this->PHPMailer->ClearAddresses();
-
-
     }
 
 	/**

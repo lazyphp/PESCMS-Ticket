@@ -7,12 +7,13 @@ namespace Expand;
  */
 class sms {
 
-    private $APIID, $APIKEY;
+    private $APIID, $APIKEY, $error;
 
     public function __construct() {
         $sms_api = json_decode(\Core\Func\CoreFunc::$param['system']['sms'], true);
-        if(empty($sms_api)){
-            die('未配置短信接口');
+        if(empty($sms_api['APIID']) || empty($sms_api['APIKEY']) ){
+            $this->error = '未配置短信接口信息';
+            return false;
         }
 
         $this->APIID = $sms_api['APIID'];
@@ -20,6 +21,11 @@ class sms {
     }
 
     public function send($param){
+        if(!empty($this->error)){
+            \Model\Extra::errorSendResult($param['send_id'], $this->error);
+            return false;
+        }
+
         $post_data = "account={$this->APIID}&password={$this->APIKEY}&mobile=".$param['send_account']."&content=".rawurlencode($param['send_title']);
         $result=  $this->xml_to_array((new \Expand\cURL())->init('http://106.ihuyi.cn/webservice/sms.php?method=Submit', $post_data));
 

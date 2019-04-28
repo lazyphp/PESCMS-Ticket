@@ -8,12 +8,13 @@ namespace Expand;
 class weixinWork {
 
     public $access_token = '';
-    private $corpid, $AgentId, $Secret;
+    private $corpid, $AgentId, $Secret, $error;
 
     public function __construct() {
         $weixinWork_api = json_decode(\Core\Func\CoreFunc::$param['system']['weixinWork_api'], true);
-        if(empty($weixinWork_api)){
-            die('未配置企业微信接口信息');
+        if(empty($weixinWork_api['corpid']) || empty($weixinWork_api['AgentId'])){
+            $this->error = '未配置企业微信接口信息';
+            return false;
         }
         //企业ID
         $this->corpid = $weixinWork_api['corpid'];
@@ -29,13 +30,15 @@ class weixinWork {
             $result = (new cURL())->init("https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={$this->corpid}&corpsecret=$this->Secret");
 
             if(empty($result)){
-                die('获取企业微信access_token失败');
+                $this->error = '获取企业微信access_token失败';
+                return false;
             }
             $FileCache->creatCache('weixinWork_access_token', $result);
         }
         $this->access_token = json_decode($result, true)['access_token'];
         if(empty($this->access_token)){
-            die('解析企业微信access_token失败');
+            $this->error = '解析企业微信access_token失败';
+            return false;
         }
     }
 
@@ -44,6 +47,11 @@ class weixinWork {
      * @param $param 发送内容
      */
     public function send_notice($param) {
+        if(!empty($this->error)){
+            \Model\Extra::errorSendResult($param['send_id'], $this->error);
+            return false;
+        }
+
         $result = json_decode((new cURL())->init("https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={$this->access_token}", json_encode([
             "touser" => $param['send_account'],
             "msgtype" => "text",

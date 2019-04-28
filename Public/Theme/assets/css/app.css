@@ -180,7 +180,12 @@ html,body{
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
 }
-
+@media only screen and (min-width: 641px) {
+    .fix-input-width {
+        display: inline !important;
+        width: auto !important;
+    }
+}
 /*---------------面板---------------*/
 .am-panel{
     background-color: #fff;

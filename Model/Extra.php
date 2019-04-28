@@ -95,8 +95,13 @@ class Extra extends \Core\Model\Model {
      * 执行通知发送
      */
     public static function actionNoticeSend(){
-        foreach (\Model\Content::listContent(['table' => 'send']) as $value) {
-            //@todo 目前仅有邮件发送，日后再慢慢完善其他通知方式
+        foreach (\Model\Content::listContent([
+            'table' => 'send',
+            'condition' => 'send_time <= :time',
+            'param' => [
+                'time' => time()
+            ]
+        ]) as $value) {
             switch ($value['send_type']) {
                 case '1':
                     (new \Expand\Notice\Mail())->send($value);
@@ -112,6 +117,16 @@ class Extra extends \Core\Model\Model {
                     break;
             }
         }
+    }
+
+    public static function errorSendResult($sendID, $msg){
+        \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->update([
+            'noset' => [
+                'send_id' => $sendID
+            ],
+            'send_result' => $msg,
+            'send_time' => time() + 600, //发送失败，则增加600秒时间，再重发
+        ]);
     }
 
 }

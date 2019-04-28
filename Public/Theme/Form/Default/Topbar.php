@@ -4,9 +4,9 @@
             <?= htmlspecialchars_decode($system['siteContact']) ?>
         </div>
 
-        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-secondary am-show-sm-only"
                 data-am-collapse="{target: '#ticket-topbar-collapse'}">
-            <span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+            <span class="am-sr-only">导航切换</span> <span class="am-icon-angle-double-down"></span></button>
 
         <div class="am-collapse am-topbar-collapse am-topbar-right am-text-sm" id="ticket-topbar-collapse">
             <ul class="am-nav am-nav-pills am-topbar-nav admin-header-list">
@@ -22,8 +22,9 @@
                     <?php endif; ?>
                 <?php else: ?>
                     <li>
-                        <a href="<?= $label->url('Member-update') ?>"><?= self::session()->get('member')['member_name'] ?> 先生/女士, 您好</a>
+                        <a href="javascript:;"><?= self::session()->get('member')['member_name'] ?> 先生/女士, 您好</a>
                     </li>
+                    <li><a href="<?= $label->url('Member-update') ?>"><i class="am-icon-info-circle"></i> 我的信息</a></li>
                     <li>
                         <a href="<?= $label->url('Login-logout'); ?>"><i class="am-icon-sign-out"></i> 退出登录</a>
                     </li>
@@ -43,7 +44,7 @@
         </div>
         <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
                 data-am-collapse="{target: '#tool-container-collapse'}">
-            <span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+            <span class="am-sr-only">导航切换</span> <span class="am-icon-angle-double-down"></span></button>
 
         <div class="am-collapse am-topbar-collapse am-topbar-right am-text-sm" id="tool-container-collapse">
             <ul class="am-nav am-nav-pills am-topbar-nav admin-header-list">

@@ -7,9 +7,11 @@
 ?>
 <footer class="my-footer pescms-footer-<?= $system['notice_way'] ?>">
     <!--这部分关于PESCMS产品简介的可以自行修改或删除-->
+    <?php if(!empty($system['pescmsIntroduce'])): ?>
     <div class="am-g pescms-introduce">
         <?= htmlspecialchars_decode($system['pescmsIntroduce']) ?>
     </div>
+    <?php endif; ?>
     <!--这部分关于PESCMS产品简介的可以自行修改或删除-->
 
     <div class="copyright am-text-center">

@@ -15,11 +15,14 @@
                     <input class="form-radio" type="radio" name="contact" value="1" required="required"  checked="checked" data="<?= !empty($member) ? $member['member_email'] : '' ?>" />
                     <span>邮件</span>
                 </label>
+                <?php if(!empty(json_decode($system['sms'])->APIID) && !empty(json_decode($system['sms'])->APIKEY) ): ?>
                 <label class="form-radio-label am-radio-inline">
                     <input class="form-radio" type="radio" name="contact" value="2" required="required"   data="<?= !empty($member['member_phone']) ? $member['member_phone'] : '' ?>" />
                     <span>手机号码</span>
                 </label>
-                <?php if(!empty($member)): ?>
+                <?php endif; ?>
+                
+                <?php if(!empty($member['member_weixin'])): ?>
                 <label class="form-radio-label am-radio-inline">
                     <input class="form-radio" type="radio" name="contact" value="3" required="required"   data="<?= !empty($member['member_weixin']) ? $member['member_weixin'] : '' ?>" />
                     <span>微信</span>

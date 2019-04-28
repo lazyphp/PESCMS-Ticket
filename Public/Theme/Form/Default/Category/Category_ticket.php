@@ -104,7 +104,9 @@
             <button type="submit" class="am-btn am-btn-secondary am-btn-xs am-radius" >提交</button>
         </div>
         <div class="am-u-sm-6 am-text-right">
+            <?php if($authorize_type == 0): ?>
             <span>——本工单系统由<a href="https://www.pescms.com" target="_blank">PESCMS Ticket</a>强力驱动</span>
+            <?php endif; ?>
         </div>
     </div>
 </form>

@@ -75,6 +75,10 @@ class Login extends \Core\Controller\Controller {
         //检查是否已绑定账号，已存在则直接执行登录
         $member = \Model\Content::findContent('member', $user['openid'], 'member_weixin');
         if(!empty($member)){
+            if($member['member_status'] == 0){
+                $this->error('当前账号处于待审核/被禁用，请联系网站管理员解决。');
+            }
+
             $this->session()->set('member', $member);
             $this->session()->set('login_expire', time());
             $this->success('登录成功', $this->url('Member-index'), -1);

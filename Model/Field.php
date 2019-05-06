@@ -33,7 +33,7 @@ class Field extends \Core\Model\Model {
                 $data[$key] = $value;
             }
         }
-        return self::db('field')->where($where)->order('field_listsort asc, field_id asc')->select($data);
+        return self::db('field')->where($where)->order('field_listsort ASC, field_id DESC')->select($data);
     }
 
     /**

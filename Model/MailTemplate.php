@@ -84,12 +84,25 @@ class MailTemplate extends \Core\Model\Model {
     public static function matchContent(array $param, $type) {
         $param = array_merge(['number' => '', 'view' => ''], $param);
         $template = self::getTemplate($type);
+
+        if(\Model\Ticket::getTicketBaseInfo($param['number'])['member_id'] > 0){
+            $member = \Model\Member::getMemberWithID(\Model\Ticket::getTicketBaseInfo($param['number'])['member_id']);
+            $userName = empty($member) ? '匿名用户' : $member['member_name'];
+        }else{
+            $userName = '匿名用户';
+        }
+
         foreach ([
                     '1' => 'mail_template_content',
                     '2' => 'mail_template_sms',
                     '3' => 'mail_template_weixin_template'
                  ] as $key => $item){
 
+            if($key == 1){
+                $template[$item] = self::mergeMailTemplate($template[$item]);
+            }
+
+            //短信和微信需要将超链接的HTML代码移除
             if(in_array($key, [2, 3])){
                 $param['view'] = strip_tags($param['view']);
             }
@@ -103,18 +116,45 @@ class MailTemplate extends \Core\Model\Model {
                 $template[$item] = json_encode($newFormat);
             }
 
-            $content[$key] = str_replace(
-                '{number}',
-                $param['number'],
-                str_replace(
-                    '{view}',
-                    $param['view'],
-                    $template[$item]
-                )
-            );
+            $content[$key] = str_replace(['{user}', '{number}', '{view}'], [$userName, $param['number'], $param['view']], $template[$item]);
         }
-
         return $content;
+    }
+
+    /**
+     * 合并邮件模板
+     * @param $content
+     * @return mixed
+     */
+    public static function mergeMailTemplate($content){
+        $host = \Core\Func\CoreFunc::$param['system']['domain'];
+        $siteLogo = \Core\Func\CoreFunc::$param['system']['siteLogo'];
+        $siteTitle = \Core\Func\CoreFunc::$param['system']['siteTitle'];
+        $authorize_type = \Core\Func\CoreFunc::$param['authorize_type'];
+
+
+        $emailTemplate = file_get_contents(PES_CORE.'Expand/Notice/mailTemplate.html');
+
+        $search = [
+            '{host}',
+            '{logo}',
+            '{siteTitle}',
+            '{content}',
+            '{display}',
+            '{date}'
+        ];
+
+        $replace = [
+            $host,
+            $host.$siteLogo,
+            $siteTitle,
+            htmlspecialchars_decode($content),
+            $authorize_type == 1 ? 'none' : 'block',
+            date('Y')
+        ];
+
+        return str_replace($search, $replace, $emailTemplate);
+
     }
 
 }

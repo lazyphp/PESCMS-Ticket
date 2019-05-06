@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2019-04-25 15:14:39
+-- Generation Time: 2019-05-08 15:39:47
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `pes_field` (
   PRIMARY KEY (`field_id`),
   UNIQUE KEY `modle_id` (`field_model_id`,`field_name`),
   KEY `field_name` (`field_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=236 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=239 ;
 
 --
 -- 转存表中的数据 `pes_field`
@@ -172,7 +172,10 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (232, 17, 'weixin_template_id', '微信模板ID', 'text', '', '', '', 0, 5, 1, 1, 1, 0),
 (233, 17, 'weixin_template', '微信模板内容', 'textarea', '', '微信模板消息，输入如下变量可以动态输出对应的值：{number}为工单号码。请按照微信公众号选择模板的格式填写对应的参数。', '', 0, 6, 0, 1, 1, 0),
 (234, 21, 'result', '执行结果', 'text', '', '', '', 1, 2, 1, 1, 1, 0),
-(235, 20, 'weixin', '微信OPENID', 'text', '', '', '', 0, 10, 1, 1, 1, 1);
+(235, 20, 'weixin', '微信OPENID', 'text', '', '', '', 0, 10, 1, 1, 1, 1),
+(236, 1, 'page', '分页数', 'text', '', '', '10', 1, 5, 1, 1, 1, 0),
+(237, 15, 'time_out', '工单超时时长(分钟)', 'text', '', '有新工单提交后，在指定时间内无人受理工单，系统将发送通知给工单所在的管辖组成员。', '10', 1, 8, 1, 1, 1, 0),
+(238, 15, 'time_out_sequence', '超时提醒次数', 'text', '', '工单无人受理超时通知次数，系统将按照工单超时时长的间隔进行重复通知。', '1', 1, 9, 0, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -319,6 +322,7 @@ CREATE TABLE IF NOT EXISTS `pes_model` (
   `model_status` tinyint(4) NOT NULL DEFAULT '0',
   `model_search` tinyint(11) NOT NULL DEFAULT '0' COMMENT '允许搜索',
   `model_attr` tinyint(1) NOT NULL DEFAULT '0' COMMENT '模型属性 1:前台(含前台) 2:后台',
+  `model_page` int(11) NOT NULL DEFAULT '10',
   PRIMARY KEY (`model_id`),
   UNIQUE KEY `model_name` (`model_name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
@@ -327,22 +331,22 @@ CREATE TABLE IF NOT EXISTS `pes_model` (
 -- 转存表中的数据 `pes_model`
 --
 
-INSERT INTO `pes_model` (`model_id`, `model_name`, `model_title`, `model_status`, `model_search`, `model_attr`) VALUES
-(1, 'model', '模型管理', 1, 1, 2),
-(2, 'field', '字段管理', 1, 1, 2),
-(3, 'menu', '菜单模型', 1, 1, 2),
-(4, 'route', '路由规则', 1, 1, 2),
-(6, 'User_group', '用户组', 1, 0, 2),
-(7, 'User', '客服帐号', 1, 0, 2),
-(13, 'Node', '节点列表', 1, 1, 2),
-(15, 'ticket_model', '工单模型', 1, 1, 2),
-(16, 'ticket_form', '工单表单', 1, 1, 2),
-(17, 'mail_template', '邮件模板', 1, 0, 2),
-(18, 'Category', '分类', 1, 1, 1),
-(20, 'Member', '客户管理', 1, 1, 1),
-(21, 'Send', '发送列表', 1, 1, 1),
-(22, 'Phrase', '回复短语', 1, 0, 2),
-(23, 'Fqa', '常见问题解答', 1, 1, 1);
+INSERT INTO `pes_model` (`model_id`, `model_name`, `model_title`, `model_status`, `model_search`, `model_attr`, `model_page`) VALUES
+(1, 'model', '模型管理', 1, 1, 2, 10),
+(2, 'field', '字段管理', 1, 1, 2, 10),
+(3, 'menu', '菜单模型', 1, 1, 2, 10),
+(4, 'route', '路由规则', 1, 1, 2, 10),
+(6, 'User_group', '用户组', 1, 0, 2, 10),
+(7, 'User', '客服帐号', 1, 0, 2, 10),
+(13, 'Node', '节点列表', 1, 1, 2, 10),
+(15, 'ticket_model', '工单模型', 1, 1, 2, 10),
+(16, 'ticket_form', '工单表单', 1, 1, 2, 10),
+(17, 'mail_template', '邮件模板', 1, 0, 2, 10),
+(18, 'Category', '分类', 1, 1, 1, 10),
+(20, 'Member', '客户管理', 1, 1, 1, 10),
+(21, 'Send', '发送列表', 1, 1, 1, 10),
+(22, 'Phrase', '回复短语', 1, 0, 2, 10),
+(23, 'Fqa', '常见问题解答', 1, 1, 1, 10);
 
 -- --------------------------------------------------------
 
@@ -566,7 +570,7 @@ CREATE TABLE IF NOT EXISTS `pes_option` (
   `value` text NOT NULL,
   `option_range` varchar(128) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
 
 --
 -- 转存表中的数据 `pes_option`
@@ -596,7 +600,8 @@ INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) 
 (21, 'authorize', '授权码', '', ''),
 (22, 'siteKeywords', '网站Keywords', 'PESCMS Ticket是一款以GPLv2协议发布的开源工单客服系统', 'system'),
 (23, 'siteDescription', '网站Description', 'PESCMS,PESCMS Ticket,开源的工单系统,工单系统,工单客服系统,客服工单系统,GPL工单,GPL客服系统,GPL工单客服系统', 'system'),
-(24, 'verifyLength', '验证码长度', '4', 'system');
+(24, 'verifyLength', '验证码长度', '4', 'system'),
+(25, 'member_review', '审核设置', '1', 'system');
 
 -- --------------------------------------------------------
 
@@ -675,6 +680,7 @@ CREATE TABLE IF NOT EXISTS `pes_ticket` (
   `ticket_score_time` int(11) NOT NULL COMMENT '评分时间',
   `ticket_fix` tinyint(1) NOT NULL COMMENT '工单是否解决',
   `ticket_comment` varchar(1000) NOT NULL DEFAULT '' COMMENT '评价留言',
+  `ticket_time_out_sequence` int(11) NOT NULL DEFAULT '0' COMMENT '已通知超时次数',
   PRIMARY KEY (`ticket_id`),
   KEY `ticket_number` (`ticket_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -753,6 +759,8 @@ CREATE TABLE IF NOT EXISTS `pes_ticket_model` (
   `ticket_model_listsort` int(11) NOT NULL DEFAULT '0',
   `ticket_model_explain` text NOT NULL,
   `ticket_model_group_id` varchar(255) NOT NULL DEFAULT '',
+  `ticket_model_time_out` int(11) NOT NULL DEFAULT '10' COMMENT '工单超时提醒设置',
+  `ticket_model_time_out_sequence` int(11) NOT NULL DEFAULT '1' COMMENT '超时提醒次数',
   PRIMARY KEY (`ticket_model_id`),
   UNIQUE KEY `ticket_model_number` (`ticket_model_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='工单模型' AUTO_INCREMENT=1 ;

@@ -15,7 +15,8 @@
                 <ul class="am-tabs-nav am-nav am-nav-tabs am-padding-left-sm">
                     <li class="am-active"><a href="#tab1">基础信息</a></li>
                     <li><a href="#tab2">网站信息</a></li>
-                    <li><a href="#tab3">通知设置</a></li>
+                    <li><a href="#tab3">客户账号设置</a></li>
+                    <li><a href="#tab4">通知设置</a></li>
                 </ul>
 
                 <div class="am-tabs-bd">
@@ -27,6 +28,9 @@
                         <?php include 'action/site.php';?>
                     </div>
                     <div class="am-tab-panel am-fade" id="tab3">
+                        <?php include 'action/member.php';?>
+                    </div>
+                    <div class="am-tab-panel am-fade" id="tab4">
                         <?php include 'action/notice.php';?>
 
                         <?php include 'action/email.php';?>

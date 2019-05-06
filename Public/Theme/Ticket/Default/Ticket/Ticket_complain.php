@@ -39,8 +39,10 @@
                             </select>
                         <?php endif; ?>
 
+                        <div class="am-form-group">
                         <input type="text" name="keyword" value="<?= urldecode($_GET['keyword']) ?>"
                                class="am-input-sm pes_input_radius fix-input-width am-radius">
+                        </div>
 
                         <button type="submit" class="am-btn am-btn-default am-btn-sm am-radius">搜索</button>
                     </form>

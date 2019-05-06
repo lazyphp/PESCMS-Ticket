@@ -61,6 +61,7 @@ class Content extends \Core\Controller\Controller {
 
 
         $total = count($this->db($this->table)->where($this->condition)->select($this->param));
+        $this->page->listRows = $this->model['model_page'];
         $count = $this->page->total($total);
         $this->page->handle();
         $list = $this->db($this->table)->where($this->condition)->order($orderBy)->limit("{$this->page->firstRow}, {$this->page->listRows}")->select($this->param);

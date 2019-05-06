@@ -28,6 +28,7 @@ class Setting extends \Core\Controller\Controller {
                 'pescmsIntroduce',
                 'openindex',
                 'open_register',
+                'member_review',
                 'notice_way',
                 'siteContact',
                 'authorize',

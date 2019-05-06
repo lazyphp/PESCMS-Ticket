@@ -24,10 +24,15 @@ class Login extends \Core\Controller\Controller {
 
         $param['member_password'] = \Core\Func\CoreFunc::generatePwd($password, 'USER_KEY');
 
-        $member = $this->db('member')->where('member_email = :member_email AND member_password = :member_password AND member_status = 1')->find($param);
+        $member = $this->db('member')->where('member_email = :member_email AND member_password = :member_password')->find($param);
         if (empty($member)) {
             $this->error('帐号不存在或者密码错误');
         }
+
+        if($member['member_status'] == 0){
+            $this->error('当前账号处于待审核/被禁用，请联系网站管理员解决。');
+        }
+
         unset($member['member_password']);
         $this->session()->set('member', $member);
         $this->session()->set('login_expire', time());
@@ -47,7 +52,7 @@ class Login extends \Core\Controller\Controller {
      */
     public function signup() {
         $param = [
-            'member_status' => 1,
+            'member_status' => \Core\Func\CoreFunc::$param['system']['member_review'],
             'member_createtime' => time(),
         ];
 
@@ -163,7 +168,7 @@ class Login extends \Core\Controller\Controller {
         if(empty($_POST['email'])){
             $param['member_email'] = "{$param['member_weixin']}@{$param['member_weixin']}.wx";
             $param['member_password'] = md5(\Model\Extra::getOnlyNumber());//随机写入一些字符，随机帐号无法使用滴
-            $param['member_status'] = 1;
+            $param['member_status'] = \Core\Func\CoreFunc::$param['system']['member_review'];
             $param['member_createtime'] = time();
             $memberID = $this->db('member')->insert($param);
 
@@ -176,7 +181,7 @@ class Login extends \Core\Controller\Controller {
 
             $member = $this->db('member')->where('member_email = :member_email AND member_password = :member_password AND member_status = 1 AND member_weixin IS NULL ')->find($data);
             if (empty($member)) {
-                $this->error('帐号绑定失败!帐号不存在,密码错误,或已绑定!');
+                $this->error('帐号绑定失败!帐号可能不存在、待审核/被禁用、密码错误或已绑定!');
             }
 
             $this->db('member')->where('member_id = :member_id')->update([

@@ -33,12 +33,7 @@ class Setting extends \Core\Controller\Controller {
                 $option[$value['option_name']] = $value;
             }
         }
-
-        $license = PES_CORE.'/Core/LICENSE.pes';
-        if(is_file($license)){
-            $this->assign('license', 1);
-        }
-
+        
         $this->assign($option);
         $this->assign('title', '系统设置');
         $this->layout();

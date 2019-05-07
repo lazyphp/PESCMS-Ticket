@@ -54,6 +54,7 @@ class Option extends \Core\Slice\Slice{
         if(is_file($file)){
             $type = json_decode(file_get_contents($file), true);
             if(!empty($type['authorize_type'])){
+                $this->assign('license', 1);
                 $authorize_type = $type['authorize_type'] == 5 ? 0 : 1;
             }else{
                 $authorize_type = 0;

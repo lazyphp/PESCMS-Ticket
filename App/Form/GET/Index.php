@@ -62,10 +62,22 @@ class Index extends \Core\Controller\Controller {
     private function ticketTimeOut(){
         $list = \Model\Content::listContent([
             'table' => 'ticket AS t',
-            'field' => 't.ticket_number, t.ticket_status, t.ticket_submit_time, t.user_id, tm.ticket_model_group_id, tm.ticket_model_time_out',
+            'field' => 't.ticket_number, t.ticket_status, t.ticket_submit_time, t.user_id, t.ticket_time_out_sequence, tm.ticket_model_group_id, tm.ticket_model_time_out, tm.ticket_model_time_out_sequence',
             'join' => "{$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id",
             'condition' => 't.ticket_status = 0'
         ]);
+        if(empty($list)){
+            return true;
+        }
+        foreach ($list as $item){
+            //已通知的次数大于设定的次数则不再通知
+            if($item['ticket_time_out_sequence'] >= $item['ticket_model_time_out_sequence']){
+                continue;
+            }
+
+
+
+        }
         echo '<pre>';
         print_r($list);
         echo '</pre>';

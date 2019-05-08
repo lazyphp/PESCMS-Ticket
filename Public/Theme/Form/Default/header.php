@@ -7,7 +7,7 @@
     <meta name="keywords" content="<?= $system['siteKeywords'] ?>">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title><?= empty($title) ? '' : "{$title} - " ?><?= $authorize_type == 0 ? 'PESCMS Ticket' : $system['siteTitle'] ?></title>
+    <title><?= empty($title) ? '' : "{$title} - " ?><?= $system['siteTitle'] ?></title>
 
     <!-- Set render engine for 360 browser -->
     <meta name="renderer" content="webkit">

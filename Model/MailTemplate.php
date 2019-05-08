@@ -126,7 +126,7 @@ class MailTemplate extends \Core\Model\Model {
      * @param $content
      * @return mixed
      */
-    private static function mergeMailTemplate($content){
+    public static function mergeMailTemplate($content){
         $host = \Core\Func\CoreFunc::$param['system']['domain'];
         $siteLogo = \Core\Func\CoreFunc::$param['system']['siteLogo'];
         $siteTitle = \Core\Func\CoreFunc::$param['system']['siteTitle'];
@@ -140,7 +140,8 @@ class MailTemplate extends \Core\Model\Model {
             '{logo}',
             '{siteTitle}',
             '{content}',
-            '{display}'
+            '{display}',
+            '{date}'
         ];
 
         $replace = [
@@ -149,6 +150,7 @@ class MailTemplate extends \Core\Model\Model {
             $siteTitle,
             htmlspecialchars_decode($content),
             $authorize_type == 1 ? 'none' : 'block',
+            date('Y')
         ];
 
         return str_replace($search, $replace, $emailTemplate);

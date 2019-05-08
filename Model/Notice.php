@@ -108,11 +108,25 @@ class Notice extends \Core\Model\Model {
                 break;
             case '6':
                 break;
+            case '504':
+                $title = '工单超时提醒';
+                $timeOut = (1 + $ticket[$param['ticket_number']]['ticket_time_out_sequence']) * $ticket[$param['ticket_number']]['ticket_model_time_out'] ;
+                $content = "工单单号：{$param['ticket_number']}，《{$ticket[$param['ticket_number']]['ticket_title']}》已在{$timeOut}分钟内无人受理，请您收到本消息后，尽快处理客户提交的问题。";
+                break;
+        }
+
+        //工单处理的超链接
+        $linkStr = "详情: ".\Model\MailTemplate::getCSViewLink($param['ticket_number']);
+
+        //发送方式是邮件，则加载邮件模板
+        if($param['send_type'] == 1){
+            $content = \Model\MailTemplate::mergeMailTemplate($content.$linkStr);
+        }else{
+            $content = $content.$linkStr;
         }
 
         //生成数据完毕，删除动作
-        $linkStr = "详情: ".\Model\MailTemplate::getCSViewLink($param['ticket_number']);
-        if(\Model\Extra::insertSend($param['send_account'], $title, $content.$linkStr, $param['send_type'])){
+        if(\Model\Extra::insertSend($param['send_account'], $title, $content, $param['send_type'])){
             self::db('ticket_notice_action')->where('action_id = :action_id')->delete([
                 'action_id' => $param['action_id']
             ]);

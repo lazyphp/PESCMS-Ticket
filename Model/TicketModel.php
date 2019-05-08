@@ -27,6 +27,11 @@ class TicketModel extends \Core\Model\Model {
         return $result;
     }
 
+    /**
+     * 获取工单模型
+     * @param null $id 提交ID则获取指定的模型
+     * @return array|mixed
+     */
     public static function getTicketModelList($id = NULL){
         if(empty(self::$ticketModelList)){
             $result = \Model\Content::listContent([

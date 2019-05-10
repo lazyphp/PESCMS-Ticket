@@ -32,3 +32,9 @@
 #setting-panel .am-tabs-bd{
     border: none !important;
 }
+
+/*工单超时*/
+.ticket-timeout, .ticket-timeout a{
+    font-weight: bold;
+    color: #FF4500;
+}

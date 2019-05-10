@@ -86,7 +86,7 @@
                                         发布于: <?= date('Y-m-d H:i', $value['ticket_submit_time']); ?>
                                     </span>
                                 </div>
-                                <div class="admin-task-bd">
+                                <div class="admin-task-bd <?= $label->ticketTimeOutTag($value) ?>">
                                     <a href="<?= $label->url(GROUP . '-Ticket-handle', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>">
                                         <span class="am-text-primary"><?= $value['ticket_read'] == '0' ? '[未读]' : ''; ?></span>
                                         <?= $value['ticket_title'] ?>

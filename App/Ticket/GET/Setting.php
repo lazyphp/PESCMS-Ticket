@@ -86,8 +86,10 @@ class Setting extends \Core\Controller\Controller {
 
         $title = \Model\MailTemplate::matchTitle('123456', 3);
 
-        $template = \Model\MailTemplate::matchContent(['number' => '123456', 'content' => '测试的内容'], $id);
-
+        $template = \Model\MailTemplate::matchContent([
+            'number' => '123456',
+            'view' => \Model\MailTemplate::getViewLink('123456', 3),
+            'content' => '测试的内容'], $id);
 
         $result = (new \Expand\weixin())->sendTemplate([
             'send_id' => -1,

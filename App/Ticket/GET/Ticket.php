@@ -59,7 +59,7 @@ class Ticket extends \Core\Controller\Controller {
 
         $result = \Model\Content::quickListContent([
             'count' => sprintf($sql, 'count(*)'),
-            'normal' => sprintf($sql, 't.*, tm.ticket_model_name, tm.ticket_model_cid'),
+            'normal' => sprintf($sql, 't.*, tm.ticket_model_name, tm.ticket_model_cid, tm.ticket_model_time_out'),
             'param' => $this->param,
             'page' => '20'
         ]);

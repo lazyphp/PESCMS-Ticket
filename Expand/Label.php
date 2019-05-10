@@ -249,4 +249,12 @@ class Label {
         return \Model\Auth::check($auth);
     }
 
+    public function ticketTimeOutTag($param){
+        if($param['ticket_status']  == 0 && $param['ticket_submit_time'] + $param['ticket_model_time_out'] * 60 < time() ){
+            return 'ticket-timeout';
+        }else{
+            return '';
+        }
+    }
+
 }

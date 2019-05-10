@@ -57,10 +57,26 @@ class Login extends \Core\Controller\Controller {
      */
     public function weixinAgree(){
         $weixin = new \Expand\weixin();
-        $this->assign('login', $weixin->agree(\Core\Func\CoreFunc::$param['system']['domain'].$this->url('Login-weixin')));
+        if(!empty($weixin->error)){
+            $this->error($weixin->error);
+        }
+
+        //添加go back的地址
+        if(!empty($_GET['back_url'])){
+            $urlParam = [
+                'back_url' => $this->g('back_url')
+            ];
+        }else{
+            $urlParam = [];
+        }
+
+        $this->assign('login', $weixin->agree(\Core\Func\CoreFunc::$param['system']['domain'].$this->url('Login-weixin', $urlParam)));
         $this->display();
     }
 
+    /**
+     * 执行微信登录
+     */
     public function weixin(){
         if(empty($_GET['code'])){
             $this->error('获取参数失败');
@@ -81,15 +97,16 @@ class Login extends \Core\Controller\Controller {
 
             $this->session()->set('member', $member);
             $this->session()->set('login_expire', time());
-            $this->success('登录成功', $this->url('Member-index'), -1);
+
+            $url = !empty($_GET['back_url']) ? base64_decode(trim($_GET['back_url'])) : $this->url('Member-index');
+
+            $this->success('登录成功', $url, -1);
         }
 
         $this->assign('user', $user);
 
         $this->assign('title', '注册帐号');
         $this->layout('', 'Login_layout');
-
-
     }
 
 }

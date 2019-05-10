@@ -45,7 +45,7 @@
                                             [<?= $category[$value['ticket_model_cid']]['category_name'] ?> - <?= $value['ticket_model_name'] ?>]
                                             <?= $value['ticket_number'] ?>
                                         </div>
-                                        <div class="admin-task-bd">
+                                        <div class="admin-task-bd <?= $label->ticketTimeOutTag($value) ?>">
                                             <a href="<?= $label->url(GROUP . '-Ticket-handle', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>">
                                                 <?= $value['ticket_title'] ?>
                                             </a>

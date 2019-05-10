@@ -15,11 +15,13 @@ namespace App\Form\GET;
 class Index extends \Core\Controller\Controller {
 
     public function index() {
-        $openindex = \Model\Content::findContent('option', 'openindex', 'option_name');
-        if ($openindex['value'] == '0') {
-            $this->_404(true);
+        $system = \Core\Func\CoreFunc::$param['system'];
+        if ($system['openindex'] == '0') {
+            $this->_404();
         }
-        $this->layout();
+        $template = $system['indexStyle'] == 0 ? '' : 'Index_ticket';
+
+        $this->layout($template);
     }
 
     /**

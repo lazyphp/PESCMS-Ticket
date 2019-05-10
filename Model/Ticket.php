@@ -309,6 +309,11 @@ class Ticket extends \Core\Model\Model {
         return self::db('ticket')->where('ticket_id = :ticket_id')->update($param);
     }
 
+    /**
+     * 工单登录验证
+     * @param $ticket 工单信息
+     * @param string $back_url 返回的地址
+     */
     public static function loginCheck($ticket, $back_url = ''){
 
         if(empty($back_url)){
@@ -317,7 +322,16 @@ class Ticket extends \Core\Model\Model {
 
         //判断工单模型是否设置登录验证.
         if($ticket['ticket_model_login'] == 1 && empty(self::session()->get('member'))){
-            self::success('需要登录帐号', self::url('Login-index', ['back_url' => $back_url]), -1);
+
+            switch ($_GET['loginType']){
+                case 'weixin':
+                    $url = self::url('Login-weixinAgree', ['back_url' => $back_url]);
+                    break;
+                default:
+                    $url = self::url('Login-index', ['back_url' => $back_url]);
+            }
+
+            self::success('需要登录帐号', $url, -1);
         }
 
         //非匿名工单判断用户所属，非此用户所属则跳转至我的工单

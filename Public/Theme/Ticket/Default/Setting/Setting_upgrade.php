@@ -26,11 +26,11 @@
             <form action="<?= $label->url(GROUP . '-Setting-mtUpgrade') ?>" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="method" value="PUT">
 
-                <div class="am-form-group am-form-file">
+                <div class="am-form-group am-form-file am-margin-bottom-0">
                     <button type="button" class="am-btn am-radius am-btn-danger am-btn-xs">
                         <i class="am-icon-cloud-upload"></i> 导入zip升级包
                     </button>
-                    <input id="doc-form-file" type="file" name="zip" multiple>
+                    <input id="doc-form-file" type="file" name="zip" accept="application/zip">
                 </div>
                 <div id="file-list"></div>
                 <script>
@@ -44,7 +44,7 @@
                         });
                     });
                 </script>
-                <button type="submit" id="btn-submit" class="am-btn am-radius am-btn-default am-btn-xs">
+                <button type="submit" id="btn-submit" class="am-btn am-radius am-btn-default am-btn-xs am-margin-top-sm">
                     手动安装更新
                 </button>
             </form>

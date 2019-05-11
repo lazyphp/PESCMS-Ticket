@@ -1,0 +1,1 @@
+INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) VALUES (NULL, 'indexStyle', '首页样式', '0', 'system');

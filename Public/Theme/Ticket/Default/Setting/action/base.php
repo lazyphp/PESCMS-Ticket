@@ -56,11 +56,28 @@
             </div>
         </div>
 
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">首页样式<i class="am-text-danger">*</i></label>
+                    <label class="am-radio-inline">
+                        <input type="radio" value="0" name="indexStyle" required="" <?= $indexStyle['value'] == '0' ? 'checked="checked"' : '' ?>> 搜索样式
+                    </label>
+                    <label class="am-radio-inline">
+                        <input type="radio" value="1" name="indexStyle" required="" <?= $indexStyle['value'] == '1' ? 'checked="checked"' : '' ?>> 工单样式
+                    </label>
+                    <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
+                        <i class="am-icon-lightbulb-o"></i> 若想用户打开网站即提交工单请选择工单样式，反之选择搜索样式。选择工单样式时，工单模型有变化需要手动更新首页模板。<a href="<?= $label->url('Form-Category-index', ['new_index' => 1, 'method' => 'GET']) ?>" class="ajax-click" style="color: #0b70d8">点击更新</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <hr class="am-margin-top-0 am-divider-default"/>
         <div class="am-g am-g-collapse">
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
-                    <label class="am-block">登录验证码<i class="am-text-danger">*</i></label>
+                    <label class="am-block">登录验证码</label>
                     <label class="am-checkbox-inline">
                         <input type="checkbox" value="1" name="login_verify[]"  <?= $login_verify['0'] == '1' ? 'checked="checked"' : '' ?>> 前台开启
                     </label>

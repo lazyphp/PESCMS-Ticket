@@ -44,8 +44,36 @@ class Category extends \Core\Controller\Controller{
 		}
         $this->assign('title', '提交工单');
 		$this->assign('category', $category);
-		$this->layout('Category_index', 'Category_layout');
+
+        $this->displayTicket();
+
+
 	}
+
+    /**
+     * 显示提交工单列表
+     * @description 当GET参数new_index存在时且是后台已登陆，则对工单列表进行一次模板HTML缓存记录。
+     */
+	private function displayTicket(){
+        //首页工单模板缓存文件生成
+        if(!empty($_GET['new_index']) && !empty($this->session()->get('ticket')) ){
+            ob_start();
+            $this->layout('Category_index', 'Category_layout');
+            $indexHtml = ob_get_contents();
+            ob_clean();
+            $fopen = fopen(THEME_PATH.'/Index/Index_ticket.php', 'w');
+            fwrite($fopen, $indexHtml);
+            fclose($fopen);
+
+            $url = empty($_GET['back_url']) ? $this->url('Ticket-Setting-action') : base64_decode($_GET['url']);
+
+            $this->success('首页工单样式已更新', $url);
+        }elseif(!empty($_GET['new_index']) && empty($this->session()->get('ticket')) ){
+            $this->_404();
+        }else{
+            $this->layout('Category_index', 'Category_layout');
+        }
+    }
 
     /**
      * 创建工单
@@ -103,6 +131,9 @@ class Category extends \Core\Controller\Controller{
      * 创建JS
      */
 	public function createJS(){
+	    if(empty($this->session()->get('ticket'))){
+	        $this->_404();
+        }
 	    $this->ticket();
         ob_start();
 	    $this->display('Category_ticket');

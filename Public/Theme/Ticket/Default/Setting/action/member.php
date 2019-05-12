@@ -36,6 +36,24 @@
             </div>
         </div>
 
+        <hr class="am-margin-top-0 am-divider-default"/>
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">客户登陆方式<i class="am-text-danger">*</i></label>
+                    <label class="am-radio-inline">
+                        <input type="radio" value="0" name="member_login" required="" <?= $member_login['value'] == '0' ? 'checked="checked"' : '' ?>> 邮箱地址
+                    </label>
+                    <label class="am-radio-inline">
+                        <input type="radio" value="1" name="member_login" required="" <?= $member_login['value'] == '1' ? 'checked="checked"' : '' ?>> 账号
+                    </label>
+                    <label class="am-radio-inline">
+                        <input type="radio" value="2" name="member_login" required="" <?= $member_login['value'] == '2' ? 'checked="checked"' : '' ?>> 手机号码
+                    </label>
+                </div>
+            </div>
+        </div>
+
 
     </div>
 </div>

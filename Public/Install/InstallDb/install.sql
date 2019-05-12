@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2019-05-08 15:39:47
+-- Generation Time: 2019-05-12 14:58:10
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `pes_field` (
   PRIMARY KEY (`field_id`),
   UNIQUE KEY `modle_id` (`field_model_id`,`field_name`),
   KEY `field_name` (`field_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=239 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=240 ;
 
 --
 -- 转存表中的数据 `pes_field`
@@ -135,7 +135,7 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (179, 3, 'type', '链接类型', 'radio', '{&quot;\\u7ad9\\u5185\\u94fe\\u63a5&quot;:&quot;0&quot;,&quot;\\u7ad9\\u5916\\u8fde\\u63a5&quot;:&quot;1&quot;}', '', '', 1, 3, 1, 1, 1, 0),
 (183, 17, 'type', '模板类型', 'select', '{&quot;\\u65b0\\u5de5\\u5355&quot;:&quot;1&quot;,&quot;\\u53d7\\u7406\\u5de5\\u5355&quot;:&quot;2&quot;,&quot;\\u56de\\u590d\\u5de5\\u5355&quot;:&quot;3&quot;,&quot;\\u8f6c\\u4ea4\\u5ba2\\u670d&quot;:&quot;4&quot;,&quot;\\u5de5\\u5355\\u5b8c\\u6210&quot;:&quot;5&quot;,&quot;\\u5de5\\u5355\\u5173\\u95ed&quot;:&quot;6&quot;}', '', '', 1, 1, 1, 1, 1, 0),
 (184, 17, 'title', '邮件标题', 'text', '', '标题输入框可以填写{number}变量，动态输出当时的工单号码。', '', 1, 2, 1, 1, 1, 0),
-(185, 17, 'content', '邮件模板内容', 'textarea', '', '在模板内容，输入如下变量可以动态输出对应的值：{number}为工单号码，{content}为工单回复的内容，{view}为工单查询的链接地址', '', 1, 3, 0, 1, 1, 0),
+(185, 17, 'content', '邮件模板内容', 'textarea', '', '在模板内容，输入如下变量可以动态输出对应的值：{number}为工单号码，{user}为客户名称，{view}为工单查询的链接地址', '', 1, 3, 0, 1, 1, 0),
 (186, 15, 'cid', '所属分类', 'category', '', '', '', 1, 1, 1, 1, 1, 0),
 (187, 18, 'status', '状态', 'radio', '{&quot;\\u7981\\u7528&quot;:&quot;0&quot;,&quot;\\u542f\\u7528&quot;:&quot;1&quot;}', '', '1', 1, 100, 1, 1, 1, 0),
 (188, 18, 'listsort', '排序', 'text', '', '', '', 0, 98, 1, 1, 1, 0),
@@ -175,7 +175,8 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (235, 20, 'weixin', '微信OPENID', 'text', '', '', '', 0, 10, 1, 1, 1, 1),
 (236, 1, 'page', '分页数', 'text', '', '', '10', 1, 5, 1, 1, 1, 0),
 (237, 15, 'time_out', '工单超时时长(分钟)', 'text', '', '有新工单提交后，在指定时间内无人受理工单，系统将发送通知给工单所在的管辖组成员。', '10', 1, 8, 1, 1, 1, 0),
-(238, 15, 'time_out_sequence', '超时提醒次数', 'text', '', '工单无人受理超时通知次数，系统将按照工单超时时长的间隔进行重复通知。', '1', 1, 9, 0, 1, 1, 0);
+(238, 15, 'time_out_sequence', '超时提醒次数', 'text', '', '工单无人受理超时通知次数，系统将按照工单超时时长的间隔进行重复通知。', '1', 1, 9, 0, 1, 1, 0),
+(239, 20, 'account', '登陆账号', 'text', '', '', '', 1, 1, 1, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -248,6 +249,7 @@ INSERT INTO `pes_mail_template` (`mail_template_id`, `mail_template_type`, `mail
 
 CREATE TABLE IF NOT EXISTS `pes_member` (
   `member_id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_account` varchar(255) NOT NULL,
   `member_email` varchar(255) NOT NULL DEFAULT '',
   `member_password` varchar(255) NOT NULL DEFAULT '',
   `member_name` varchar(255) NOT NULL DEFAULT '',
@@ -257,6 +259,8 @@ CREATE TABLE IF NOT EXISTS `pes_member` (
   `member_weixin` varchar(255) DEFAULT NULL COMMENT '微信openid',
   PRIMARY KEY (`member_id`),
   UNIQUE KEY `member_email` (`member_email`),
+  UNIQUE KEY `member_account` (`member_account`) USING BTREE,
+  UNIQUE KEY `member_phone` (`member_phone`) USING BTREE,
   UNIQUE KEY `member_weixin` (`member_weixin`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -570,7 +574,7 @@ CREATE TABLE IF NOT EXISTS `pes_option` (
   `value` text NOT NULL,
   `option_range` varchar(128) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
 
 --
 -- 转存表中的数据 `pes_option`
@@ -601,7 +605,9 @@ INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) 
 (22, 'siteKeywords', '网站Keywords', 'PESCMS Ticket是一款以GPLv2协议发布的开源工单客服系统', 'system'),
 (23, 'siteDescription', '网站Description', 'PESCMS,PESCMS Ticket,开源的工单系统,工单系统,工单客服系统,客服工单系统,GPL工单,GPL客服系统,GPL工单客服系统', 'system'),
 (24, 'verifyLength', '验证码长度', '4', 'system'),
-(25, 'member_review', '审核设置', '1', 'system');
+(25, 'member_review', '审核设置', '1', 'system'),
+(26, 'indexStyle', '首页样式', '0', 'system'),
+(27, 'member_login', '客户登陆方式', '0', 'system');
 
 -- --------------------------------------------------------
 

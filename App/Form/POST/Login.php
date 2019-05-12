@@ -19,12 +19,29 @@ class Login extends \Core\Controller\Controller {
      * 登录帐号
      */
     public function index() {
-        $param['member_email'] = $this->isP('email', '请填写邮箱地址');
+
+        $system = \Core\Func\CoreFunc::$param['system'];
+
+        switch ($system['member_login']){
+            case '1':
+                $condition = 'member_account = :member_account';
+                $param['member_account'] = $this->isP('account', '请填写您的账号');
+                break;
+            case '2':
+                $condition = 'member_phone = :member_phone';
+                $param['member_phone'] = $this->isP('phone', '请填写手机号码');
+                break;
+            default:
+                $condition = 'member_email = :member_email';
+                $param['member_email'] = $this->isP('email', '请填写邮箱地址');
+
+        }
+
         $password = $this->isP('password', '请填密码');
 
         $param['member_password'] = \Core\Func\CoreFunc::generatePwd($password, 'USER_KEY');
 
-        $member = $this->db('member')->where('member_email = :member_email AND member_password = :member_password')->find($param);
+        $member = $this->db('member')->where("{$condition} AND member_password = :member_password")->find($param);
         if (empty($member)) {
             $this->error('帐号不存在或者密码错误');
         }
@@ -57,6 +74,7 @@ class Login extends \Core\Controller\Controller {
         ];
 
 
+        $param['member_account'] = $this->isP('account', '请填写登陆账号');
         $param['member_name'] = $this->isP('name', '请填写名字');
         $param['member_email'] = $this->isP('email', '请填写邮箱地址');
         $param['member_phone'] = $this->isP('phone', '请填写手机号码');
@@ -70,12 +88,14 @@ class Login extends \Core\Controller\Controller {
             $this->error('请输入正确的手机号码');
         }
 
-        $checkEmail = $this->db('member')->where('member_email = :member_email')->find([
-            'member_email' => $param['member_email']
-        ]);
-        if (!empty($checkEmail)) {
-            $this->error('该邮箱地址已存在');
+        foreach ([
+            'email' => '该邮箱地址已存在',
+            'account' => '该账号已存在',
+            'phone' => '该手机号码已存在'
+                 ] as $field => $msg){
+            $this->checkRepeatInfo($field, $param, $msg);
         }
+
 
         if (strcmp($password, $repassword) != 0) {
             $this->error('两次输入的密码不一致');
@@ -86,6 +106,22 @@ class Login extends \Core\Controller\Controller {
         $this->db('member')->insert($param);
 
         $this->success('注册成功', $this->url('Member-index'));
+    }
+
+    /**
+     * 检查库中重复的账号、邮箱和手机号码
+     * @param $type 检查字段
+     * @param $param 提交的参数
+     * @param $msg 提示信息
+     */
+    private function checkRepeatInfo($type, $param, $msg){
+        $checkRepeat = $this->db('member')->where("member_{$type} = :member_{$type}")->find([
+            "member_{$type}" => $param["member_{$type}"]
+        ]);
+
+        if(!empty($checkRepeat)){
+            $this->error($msg);
+        }
     }
 
     /**
@@ -167,6 +203,7 @@ class Login extends \Core\Controller\Controller {
         //邮件地址没有填写，则直接随机创建帐号
         if(empty($_POST['email'])){
             $param['member_email'] = "{$param['member_weixin']}@{$param['member_weixin']}.wx";
+            $param['member_account'] = "wx_{$param['member_weixin']}";
             $param['member_password'] = md5(\Model\Extra::getOnlyNumber());//随机写入一些字符，随机帐号无法使用滴
             $param['member_status'] = \Core\Func\CoreFunc::$param['system']['member_review'];
             $param['member_createtime'] = time();

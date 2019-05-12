@@ -36,6 +36,7 @@ class Setting extends \Core\Controller\Controller {
                 'siteKeywords',
                 'siteDescription',
                 'verifyLength',
+                'member_login',
             ],
             //基于数组的json更新设置
             'array' => [

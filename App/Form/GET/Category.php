@@ -82,7 +82,7 @@ class Category extends \Core\Controller\Controller{
         $number = $this->isG('number', '请提交您要生成的工单');
         $result = \Model\TicketForm::getFormWithNumber($number);
         if(empty($result)){
-            $this->_404(true);
+            $this->_404();
         }
 
         $field = [];

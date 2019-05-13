@@ -17,7 +17,7 @@ class Index extends \Core\Controller\Controller {
     public function index() {
         $system = \Core\Func\CoreFunc::$param['system'];
         if ($system['openindex'] == '0') {
-            $this->_404(true);
+            $this->_404();
         }
         $template = $system['indexStyle'] == 0 ? '' : 'Index_ticket';
 

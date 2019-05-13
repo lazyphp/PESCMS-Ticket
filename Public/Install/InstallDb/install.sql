@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2019-05-13 01:28:02
+-- Generation Time: 2019-05-13 04:25:14
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -225,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `pes_mail_template` (
   `mail_template_content` text NOT NULL,
   `mail_template_sms` varchar(500) NOT NULL DEFAULT '',
   `mail_template_weixin_template_id` varchar(128) NOT NULL DEFAULT '',
-  `mail_template_weixin_template` varchar(500) NOT NULL DEFAULT '',
+  `mail_template_weixin_template` text NOT NULL,
   PRIMARY KEY (`mail_template_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
@@ -652,7 +652,7 @@ CREATE TABLE IF NOT EXISTS `pes_send` (
   `send_id` int(11) NOT NULL AUTO_INCREMENT,
   `send_account` varchar(255) NOT NULL DEFAULT '',
   `send_title` varchar(255) NOT NULL DEFAULT '' COMMENT '待发送标题',
-  `send_content` text NOT NULL COMMENT '待发送的内容',
+  `send_content` mediumtext NOT NULL COMMENT '待发送的内容',
   `send_time` int(11) NOT NULL DEFAULT '0' COMMENT '发送时间',
   `send_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1:邮箱 2:手机 ..',
   `send_result` varchar(255) NOT NULL,

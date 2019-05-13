@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2019-05-12 14:58:10
+-- Generation Time: 2019-05-13 01:28:02
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -149,7 +149,7 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (207, 20, 'email', '邮箱地址', 'text', '', '', '', 1, 1, 1, 1, 1, 0),
 (208, 20, 'password', '用户密码', 'text', '', '', '', 0, 2, 0, 1, 1, 0),
 (209, 20, 'name', '用户名称', 'text', '', '', '', 1, 3, 1, 1, 1, 0),
-(210, 20, 'phone', '手机号码', 'text', '', '', '', 1, 4, 1, 1, 1, 0),
+(210, 20, 'phone', '手机号码', 'text', '', '', '', 1, 4, 1, 1, 1, 1),
 (211, 15, 'group_id', '管辖用户组', 'multiple', '{"\\u7ba1\\u7406\\u5458":"1","\\u5ba2\\u670d\\u4eba\\u5458":"2","\\u6295\\u8bc9\\u53cd\\u9988":"3"}', '绑定对应的用户组，当前工单模型有新工单，将会发送通知给该用户组下的所有成员。', '', 1, 7, 1, 1, 1, 0),
 (212, 21, 'account', '接收帐号', 'text', '', '', '', 1, 1, 1, 1, 1, 0),
 (213, 21, 'title', '发送标题', 'text', '', '', '', 1, 2, 1, 1, 1, 0),
@@ -253,7 +253,7 @@ CREATE TABLE IF NOT EXISTS `pes_member` (
   `member_email` varchar(255) NOT NULL DEFAULT '',
   `member_password` varchar(255) NOT NULL DEFAULT '',
   `member_name` varchar(255) NOT NULL DEFAULT '',
-  `member_phone` varchar(255) NOT NULL DEFAULT '',
+  `member_phone` varchar(255) DEFAULT NULL,
   `member_status` tinyint(4) NOT NULL DEFAULT '0',
   `member_createtime` int(11) NOT NULL DEFAULT '0',
   `member_weixin` varchar(255) DEFAULT NULL COMMENT '微信openid',

@@ -70,7 +70,7 @@ class Notice extends \Core\Model\Model {
         $title = \Model\MailTemplate::matchTitle($param['ticket_number'], $param['template_type']);
         $content = \Model\MailTemplate::matchContent([
             'number' => $param['ticket_number'],
-            'view' => \Model\MailTemplate::getViewLink($param['ticket_number'])
+            'view' => \Model\MailTemplate::getViewLink($param['ticket_number'], $param['template_type'])
         ], $param['template_type']);
 
         if(\Model\Extra::insertSend($param['send_account'], $title[$param['send_type']], $content[$param['send_type']], $param['send_type'])){

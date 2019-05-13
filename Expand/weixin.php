@@ -7,8 +7,8 @@ namespace Expand;
  */
 class weixin {
 
-    public $access_token = '';
-    private $appID, $appsecret, $error;
+    public $access_token = '', $error;
+    private $appID, $appsecret;
 
     public function __construct() {
         $weixin_api = json_decode(\Core\Func\CoreFunc::$param['system']['weixin_api'], true);

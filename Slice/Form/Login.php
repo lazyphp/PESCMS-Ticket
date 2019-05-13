@@ -31,7 +31,7 @@ class Login extends \Core\Slice\Slice{
     }
 
     /**
-     * 检测系统设置
+     * 检测系统是否关闭注册
      */
     private function option(){
         $system = \Core\Func\CoreFunc::$param['system'];

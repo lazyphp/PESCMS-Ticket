@@ -39,11 +39,22 @@ class MailTemplate extends \Core\Model\Model {
     /**
      * 快速生成查看工单的链接
      * @param $number 工单号
+     * @param $type 发送类型特殊标记
      * @return string
      */
-    public static function getViewLink($number) {
+    public static function getViewLink($number, $type = '') {
         $system = \Core\Func\CoreFunc::$param['system'];
-        $link = $system['domain'] . self::url('Form-View-ticket', ['number' => $number]);
+
+        $urlParam = [
+            'number' => $number
+        ];
+
+        //微信通知带上微信标记,用于指向用户自动登录
+        if($type == 3){
+            $urlParam['loginType'] = 'weixin';
+        }
+
+        $link = $system['domain'] . self::url('Form-View-ticket', $urlParam);
         return '<a href="' . $link . '">' . $link . '</a>';
     }
 

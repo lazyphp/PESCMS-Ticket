@@ -83,7 +83,7 @@
 
         var authorizeKey = $('input[name=authorize]').val()
 
-        $.getJSON('/?g=Ticket&m=Setting&a=authorize', {key:authorizeKey}, function(data){
+        $.getJSON('<?=$label->url('Ticket-Setting-authorize')?>', {key:authorizeKey}, function(data){
             if(data.status == 200){
                 $('input[name=siteTitle], textarea[name=siteContact], textarea[name=pescmsIntroduce], input[name=siteKeywords], textarea[name=siteDescription]').removeAttr('readonly').unbind('mouseenter mouseleave')
             }

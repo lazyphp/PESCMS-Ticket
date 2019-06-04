@@ -181,7 +181,7 @@ $(function () {
      */
     $(".display-verify").on("click", function () {
         $(this).remove();
-        $(".refresh-verify").removeClass("am-hide").attr("src", "/?m=Index&a=verify&time=" + Date.parse(new Date()) + Math.random());
+        $(".refresh-verify").removeClass("am-hide").attr("src", PESCMS_PATH +"/?m=Index&a=verify&time=" + Date.parse(new Date()) + Math.random());
     });
 
 })

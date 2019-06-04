@@ -20,7 +20,7 @@
                 <span class="am-input-group-label"><i class="am-icon-shield am-icon-fw"></i></span>
                 <input type="text" class="am-form-field" name="verify">
                 <span class="am-input-group-btn">
-                    <img src="/?m=Index&a=verify" class="refresh-verify am-padding-left-sm">
+                    <img src="<?= $label->url('Index-verify') ?>" class="refresh-verify am-padding-left-sm">
                 </span>
             </div>
             <?php endif; ?>

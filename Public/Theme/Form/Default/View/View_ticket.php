@@ -27,7 +27,7 @@
                                 <?php if($ticket_model_verify == 1): ?>
                                 <div class="am-form-group pt-reply-content">
                                     <label for="">验证码: </label>
-                                    <img src="/?g=Form&m=Index&a=verify" class="refresh-verify" height="25"/>
+                                    <img src="<?= $label->url('Index-verify') ?>" class="refresh-verify" height="25"/>
                                     <input type="text" name="verify" required/>
                                 </div>
                                 <?php endif; ?>

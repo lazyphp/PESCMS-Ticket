@@ -78,7 +78,7 @@ $(function () {
         $.extend(obj, param)
 
         var progress = $.AMUI.progress;
-        var d = dialog({title: '系统提示', zIndex: '999'});
+        var d = dialog({title: '系统提示', zIndex: '9999'});
         if(obj.dialog == true){
             d.showModal()
         }
@@ -181,7 +181,7 @@ $(function () {
      */
     $(".display-verify").on("click", function () {
         $(this).remove();
-        $(".refresh-verify").removeClass("am-hide").attr("src", "/?m=Index&a=verify&time=" + Date.parse(new Date()) + Math.random());
+        $(".refresh-verify").removeClass("am-hide").attr("src", PESCMS_PATH +"/?m=Index&a=verify&time=" + Date.parse(new Date()) + Math.random());
     });
 
 })

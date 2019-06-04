@@ -114,10 +114,21 @@ class Index extends \Core\Controller\Controller {
         $data['passwd'] = $this->isP('passwd', '请填写管理员密码');
         $data['name'] = $this->isP('name', '请填写管理员名称');
         $data['mail'] = $this->isP('mail', '请填写管理员邮箱');
-        $manage = $this->p('manage');
+        $manage = $this->isP('manage', '请填写您的后台地址');
         if(!empty($manage)){
             $f = fopen(PES_CORE."Public/{$manage}.php", 'w');
-            fwrite($f, "<?php\n header('Location:/?g=Ticket&m=Login&a=index');");
+            $documentPath = str_replace('Install', '', DOCUMENT_ROOT);
+            $backstage = "<?php\n
+require dirname(__DIR__).'/vendor/autoload.php';\n
+\$config = require dirname(__DIR__).'/Config/config.php';\n
+
+\$session = new \duncan3dc\Sessions\SessionInstance(\$config['SESSION_ID']);\n
+
+\$session->set('backstage', '1');\n
+
+header('Location:{$documentPath}?g=Ticket&m=Login&a=index');";
+
+            fwrite($f, $backstage);
             fclose($f);
             $this->assign('manage', $manage);
         }

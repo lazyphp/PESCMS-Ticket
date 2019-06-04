@@ -43,9 +43,11 @@
     <div class="am-form-group">
         <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">后台入口程序:</label>
         <div class="am-u-sm-10">
-            <input type="text" name="manage" placeholder="">
+            <div>
+                <input type="text" name="manage" class="am-inline-block am-text-right" placeholder="admin" style="width: 80px" required><input type="text" value=".php" class="am-inline-block" disabled style="width: 60px">
+            </div>
             <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
-                <i class="am-icon-lightbulb-o"></i> 填写后台入口程序，程序将会创建一个后台入口地址。如admin.php，那么您访问后台只需要 http://您的程序/admin.php
+                <i class="am-icon-lightbulb-o"></i> 填写后台入口程序，程序将会创建一个后台入口地址。如admin，那么您访问后台只需要 http://您的程序/admin.php
             </div>
         </div>
     </div>

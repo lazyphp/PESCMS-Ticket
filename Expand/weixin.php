@@ -136,4 +136,21 @@ class weixin {
         return $result;
     }
 
+    /**
+     * 测试微信access_token返回内容
+     */
+    public function debug_access_token(){
+        $result = (new cURL())->init("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$this->appID}&secret={$this->appsecret}");
+        echo '<pre>';
+        echo "微信返回的原始数据：<br/>{$result}";
+        echo '<br/>';
+        echo '<br/>';
+        echo 'PESCMS解析微信返回数据结构:<br/>';
+        print_r(json_decode($result));
+        echo '</pre>';
+        echo '<br/>';
+        exit;
+
+    }
+
 }

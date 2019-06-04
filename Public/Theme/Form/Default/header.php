@@ -38,10 +38,15 @@
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/spectrum.js?v=<?= $system['version'] ?>"></script>
 
     <!--编辑器-->
-    <script>var path = '<?= DOCUMENT_ROOT; ?>';</script>
+    <script>var PESCMS_PATH = '<?= DOCUMENT_ROOT; ?>';</script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.config.js?v=<?= $system['version'] ?>"></script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.all.js?v=<?= $system['version'] ?>"></script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/lang/zh-cn/zh-cn.js?v=<?= $system['version'] ?>"></script>
+
+    <!--图片放大器-->
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/jquery.fancybox.min.js?v=<?=$system['version']?>"></script>
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/jquery.fancybox.min.css?v=<?=$system['version']?>"/>
+    <!--图片放大器-->
 
     <!--百度上传控件-->
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/webuploader.css?v=<?= $system['version'] ?>"/>

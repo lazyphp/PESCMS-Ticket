@@ -28,7 +28,7 @@
         UEDITOR_HOME_URL: URL
 
                 // 服务器统一请求接口路径
-        , serverUrl: path + "/?m=Upload&a=ueditor&method=POST"
+        , serverUrl: PESCMS_PATH + "/?m=Upload&a=ueditor&method=POST"
 
                 //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的从新定义
         , toolbars: [[

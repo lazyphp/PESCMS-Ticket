@@ -171,7 +171,7 @@ var AMUIwebuploader = {
         var upload_icon = options.type == 'file' ? 'upload_file_icon' : ''
 
         return (
-        '<ul class="am-gallery am-avg-lg-10 am-gallery-overlay am-webuploader-ul" >' +
+        '<ul class="am-gallery am-avg-lg am-gallery-overlay am-webuploader-ul" >' +
             '<li id="before' + options.id + '">' +
                 '<div class="am-gallery-item webuploader-item am-img-thumbnail am-radius webuploader-background-img">' +
                     '<a href="javascript:;" id="' + options.id + '" class="'+upload_icon+'"></a>' +

@@ -52,14 +52,7 @@ class weixinWork {
             return false;
         }
 
-        $result = json_decode((new cURL())->init("https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={$this->access_token}", json_encode([
-            "touser" => $param['send_account'],
-            "msgtype" => "text",
-            "agentid" => $this->AgentId,
-            "text" => [
-                "content" => $param['send_content']
-            ]
-        ])), true);
+        $result = json_decode($this->notice($param['send_content']), true);
 
         //发送成功，删除消息
         if($result['errmsg'] == 'ok'){
@@ -74,6 +67,39 @@ class weixinWork {
                 'send_result' => $result['errmsg']
             ]);
         }
+    }
+
+    /**
+     * 发送企业微信应用消息通知
+     * @param $account
+     * @return mixed
+     */
+    public function notice($account){
+        return (new cURL())->init("https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={$this->access_token}", json_encode([
+            "touser" => $account,
+            "msgtype" => "text",
+            "agentid" => $this->AgentId,
+            "text" => [
+                "content" => $account
+            ]
+        ]));
+    }
+
+    /**
+     * 测试微信access_token返回内容
+     */
+    public function debug_access_token(){
+        $result = (new cURL())->init("https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={$this->corpid}&corpsecret=$this->Secret");
+        echo '<pre>';
+        echo "企业微信返回的原始数据：<br/>{$result}";
+        echo '<br/>';
+        echo '<br/>';
+        echo 'PESCMS解析企业微信返回数据结构:<br/>';
+        print_r(json_decode($result));
+        echo '</pre>';
+        echo '<br/>';
+        exit;
+
     }
 
     /**

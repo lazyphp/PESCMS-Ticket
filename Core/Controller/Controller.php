@@ -208,7 +208,7 @@ class Controller {
     /**
      * 404专用提示
      */
-    protected function _404($layout = false, $title = '页面被怪兽吃掉了'){
+    protected function _404($layout = false, $title = '404 - 页面被怪兽吃掉了'){
         header("HTTP/1.1 404 Page not found");
         $this->assign('title', $title);
         if($layout == true){

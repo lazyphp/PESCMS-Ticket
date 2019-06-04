@@ -34,6 +34,7 @@
                     </select>
                     <input type="text" class="test_account am-inline" placeholder="接收消息的微信openid" style="width: 20%">
                     <a href="javascript:;" data="<?= $label->url(GROUP.'-Setting-weixinTest') ?>" type="submit" class="am-inline am-btn am-btn-warning send-test" >发送模板消息</a>
+                    <a href="<?= $label->url(GROUP.'-Setting-weixinTest', ['debug_access_token' => true]) ?>" target="_blank">[access_token调试]</a>
                 </div>
             </div>
         </div>
@@ -71,6 +72,18 @@
                 <div class="am-form-group">
                     <label class="am-block">Secret</label>
                     <input name="weixinWork_api[Secret]" placeholder="" type="text" value="<?= $weixinWork_api['Secret']; ?>" >
+                </div>
+            </div>
+        </div>
+
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">企业微信调试</label>
+                    <input type="text" class="test_account am-inline" placeholder="接收消息的企业微信帐号" style="width: 20%">
+                    <a href="javascript:;" data="<?= $label->url(GROUP.'-Setting-weixinWorkTest') ?>" type="submit" class="am-inline am-btn am-btn-warning send-test" >企业消息测试</a>
+                    <a href="<?= $label->url(GROUP.'-Setting-weixinWorkTest', ['debug_access_token' => true]) ?>" target="_blank">[access_token调试]</a>
+
                 </div>
             </div>
         </div>

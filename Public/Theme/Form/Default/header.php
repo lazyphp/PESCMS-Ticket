@@ -38,7 +38,7 @@
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/spectrum.js?v=<?= $system['version'] ?>"></script>
 
     <!--编辑器-->
-    <script>var path = '<?= DOCUMENT_ROOT; ?>';</script>
+    <script>var PESCMS_PATH = '<?= DOCUMENT_ROOT; ?>';</script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.config.js?v=<?= $system['version'] ?>"></script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.all.js?v=<?= $system['version'] ?>"></script>
     <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/lang/zh-cn/zh-cn.js?v=<?= $system['version'] ?>"></script>

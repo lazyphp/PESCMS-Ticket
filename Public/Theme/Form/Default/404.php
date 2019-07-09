@@ -5,7 +5,7 @@
         <div class="am-panel am-panel-default">
             <div class="am-panel-bd">
                 <h2 class="am-text-center am-text-xxxl am-margin-top-lg">404. Not Found</h2>
-                <p class="am-text-center">没有找到你要的页面</p>
+                <p class="am-text-center"><?= $title ?></p>
             </div>
         </div>
 

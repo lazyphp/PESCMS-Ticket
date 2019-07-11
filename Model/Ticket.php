@@ -166,21 +166,28 @@ class Ticket extends \Core\Model\Model {
 
                     break;
                 case 'thumb':
-                    $form[$value['ticket_form_id']]['ticket_value'] = empty($value['ticket_form_content']) ? '' : '<img src="'.$value['ticket_form_content'].'" alt="'.$value['ticket_form_content'].'" class="am-img-thumbnail" height="300" />';
+                    $suffix = pathinfo($value['ticket_form_content']);
+                    $small = "{$value['ticket_form_content']}_50x50.{$suffix['extension']}";
+
+                    $form[$value['ticket_form_id']]['ticket_value'] = empty($value['ticket_form_content']) ? '' : '<a href="'.$value['ticket_form_content'].'" data-fancybox><img src="'.$small.'" alt="'.$value['ticket_form_content'].'" class="am-img-thumbnail" width="50" height="50" /></a>';
                     break;
                 case 'img':
                     $splitImg = explode(',', $value['ticket_form_content']);
-                    $imgStr = '<ul class="am-avg-sm-4 am-thumbnails">';
+                    $imgStr = '<ul class="am-avg-sm am-thumbnails">';
                     if(!empty($value['ticket_form_content'])){
                         foreach ($splitImg as $item){
-                            $imgStr .= '<li><img src="'.$item.'" alt="'.imgs.'" class="am-img-thumbnail" /></li>';
+                            $suffix = pathinfo($item);
+                            $small = "{$item}_50x50.{$suffix['extension']}";
+                            $imgStr .= '<li>
+<a href="'.$item.'" data-fancybox><img src="'.$small.'" alt="'.imgs.'" class="am-img-thumbnail" width="50" height="50" /></a>
+</li>';
                         }
                     }
                     $imgStr .= '</ul>';
                     $form[$value['ticket_form_id']]['ticket_value'] = $imgStr;
                     break;
                 case 'file':
-                    //@todo 待优化
+                    //@todo 待优化,下载应该基于header方法
                     $splitImg = explode(',', $value['ticket_form_content']);
                     $imgStr = '<ul class="am-avg-sm-4 am-thumbnails">';
                     if(!empty($value['ticket_form_content'])){

@@ -47,6 +47,7 @@
 			<th class="table-sort">排序</th>
 			<th class="table-id">ID</th>
 			<th class="table-title">名称</th>
+			<th class="table-title">状态</th>
 			<th class="table-set">操作</th>
 		</tr>
 		<?php foreach($list as $key => $value): ?>
@@ -57,6 +58,9 @@
                 </td>
 				<td class="am-text-middle"><?= $value['category_id'] ?></td>
 				<td class="am-text-middle"><?= $value['space'].$value['guide'].$value['category_name'] ?></td>
+                <td>
+                    <?= $label->getFieldOptionToMatch(187, $value['category_status']); ?>
+                </td>
 				<td class="am-text-middle">
                     <a class="am-text-secondary" href="<?= $label->url(GROUP . '-' . MODULE . '-action', ['id' => $value["category_id"], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>"><span class="am-icon-pencil-square-o"></span> 编辑</a>
                     <i class="am-margin-left-xs am-margin-right-xs">|</i>

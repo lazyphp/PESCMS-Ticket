@@ -237,7 +237,7 @@ class Label {
             $this->xss = new \voku\helper\AntiXSS();
         }
 
-        return $this->xss->xss_clean($str);
+        return trim($this->xss->xss_clean($str));
     }
 
     /**

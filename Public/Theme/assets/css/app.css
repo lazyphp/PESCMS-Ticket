@@ -25,7 +25,7 @@ html,body{
     .am-topbar .am-dropdown:hover>.am-dropdown-content a{
         color: #fff;
     }
-    .am-topbar .am-dropdown:hover>.am-dropdown-content a:hover, .am-dropdown:hover>.am-dropdown-content a:focus{
+    .am-topbar .am-dropdown:hover>.am-dropdown-content a:hover, .am-topbar .am-dropdown:hover>.am-dropdown-content a:focus{
         background-color: rgba(52,59,78,.618);
     }
     /*.am-topbar .am-dropdown-toggle{*/

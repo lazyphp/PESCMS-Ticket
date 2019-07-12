@@ -3,7 +3,7 @@
         <div class="am-g am-g-collapse">
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
-                    <label class="am-block">检查更新<i class="am-text-danger">*</i></label>
+                    <label class="am-block">点击版本号检查更新<i class="am-text-danger">*</i></label>
                     <a class="am-btn am-btn-sm am-btn-warning" href="<?= $label->url(GROUP . '-Setting-upgrade') ?>"><i class="am-icon-refresh"></i> <?= $version['value'] ?>
                     </a>
                 </div>

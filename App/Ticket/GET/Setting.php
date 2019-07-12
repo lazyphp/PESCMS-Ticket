@@ -14,7 +14,9 @@ namespace App\Ticket\GET;
 
 class Setting extends \Core\Controller\Controller {
 
-
+    /**
+     * 系统设置
+     */
     public function action(){
         //调试获取$_SERVER信息
         if($_GET['dev']){
@@ -50,11 +52,6 @@ class Setting extends \Core\Controller\Controller {
 		(new \Expand\Notice\Mail())->test($email);
 	}
 
-    public function upgrade(){
-        $this->assign('title', '检查更新');
-        $this->layout();
-    }
-
     /**
      * 短信测试
      */
@@ -79,8 +76,16 @@ class Setting extends \Core\Controller\Controller {
         exit;
 
     }
-    
+
+    /**
+     * 微信模板测试
+     */
     public function weixinTest(){
+
+        if(!empty($_GET['debug_access_token'])){
+            (new \Expand\weixin())->debug_access_token();
+        }
+
         $account = $this->isG('account', '请填写接收模板消息的微信openid');
         $id = $this->isG('template', '请选择模板');
 
@@ -101,8 +106,10 @@ class Setting extends \Core\Controller\Controller {
         echo '<pre>';
         echo "您使用的模板ID: {$title['3']} <br/>";
         echo "模板格式: {$template['3']} <br/>";
+        echo '<br/>';
         echo "------------下面格式化后的模板格式-------------<br/>";
         print_r(json_decode($template[3], true));
+        echo '<br/>';
         echo "------------下面是微信返回的结果---------------<br/>";
         print_r($result);
         echo '</pre>';
@@ -110,6 +117,42 @@ class Setting extends \Core\Controller\Controller {
         exit;
     }
 
+    /**
+     * 企业微信测试
+     */
+    public function weixinWorkTest(){
+        if(!empty($_GET['debug_access_token'])){
+            (new \Expand\weixinWork())->debug_access_token();
+        }
+
+        $account = $this->isG('account', '请填写接收消息的企业微信帐号');
+
+        $result = (new \Expand\weixinWork())->notice($account);
+
+        echo '<pre>';
+        echo "您发送消息的帐号是: {$account} <br/>";
+        echo '<br/>';
+        echo "------------下面格式化后的模板格式-------------<br/>";
+        print_r(json_decode($result, true));
+        echo '<br/>';
+        echo "------------下面是微信返回的结果---------------<br/>";
+        print_r($result);
+        echo '</pre>';
+        echo '<br/>';
+        exit;
+    }
+
+    /**
+     * 检查更新模板
+     */
+    public function upgrade(){
+        $this->assign('title', '检查更新');
+        $this->layout();
+    }
+
+    /**
+     * 产品安全验证
+     */
     public function authorize(){
         $license = PES_CORE.'/Core/LICENSE.pes';
         $authorize = \Model\Content::findContent('option', 'authorize', 'option_name');

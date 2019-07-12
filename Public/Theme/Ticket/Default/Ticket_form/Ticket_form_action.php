@@ -78,5 +78,24 @@
                 $("#bind_value").html('待选择')
             }
         })
+
+        $('input[name=name]').on('blur', function(){
+            $('.tips-alert').remove();
+            var dom = $(this)
+            var field = $(this).val();
+            if(field == ''){
+                return false;
+            }
+            $.getJSON(PESCMS_PATH + '/?g=Ticket&m=Ticket_form&a=checkFieldName&number=<?= $label->xss($_GET['number']) ?>&field='+field, function(data){
+                if(data.status == 200){
+                    dom.removeClass('am-field-error');
+                }else{
+                    dom.addClass('am-field-error').removeClass('am-field-valid')
+                    dom.after('<div class="tips-alert am-alert am-alert-danger" style="">'+data.msg+'</div>')
+                }
+
+            })
+        })
+
     })
 </script>

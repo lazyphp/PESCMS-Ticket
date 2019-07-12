@@ -103,4 +103,26 @@ class Ticket_form extends Content {
         $this->layout();
     }
 
+    /**
+     * 验证工单表单字段名称是否重复
+     */
+    public function checkFieldName(){
+        $field = $this->isG('field', '请提交要验证的字段');
+        if(empty($this->ticket)){
+            $this->error('工单模型不存在');
+        }
+
+        $check = $this->db('ticket_form')->where('ticket_form_model_id = :ticket_form_model_id AND ticket_form_name = :ticket_form_name ')->find([
+            'ticket_form_model_id' => $this->ticket['ticket_model_id'],
+            'ticket_form_name' => $field
+        ]);
+
+        if(!empty($check)){
+            $this->error("字段{$field}已存在, 请换一个");
+        }
+
+        $this->success("字段{$field}可用");
+
+    }
+
 }

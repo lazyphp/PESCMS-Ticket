@@ -34,6 +34,7 @@ class Index extends \Core\Controller\Controller {
      * 欢迎界面
      */
     public function index() {
+        $this->assign('program', 'PESCMS Ticket');
         $this->assign('title', '欢迎使用PESCMS Ticket客服工单系统');
         $this->layout();
     }

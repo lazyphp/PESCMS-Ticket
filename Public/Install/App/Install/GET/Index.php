@@ -117,7 +117,7 @@ class Index extends \Core\Controller\Controller {
         $manage = $this->isP('manage', '请填写您的后台地址');
         if(!empty($manage)){
             $f = fopen(PES_CORE."Public/{$manage}.php", 'w');
-
+            $documentPath = str_replace('Install', '', DOCUMENT_ROOT);
             $backstage = "<?php\n
 require dirname(__DIR__).'/vendor/autoload.php';\n
 \$config = require dirname(__DIR__).'/Config/config.php';\n
@@ -126,7 +126,7 @@ require dirname(__DIR__).'/vendor/autoload.php';\n
 
 \$session->set('backstage', '1');\n
 
-header('Location:/?g=Ticket&m=Login&a=index');";
+header('Location:{$documentPath}?g=Ticket&m=Login&a=index');";
 
             fwrite($f, $backstage);
             fclose($f);

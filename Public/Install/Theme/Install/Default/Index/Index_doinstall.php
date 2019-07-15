@@ -12,10 +12,7 @@
 </div>
 <div class="am-center am-text-center">
     <a href="<?= str_replace("/Install", "", DOCUMENT_ROOT) ?>/"  target="_blank" class="next am-btn am-btn-success am-hide am-margin-left-sm am-inline">查看前台</a>
-    <a href="<?= str_replace("/Install", "", $label->url('Ticket-Login-index')) ?>" target="_blank"  class="next am-btn am-btn-primary am-hide am-inline">查看后台</a>
-    <?php if(!empty($manage)): ?>
-    <p class="next am-hide">您填写的专属后台访问地址: <a href="/<?= $manage ?>.php"><?= $manage ?>.php</a></p>
-    <?php endif; ?>
+    <a href="<?= str_replace("Install", "", DOCUMENT_ROOT) ?><?= $manage ?>.php" target="_blank"  class="next am-btn am-btn-primary am-hide am-inline">查看后台</a>
 </div>
 <script>
     $(function () {

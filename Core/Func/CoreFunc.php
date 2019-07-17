@@ -178,7 +178,7 @@ class CoreFunc {
      * @param type $key 混淆配置
      */
     public static function generatePwd($pwd, $key = 'PRIVATE_KEY') {
-        $config = self::loadConfig();
+        $config = self::loadConfig('', true);
         $salt = $config[GROUP][$key] ? $config[GROUP][$key] : $config[$key];
         $salt = '$6$' . $salt;
         return crypt($pwd, $salt);

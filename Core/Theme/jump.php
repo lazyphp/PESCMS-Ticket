@@ -7,7 +7,7 @@
         <meta name="renderer" content="webkit">
         <meta http-equiv="Cache-Control" content="no-siteapp" />
         <title>提示信息</title>
-        <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/amazeui.min.css"/>
+        <link rel="stylesheet" href="<?= str_replace('Install', '', DOCUMENT_ROOT); ?>Theme/assets/css/amazeui.min.css"/>
     </head>
     <body class="p-background-color-fbfbfb">
         <div class="am-vertical-align" style="height: 500px">

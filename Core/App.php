@@ -170,14 +170,8 @@ class App {
         if (!empty(\Core\Func\CoreFunc::$param)) {
             extract(\Core\Func\CoreFunc::$param, EXTR_OVERWRITE);
         }
-	    //非调试模式加载404页面。
-        if (is_file(THEME_PATH. '/404.php') && DEBUG == false ) {
-            require THEME_PATH. '/404.php';
-        } elseif(is_file(THEME_PATH.'/error.php')){
-            require THEME_PATH.'/error.php';
-        }else{
-            require PES_CORE . 'Core/Theme/error.php';
-        }
+	    //加载文件丢失，加载全局404页面。
+        require PES_CORE . 'Core/Theme/404.php';
         exit;
     }
 

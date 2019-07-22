@@ -51,6 +51,13 @@ class Ticket extends \Core\Controller\Controller {
             $this->param['group_id'] = "%,{$this->session()->get('ticket')['user_group_id']},%";
         }
 
+        if(!empty($_GET['begin']) && !empty($_GET['end']) ){
+            $timeField = $_GET['time_type'] == 1 ? 't.ticket_submit_time' : 't.ticket_complete_time';
+            $this->condition .= " AND {$timeField} BETWEEN :begin AND :end  ";
+            $this->param['begin'] = strtotime($this->g('begin'). ' 00:00:00');
+            $this->param['end'] = strtotime($this->g('end'). ' 23:59:59');
+        }
+
         $sql = "SELECT %s
                 FROM {$this->prefix}ticket AS t
                 LEFT JOIN {$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id

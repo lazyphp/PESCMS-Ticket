@@ -13,51 +13,73 @@
                         <input type="hidden" name="m" value="<?= MODULE ?>"/>
                         <input type="hidden" name="a" value="<?= ACTION ?>"/>
 
-                        <select name="model_id" class="am-form-field" placeholder="所有类型"
-                                data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}">
-                            <option value="-1">所有类型</option>
-                            <?php foreach ($ticketModel as $value): ?>
-                                <option value="<?= $value['ticket_model_id']; ?>" <?= $value['ticket_model_id'] == $_GET['model_id'] ? 'selected="selected"' : '' ?> >
-                                    <?= $category[$value['ticket_model_cid']]['category_name']; ?> - <?= $value['ticket_model_name']; ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
+                        <div class="am-margin-bottom-xs">
 
+                            <select name="time_type" class="am-form-field" placeholder="时间筛选"
+                                    data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}">
+                                <option value="1">创建时间</option>
+                                <option value="2" <?= $label->xss($_GET['time_type']) == 2 ? 'selected="selected"' : '' ?>>完成时间</option>
+                            </select>
 
-                        <select name="status" class="am-form-field" placeholder="所有进度"
-                                data-am-selected="{btnSize: 'sm', dropUp: 0}">
-                            <option value="-1">所有进度</option>
-                            <?php foreach ($ticketStatus as $key => $value): ?>
-                                <option value="<?= $key; ?>" <?= (string)$key === $_GET['status'] ? 'selected="selected"' : '' ?>><?= $value['name']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                            <div class="am-form-group am-form-icon">
+                                <i class="am-icon-calendar"></i>
+                                <input type="text" class="am-form-field am-input-sm am-radius" name="begin" value="<?= !empty($_GET['begin']) ? $label->xss($_GET['begin']) : '' ?>" readonly data-am-datepicker>
+                            </div>
 
-                        <select name="read" class="am-form-field" placeholder=""
-                                data-am-selected="{btnSize: 'sm', dropUp: 0}">
-                            <option value="-1">查看状态</option>
-                            <option value="0" <?= '0' == $_GET['read'] ? 'selected="selected"' : '' ?>>未读</option>
-                            <option value="1" <?= '1' == $_GET['read'] ? 'selected="selected"' : '' ?>>已读</option>
-                        </select>
-
-                        <select name="close" class="am-form-field" placeholder=""
-                                data-am-selected="{btnSize: 'sm', dropUp: 0}">
-                            <option value="-1">关闭状态</option>
-                            <option value="0" <?= '0' == $_GET['close'] ? 'selected="selected"' : '' ?>>正常</option>
-                            <option value="1" <?= '1' == $_GET['close'] ? 'selected="selected"' : '' ?>>已关闭</option>
-                        </select>
-
-                        <?php if(!empty($member[$_GET['member']])): ?>
-                        <select name="member" class="am-form-field" placeholder=""
-                                data-am-selected="{btnSize: 'sm', dropUp: 0}">
-                            <option value="-1" >不筛选用户</option>
-                            <option value="<?= $_GET['member'] ?>" selected="selected" ><?= $member[$_GET['member']]['member_name'] ?></option>
-                        </select>
-                        <?php endif; ?>
-                        <div class="am-form-group">
-                        <input type="text" name="keyword" value="<?= urldecode($_GET['keyword']) ?>" class="am-block am-input-sm pes_input_radius fix-input-width am-radius">
+                            <div class="am-form-group am-form-icon">
+                                <i class="am-icon-calendar"></i>
+                                <input type="text" class="am-form-field am-input-sm am-radius" name="end" value="<?= !empty($_GET['end']) ? $label->xss($_GET['end']) : '' ?>" readonly data-am-datepicker>
+                            </div>
                         </div>
 
-                        <button type="submit" class="am-btn am-btn-default am-btn-sm am-radius">搜索</button>
+                        <div>
+                            <select name="model_id" class="am-form-field" placeholder="所有类型"
+                                    data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}">
+                                <option value="-1">所有类型</option>
+                                <?php foreach ($ticketModel as $value): ?>
+                                    <option value="<?= $value['ticket_model_id']; ?>" <?= $value['ticket_model_id'] == $_GET['model_id'] ? 'selected="selected"' : '' ?> >
+                                        <?= $category[$value['ticket_model_cid']]['category_name']; ?> - <?= $value['ticket_model_name']; ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+
+
+                            <select name="status" class="am-form-field" placeholder="所有进度"
+                                    data-am-selected="{btnSize: 'sm', dropUp: 0}">
+                                <option value="-1">所有进度</option>
+                                <?php foreach ($ticketStatus as $key => $value): ?>
+                                    <option value="<?= $key; ?>" <?= (string)$key === $_GET['status'] ? 'selected="selected"' : '' ?>><?= $value['name']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+
+                            <select name="read" class="am-form-field" placeholder=""
+                                    data-am-selected="{btnSize: 'sm', dropUp: 0}">
+                                <option value="-1">查看状态</option>
+                                <option value="0" <?= '0' == $_GET['read'] ? 'selected="selected"' : '' ?>>未读</option>
+                                <option value="1" <?= '1' == $_GET['read'] ? 'selected="selected"' : '' ?>>已读</option>
+                            </select>
+
+                            <select name="close" class="am-form-field" placeholder=""
+                                    data-am-selected="{btnSize: 'sm', dropUp: 0}">
+                                <option value="-1">关闭状态</option>
+                                <option value="0" <?= '0' == $_GET['close'] ? 'selected="selected"' : '' ?>>正常</option>
+                                <option value="1" <?= '1' == $_GET['close'] ? 'selected="selected"' : '' ?>>已关闭</option>
+                            </select>
+
+                            <?php if(!empty($member[$_GET['member']])): ?>
+                                <select name="member" class="am-form-field" placeholder=""
+                                        data-am-selected="{btnSize: 'sm', dropUp: 0}">
+                                    <option value="-1" >不筛选用户</option>
+                                    <option value="<?= $_GET['member'] ?>" selected="selected" ><?= $member[$_GET['member']]['member_name'] ?></option>
+                                </select>
+                            <?php endif; ?>
+                            <div class="am-form-group">
+                                <input type="text" name="keyword" value="<?= urldecode($_GET['keyword']) ?>" class="am-block am-input-sm pes_input_radius fix-input-width am-radius">
+                            </div>
+
+                            <button type="submit" class="am-btn am-btn-default am-btn-sm am-radius">搜索</button>
+                        </div>
+
                     </form>
                 </div>
             </div>

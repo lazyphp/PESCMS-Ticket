@@ -24,7 +24,7 @@ class Ticket extends \Core\Model\Model {
 
         $firstContent = current($field);
         if ($firstContent['ticket_status'] == '0') {
-            self::error('已关闭该工单的提交');
+            self::error('该工单已禁止提交');
         }
 
         $param['ticket_title'] = self::isP('title', '请填写简明扼要的问题描述，以便客户能够快速反馈问题');
@@ -94,9 +94,18 @@ class Ticket extends \Core\Model\Model {
                 }
             }
 
+            //加密
+            if($value['ticket_form_type'] == 'encrypt' && !empty($form) ){
+                $form = (new \Expand\OpenSSL(\Core\Func\CoreFunc::loadConfig('USER_KEY', true)))->encrypt($form);
+            }
+
             //@todo 这里还差一个工单表单类型验证功能
 
-            $result = self::db('ticket_content')->insert(['ticket_id' => $ticketID, 'ticket_form_id' => $value['ticket_form_id'], 'ticket_form_content' => $form]);
+            $result = self::db('ticket_content')->insert([
+                'ticket_id' => $ticketID,
+                'ticket_form_id' => $value['ticket_form_id'],
+                'ticket_form_content' => $form
+            ]);
             if ($result === false) {
                 self::db()->rollback();
                 self::error('记录工单内容出错');
@@ -197,6 +206,9 @@ class Ticket extends \Core\Model\Model {
                     }
                     $imgStr .= '</ul>';
                     $form[$value['ticket_form_id']]['ticket_value'] = $imgStr;
+                    break;
+                case 'encrypt':
+                    $form[$value['ticket_form_id']]['ticket_value'] = !empty(self::session()->get('ticket')['user_id']) ? (new \Expand\OpenSSL(\Core\Func\CoreFunc::loadConfig('USER_KEY', true)))->decrypt($value['ticket_form_content']) : '<i class="am-text-warning">您提交了加密信息,此部分只有客服可知.</i>' ;
                     break;
                 default:
                     $form[$value['ticket_form_id']]['ticket_value'] = (new \voku\helper\AntiXSS())->xss_clean(htmlspecialchars_decode( $value['ticket_form_content'] ));

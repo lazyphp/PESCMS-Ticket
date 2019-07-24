@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2019-05-13 04:25:14
+-- Generation Time: 2019-07-24 07:20:43
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -587,7 +587,7 @@ INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) 
 (4, 'openindex', '开启首页', '1', 'system'),
 (5, 'customstatus', '工单状态', '[{"color":"#dd514c","name":"\\u5f85\\u89e3\\u51b3"},{"color":"#F37B1D","name":"\\u5df2\\u53d7\\u7406"},{"color":"#3bb4f2","name":"\\u5f85\\u56de\\u590d"},{"color":"#5eb95e","name":"\\u5b8c\\u6210"}]', ''),
 (6, 'mail', '邮箱设置', '', ''),
-(7, 'notice_way', '通知方式', '2', 'system'),
+(7, 'notice_way', '通知方式', '3', 'system'),
 (8, 'upload_img', '图片格式', '[".jpg",".jpge",".bmp",".gif",".png"]', 'upload'),
 (9, 'upload_file', '文件格式', '[".zip",".rar",".7z",".doc",".docx",".pdf",".xls",".xlsx",".ppt",".pptx",".txt"]', 'upload'),
 (10, 'interior_ticket', '站内工单', '1', 'system'),

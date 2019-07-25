@@ -127,7 +127,7 @@ class Setting extends \Core\Controller\Controller {
 
         $account = $this->isG('account', '请填写接收消息的企业微信帐号');
 
-        $result = (new \Expand\weixinWork())->notice($account);
+        $result = (new \Expand\weixinWork())->notice($account, '这是测试的消息内容');
 
         echo '<pre>';
         echo "您发送消息的帐号是: {$account} <br/>";

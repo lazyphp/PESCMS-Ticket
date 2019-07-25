@@ -52,7 +52,7 @@ class weixinWork {
             return false;
         }
 
-        $result = json_decode($this->notice($param['send_content']), true);
+        $result = json_decode($this->notice($param['send_account'], $param['send_content']), true);
 
         //发送成功，删除消息
         if($result['errmsg'] == 'ok'){
@@ -71,16 +71,17 @@ class weixinWork {
 
     /**
      * 发送企业微信应用消息通知
-     * @param $account
+     * @param $account 接收消息帐号
+     * @param $content 发送的内容
      * @return mixed
      */
-    public function notice($account){
+    public function notice($account, $content){
         return (new cURL())->init("https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={$this->access_token}", json_encode([
             "touser" => $account,
             "msgtype" => "text",
             "agentid" => $this->AgentId,
             "text" => [
-                "content" => $account
+                "content" => $content
             ]
         ]));
     }

@@ -167,4 +167,16 @@ class Index extends \Core\Controller\Controller {
         $this->assign('list', $list);
     }
 
+    /**
+     * 清空临时目录文件缓存
+     */
+    public function clean(){
+        $result = \Model\Extra::clearDirAllFile();
+        if($result['status'] == 200){
+            $this->success('缓存已清空完毕');
+        }else{
+            $this->error($result['msg']);
+        }
+    }
+
 }

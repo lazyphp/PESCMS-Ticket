@@ -48,6 +48,10 @@
                         <li><a href="javascript:;" class="close-tips">暂无新工单</a></li>
                     </ul>
                 </li>
+                <?php if($label->checkAuth(GROUP . 'GETSettingaction') === true): ?>
+                <li><a href="<?= $label->url('Ticket-Index-clean', ['method' => 'GET']); ?>" class="ajax-click ajax-dialog" msg="确认需要清空缓存吗?" ><i class="am-icon-recycle"></i> 清空缓存</a></li>
+                <?php endif; ?>
+
                 <li><a href="<?= $label->url('Ticket-Login-logout'); ?>"><i class="am-icon-sign-out"></i> 退出</a></li>
             </ul>
         </div>

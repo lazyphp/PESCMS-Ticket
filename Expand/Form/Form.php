@@ -22,6 +22,9 @@ class Form {
      */
     public function formList($field) {
         switch ($field['field_type']) {
+            case 'encrypt':
+                require 'theme/textarea.php';
+                break;
             case 'editor':
                 /**
                  * 将属于必填项的表单名称写入数组

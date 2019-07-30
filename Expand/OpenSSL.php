@@ -42,7 +42,9 @@ class OpenSSL{
     public function __construct($key, $method = 'DES-ECB') {
         $this->key = $key;
         $this->method = $method;
-
+        if(function_exists('openssl_cipher_iv_length') === false || function_exists('openssl_random_pseudo_bytes') === false ){
+            return 'openssl加密扩展未部署';
+        }
         $ivlen = openssl_cipher_iv_length($method);
         $this->iv = openssl_random_pseudo_bytes($ivlen);
     }

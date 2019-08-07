@@ -55,7 +55,7 @@ class weixinWork {
         $result = json_decode($this->notice($param['send_account'], $param['send_content']), true);
 
         //发送成功，删除消息
-        if($result['errmsg'] == 'ok'){
+        if($result['errmsg'] == 'ok' && empty($result['invaliduser']) ){
             \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->delete([
                 'send_id' => $param['send_id']
             ]);

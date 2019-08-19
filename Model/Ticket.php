@@ -178,7 +178,7 @@ class Ticket extends \Core\Model\Model {
                     $suffix = pathinfo($value['ticket_form_content']);
                     $small = "{$value['ticket_form_content']}_50x50.{$suffix['extension']}";
 
-                    $form[$value['ticket_form_id']]['ticket_value'] = empty($value['ticket_form_content']) ? '' : '<a href="'.$value['ticket_form_content'].'" data-fancybox><img src="'.$small.'" alt="'.$value['ticket_form_content'].'" class="am-img-thumbnail" width="50" height="50" /></a>';
+                    $form[$value['ticket_form_id']]['ticket_value'] = empty($value['ticket_form_content']) ? '' : '<a href="'.$value['ticket_form_content'].'" data-fancybox="gallery"><img src="'.$small.'" alt="'.$value['ticket_form_content'].'" class="am-img-thumbnail" width="50" height="50" /></a>';
                     break;
                 case 'img':
                     $splitImg = explode(',', $value['ticket_form_content']);
@@ -188,7 +188,7 @@ class Ticket extends \Core\Model\Model {
                             $suffix = pathinfo($item);
                             $small = "{$item}_50x50.{$suffix['extension']}";
                             $imgStr .= '<li>
-<a href="'.$item.'" data-fancybox><img src="'.$small.'" alt="'.imgs.'" class="am-img-thumbnail" width="50" height="50" /></a>
+<a href="'.$item.'" data-fancybox="gallery" ><img src="'.$small.'" alt="'.imgs.'" class="am-img-thumbnail" width="50" height="50" /></a>
 </li>';
                         }
                     }

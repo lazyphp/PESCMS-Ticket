@@ -25,7 +25,41 @@
 <?php break;?>
 
 <?php case 'thumb': ?>
-        <img class="am-radius" alt="140*140" src="<?= $value[$prefix . $field['field_name']]; ?>" width="140" height="140" />
+    <?php if(!empty($value[$prefix . $field['field_name']])): ?>
+        <a href="<?= $value[$prefix . $field['field_name']]; ?>" data-fancybox>
+            <img class="am-radius" alt="<?= $value[$prefix . $field['field_name']]; ?>" src="<?= $value[$prefix . $field['field_name']]; ?>"  width="140" height="140" />
+        </a>
+    <?php endif; ?>
+<?php break;?>
+
+<?php case 'img': ?>
+    <?php if(empty($value[$prefix . $field['field_name']])): ?>
+        暂无图组上传
+    <?php else: ?>
+        <div class="am-dropdown" data-am-dropdown>
+            <a href="javascript:;" class="am-dropdown-toggle" data-am-dropdown-toggle>查看图组 <span class="am-icon-caret-down"></span></a>
+            <ul class="am-dropdown-content">
+                <?php foreach(explode(',', $value[$prefix . $field['field_name']]) as $key => $file): ?>
+                    <li><a href="<?= $file ?>" data-fancybox="gallery_<?= $value[$prefix . 'id']; ?>" data-caption="图片<?= $key + 1?>">图片<?= $key + 1?></a></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+<?php break;?>
+
+<?php case 'file': ?>
+    <?php if(empty($value[$prefix . $field['field_name']])): ?>
+        暂无文件上传
+    <?php else: ?>
+    <div class="am-dropdown" data-am-dropdown>
+        <a href="javascript:;" class="am-dropdown-toggle" data-am-dropdown-toggle>文件列表 <span class="am-icon-caret-down"></span></a>
+        <ul class="am-dropdown-content">
+            <?php foreach(explode(',', $value[$prefix . $field['field_name']]) as $key => $file): ?>
+            <li><a href="<?= $file ?>" target="_blank">下载文件<?= $key + 1?></a></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    <?php endif; ?>
 <?php break;?>
 
 <?php case 'color': ?>

@@ -105,6 +105,13 @@ class Login extends \Core\Controller\Controller {
 
         $this->db('member')->insert($param);
 
+        //关闭审核状态，发送欢迎注册邮件
+        if($param['member_status'] == 1){
+            $title = '欢迎来到'.\Core\Func\CoreFunc::$param['system']['siteTitle'];
+            $emailContent = \Model\MailTemplate::mergeMailTemplate("<p>您好！</p><p>{$title}，您可以使用此帐号登录系统。尔后，您可以提交和管理工单。</p>");
+            \Model\Extra::insertSend($param['member_email'], $title, $emailContent, '1');
+        }
+
         $this->success('注册成功', $this->url('Member-index'));
     }
 

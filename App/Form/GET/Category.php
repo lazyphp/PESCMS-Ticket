@@ -94,6 +94,8 @@ class Category extends \Core\Controller\Controller{
                 'login' => $value['ticket_model_login'],
                 'verify' => $value['ticket_model_verify'],
                 'cid' => $value['ticket_model_cid'],
+                'contact' => $value['ticket_model_contact'],
+                'contact_default' => $value['ticket_model_contact_default'],
             ];
             $field[$value['ticket_form_id']] = [
                 'field_name' => $value['ticket_form_name'],
@@ -117,6 +119,22 @@ class Category extends \Core\Controller\Controller{
         $this->assign('title', $ticketInfo['title']);
         $this->assign('ticketInfo', $ticketInfo);
         $this->assign('field', $field);
+
+        //@todo 现阶段只有三种联系方式，因此暂时用代码写死的形式展示
+        $this->assign('contact', [
+            '1' => [
+                'title' => '邮件',
+                'key' => 'member_email'
+            ],
+            '2' => [
+                'title' => '手机号码',
+                'key' => 'member_phone'
+            ],
+            '3' => [
+                'title' => '微信',
+                'key' => 'member_weixin'
+            ],
+        ]);
 
         $this->assign('member', $this->session()->get('member'));
 

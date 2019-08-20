@@ -279,6 +279,9 @@ html,body{
 .am-text-gray{
     color: #999;
 }
+.am-text-gray-background{
+    background-color: #FBFBEA !important;
+}
 /*扩展颜色*/
 
 a.am-btn-white:visited{

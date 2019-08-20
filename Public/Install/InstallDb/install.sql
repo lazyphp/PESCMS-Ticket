@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2019-07-24 07:20:43
+-- Generation Time: 2019-08-20 02:51:59
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `pes_field` (
   PRIMARY KEY (`field_id`),
   UNIQUE KEY `modle_id` (`field_model_id`,`field_name`),
   KEY `field_name` (`field_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=240 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=242 ;
 
 --
 -- 转存表中的数据 `pes_field`
@@ -176,7 +176,9 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (236, 1, 'page', '分页数', 'text', '', '', '10', 1, 5, 1, 1, 1, 0),
 (237, 15, 'time_out', '工单超时时长(分钟)', 'text', '', '有新工单提交后，在指定时间内无人受理工单，系统将发送通知给工单所在的管辖组成员。', '10', 1, 8, 1, 1, 1, 0),
 (238, 15, 'time_out_sequence', '超时提醒次数', 'text', '', '工单无人受理超时通知次数，系统将按照工单超时时长的间隔进行重复通知。', '1', 1, 9, 0, 1, 1, 0),
-(239, 20, 'account', '登陆账号', 'text', '', '', '', 1, 1, 1, 1, 1, 0);
+(239, 20, 'account', '登陆账号', 'text', '', '', '', 1, 1, 1, 1, 1, 0),
+(240, 15, 'contact', '联系方式', 'checkbox', '{&quot;\\u90ae\\u4ef6&quot;:&quot;1&quot;,&quot;\\u624b\\u673a\\u53f7\\u7801&quot;:&quot;2&quot;,&quot;\\u5fae\\u4fe1&quot;:&quot;3&quot;}', '', '', 1, 11, 1, 1, 1, 0),
+(241, 15, 'contact_default', '默认联系方式', 'radio', '{&quot;\\u90ae\\u4ef6&quot;:&quot;1&quot;,&quot;\\u624b\\u673a\\u53f7\\u7801&quot;:&quot;2&quot;,&quot;\\u5fae\\u4fe1&quot;:&quot;3&quot;}', '', '', 1, 12, 0, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -288,7 +290,7 @@ CREATE TABLE IF NOT EXISTS `pes_menu` (
 
 INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_link`, `menu_listsort`, `menu_type`) VALUES
 (1, '工单设置', 0, 'am-icon-ticket', '', 3, 0),
-(2, '工单模型', 1, 'am-icon-modx', 'Ticket-Ticket_model-index', 1, 0),
+(2, '工单模型', 1, 'am-icon-modx', 'Ticket-Ticket_model-index', 2, 0),
 (3, '帐号管理', 0, 'am-icon-users', '', 5, 0),
 (4, '客服帐号', 3, 'am-icon-user', 'Ticket-User-index', 1, 0),
 (6, '基础设置', 9, 'am-icon-tv', 'Ticket-Setting-action', 1, 0),
@@ -304,7 +306,7 @@ INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_l
 (17, '工单列表', 13, 'am-icon-fire', 'Ticket-Ticket-index', 1, 0),
 (18, '我的工单', 13, 'am-icon-coffee', 'Ticket-Ticket-myTicket', 2, 0),
 (19, '邮件模板', 9, 'am-icon-paint-brush', 'Ticket-Mail_template-index', 5, 0),
-(21, '分类管理', 0, 'am-icon-list-alt', 'Ticket-Category-index', 4, 0),
+(21, '工单分类', 1, 'am-icon-list-alt', 'Ticket-Category-index', 1, 0),
 (23, '客户管理', 3, 'am-icon-street-view', 'Ticket-Member-index', 4, 0),
 (24, '应用商店', 9, 'am-icon-cogs', 'Ticket-Application-index', 3, 0),
 (25, '商业授权', 9, 'am-icon-registered', 'https://www.pescms.com/Page/Authorization.html', 99, 1),
@@ -767,6 +769,8 @@ CREATE TABLE IF NOT EXISTS `pes_ticket_model` (
   `ticket_model_group_id` varchar(255) NOT NULL DEFAULT '',
   `ticket_model_time_out` int(11) NOT NULL DEFAULT '10' COMMENT '工单超时提醒设置',
   `ticket_model_time_out_sequence` int(11) NOT NULL DEFAULT '1' COMMENT '超时提醒次数',
+  `ticket_model_contact` varchar(64) NOT NULL DEFAULT '',
+  `ticket_model_contact_default` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ticket_model_id`),
   UNIQUE KEY `ticket_model_number` (`ticket_model_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='工单模型' AUTO_INCREMENT=1 ;

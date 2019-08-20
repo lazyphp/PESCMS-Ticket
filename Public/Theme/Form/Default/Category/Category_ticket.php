@@ -11,23 +11,18 @@
         <div class="am-u-sm-12 am-u-sm-centered">
             <div class="am-form-group">
                 <label class="am-block">联系方式<i class="am-text-danger">*</i></label>
-                <label class="form-radio-label am-radio-inline">
-                    <input class="form-radio" type="radio" name="contact" value="1" required="required"  checked="checked" data="<?= !empty($member) ? $member['member_email'] : '' ?>" />
-                    <span>邮件</span>
-                </label>
-                <?php if(!empty(json_decode($system['sms'])->APIID) && !empty(json_decode($system['sms'])->APIKEY) ): ?>
-                <label class="form-radio-label am-radio-inline">
-                    <input class="form-radio" type="radio" name="contact" value="2" required="required"   data="<?= !empty($member['member_phone']) ? $member['member_phone'] : '' ?>" />
-                    <span>手机号码</span>
-                </label>
-                <?php endif; ?>
                 
-                <?php if(!empty($member['member_weixin'])): ?>
-                <label class="form-radio-label am-radio-inline">
-                    <input class="form-radio" type="radio" name="contact" value="3" required="required"   data="<?= !empty($member['member_weixin']) ? $member['member_weixin'] : '' ?>" />
-                    <span>微信</span>
-                </label>
-                <?php endif; ?>
+                <?php foreach($contact as $contactID => $contactValue): ?>
+                    <?php
+                        if($contactID == 3 && empty($member['member_weixin']) ){
+                            continue;
+                        }
+                    ?>
+                    <label class="form-radio-label am-radio-inline">
+                        <input class="form-radio" type="radio" name="contact" value="<?= $contactID ?>" required="required" <?= $ticketInfo['contact_default'] == $contactID ? 'checked="checked"' : '' ?> data="<?= !empty($member) ? $member[$contactValue['key']] : '' ?>" />
+                        <span><?= $contactValue['title'] ?></span>
+                    </label>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
@@ -36,7 +31,7 @@
         <div class="am-u-sm-12 am-u-sm-centered">
             <div class="am-form-group">
                 <label class="am-block">联系信息<i class="am-text-danger">*</i></label>
-                <input class="form-text-input input-leng3 am-radius" name="contact_account" placeholder="请填写您的联系信息,方便我们与您联系" type="text" value="<?= !empty($member) ? $member['member_email'] : '' ?>" required="">
+                <input class="form-text-input input-leng3 am-radius" name="contact_account" placeholder="请填写您的联系信息,方便我们与您联系" type="text" value="" required="">
             </div>
         </div>
     </div>
@@ -115,13 +110,23 @@
 </form>
 <script>
     $(function(){
-        $('input[name=contact]').click(function(){
-            if($(this).val() == '3'){
+        var contact = function(){
+            var dom = $('input[name=contact]:checked');
+            var checkContact = dom.val();
+
+            if(checkContact == '3'){
                 $('input[name=contact_account]').parent().hide()
             }else{
                 $('input[name=contact_account]').parent().show();
             }
-            $('input[name=contact_account]').val($(this).attr('data'))
+            $('input[name=contact_account]').val(dom.attr('data'))
+        }
+
+        contact();
+
+
+        $('input[name=contact]').click(function(){
+            contact();
         })
     })
 </script>

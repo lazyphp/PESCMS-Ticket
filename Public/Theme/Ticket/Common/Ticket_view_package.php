@@ -56,7 +56,7 @@
         <h3 class="am-margin-0">沟通记录</h3>
     </div>
     <ul class="am-list am-list-static am-text-sm am-list-hover">
-        <li class="am-text-gray">
+        <li class="am-text-gray am-text-gray-background">
             <div class="am-g">
                 <div class="am-u-sm-1">
                     <img src="<?= DOCUMENT_ROOT . '/Theme/assets/i/custom.ico'; ?>" alt=""
@@ -80,7 +80,7 @@
         </li>
         <?php if (!empty($chat)): ?>
             <?php foreach ($chat as $value): ?>
-                <li class="<?= $value['user_id'] == '-1' ? 'am-text-gray' : '' ?> ">
+                <li class="<?= $value['user_id'] == '-1' ? 'am-text-gray am-text-gray-background' : '' ?> ">
                     <div class="am-g">
                         <div class="am-u-sm-1">
                             <img src="<?= DOCUMENT_ROOT . '/Theme/assets/i/'; ?><?= $value['user_id'] == '-1' ? 'custom.ico' : 'service.ico' ?>"

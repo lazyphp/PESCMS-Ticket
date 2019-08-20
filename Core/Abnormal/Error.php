@@ -113,11 +113,11 @@ class Error {
                 $errorMsg = "<b>{$type}:</b>{$message}";
                 $errorFile = "<b>File:</b>{$file}<b>Line:</b>{$line}";
             } else {
-                $errorMsg = "There was an error. Please try again later.";
-                $errorFile = "That's all we know.";
+                $errorMsg = "服务器当前出了点小差。请稍后再尝试。";
+                $errorFile = "此错误我们将会记录起来。";
             }
             header("HTTP/1.1 500 Internal Server Error");
-            $title = "500 Internal Server Error";
+            $title = "500 内部服务器错误";
 
             if (!empty($db->errorInfo)) {
                 CoreFunc::isAjax(['msg' => $errorMsg], 500);
@@ -157,11 +157,11 @@ class Error {
             $errorMsg = "<b>Sql Run Message</b>: {$db->errorInfo['message']}";
             $errorFile = "<b>Sql Error Info</b>:<br/>" . implode("<br/>", explode("\n", $db->errorInfo['string']));
         } else {
-            $errorMsg = "There was an error. Please try again later.";
-            $errorFile = "That's all we know.";
+            $errorMsg = "服务器当前出了点小差。请稍后再尝试。";
+            $errorFile = "此错误我们将会记录起来。";
         }
         header("HTTP/1.1 500 Internal Server Error");
-        $title = "500 Internal Server Error";
+        $title = "500 内部服务器错误";
 
         CoreFunc::isAjax(['msg' => $errorMsg], 500);
         require self::promptPage();

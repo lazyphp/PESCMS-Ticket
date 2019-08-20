@@ -342,11 +342,11 @@ class Controller {
      */
     protected static function checkToken() {
         if (empty($_REQUEST['token'])) {
-            self::error('Lose Token');
+            self::error('令牌不存在，无法校验数据一致性。');
         }
 
         if ($_REQUEST['token'] != self::session()->get('token')) {
-            self::error('Token Incorrect');
+            self::error('提交数据超时，请再次提交。');
         }
 
         self::session()->delete('token');

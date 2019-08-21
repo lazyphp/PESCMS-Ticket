@@ -104,18 +104,23 @@ class Extra extends \Core\Model\Model {
         ]) as $value) {
             switch ($value['send_type']) {
                 case '1':
-                    (new \Expand\Notice\Mail())->send($value);
+                    $result = (new \Expand\Notice\Mail())->send($value);
                     break;
                 case '2':
-                    (new \Expand\sms())->send($value);
+                    $result = (new \Expand\sms())->send($value);
                     break;
                 case '3':
-                    (new \Expand\weixin())->sendTemplate($value);
+                    $result = (new \Expand\weixin())->sendTemplate($value);
                     break;
                 case '4':
-                    (new \Expand\weixinWork())->send_notice($value);
+                    $result = (new \Expand\weixinWork())->send_notice($value);
                     break;
             }
+
+            if(DEBUG == true){
+                echo "<p>{$value['send_type']}T: {$result}</p>";
+            }
+
         }
     }
 

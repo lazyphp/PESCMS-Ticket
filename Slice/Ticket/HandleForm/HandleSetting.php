@@ -26,8 +26,8 @@ class HandleSetting extends \Core\Slice\Slice {
         }
 
         if((empty($authorize['authorize_type']) || $authorize['authorize_type'] == 5) && METHOD == 'PUT' ){
-            $_POST['siteKeywords'] = base64_decode('UEVTQ01TIFRpY2tldOaYr+S4gOasvuS7pUdQTHYy5Y2P6K6u5Y+R5biD55qE5byA5rqQ5bel5Y2V5a6i5pyN57O757uf');
-            $_POST['siteDescription'] = base64_decode('UEVTQ01TLFBFU0NNUyBUaWNrZXQs5byA5rqQ55qE5bel5Y2V57O757ufLOW3peWNleezu+e7nyzlt6XljZXlrqLmnI3ns7vnu58s5a6i5pyN5bel5Y2V57O757ufLEdQTOW3peWNlSxHUEzlrqLmnI3ns7vnu58sR1BM5bel5Y2V5a6i5pyN57O757uf');
+            $_POST['siteKeywords'] = base64_decode('UEVTQ01TLFBFU0NNUyBUaWNrZXQs5byA5rqQ55qE5bel5Y2V57O757ufLOW3peWNleezu+e7nyzlt6XljZXlrqLmnI3ns7vnu58s5a6i5pyN5bel5Y2V57O757ufLEdQTOW3peWNlSxHUEzlrqLmnI3ns7vnu58sR1BM5bel5Y2V5a6i5pyN57O757uf');
+            $_POST['siteDescription'] = base64_decode('UEVTQ01TIFRpY2tldOaYr+S4gOasvuS7pUdQTHYy5Y2P6K6u5Y+R5biD55qE5byA5rqQ5bel5Y2V5a6i5pyN57O757uf');
         }
 
         $check = strcmp(trim($_SERVER['HTTP_HOST']), trim($authorize['authorize_domain']));
@@ -37,7 +37,7 @@ class HandleSetting extends \Core\Slice\Slice {
         }
         if(( $check !== 0 || empty($authorize['authorize_domain']) ) && METHOD == 'PUT'){
             $_POST['siteTitle'] = 'PESCMS Ticket';
-            $_POST['siteLogo'] = '/Theme/assets/i/logo.png';
+            $_POST['siteLogo'] = DOCUMENT_ROOT.'/Theme/assets/i/logo.png';
             $_POST['siteContact'] = '';
             $_POST['pescmsIntroduce'] = file_get_contents(dirname(__FILE__).'/introduce.php');
         }

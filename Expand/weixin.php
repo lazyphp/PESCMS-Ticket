@@ -14,7 +14,7 @@ class weixin {
         $weixin_api = json_decode(\Core\Func\CoreFunc::$param['system']['weixin_api'], true);
         if(empty($weixin_api['appID']) || empty($weixin_api['appsecret']) ){
             $this->error = '未配置微信接口信息';
-            return false;
+            return $this->error;
         }
         $this->appID = $weixin_api['appID'];
         $this->appsecret = $weixin_api['appsecret'];
@@ -26,14 +26,14 @@ class weixin {
             $result = (new cURL())->init("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$this->appID}&secret={$this->appsecret}");
             if(empty($result)){
                 $this->error = '获取微信access_token失败';
-                return false;
+                return $this->error;
             }
             $FileCache->creatCache('access_token', $result);
         }
         $this->access_token = json_decode($result, true)['access_token'];
         if(empty($this->access_token)){
             $this->error = '解析微信access_token失败';
-            return false;
+            return $this->error;
         }
     }
 
@@ -105,7 +105,7 @@ class weixin {
     public function sendTemplate($param){
         if(!empty($this->error)){
             \Model\Extra::errorSendResult($param['send_id'], $this->error);
-            return false;
+            return $this->error;
         }
 
 
@@ -133,7 +133,7 @@ class weixin {
             ]);
         }
 
-        return $result;
+        return json_encode($result);
     }
 
     /**

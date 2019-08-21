@@ -1,8 +1,8 @@
 <div class="am-u-sm-12 am-u-lg-11 am-u-sm-centered">
     <div class="am-g">
         <div class="am-u-sm-12 am-u-lg-3">
-            <h4>关于PESCMS</h4>
-            <p>PESCMS旗下有TEAM团队任务管理系统，Ticket客服工单系统，DOC文档管理系统以及基于浏览器开发的基金定投助手。</p>
+            <h4>关于我们</h4>
+            <p>当前正在使用PESCMS Ticket客服工单系统。页脚内容为预设，请按照业务需求设置页脚内容。</p>
         </div>
         <div class="am-u-sm-12 am-u-lg-3">
             <h4>产品列表</h4>

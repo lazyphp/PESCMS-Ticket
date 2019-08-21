@@ -14,7 +14,7 @@ class weixinWork {
         $weixinWork_api = json_decode(\Core\Func\CoreFunc::$param['system']['weixinWork_api'], true);
         if(empty($weixinWork_api['corpid']) || empty($weixinWork_api['AgentId'])){
             $this->error = '未配置企业微信接口信息';
-            return false;
+            return $this->error;
         }
         //企业ID
         $this->corpid = $weixinWork_api['corpid'];
@@ -31,14 +31,14 @@ class weixinWork {
 
             if(empty($result)){
                 $this->error = '获取企业微信access_token失败';
-                return false;
+                return $this->error;
             }
             $FileCache->creatCache('weixinWork_access_token', $result);
         }
         $this->access_token = json_decode($result, true)['access_token'];
         if(empty($this->access_token)){
             $this->error = '解析企业微信access_token失败';
-            return false;
+            return $this->error;
         }
     }
 
@@ -49,7 +49,7 @@ class weixinWork {
     public function send_notice($param) {
         if(!empty($this->error)){
             \Model\Extra::errorSendResult($param['send_id'], $this->error);
-            return false;
+            return $this->error;
         }
 
         $result = json_decode($this->notice($param['send_account'], $param['send_content']), true);
@@ -67,6 +67,9 @@ class weixinWork {
                 'send_result' => $result['errmsg']
             ]);
         }
+
+        return json_encode($result);
+
     }
 
     /**

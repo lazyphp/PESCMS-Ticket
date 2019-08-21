@@ -28,7 +28,7 @@ class Mail {
 
         if(empty($mail['address']) || empty($mail['passwd']) || empty($mail['port']) ){
             $this->error = '未配置邮箱接口信息';
-            return false;
+            return $this->error;
         }
 
         require_once dirname(__FILE__) . '/PHPMailerAutoload.php';
@@ -60,11 +60,11 @@ class Mail {
     public function send(array $email) {
         if(!empty($this->error)){
             \Model\Extra::errorSendResult($email['send_id'], $this->error);
-            return false;
+            return $this->error;
         }
 
         if(\Model\Extra::checkInputValueType($email['send_account'], 1) === false){
-            return false;
+            return "'{$email['send_account']}'非邮箱地址";
         }
 
         $this->PHPMailer->addAddress($email['send_account']);
@@ -81,9 +81,11 @@ class Mail {
                 'send_id' => $email['send_id']
             ]);
         }else{
-            \Model\Extra::errorSendResult($email['send_id'], '邮件发送失败');
+            $msg = '邮件发送失败';
+            \Model\Extra::errorSendResult($email['send_id'], $msg);
         }
         $this->PHPMailer->ClearAddresses();
+        return $msg;
     }
 
 	/**

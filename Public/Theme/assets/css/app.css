@@ -300,6 +300,15 @@ a.am-btn-white:visited{
     border-color: #e6e6e6;
 }
 
+/*
+===================
+警告框超链接颜色修复
+===================
+*/
+.am-alert-secondary a{
+    color: #0e90d2;
+}
+
 
 /*
 ===================

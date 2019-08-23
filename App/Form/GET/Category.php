@@ -106,7 +106,8 @@ class Category extends \Core\Controller\Controller{
                 'field_explain' => $value['ticket_form_explain'],
                 'field_status' => $value['ticket_form_status'],
                 'field_bind' => $value['ticket_form_bind'],
-                'field_bind_value' => $value['ticket_form_bind_value']
+                'field_bind_value' => $value['ticket_form_bind_value'],
+                'field_postscript' => $value['ticket_form_postscript'],
             ];
         }
 

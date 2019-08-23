@@ -51,9 +51,10 @@
                 <div class="am-form-group">
                     <label class="am-block"><?= $value['field_display_name'] ?><?= $value['field_required'] == '1' ? '<i class="am-text-danger">*</i>' : '' ?></label>
                     <?= (new \Expand\Form\Form())->formList($value); ?>
-                    <?php if (!empty($value['field_explain'])): ?>
-                        <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
-                            <i class="am-icon-lightbulb-o"></i> <?= $value['field_explain'] ?>
+                    <?php if (!empty($value['field_explain']) || !empty($value['field_postscript']) ): ?>
+                        <div class="am-alert am-alert-secondary am-text-xs" data-am-alert>
+                            <?= !empty($value['field_explain']) ? '<i class="am-icon-lightbulb-o"></i> '.htmlspecialchars_decode($value['field_explain']) : '' ?>
+                            <?= !empty($value['field_postscript']) ? htmlspecialchars_decode($value['field_postscript']) : '' ?>
                         </div>
                     <?php endif; ?>
                 </div>

@@ -7,6 +7,16 @@
     <input type="hidden" name="PHPSESSIONID" value="">
     <?= $label->token() ?>
 
+    <?php if(!empty($ticketInfo['postscript'])): ?>
+    <div class="am-g am-g-collapse">
+        <div class="am-u-sm-12 am-u-sm-centered">
+            <div class="am-alert am-alert-postscript">
+                <?= htmlspecialchars_decode($ticketInfo['postscript']) ?>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+
     <div class="am-g am-g-collapse">
         <div class="am-u-sm-12 am-u-sm-centered">
             <div class="am-form-group">

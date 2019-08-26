@@ -305,8 +305,14 @@ a.am-btn-white:visited{
 警告框超链接颜色修复
 ===================
 */
-.am-alert-secondary a{
+.am-alert-secondary a, .am-alert-postscript a{
     color: #0e90d2;
+    border-bottom: 1px solid #0e90d2;
+}
+.am-alert-postscript{
+    color: #555;
+    background-color: #FBFBEA;
+    border: 1px dashed #bbbbbb;
 }
 
 

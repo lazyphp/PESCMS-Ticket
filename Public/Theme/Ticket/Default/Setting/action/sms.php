@@ -5,7 +5,7 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">APIID</label>
-                    <input name="sms[APIID]" placeholder="" type="text" value="<?= $sms['APIID']; ?>">
+                    <input name="sms[APIID]" placeholder="请填写短信平台的APIID" type="text" value="<?= $sms['APIID']; ?>">
                 </div>
             </div>
         </div>
@@ -14,7 +14,7 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">APIKEY</label>
-                    <input name="sms[APIKEY]" placeholder="" type="password" value="<?= $sms['APIKEY']; ?>">
+                    <input name="sms[APIKEY]" placeholder="请填写短信平台的APIKEY" type="password" value="<?= $sms['APIKEY']; ?>">
                 </div>
             </div>
         </div>

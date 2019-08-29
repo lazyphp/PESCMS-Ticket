@@ -78,7 +78,7 @@ $(function () {
         $.extend(obj, param)
 
         var progress = $.AMUI.progress;
-        var d = dialog({title: '系统提示', zIndex: '9999'});
+        var d = dialog({title: '系统提示', zIndex: '9999', fixed:true});
         if(obj.dialog == true){
             d.showModal()
         }

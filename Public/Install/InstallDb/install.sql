@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2019-08-26 08:31:24
+-- Generation Time: 2019-08-29 08:53:28
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `pes_field` (
   PRIMARY KEY (`field_id`),
   UNIQUE KEY `modle_id` (`field_model_id`,`field_name`),
   KEY `field_name` (`field_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=243 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=244 ;
 
 --
 -- 转存表中的数据 `pes_field`
@@ -179,7 +179,8 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (239, 20, 'account', '登陆账号', 'text', '', '', '', 1, 1, 1, 1, 1, 0),
 (240, 15, 'contact', '联系方式', 'checkbox', '{&quot;\\u90ae\\u4ef6&quot;:&quot;1&quot;,&quot;\\u624b\\u673a\\u53f7\\u7801&quot;:&quot;2&quot;,&quot;\\u5fae\\u4fe1&quot;:&quot;3&quot;}', '', '', 1, 12, 1, 1, 1, 0),
 (241, 15, 'contact_default', '默认联系方式', 'radio', '{&quot;\\u90ae\\u4ef6&quot;:&quot;1&quot;,&quot;\\u624b\\u673a\\u53f7\\u7801&quot;:&quot;2&quot;,&quot;\\u5fae\\u4fe1&quot;:&quot;3&quot;}', '', '', 1, 13, 0, 1, 1, 0),
-(242, 15, 'postscript', '页内指引', 'editor', '', '填写此项，在工单提交内页顶部将显示这部分填写的内容。', '', 0, 11, 0, 1, 1, 0);
+(242, 15, 'postscript', '页内指引', 'editor', '', '填写此项，在工单提交内页顶部将显示这部分填写的内容。', '', 0, 11, 0, 1, 1, 0),
+(243, 15, 'default_send', '默认发送通知', 'radio', '{&quot;\\u5426&quot;:&quot;0&quot;,&quot;\\u662f&quot;:&quot;1&quot;}', '选择是，则当前工单模型的工单处理过程，默认发送通知复选框会勾上。', '', 0, 14, 0, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -484,19 +485,13 @@ CREATE TABLE IF NOT EXISTS `pes_node_group` (
   `user_group_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户组ID',
   `node_id` int(11) NOT NULL DEFAULT '0' COMMENT '节点ID',
   PRIMARY KEY (`node_group_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='用户组权限节点' AUTO_INCREMENT=73 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='用户组权限节点' AUTO_INCREMENT=78 ;
 
 --
 -- 转存表中的数据 `pes_node_group`
 --
 
 INSERT INTO `pes_node_group` (`node_group_id`, `user_group_id`, `node_id`) VALUES
-(1, 2, 1),
-(2, 2, 2),
-(3, 2, 3),
-(4, 2, 4),
-(5, 2, 5),
-(6, 2, 6),
 (7, 1, 1),
 (8, 1, 2),
 (9, 1, 3),
@@ -562,7 +557,12 @@ INSERT INTO `pes_node_group` (`node_group_id`, `user_group_id`, `node_id`) VALUE
 (69, 1, 70),
 (70, 3, 2),
 (71, 3, 91),
-(72, 3, 92);
+(72, 3, 92),
+(73, 2, 1),
+(74, 2, 2),
+(75, 2, 3),
+(76, 2, 4),
+(77, 2, 5);
 
 -- --------------------------------------------------------
 
@@ -773,6 +773,7 @@ CREATE TABLE IF NOT EXISTS `pes_ticket_model` (
   `ticket_model_contact` varchar(64) NOT NULL DEFAULT '',
   `ticket_model_contact_default` int(11) NOT NULL DEFAULT '0',
   `ticket_model_postscript` text NOT NULL COMMENT '工单页内指引',
+  `ticket_model_default_send` tinyint(1) NOT NULL DEFAULT '0' COMMENT '默认发送通知',
   PRIMARY KEY (`ticket_model_id`),
   UNIQUE KEY `ticket_model_number` (`ticket_model_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='工单模型' AUTO_INCREMENT=1 ;

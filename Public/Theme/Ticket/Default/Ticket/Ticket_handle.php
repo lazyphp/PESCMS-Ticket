@@ -38,6 +38,8 @@
                                             是
                                         </label>
                                     </div>
+
+                                    <?php if($label->checkAuth('TicketPOSTTicketclose') === true): ?>
                                     <div class="am-form-group">
                                         <label class="am-form-label am-margin-bottom-0">工单状态 : </label>
                                         <label class="form-radio-label am-radio-inline">
@@ -45,6 +47,8 @@
                                             标记完成
                                         </label>
                                     </div>
+                                    <?php endif; ?>
+
                                     <div class="am-form-group am-hide assign-user">
                                         <label for="">转派给</label>
                                         <select name="uid">
@@ -81,7 +85,7 @@
                                 <div class="am-form-group">
                                     <label class="am-form-label am-margin-bottom-0">是否通知 : </label>
                                     <label class="form-checkbox-label am-checkbox-inline">
-                                        <input type="checkbox" name="notice" value="1">
+                                        <input type="checkbox" name="notice" value="1" <?= $ticket_model_default_send == 1 ? 'checked="checked"' : '' ?>>
                                         告知客户
                                     </label>
                                     <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>

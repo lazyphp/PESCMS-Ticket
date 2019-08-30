@@ -1,5 +1,5 @@
 <div class="am-panel am-panel-default">
-    <div class="am-panel-hd">微信设置</div>
+    <div class="am-panel-hd">微信公众号设置</div>
     <div class="am-panel-bd">
         <div class="am-g am-g-collapse">
             <div class="am-u-sm-12 am-u-sm-centered">
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
-            <i class="am-icon-lightbulb-o"></i> 如何设置微信登录：<a href="https://www.pescms.com/d/v//22/124.html" target="_blank" style="color:#0e90d2 "><b>查看教程</b></a>
+            <i class="am-icon-lightbulb-o"></i> 如何设置微信公众号登录：<a href="https://www.pescms.com/d/v/1.2.7/22/142.html" target="_blank" style="color:#0e90d2 "><b>查看教程</b></a>
         </div>
 
         <div class="am-g am-g-collapse">
@@ -53,7 +53,7 @@
                     <input name="weixinWork_api[corpid]" placeholder="请填写企业微信的企业ID" type="text" value="<?= $weixinWork_api['corpid']; ?>">
                 </div>
                 <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
-                    <i class="am-icon-lightbulb-o"></i> 登录企业微信WEB管理端，在 我的企业 - 企业信息，最下方可以看到企业ID。将此ID信息填入。<a href="https://www.pescms.com/d/v//22/125.html" target="_blank" style="color:#0e90d2 "><b>查看教程</b></a>
+                    <i class="am-icon-lightbulb-o"></i> 登录企业微信WEB管理端，在 我的企业 - 企业信息，最下方可以看到企业ID。将此ID信息填入。<a href="https://www.pescms.com/d/v/1.2.7/22/143.html" target="_blank" style="color:#0e90d2 "><b>查看教程</b></a>
                 </div>
             </div>
         </div>

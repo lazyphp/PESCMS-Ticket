@@ -78,7 +78,7 @@
                               name="pescmsIntroduce" <?= $license == 1 ? '' : 'readonly="readonly" data-am-popover="{content: \'需求购买使用授权方解除限制\', trigger: \'hover\', theme:\'sm\'}"' ?>><?= $pescmsIntroduce['value']; ?></textarea>
                     <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
                         <i class="am-icon-lightbulb-o"></i> 网站联系方式和页脚内容的设置，可以阅读这里查看教程:《<a
-                                href="https://www.pescms.com/d/v//22/131.html" target="_blank" style="color:#0e90d2 ">自定义网站设置</a>》
+                                href="https://www.pescms.com/d/v/1.2.7/22/149.html" target="_blank" style="color:#0e90d2 ">自定义网站设置</a>》
                     </div>
                 </div>
             </div>

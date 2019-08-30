@@ -28,8 +28,31 @@
     </div>
 <?php endif; ?>
 
+<div class="am-input-group am-margin-bottom signBAT" style="display: none">
+    <span class="am-margin-right-xs">社交帐号登录</span>
+    <span>
+        <a href="<?= $label->url('Login-weixinAgree') ?>" class="login-weixin am-text-success"><i class="am-icon-weixin"></i> 微信</a>
+<!--        <a href="" class=""><i class="am-icon-qq"></i> QQ</a>-->
+    </span>
+</div>
+
 <input type="hidden" name="back_url" value="<?= $_GET['back_url'] ?>">
 
 <button type="submit" class="am-btn am-btn-secondary am-radius am-btn-sm am-margin-top-sm">登录</button>
 
 <a href="<?= $label->url('Login-findpw') ?>" class="am-btn am-btn-white am-radius am-btn-sm am-margin-top-sm">忘记密码</a>
+
+<div class="ddd"></div>
+
+<script>
+    /**
+     * @todo 目前只整合了微信公众号登录，以后在添加其他社交平台登录入口
+     */
+    $(function(){
+        var ua = navigator.userAgent.toLowerCase();
+        //判断是否微信浏览器访问
+        if( ua.indexOf("wechat") != -1 || ua.indexOf("micromessenger") != -1 ){
+            $('.signBAT').show();
+        }
+    })
+</script>

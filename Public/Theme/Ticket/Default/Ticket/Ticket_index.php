@@ -15,8 +15,7 @@
 
                         <div class="am-margin-bottom-xs">
 
-                            <select name="time_type" class="am-form-field" placeholder="时间筛选"
-                                    data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}">
+                            <select name="time_type" class="am-form-field am-input-sm am-radius" data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}">
                                 <option value="1">创建时间</option>
                                 <option value="2" <?= $label->xss($_GET['time_type']) == 2 ? 'selected="selected"' : '' ?>>完成时间</option>
                             </select>
@@ -33,8 +32,7 @@
                         </div>
 
                         <div>
-                            <select name="model_id" class="am-form-field" placeholder="所有类型"
-                                    data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}">
+                            <select name="model_id" class="am-form-field am-input-sm am-radius" data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}">
                                 <option value="-1">所有类型</option>
                                 <?php foreach ($ticketModel as $value): ?>
                                     <option value="<?= $value['ticket_model_id']; ?>" <?= $value['ticket_model_id'] == $_GET['model_id'] ? 'selected="selected"' : '' ?> >
@@ -44,23 +42,20 @@
                             </select>
 
 
-                            <select name="status" class="am-form-field" placeholder="所有进度"
-                                    data-am-selected="{btnSize: 'sm', dropUp: 0}">
+                            <select name="status" class="am-form-field am-input-sm am-radius" data-am-selected="{btnSize: 'sm', dropUp: 0}">
                                 <option value="-1">所有进度</option>
                                 <?php foreach ($ticketStatus as $key => $value): ?>
                                     <option value="<?= $key; ?>" <?= (string)$key === $_GET['status'] ? 'selected="selected"' : '' ?>><?= $value['name']; ?></option>
                                 <?php endforeach; ?>
                             </select>
 
-                            <select name="read" class="am-form-field" placeholder=""
-                                    data-am-selected="{btnSize: 'sm', dropUp: 0}">
+                            <select name="read" class="am-form-field am-input-sm am-radius" data-am-selected="{btnSize: 'sm', dropUp: 0}">
                                 <option value="-1">查看状态</option>
                                 <option value="0" <?= '0' == $_GET['read'] ? 'selected="selected"' : '' ?>>未读</option>
                                 <option value="1" <?= '1' == $_GET['read'] ? 'selected="selected"' : '' ?>>已读</option>
                             </select>
 
-                            <select name="close" class="am-form-field" placeholder=""
-                                    data-am-selected="{btnSize: 'sm', dropUp: 0}">
+                            <select name="close" class="am-form-field am-input-sm am-radius" data-am-selected="{btnSize: 'sm', dropUp: 0}">
                                 <option value="-1">关闭状态</option>
                                 <option value="0" <?= '0' == $_GET['close'] ? 'selected="selected"' : '' ?>>正常</option>
                                 <option value="1" <?= '1' == $_GET['close'] ? 'selected="selected"' : '' ?>>已关闭</option>

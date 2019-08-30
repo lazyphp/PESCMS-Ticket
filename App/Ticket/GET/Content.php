@@ -71,6 +71,10 @@ class Content extends \Core\Controller\Controller {
         $this->assign('title', $this->model['model_title']);
         $this->assign('field', $this->field);
 
+        //加载列表自定义的工具栏
+        $this->assign('tool_column', is_file("{$this->modelThemePrefixPath}_index_tool.php") ? "{$this->modelThemePrefixPath}_index_tool.php" : THEME_PATH . "/Content/Content_index_tool.php");
+
+        //加载列表操作按钮
         $this->assign('operate', is_file("{$this->modelThemePrefixPath}_index_operate.php") ? '/' . MODULE . '/' . MODULE . "_index_operate.php" : '');
 
 

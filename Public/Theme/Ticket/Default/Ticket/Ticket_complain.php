@@ -15,8 +15,7 @@
 
                         <div class="am-margin-bottom-xs">
 
-                            <select name="time_type" class="am-form-field" placeholder="时间筛选"
-                                    data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}">
+                            <select name="time_type" class="am-form-field am-input-sm am-radius" data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}">
                                 <option value="1">创建时间</option>
                                 <option value="2" <?= $label->xss($_GET['time_type']) == 2 ? 'selected="selected"' : '' ?>>完成时间</option>
                             </select>
@@ -33,8 +32,7 @@
                         </div>
 
                         <div>
-                            <select name="model_id" class="am-form-field" placeholder="所有类型"
-                                    data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}">
+                            <select name="model_id" class="am-form-field am-input-sm am-radius" data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}">
                                 <option value="-1">所有类型</option>
                                 <?php foreach ($ticketModel as $value): ?>
                                     <option value="<?= $value['ticket_model_id']; ?>" <?= $value['ticket_model_id'] == $_GET['model_id'] ? 'selected="selected"' : '' ?> >
@@ -44,24 +42,21 @@
                             </select>
 
 
-                            <select name="fix" class="am-form-field" placeholder=""
-                                    data-am-selected="{btnSize: 'sm', dropUp: 0}">
+                            <select name="fix" class="am-form-field am-input-sm am-radius" data-am-selected="{btnSize: 'sm', dropUp: 0}">
                                 <option value="-1">问题是否解决</option>
                                 <option value="0" <?= '0' == $_GET['fix'] ? 'selected="selected"' : '' ?>>否</option>
                                 <option value="1" <?= '1' == $_GET['fix'] ? 'selected="selected"' : '' ?>>是</option>
                             </select>
 
                             <?php if(!empty($member[$_GET['member']])): ?>
-                                <select name="member" class="am-form-field" placeholder=""
-                                        data-am-selected="{btnSize: 'sm', dropUp: 0}">
+                                <select name="member" class="am-form-field am-input-sm am-radius" data-am-selected="{btnSize: 'sm', dropUp: 0}">
                                     <option value="-1" >不筛选用户</option>
                                     <option value="<?= $_GET['member'] ?>" selected="selected" ><?= $member[$_GET['member']]['member_name'] ?></option>
                                 </select>
                             <?php endif; ?>
 
                             <div class="am-form-group">
-                                <input type="text" name="keyword" value="<?= urldecode($_GET['keyword']) ?>"
-                                       class="am-input-sm pes_input_radius fix-input-width am-radius">
+                                <input type="text" name="keyword" value="<?= $label->xss($_GET['keyword']) ?>" class="am-input-sm pes_input_radius fix-input-width am-radius">
                             </div>
 
                             <button type="submit" class="am-btn am-btn-default am-btn-sm am-radius">搜索</button>

@@ -7,7 +7,7 @@ namespace App\Ticket\GET;
  */
 class Content extends \Core\Controller\Controller {
 
-    protected $model, $table, $fieldPrefix, $field = [], $modelThemePrefixPath, $condition = '1 = 1', $param = [], $page;
+    protected $model, $table, $fieldPrefix, $field = [], $modelThemePrefixPath, $condition = '1 = 1', $param = [], $page, $sortBy;
 
     public function __init() {
         parent::__init();
@@ -57,6 +57,11 @@ class Content extends \Core\Controller\Controller {
 
         if (!empty($conditionArray)) {
             $this->condition .= ' AND ('.implode(' OR ', $conditionArray).')';
+        }
+
+        //若定义了自定义排序，则覆写默认的排序方式
+        if(!empty($this->sortBy)){
+            $orderBy = $this->sortBy;
         }
 
 

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2019-08-29 08:53:28
+-- Generation Time: 2019-09-02 02:38:50
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `pes_field` (
   PRIMARY KEY (`field_id`),
   UNIQUE KEY `modle_id` (`field_model_id`,`field_name`),
   KEY `field_name` (`field_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=244 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=245 ;
 
 --
 -- 转存表中的数据 `pes_field`
@@ -111,14 +111,14 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (155, 16, 'model_id', '工单模型ID', 'text', '', '', '', 1, 2, 0, 0, 1, 0),
 (156, 16, 'name', '工单表单字段名称', 'text', '', '建议以英语字母下划线填写！否则容易引起工单内容提交丢失的现象。', '', 1, 2, 0, 1, 1, 0),
 (157, 16, 'description', '工单字段显示名称', 'text', '', '告诉用户该表单的作用', '', 1, 3, 1, 1, 1, 0),
-(158, 16, 'explain', '工单表单说明', 'text', '', '非必填，告诉用户此工单表单的作用', '', 0, 4, 0, 1, 1, 0),
-(159, 16, 'msg', '工单提示信息', 'text', '', '非必填，提交失败返回的显示信息', '', 0, 5, 0, 1, 1, 0),
-(160, 16, 'type', '工单表单类型', 'select', '', '', '', 1, 6, 1, 1, 1, 0),
-(161, 16, 'option', '工单表单的选项值', 'textarea', '', '非必填，此处若没有特殊说明，必须 名称|值 填写、且一行一个选项值，否则将导致数据异常! \r\n注意:目前选项适用于单选，复选，下拉菜单。其余功能填写也不会产生任何实际效果。', '', 0, 7, 0, 1, 1, 0),
-(162, 16, 'verify', '工单表单验证类型', 'select', '', '', '', 0, 8, 1, 1, 1, 0),
-(163, 16, 'required', '工单表单是否必填', 'radio', '{"\\u975e\\u5fc5\\u586b":"0","\\u5fc5\\u586b":"1"}', '', '', 1, 9, 1, 1, 1, 0),
-(164, 16, 'status', '工单表单启用状态', 'radio', '{"\\u7981\\u7528":"0","\\u542f\\u7528":"1"}', '', '', 1, 10, 1, 1, 1, 0),
-(165, 16, 'listsort', '工单表单排序值', 'text', '', '升序', '', 0, 11, 0, 1, 1, 0),
+(158, 16, 'explain', '工单表单说明', 'text', '', '非必填，告诉用户此工单表单的作用', '', 0, 10, 0, 1, 1, 0),
+(159, 16, 'msg', '工单提示信息', 'text', '', '非必填，提交失败返回的显示信息', '', 0, 40, 0, 1, 1, 0),
+(160, 16, 'type', '工单表单类型', 'select', '', '', '', 1, 50, 1, 1, 1, 0),
+(161, 16, 'option', '工单表单的选项值', 'textarea', '', '非必填，此处若没有特殊说明，必须 名称|值 填写、且一行一个选项值，否则将导致数据异常! \r\n注意:目前选项适用于单选，复选，下拉菜单。其余功能填写也不会产生任何实际效果。', '', 0, 60, 0, 1, 1, 0),
+(162, 16, 'verify', '工单表单验证类型', 'select', '', '', '', 0, 70, 1, 1, 1, 0),
+(163, 16, 'required', '工单表单是否必填', 'radio', '{"\\u975e\\u5fc5\\u586b":"0","\\u5fc5\\u586b":"1"}', '', '', 1, 80, 1, 1, 1, 0),
+(164, 16, 'status', '工单表单启用状态', 'radio', '{"\\u7981\\u7528":"0","\\u542f\\u7528":"1"}', '', '', 1, 98, 1, 1, 1, 0),
+(165, 16, 'listsort', '工单表单排序值', 'text', '', '升序', '', 0, 99, 0, 1, 1, 0),
 (166, 16, 'bind', '联动显示', 'select', '', '若需联动显示，请设置绑定的表单选项，当用户选择该选项时会触发本表单的显示。\r\n注：仅限单选、单选下拉框。', '', 0, 1, 0, 1, 1, 0),
 (167, 16, 'bind_value', '联动触发值', 'checkbox', '', '此处填写用户选择了绑定的表单的触发值。', '', 0, 1, 0, 1, 1, 0),
 (168, 15, 'login', '登录验证', 'radio', '{&quot;\\u4e0d\\u9a8c\\u8bc1&quot;:&quot;0&quot;,&quot;\\u9a8c\\u8bc1&quot;:&quot;1&quot;}', '', '1', 1, 4, 1, 1, 1, 0),
@@ -180,7 +180,8 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (240, 15, 'contact', '联系方式', 'checkbox', '{&quot;\\u90ae\\u4ef6&quot;:&quot;1&quot;,&quot;\\u624b\\u673a\\u53f7\\u7801&quot;:&quot;2&quot;,&quot;\\u5fae\\u4fe1&quot;:&quot;3&quot;}', '', '', 1, 12, 1, 1, 1, 0),
 (241, 15, 'contact_default', '默认联系方式', 'radio', '{&quot;\\u90ae\\u4ef6&quot;:&quot;1&quot;,&quot;\\u624b\\u673a\\u53f7\\u7801&quot;:&quot;2&quot;,&quot;\\u5fae\\u4fe1&quot;:&quot;3&quot;}', '', '', 1, 13, 0, 1, 1, 0),
 (242, 15, 'postscript', '页内指引', 'editor', '', '填写此项，在工单提交内页顶部将显示这部分填写的内容。', '', 0, 11, 0, 1, 1, 0),
-(243, 15, 'default_send', '默认发送通知', 'radio', '{&quot;\\u5426&quot;:&quot;0&quot;,&quot;\\u662f&quot;:&quot;1&quot;}', '选择是，则当前工单模型的工单处理过程，默认发送通知复选框会勾上。', '', 0, 14, 0, 1, 1, 0);
+(243, 15, 'default_send', '默认发送通知', 'radio', '{&quot;\\u5426&quot;:&quot;0&quot;,&quot;\\u662f&quot;:&quot;1&quot;}', '选择是，则当前工单模型的工单处理过程，默认发送通知复选框会勾上。', '', 0, 14, 0, 1, 1, 0),
+(244, 16, 'postscript', '工单表单详细说明', 'editor', '', '若需要对当前表单字段有更加完整的说明，请在此处填写。', '', 0, 11, 0, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -747,6 +748,7 @@ CREATE TABLE IF NOT EXISTS `pes_ticket_form` (
   `ticket_form_listsort` int(11) NOT NULL DEFAULT '0' COMMENT '动态表单的排序值（升值））',
   `ticket_form_bind` int(11) NOT NULL DEFAULT '0' COMMENT '绑定的联动表单',
   `ticket_form_bind_value` varchar(255) NOT NULL DEFAULT '' COMMENT '联动触发值',
+  `ticket_form_postscript` text NOT NULL COMMENT '工单表单详细说明',
   PRIMARY KEY (`ticket_form_id`),
   KEY `ticket_form_model_id` (`ticket_form_model_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='工单动态表单' AUTO_INCREMENT=1 ;

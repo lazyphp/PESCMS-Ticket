@@ -154,7 +154,7 @@ class Index extends \Core\Controller\Controller {
             $list[$key]['url'] = $value['url'];
             $list[$key]['list'] = \Model\Content::listContent([
                 'table' => 'ticket AS t',
-                'field' => 't.*, tm.ticket_model_name, tm.ticket_model_cid',
+                'field' => 't.*, tm.ticket_model_name, tm.ticket_model_cid, tm.ticket_model_time_out',
                 'join' => "{$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id",
                 'condition' => $value['condition'],
                 'param' => $value['param'],

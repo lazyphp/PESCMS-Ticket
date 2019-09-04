@@ -27,6 +27,11 @@
                         if($contactID == 3 && empty($member['member_weixin']) ){
                             continue;
                         }
+
+                        if(!in_array($contactID, explode(',', $ticketInfo['contact']))){
+                            continue;
+                        }
+
                     ?>
                     <label class="form-radio-label am-radio-inline">
                         <input class="form-radio" type="radio" name="contact" value="<?= $contactID ?>" required="required" <?= $ticketInfo['contact_default'] == $contactID ? 'checked="checked"' : '' ?> data="<?= !empty($member) ? $member[$contactValue['key']] : '' ?>" />

@@ -150,6 +150,8 @@ class Ticket extends \Core\Model\Model {
         if (empty($result)) {
             return $form;
         }
+        
+
         //组装一下，让他ticket_form_id成为键值
         foreach ($result as $value) {
             $form[$value['ticket_form_id']] = $value;
@@ -197,15 +199,26 @@ class Ticket extends \Core\Model\Model {
                     break;
                 case 'file':
                     //@todo 待优化,下载应该基于header方法
-                    $splitImg = explode(',', $value['ticket_form_content']);
-                    $imgStr = '<ul class="am-avg-sm-4 am-thumbnails">';
-                    if(!empty($value['ticket_form_content'])){
-                        foreach ($splitImg as $key => $item){
-                            $imgStr .= '<li><a href="'.$item.'">下载附件'.($key +1) .'</a></li>';
+
+                    $downloadFile = (new \Expand\UBB())->url($value['ticket_form_content']);
+                    if($downloadFile == false){
+                        $splitImg = explode(',', $value['ticket_form_content']);
+                        $imgStr = '<ul class="am-avg-sm am-thumbnails">';
+                        if(!empty($value['ticket_form_content'])){
+                            foreach ($splitImg as $key => $item){
+                                $imgStr .= '<li><a href="'.$item.'">下载附件'.($key +1) .'</a></li>';
+                            }
                         }
+                        $imgStr .= '</ul>';
+                        $form[$value['ticket_form_id']]['ticket_value'] = $imgStr;
+                    }else{
+                        $imgStr = '<ul class="am-avg-sm am-thumbnails">';
+                        foreach ($downloadFile as $item){
+                            $imgStr .= "<li>{$item}</li>";
+                        }
+                        $imgStr .= '</ul>';
+                        $form[$value['ticket_form_id']]['ticket_value'] = $imgStr;
                     }
-                    $imgStr .= '</ul>';
-                    $form[$value['ticket_form_id']]['ticket_value'] = $imgStr;
                     break;
                 case 'encrypt':
                     $form[$value['ticket_form_id']]['ticket_value'] = !empty(self::session()->get('ticket')['user_id']) ? (new \Expand\OpenSSL(\Core\Func\CoreFunc::loadConfig('USER_KEY', true)))->decrypt($value['ticket_form_content']) : '<i class="am-text-warning">您提交了加密信息,此部分只有客服可知.</i>' ;
@@ -218,7 +231,6 @@ class Ticket extends \Core\Model\Model {
                 $form[$value['ticket_form_id']]['ticket_form_bind_value'] = explode(',', $value['ticket_form_bind_value']);
             }
         }
-
         return $form;
     }
 

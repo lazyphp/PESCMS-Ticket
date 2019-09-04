@@ -566,7 +566,6 @@
 
     /* 在线附件 */
     function OnlineFile(target) {
-        return false;
         this.container = utils.isString(target) ? document.getElementById(target) : target;
         this.init();
     }
@@ -687,7 +686,7 @@
                     } else {
                         var ic = document.createElement('i'),
                             textSpan = document.createElement('span');
-                        textSpan.innerHTML = list[i].url.substr(list[i].url.lastIndexOf('/') + 1);
+                        textSpan.innerHTML = list[i].name;
                         preview = document.createElement('div');
                         preview.appendChild(ic);
                         preview.appendChild(textSpan);
@@ -698,8 +697,8 @@
                     }
                     domUtils.addClass(icon, 'icon');
                     item.setAttribute('data-url', urlPrefix + list[i].url);
-                    if (list[i].original) {
-                        item.setAttribute('data-title', list[i].original);
+                    if (list[i].name) {
+                        item.setAttribute('data-title', list[i].name);
                     }
 
                     item.appendChild(preview);
@@ -737,6 +736,7 @@
         },
         getInsertList: function () {
             var i, lis = this.list.children, list = [];
+
             for (i = 0; i < lis.length; i++) {
                 if (domUtils.hasClass(lis[i], 'selected')) {
                     var url = lis[i].getAttribute('data-url');

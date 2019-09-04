@@ -56,25 +56,34 @@
         <h3 class="am-margin-0">沟通记录</h3>
     </div>
     <ul class="am-list am-list-static am-text-sm am-list-hover">
-        <li class="am-text-gray am-text-gray-background">
+        <li class="am-text-gray-background">
             <div class="am-g">
-                <div class="am-u-sm-1">
+                <div class="am-u-sm-2 am-u-lg-1">
                     <img src="<?= DOCUMENT_ROOT . '/Theme/assets/i/custom.ico'; ?>" alt=""
                          class="am-comment-avatar" width="48" height="48">
                 </div>
-                <div class="am-u-sm-11">
+                <div class="am-u-sm-10 am-u-lg-11">
                     <div class="am-block">
                         <?php foreach ($form as $key => $value): ?>
                             <?php if ($value['ticket_form_bind'] == '0'): ?>
-                                <p><span class="pt-text-explode"><?= $value['ticket_form_description']; ?>: </span><?= $value['ticket_value']; ?></p>
+
+                                <div class="pt-text-border">
+                                    <div class="pt-text-explode"><?= $value['ticket_form_description']; ?>:</div>
+                                    <div><?= $value['ticket_value']; ?></div>
+                                </div>
+
                             <?php else: ?>
                                 <?php if (in_array($form[$value['ticket_form_bind']]['ticket_form_content'], $value['ticket_form_bind_value'])): ?>
-                                    <p><span class="pt-text-explode"><?= $value['ticket_form_description']; ?>: </span><?= $value['ticket_value']; ?></p>
+
+                                    <div class="pt-text-border">
+                                        <div class="pt-text-explode"><?= $value['ticket_form_description']; ?>:</div>
+                                        <div><?= $value['ticket_value']; ?></div>
+                                    </div>
+
                                 <?php endif; ?>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </div>
-                    <div class="am-block"><?= date('Y-m-d H:i:s', $ticket_submit_time); ?></div>
                 </div>
             </div>
         </li>

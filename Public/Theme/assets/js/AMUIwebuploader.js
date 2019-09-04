@@ -94,7 +94,18 @@ $(function () {
             uploader.on('uploadSuccess', function (file, response) {
                 //上传成功，则在对应文件的li层追加一个隐藏域存放上传成功的图片URL
                 if (response.state == 'SUCCESS') {
-                    $('#' + file.id).append('<input type="hidden" name="' + obj.name + '" value="' + response.url + '">');
+
+                    //判断上传类型
+                    switch(response.action){
+                        case 'uploadfile':
+                            var inputValue = '[url='+response.url+']'+response.original+'[/url]';
+                            break;
+                        case 'uploadimage':
+                        default:
+                            var inputValue = response.url;
+                    }
+
+                    $('#' + file.id).append('<input type="hidden" name="' + obj.name + '" value="' + inputValue + '">');
                 }
                 $('#' + file.id + ' h3.am-gallery-title').html(response.state).removeClass('am-hide');
             });

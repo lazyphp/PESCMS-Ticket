@@ -77,13 +77,33 @@ class UEController {
             if(!in_array($action, ['listimage', 'listfile'])){
                 //上传成功，顺便将文件信息记录数据库
                 if($info['state'] == 'SUCCESS'){
-//                    \Model\Content::insert('attachment', [
-//                        'attachment_name' => $info['original'],
-//                        'attachment_upload_name' => $info['title'],
-//                        'attachment_path' => $info['url'],
-//                        'attachment_type' => in_array($info['type'], json_decode($imgsuffix, true)) ? '1' : '2',
-//                        'attachment_createtime' => time(),
-//                    ]);
+
+                    $session = \Core\Func\CoreFunc::session()->getAll();
+
+
+                    switch ($action){
+                        case 'uploadimage':
+                            $type = 0;
+                            break;
+                        case 'uploadfile':
+                            $type = 1;
+                            break;
+                        case 'uploadvideo':
+                            $type = 3;
+                            break;
+                    }
+
+                    \Model\Content::insert('attachment', [
+                        'attachment_status' => 1,
+                        'attachment_path' => $info['url'],
+                        'attachment_path_type' => 0,
+                        'attachment_createtime' => time(),
+                        'attachment_name' => (new \voku\helper\AntiXSS())->xss_clean(trim($info['original'])),
+                        'attachment_type' => $type,
+                        'attachment_owner' => empty($session['ticket']) ? 0 : 1,
+                        'attachment_user_id' => empty($session['ticket']) ? 0 : $session['ticket']['user_id'],
+                        'attachment_member_id' => empty($session['member']) ? -1 : $session['member']['member_id']
+                    ]);
                 }
             }
             return $result;

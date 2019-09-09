@@ -98,7 +98,7 @@ class UEController {
                         'attachment_path' => $info['url'],
                         'attachment_path_type' => 0,
                         'attachment_createtime' => time(),
-                        'attachment_name' => trim($info['original']),
+                        'attachment_name' => (new \voku\helper\AntiXSS())->xss_clean(trim($info['original'])),
                         'attachment_type' => $type,
                         'attachment_owner' => empty($session['ticket']) ? 0 : 1,
                         'attachment_user_id' => empty($session['member']) ? -1 : $session['member']['member_id'],

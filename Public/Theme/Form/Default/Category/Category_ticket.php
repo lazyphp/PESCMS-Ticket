@@ -4,7 +4,6 @@
 <h3>新工单 > <?= $ticketInfo['category']['category_name'] ?> > <?= $ticketInfo['title'] ?></h3>
 <form action="<?= $label->url('Submit-ticket') ?>" method="POST" class="am-form ajax-submit am-form-horizontal" data-am-validator>
     <input type="hidden" name="number" value="<?= $ticketInfo['number'] ?>">
-    <input type="hidden" name="PHPSESSIONID" value="">
     <?= $label->token() ?>
 
     <?php if(!empty($ticketInfo['postscript'])): ?>

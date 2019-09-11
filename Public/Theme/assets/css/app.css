@@ -264,8 +264,32 @@ html,body{
 .pt-info-panel{
     background-color: #f8f8f8;
 }
+.pt-text-border{
+    border-bottom: 1px dashed #d6d6d6;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.pt-text-border:last-child{
+    border: 0px;
+}
 .pt-text-explode {
     color: #999 !important;
+    margin-bottom: 0.5rem;
+}
+.pt-text-border p{
+    margin: 0 0 0.3rem 0;
+}
+.pt-text-border ul{
+    margin: 0 !important;
+}
+.pt-text-border li{
+    padding: 0 0.5rem 0 0 !important;
+}
+.pt-text-border li:hover{
+    background:none !important;
+}
+.pt-text-border a:hover{
+    border-bottom: 1px solid;
 }
 /*工单内容描述结束*/
 

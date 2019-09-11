@@ -54,9 +54,18 @@
     <div class="am-dropdown" data-am-dropdown>
         <a href="javascript:;" class="am-dropdown-toggle" data-am-dropdown-toggle>文件列表 <span class="am-icon-caret-down"></span></a>
         <ul class="am-dropdown-content">
-            <?php foreach(explode(',', $value[$prefix . $field['field_name']]) as $key => $file): ?>
-            <li><a href="<?= $file ?>" target="_blank">下载文件<?= $key + 1?></a></li>
-            <?php endforeach; ?>
+            <?php
+            $downloadFile = $this->ubbUrl($value[$prefix . $field['field_name']]);
+            ?>
+            <?php if($downloadFile == false): ?>
+                <?php foreach(explode(',', $value[$prefix . $field['field_name']]) as $key => $file): ?>
+                <li><a href="<?= $file ?>" target="_blank">下载文件<?= $key + 1?></a></li>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <?php foreach($downloadFile as $key => $value): ?>
+                    <li><?= $value ?></li>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </ul>
     </div>
     <?php endif; ?>

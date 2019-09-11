@@ -10,6 +10,7 @@
 namespace Expand;
 
 class Uploader {
+    private $action;//请求方法
     private $fileField; //文件域名
     private $file; //文件上传对象
     private $base64; //文件上传对象
@@ -45,12 +46,15 @@ class Uploader {
     );
 
     /**
-     * 构造函数
+     * Uploader constructor.
+     * @param $action 请求方法
      * @param string $fileField 表单名称
      * @param array $config 配置项
-     * @param bool $base64 是否解析base64编码，可省略。若开启，则$fileField代表的是base64编码的字符串表单名
+     * @param bool $type | $base64 是否解析base64编码，可省略。若开启，则$fileField代表的是base64编码的字符串表单名
+     * @param string $imgsuffix
      */
-    public function __construct($fileField, $config, $type = "upload", $imgsuffix = "") {
+    public function __construct($action, $fileField, $config, $type = "upload", $imgsuffix = "") {
+        $this->action = $action;
         $this->fileField = $fileField;
         $this->config = $config;
         $this->type = $type;
@@ -351,6 +355,7 @@ class Uploader {
      */
     public function getFileInfo() {
         return array(
+            "action" => $this->action,
             "state" => $this->stateInfo,
             "url" => DOCUMENT_ROOT . $this->fullName,
             "title" => $this->fileName,

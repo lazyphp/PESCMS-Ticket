@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2019-09-02 02:38:50
+-- Generation Time: 2019-09-11 08:11:06
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -19,6 +19,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `ticket`
 --
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `pes_attachment`
+--
+
+CREATE TABLE IF NOT EXISTS `pes_attachment` (
+  `attachment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `attachment_status` tinyint(4) NOT NULL DEFAULT '0',
+  `attachment_path` varchar(1000) NOT NULL DEFAULT '',
+  `attachment_createtime` int(11) NOT NULL DEFAULT '0',
+  `attachment_name` varchar(255) NOT NULL DEFAULT '',
+  `attachment_path_type` int(11) NOT NULL DEFAULT '0',
+  `attachment_type` int(11) NOT NULL DEFAULT '0',
+  `attachment_user_id` int(11) NOT NULL DEFAULT '0' COMMENT '后台上传用户ID',
+  `attachment_member_id` int(11) NOT NULL DEFAULT '-1' COMMENT '前台上传用户ID -1 为匿名',
+  `attachment_owner` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`attachment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -60,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `pes_field` (
   PRIMARY KEY (`field_id`),
   UNIQUE KEY `modle_id` (`field_model_id`,`field_name`),
   KEY `field_name` (`field_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=245 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=252 ;
 
 --
 -- 转存表中的数据 `pes_field`
@@ -181,7 +201,14 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (241, 15, 'contact_default', '默认联系方式', 'radio', '{&quot;\\u90ae\\u4ef6&quot;:&quot;1&quot;,&quot;\\u624b\\u673a\\u53f7\\u7801&quot;:&quot;2&quot;,&quot;\\u5fae\\u4fe1&quot;:&quot;3&quot;}', '', '', 1, 13, 0, 1, 1, 0),
 (242, 15, 'postscript', '页内指引', 'editor', '', '填写此项，在工单提交内页顶部将显示这部分填写的内容。', '', 0, 11, 0, 1, 1, 0),
 (243, 15, 'default_send', '默认发送通知', 'radio', '{&quot;\\u5426&quot;:&quot;0&quot;,&quot;\\u662f&quot;:&quot;1&quot;}', '选择是，则当前工单模型的工单处理过程，默认发送通知复选框会勾上。', '', 0, 14, 0, 1, 1, 0),
-(244, 16, 'postscript', '工单表单详细说明', 'editor', '', '若需要对当前表单字段有更加完整的说明，请在此处填写。', '', 0, 11, 0, 1, 1, 0);
+(244, 16, 'postscript', '工单表单详细说明', 'editor', '', '若需要对当前表单字段有更加完整的说明，请在此处填写。', '', 0, 11, 0, 1, 1, 0),
+(245, 24, 'status', '状态', 'radio', '{"\\u7981\\u7528":"0","\\u542f\\u7528":"1"}', '', '1', 1, 100, 1, 1, 1, 0),
+(246, 24, 'createtime', '创建时间', 'date', '', '', '', 0, 99, 1, 1, 1, 0),
+(247, 24, 'name', '附件名称', 'text', '', '', '', 1, 2, 1, 1, 1, 0),
+(248, 24, 'path', '附件地址', 'text', '', '', '', 1, 3, 1, 1, 1, 0),
+(249, 24, 'path_type', '存储位置', 'radio', '{&quot;\\u672c\\u5730\\u786c\\u76d8&quot;:&quot;0&quot;}', '', '', 1, 4, 1, 1, 1, 0),
+(250, 24, 'type', '附件类型', 'radio', '{&quot;\\u56fe\\u7247&quot;:&quot;0&quot;,&quot;\\u6587\\u4ef6&quot;:&quot;1&quot;,&quot;\\u591a\\u5a92\\u4f53&quot;:&quot;3&quot;}', '', '', 1, 1, 1, 1, 1, 0),
+(251, 24, 'owner', '上传方', 'radio', '{&quot;\\u524d\\u53f0\\u7528\\u6237&quot;:&quot;0&quot;,&quot;\\u540e\\u53f0\\u7ba1\\u7406&quot;:&quot;1&quot;}', '', '', 1, 94, 1, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -285,7 +312,7 @@ CREATE TABLE IF NOT EXISTS `pes_menu` (
   `menu_type` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`menu_id`),
   KEY `menu_pid` (`menu_pid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=34 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=35 ;
 
 --
 -- 转存表中的数据 `pes_menu`
@@ -299,8 +326,7 @@ INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_l
 (6, '基础设置', 9, 'am-icon-tv', 'Ticket-Setting-action', 1, 0),
 (7, '菜单设置', 9, 'am-icon-map-signs', 'Ticket-Menu-index', 2, 0),
 (9, '系统设置', 0, 'am-icon-cog', '', 10, 0),
-(10, '帮助文档', 9, 'am-icon-leanpub', 'https://www.pescms.com/d/index/22', 6, 1),
-(11, '反馈建议', 9, 'am-icon-twitch', 'https://forum.pescms.com/list/22.html', 7, 1),
+(10, '帮助文档', 9, 'am-icon-leanpub', 'https://www.pescms.com/d/index/22', 8, 1),
 (12, '工作台', 0, 'am-icon-tachometer', 'Ticket-Index-index', 1, 0),
 (13, '工单列表', 0, 'am-icon-yelp', '', 2, 0),
 (14, '用户组', 3, 'am-icon-steam', 'Ticket-User_group-index', 2, 0),
@@ -308,7 +334,7 @@ INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_l
 (16, '路由规则', 9, 'am-icon-map-o', 'Ticket-Route-index', 4, 0),
 (17, '工单列表', 13, 'am-icon-fire', 'Ticket-Ticket-index', 1, 0),
 (18, '我的工单', 13, 'am-icon-coffee', 'Ticket-Ticket-myTicket', 2, 0),
-(19, '邮件模板', 9, 'am-icon-paint-brush', 'Ticket-Mail_template-index', 5, 0),
+(19, '邮件模板', 9, 'am-icon-paint-brush', 'Ticket-Mail_template-index', 6, 0),
 (21, '工单分类', 1, 'am-icon-list-alt', 'Ticket-Category-index', 1, 0),
 (23, '客户管理', 3, 'am-icon-street-view', 'Ticket-Member-index', 4, 0),
 (24, '应用商店', 9, 'am-icon-cogs', 'Ticket-Application-index', 3, 0),
@@ -316,7 +342,8 @@ INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_l
 (26, '发送列表', 9, 'am-icon-send', 'Ticket-Send-index', 5, 0),
 (27, '全部工单', 13, 'am-icon-list', 'Ticket-Ticket-all', 1, 0),
 (32, '常见问题解答', 1, 'am-icon-question-circle', 'Ticket-Fqa-index', 20, 0),
-(33, '工单投诉反馈', 0, 'am-icon-cutlery', 'Ticket-Ticket-complain', 6, 0);
+(33, '工单投诉反馈', 0, 'am-icon-cutlery', 'Ticket-Ticket-complain', 6, 0),
+(34, '附件管理', 9, 'am-icon-suitcase', 'Ticket-Attachment-index', 7, 0);
 
 -- --------------------------------------------------------
 
@@ -334,7 +361,7 @@ CREATE TABLE IF NOT EXISTS `pes_model` (
   `model_page` int(11) NOT NULL DEFAULT '10',
   PRIMARY KEY (`model_id`),
   UNIQUE KEY `model_name` (`model_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 --
 -- 转存表中的数据 `pes_model`
@@ -355,7 +382,8 @@ INSERT INTO `pes_model` (`model_id`, `model_name`, `model_title`, `model_status`
 (20, 'Member', '客户管理', 1, 1, 1, 10),
 (21, 'Send', '发送列表', 1, 1, 1, 10),
 (22, 'Phrase', '回复短语', 1, 0, 2, 10),
-(23, 'Fqa', '常见问题解答', 1, 1, 1, 10);
+(23, 'Fqa', '常见问题解答', 1, 1, 1, 10),
+(24, 'attachment', '附件管理', 1, 0, 2, 30);
 
 -- --------------------------------------------------------
 

@@ -9,7 +9,8 @@ include "Uploader.php";
 
 /* 上传配置 */
 $base64 = "upload";
-switch (htmlspecialchars($_GET['action'])) {
+$action = htmlspecialchars(trim($_GET['action']));
+switch ($action) {
     case 'uploadimage':
         $config = array(
             "pathFormat" => $CONFIG['imagePathFormat'],
@@ -48,7 +49,7 @@ switch (htmlspecialchars($_GET['action'])) {
 }
 
 /* 生成上传实例对象并完成上传 */
-$up = new \Expand\Uploader($fieldName, $config, $base64, $imgsuffix);
+$up = new \Expand\Uploader($action, $fieldName, $config, $base64, $imgsuffix);
 
 /**
  * 得到上传文件所对应的各个参数,数组结构

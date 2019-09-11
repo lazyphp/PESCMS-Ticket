@@ -249,12 +249,31 @@ class Label {
         return \Model\Auth::check($auth);
     }
 
+    /**
+     * 超时标签输出
+     * @param $param
+     * @return string
+     */
     public function ticketTimeOutTag($param){
         if($param['ticket_status']  == 0 && $param['ticket_submit_time'] + $param['ticket_model_time_out'] * 60 < time() ){
             return 'ticket-timeout';
         }else{
             return '';
         }
+    }
+
+    /**
+     * ubbURL模板输出
+     * @param $string
+     * @return array
+     */
+    public function ubbUrl($string){
+        static $ubb;
+        if(is_object($ubb)){
+            return $ubb->url($string);
+        }
+        $ubb = new \Expand\UBB();
+        return $ubb->url($string);
     }
 
 }

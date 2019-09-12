@@ -28,3 +28,13 @@ CREATE TABLE IF NOT EXISTS `pes_attachment` (
 
 INSERT INTO `pes_menu` (`menu_name`, `menu_pid`, `menu_icon`, `menu_link`, `menu_listsort`, `menu_type`) VALUES
 ('附件管理', 9, 'am-icon-suitcase', 'Ticket-Attachment-index', 6, 0);
+
+
+INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES
+(93, '附件管理', 11, 1, '', 'GET', 'Attachment', '', 0, 9),
+(94, '附件列表', 43, 1, '', 'GET', 'index', 'TicketGETAttachmentindex', 93, 130),
+(95, '附件编辑', 43, 1, '', 'GET', 'action', 'TicketGETAttachmentaction', 93, 140),
+(96, '附件添加', 43, 1, '', 'POST', 'action', 'TicketPOSTAttachmentaction', 93, 150),
+(97, '附件更新', 43, 1, '', 'PUT', 'action', 'TicketPUTAttachmentaction', 93, 160),
+(98, '附件删除', 43, 1, '', 'DELETE', 'action', 'TicketDELETEAttachmentaction', 93, 170);
+

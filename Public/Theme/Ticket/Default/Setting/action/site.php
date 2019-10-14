@@ -83,5 +83,17 @@
                 </div>
             </div>
         </div>
+
+        <hr class="am-margin-top-0 am-divider-default"/>
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">自定义样式</label>
+                    <textarea rows="10"
+                              name="siteStyle" <?= $license == 1 ? '' : 'readonly="readonly" data-am-popover="{content: \'需求购买使用授权方解除限制\', trigger: \'hover\', theme:\'sm\'}"' ?>><?= $siteStyle['value']; ?></textarea>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

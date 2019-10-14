@@ -1,5 +1,5 @@
 <div class="am-g am-margin-bottom-xs am-g-collapse">
-    <div class="am-u-sm-12 am-u-md-1 am-padding-top-xs">
+    <div class="am-u-sm-12 am-u-md-2 am-padding-top-xs">
         <div class="am-btn-toolbar">
             <div class="am-btn-group am-btn-group-xs">
                 <?php ?>
@@ -17,7 +17,7 @@
     </div>
 
 
-    <div class="am-u-sm-12 am-u-md-11">
+    <div class="am-u-sm-12 am-u-md-10">
         <form class="am-form am-form-inline am-text-right">
             <input type="hidden" name="g" value="<?= GROUP; ?>"/>
             <input type="hidden" name="m" value="<?= MODULE ?>"/>

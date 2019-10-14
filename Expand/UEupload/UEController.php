@@ -15,15 +15,17 @@ class UEController {
         $expandPath = PES_CORE . '/Expand/UEupload/';
         $configjson = file_get_contents("{$expandPath}config.json");
 
-        $imgsuffix = \Model\Content::findContent('option', 'upload_img', 'option_name')['value'];
-        $filesuffix = \Model\Content::findContent('option', 'upload_file', 'option_name')['value'];
 
+        $upload = $this->uploadSetting();
+
+        $search = ['{imgsuffix}', '{filesuffix}', '{uploadMaxSize}'];
+        $replace = [$upload['upload_img'], $upload['upload_file'], $upload['max_upload_size'] * 1048576];
 
         $CONFIG = json_decode(preg_replace("/\/\*[\s\S]+?\*\//", "", str_replace('{pesupload}', \Core\Func\CoreFunc::loadConfig('UPLOAD_PATH'),
-                str_replace('{imgsuffix}', $imgsuffix,
-                    str_replace('{filesuffix}', $filesuffix, $configjson))
+                str_replace($search, $replace, $configjson)
             )
         ), true);
+
 
         $action = $_GET['action'];
 
@@ -108,6 +110,22 @@ class UEController {
             }
             return $result;
         }
+    }
+
+    /**
+     * 上传设置信息
+     * @return mixed
+     */
+    private function uploadSetting(){
+        $uploadSetting = \Model\Content::listContent([
+            'table' => 'option',
+            'condition' => 'option_range = :option_range',
+            'param' => ['option_range' => 'upload']
+        ]);
+        foreach ($uploadSetting as $item){
+            $upload[$item['option_name']] = $item['value'];
+        }
+        return $upload;
     }
 
 }

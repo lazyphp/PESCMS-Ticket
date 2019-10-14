@@ -27,7 +27,7 @@ class HandleModelTicket_form extends \Core\Slice\Slice {
             }
 
             $_POST['model_id'] = (string)$ticketModel['ticket_model_id'];
-            $_POST['option'] = (string)\Model\Field::splitOption($this->p('option'));
+            $_POST['option'] = (string)\Model\Field::newSplitOption('option');
         }
     }
 

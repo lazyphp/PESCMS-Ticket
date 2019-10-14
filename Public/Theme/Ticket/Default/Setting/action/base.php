@@ -121,8 +121,23 @@
                     <textarea name="upload_file"><?= implode(',', $upload_file) ?></textarea>
 
                     <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
-                        <i class="am-icon-lightbulb-o"></i> 填写您要支持的文件格式，英文逗号分隔。
+                        <i class="am-icon-lightbulb-o"></i> 填写您要支持的文件格式，英文逗号分隔。.php, .html文件无法上传，需要上传此后缀文件请更改后缀。
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">上传大小<i class="am-text-danger">*</i></label>
+                    <div class="am-input-group am-u-lg-2 am-u-sm-12">
+                        <input name="max_upload_size" placeholder="1" type="number" value="<?= $max_upload_size['value']; ?>" class="am-form-field am-text-right" required="required">
+                        <span class="am-input-group-label">MB</span>
+                    </div>
+                </div>
+                <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
+                    当前PHP.ini配置最大上传容量: <?= ini_get('max_file_uploads') ?>M
                 </div>
             </div>
         </div>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2019-09-12 02:13:20
+-- Generation Time: 2019-10-31 02:10:54
 -- 服务器版本： 5.6.25-log
 -- PHP Version: 5.6.12
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `ticket`
+-- Database: `ptttest`
 --
 
 -- --------------------------------------------------------
@@ -93,7 +93,7 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (4, 1, 'attr', '模型属性', 'radio', '{"\\u524d\\u53f0":"1","\\u540e\\u53f0":"2"}', '', '', 1, 4, 1, 1, 1, 0),
 (5, 1, 'status', '模型状态', 'radio', '{"\\u542f\\u7528":"1","\\u7981\\u7528":"0"}', '', '', 1, 5, 1, 1, 1, 0),
 (6, 2, 'model_id', '模型ID', 'text', '', '', '', 1, 0, 0, 0, 1, 0),
-(7, 2, 'type', '字段类型', 'select', '{&quot;\\u5206\\u7c7b&quot;:&quot;category&quot;,&quot;\\u5355\\u884c\\u8f93\\u5165\\u6846&quot;:&quot;text&quot;,&quot;\\u591a\\u884c\\u8f93\\u5165\\u6846&quot;:&quot;textarea&quot;,&quot;\\u5355\\u9009\\u6309\\u94ae&quot;:&quot;radio&quot;,&quot;\\u590d\\u9009\\u6846&quot;:&quot;checkbox&quot;,&quot;\\u5355\\u9009\\u4e0b\\u62c9\\u6846&quot;:&quot;select&quot;,&quot;\\u591a\\u9009\\u4e0b\\u62c9\\u6846&quot;:&quot;multiple&quot;,&quot;\\u7f16\\u8f91\\u5668&quot;:&quot;editor&quot;,&quot;\\u7f29\\u7565\\u56fe&quot;:&quot;thumb&quot;,&quot;\\u4e0a\\u4f20\\u56fe\\u7ec4&quot;:&quot;img&quot;,&quot;\\u4e0a\\u4f20\\u6587\\u4ef6&quot;:&quot;file&quot;,&quot;\\u65e5\\u671f&quot;:&quot;date&quot;,&quot;\\u5de5\\u5355\\u6a21\\u578b&quot;:&quot;ticket&quot;,&quot;\\u7c7b\\u578b&quot;:&quot;types&quot;}', '', '', 1, 1, 1, 1, 1, 0),
+(7, 2, 'type', '字段类型', 'select', '{"\\u5206\\u7c7b":"category","\\u5355\\u884c\\u8f93\\u5165\\u6846":"text","\\u591a\\u884c\\u8f93\\u5165\\u6846":"textarea","\\u5355\\u9009\\u6309\\u94ae":"radio","\\u590d\\u9009\\u6846":"checkbox","\\u5355\\u9009\\u4e0b\\u62c9\\u6846":"select","\\u591a\\u9009\\u4e0b\\u62c9\\u6846":"multiple","\\u7f16\\u8f91\\u5668":"editor","\\u7f29\\u7565\\u56fe":"thumb","\\u4e0a\\u4f20\\u56fe\\u7ec4":"img","\\u4e0a\\u4f20\\u6587\\u4ef6":"file","\\u65e5\\u671f":"date","\\u5de5\\u5355\\u6a21\\u578b":"ticket","\\u7c7b\\u578b":"types","\\u9009\\u9879\\u503c":"option"}', '', '', 1, 1, 1, 1, 1, 0),
 (8, 2, 'name', '字段名称', 'text', '', '', '', 1, 2, 1, 1, 1, 0),
 (9, 2, 'display_name', '显示名称', 'text', '', '', '', 1, 3, 1, 1, 1, 0),
 (10, 2, 'option', '选项值', 'textarea', '', '选填， 选填， 此处若没有特殊说明，必须 名称|值 填写、且一行一个选项值，否则将导致数据异常!  注意:目前选项适用于单选，复选，下拉菜单。其余功能填写也不会产生任何实际效果。', '', 0, 4, 0, 1, 1, 0),
@@ -127,14 +127,14 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (142, 13, 'check_value', '验证值', 'text', '', '', '', 0, 8, 0, 0, 1, 0),
 (151, 15, 'status', '状态', 'radio', '{"\\u7981\\u7528":"0","\\u542f\\u7528":"1"}', '', '1', 1, 6, 1, 1, 1, 0),
 (153, 15, 'number', '工单ID', 'text', '', '', '', 1, 2, 1, 0, 1, 0),
-(154, 15, 'name', '工单名称', 'text', '', '', '', 1, 3, 1, 1, 1, 0),
+(154, 15, 'name', '工单名称', 'text', '', '', '', 1, 3, 0, 1, 1, 0),
 (155, 16, 'model_id', '工单模型ID', 'text', '', '', '', 1, 2, 0, 0, 1, 0),
 (156, 16, 'name', '工单表单字段名称', 'text', '', '建议以英语字母下划线填写！否则容易引起工单内容提交丢失的现象。', '', 1, 2, 0, 1, 1, 0),
 (157, 16, 'description', '工单字段显示名称', 'text', '', '告诉用户该表单的作用', '', 1, 3, 1, 1, 1, 0),
 (158, 16, 'explain', '工单表单说明', 'text', '', '非必填，告诉用户此工单表单的作用', '', 0, 10, 0, 1, 1, 0),
 (159, 16, 'msg', '工单提示信息', 'text', '', '非必填，提交失败返回的显示信息', '', 0, 40, 0, 1, 1, 0),
 (160, 16, 'type', '工单表单类型', 'select', '', '', '', 1, 50, 1, 1, 1, 0),
-(161, 16, 'option', '工单表单的选项值', 'textarea', '', '非必填，此处若没有特殊说明，必须 名称|值 填写、且一行一个选项值，否则将导致数据异常! \r\n注意:目前选项适用于单选，复选，下拉菜单。其余功能填写也不会产生任何实际效果。', '', 0, 60, 0, 1, 1, 0),
+(161, 16, 'option', '工单表单的选项值', 'option', '', '目前选项适用于单选，复选，下拉菜单。其余功能填写也不会产生任何实际效果。', '', 0, 60, 0, 1, 1, 0),
 (162, 16, 'verify', '工单表单验证类型', 'select', '', '', '', 0, 70, 1, 1, 1, 0),
 (163, 16, 'required', '工单表单是否必填', 'radio', '{"\\u975e\\u5fc5\\u586b":"0","\\u5fc5\\u586b":"1"}', '', '', 1, 80, 1, 1, 1, 0),
 (164, 16, 'status', '工单表单启用状态', 'radio', '{"\\u7981\\u7528":"0","\\u542f\\u7528":"1"}', '', '', 1, 98, 1, 1, 1, 0),
@@ -612,7 +612,7 @@ CREATE TABLE IF NOT EXISTS `pes_option` (
   `value` text NOT NULL,
   `option_range` varchar(128) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
 
 --
 -- 转存表中的数据 `pes_option`
@@ -645,7 +645,9 @@ INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) 
 (24, 'verifyLength', '验证码长度', '4', 'system'),
 (25, 'member_review', '审核设置', '1', 'system'),
 (26, 'indexStyle', '首页样式', '0', 'system'),
-(27, 'member_login', '客户登陆方式', '0', 'system');
+(27, 'member_login', '客户登陆方式', '0', 'system'),
+(28, 'max_upload_size', '上传大小', '1', 'upload'),
+(29, 'siteStyle', '自定义样式', '', 'system');
 
 -- --------------------------------------------------------
 

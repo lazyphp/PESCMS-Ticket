@@ -2,8 +2,8 @@
 /**
  * 本模板为通用编辑按钮，若没有特殊需求，请加载本模板
  */
-$echoEditUrl = empty($editUrl) ? $label->url(GROUP . '-' . MODULE . '-action', array('id' => $value["{$fieldPrefix}id"], 'back_url' => base64_encode($_SERVER['REQUEST_URI']))) : $editUrl;
-$echoDeleteUrl = empty($deleteUrl) ? $label->url(GROUP . '-' . MODULE . '-action', array('id' => $value["{$fieldPrefix}id"], 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI']))) : $deleteUrl;
+$echoEditUrl = empty($editUrl) ? $label->url(GROUP . '-' . MODULE . '-action', array('id' => $label->xss($value["{$fieldPrefix}id"]), 'back_url' => base64_encode($_SERVER['REQUEST_URI']))) : $editUrl;
+$echoDeleteUrl = empty($deleteUrl) ? $label->url(GROUP . '-' . MODULE . '-action', array('id' => $label->xss($value["{$fieldPrefix}id"]), 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI']))) : $deleteUrl;
 
 ?>
 <?php if($label->checkAuth(GROUP.'GET'.MODULE.'action') === true): ?>

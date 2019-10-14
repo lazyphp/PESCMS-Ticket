@@ -32,11 +32,13 @@ class Setting extends \Core\Controller\Controller {
                 'member_review',
                 'notice_way',
                 'siteContact',
+                'siteStyle',
                 'authorize',
                 'siteKeywords',
                 'siteDescription',
                 'verifyLength',
                 'member_login',
+                'max_upload_size',
             ],
             //基于数组的json更新设置
             'array' => [

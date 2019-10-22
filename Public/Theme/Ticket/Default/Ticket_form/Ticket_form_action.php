@@ -17,14 +17,6 @@
 						<?php $value['field_option'] = json_encode($checkType); ?>
 					<?php elseif ($value['field_name'] == 'bind'): ?>
 						<?php $value['field_option'] = json_encode($bind); ?>
-					<?php elseif ($value['field_name'] == 'option' && !empty($value['value'])): ?>
-						<?php
-						$optionStr = '';
-						foreach (json_decode(htmlspecialchars_decode($value['value']), true) as $ok => $ov) {
-							$optionStr .= "{$ok}|{$ov}\n";
-						}
-						$value['value'] = trim($optionStr);
-						?>
 					<?php endif; ?>
 
 					<?php if ($value['field_name'] == 'bind_value'): ?>
@@ -96,6 +88,5 @@
 
             })
         })
-
     })
 </script>

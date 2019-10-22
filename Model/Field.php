@@ -159,15 +159,40 @@ class Field extends \Core\Model\Model {
         } else {
             return '';
         }
-        foreach ($splitNewline as $value) {
-            $splitOption[] = explode("|", $value);
-            foreach ($splitOption as $key => $value) {
-                $option[$value[0]] = str_replace("\r", "", $value[1]);
-            }
+        foreach ($splitNewline as $item) {
+            $splitOption = explode("|", $item);
+            $option[$splitOption[0]] = str_replace("\r", "", $splitOption[1]);
         }
+
         if (!is_array($option)) {
             return false;
         }
+        return json_encode($option);
+    }
+
+    /**
+     * 新的拆分选项值方法，返回为一个数组
+     * @param $optionName 选项表单名称
+     * @return json
+     */
+    public static function newSplitOption($optionName){
+        $display = $_POST["{$optionName}_display"];
+        $value = $_POST["{$optionName}_value"];
+
+        if(empty($display) || empty($value)){
+            return false;
+        }
+
+        if(count($display) != count($value)){
+            self::error('选项值的显示名称与值长度不一致.');
+        }
+
+        $option = [];
+
+        foreach ($display as $key => $item){
+            $option[$item] = $value[$key];
+        }
+
         return json_encode($option);
     }
 

@@ -37,6 +37,7 @@ class Setting extends \Core\Controller\Controller {
                 'siteDescription',
                 'verifyLength',
                 'member_login',
+                'max_upload_size',
             ],
             //基于数组的json更新设置
             'array' => [

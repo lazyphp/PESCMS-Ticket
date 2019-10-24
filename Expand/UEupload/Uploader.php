@@ -121,7 +121,7 @@ class Uploader {
         }
 
         //图片则利用GD库进行处理，过滤掉图片木马。同时生成对应的三种图片
-        if (in_array($this->getFileExt(), json_decode($this->imgsuffix, true))) {
+        if (!empty($this->imgsuffix) && in_array($this->getFileExt(), json_decode($this->imgsuffix, true))) {
             $image = new \Expand\PHPImage($file["tmp_name"]);
             $image->batchResize("{$this->filePath}_%dx%d.".pathinfo($file['name'])['extension'], array(
                 array(50, 50, true, true),
@@ -338,6 +338,9 @@ class Uploader {
      * @return bool
      */
     private function checkType() {
+        if(in_array(trim($this->getFileExt()), ['.php', '.html'])){
+            return false;
+        }
         return in_array($this->getFileExt(), $this->config["allowFiles"]);
     }
 

@@ -3,4 +3,6 @@ UPDATE `pes_field` SET `field_option` = '{"\\u5206\\u7c7b":"category","\\u5355\\
 UPDATE `pes_field` SET `field_type` = 'option', `field_explain` = '目前选项适用于单选，复选，下拉菜单。其余功能填写也不会产生任何实际效果。' WHERE `field_id` = 161;
 
 INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) VALUES
-(28, 'max_upload_size', '上传大小', '8', 'upload');
+(NULL, 'max_upload_size', '上传大小', '8', 'upload');
+
+INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) VALUES (NULL, 'siteStyle', '自定义样式', '', 'system');

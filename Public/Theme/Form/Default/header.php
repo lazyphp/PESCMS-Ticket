@@ -15,7 +15,9 @@
     <!-- No Baidu Siteapp-->
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
 
-    <!-- Tile icon for Win8 (144x144 + tile color) -->
+
+
+
     <link rel="icon" type="image/png" href="<?= DOCUMENT_ROOT ?>/favicon.ico?v=<?= $system['version'] ?>">
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/amazeui.min.css?v=<?= $system['version'] ?>">
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/app.css?v=<?= $system['version'] ?>">
@@ -62,5 +64,8 @@
     <!--百度上传控件-->
 
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/app.js?v=<?= $system['version'] ?>"></script>
+
+    <?= !empty($system['siteStyle']) ? "<style>{$system['siteStyle']}</style>" : '' ?>
+
 </head>
 <body>

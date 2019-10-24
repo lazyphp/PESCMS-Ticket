@@ -32,6 +32,7 @@ class Setting extends \Core\Controller\Controller {
                 'member_review',
                 'notice_way',
                 'siteContact',
+                'siteStyle',
                 'authorize',
                 'siteKeywords',
                 'siteDescription',

@@ -6,3 +6,5 @@ INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) 
 (NULL, 'max_upload_size', '上传大小', '8', 'upload');
 
 INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) VALUES (NULL, 'siteStyle', '自定义样式', '', 'system');
+
+UPDATE `pes_field` SET `field_list` = '0' WHERE `field_id` = 154;

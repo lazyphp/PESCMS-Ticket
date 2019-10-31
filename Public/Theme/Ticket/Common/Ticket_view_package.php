@@ -3,6 +3,7 @@
 <?php if(!empty($_GET['back_url'])): ?>
         <div class="">
             <a href="<?= base64_decode($_GET['back_url']) ?>" class="am-margin-right-xs am-text-danger"><i class="am-icon-reply"></i>返回上一页</a>
+            <a class="am-link-muted print-ticket" href="<?= $label->url('View-printer', array('number' => $ticket_number)); ?>"><span class="am-icon-print"></span></a>
         </div>
         <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
         <?php endif; ?>
@@ -16,7 +17,7 @@
             <?php endforeach; ?>
         </div>
 
-        <div class="am-padding pt-info-panel ">
+        <div class="am-padding pt-info-panel">
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div><span class="pt-text-explode">问题标题 : </span> <?= $ticket_title; ?></div>
                 <div class="am-g am-g-collapse">
@@ -46,6 +47,11 @@
                     </div>
                 </div>
             </div>
+            <?php if(!empty(self::session()->get('ticket')) && GROUP == 'Ticket' ): ?>
+            <hr/>
+            <div class="am-padding-left"><span class="pt-text-explode">备注说明 : </span> <input type="text" class="ticket-remark-input" maxlength="22" old="<?= $label->xss($ticket_remark) ?>" value="<?= $label->xss($ticket_remark) ?>" placeholder="若需要在列表标记说明，请在此处填写一句话，限22个字"></div>
+            <?php endif; ?>
+
         </div>
 
     </div>
@@ -98,7 +104,7 @@
                         </div>
                         <div class="am-u-sm-11">
                             <div class="am-block am-nbfc">
-                                <?= $value['user_id'] == '-1' ? '' : "{$value['user_name']} : " ?><?=  $label->xss(htmlspecialchars_decode($value['ticket_chat_content'])) ?>
+                                <?= $value['user_id'] == '-1' ? (empty($member) ? '匿名用户 : ' : "{$member['member_name']} : " ) : "{$value['user_name']} : " ?><?=  $label->xss(htmlspecialchars_decode($value['ticket_chat_content'])) ?>
                             </div>
                             <div class="am-block"><?= date('Y-m-d H:i:s', $value['ticket_chat_time']); ?></div>
                         </div>

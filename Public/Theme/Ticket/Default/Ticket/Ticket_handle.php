@@ -49,15 +49,25 @@
                                     </div>
                                     <?php endif; ?>
 
-                                    <div class="am-form-group am-hide assign-user">
-                                        <label for="">转派给</label>
-                                        <select name="uid">
-                                            <option value="">转派给谁呢？</option>
-                                            <?php foreach ($user as $value): ?>
-                                                <option value="<?= $value['user_id']; ?>"><?= $value['user_name']; ?></option>
-                                            <?php endforeach; ?>
+                                    <div class="am-form-inline am-margin-bottom">
+                                        <div class="am-form-group am-hide am-block assign-user">
+                                            <label for="">转派给 : </label>
+                                        </div>
+                                        <div class="am-form-group am-hide assign-user">
+                                            <select class="ticket-group" size="5">
+                                                <option value="">请选择组</option>
+                                                <?php foreach ($groupList as $value): ?>
+                                                    <option value="<?= $value['user_group_id']; ?>"><?= $value['user_group_name']; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                        <div class="am-form-group am-hide assign-user">
+                                        <select name="uid" size="5">
+                                            <option value="" disabled>等待获取用户信息</option>
                                         </select>
+                                        </div>
                                     </div>
+
 
                                     <?php if(!empty($phrase)): ?>
                                         <div class="am-form-group phrase_list">
@@ -155,6 +165,52 @@
             var content = $('#phrase_'+id).html().trim();
             ue.setContent(content);
 
+        })
+
+        /**
+         * 选择对应的组，进行获取对应的用户列表
+         */
+        $('.ticket-group').on('click', function(){
+            var group = $(this).val();
+            if(group == ''){
+                return false;
+            }
+            $('select[name=uid]').html('<option disabled>正在获取客服信息中...</option>');
+
+            $.post('<?= $label->url('Ticket-Ticket-getAssignUser', ['method' => 'GET']) ?>', {group:group}, function(result){
+                if(result.status == 200){
+                    var option = '';
+                    for(var key in result.data){
+                        option += '<option value="'+result.data[key]['user_id']+'" '+result.data[key]['disabled']+' >'+result.data[key]['user_name']+'</option>'
+                    }
+                    $('select[name=uid]').html(option);
+                }else{
+                    var d = dialog({
+                        title: '系统提示',
+                        id:'tisp',
+                        content: result.msg
+                    })
+                    d.showModal();
+                    setTimeout(function(){
+                        d.close();
+                    }, 1800)
+                }
+            }, 'JSON')
+
+        })
+
+        /**
+         * 工单备注登记
+         */
+        $('.ticket-remark-input').on('blur', function(){
+            var remark = $(this).val();
+            if(remark == '' || remark == $(this).attr('old')){
+                return false;
+            }
+            var number = '<?= $ticket_number ?>';
+            $.ajaxsubmit({url : '<?= $label->url('Ticket-Ticket-remark') ?>', data : {number:number, remark:remark}}, function(){
+
+            })
         })
 
     })

@@ -95,5 +95,15 @@
             </div>
         </div>
 
+        <hr class="am-margin-top-0 am-divider-default"/>
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">网站统计代码</label>
+                    <textarea rows="10" name="siteTongji" ><?= $siteTongji['value']; ?></textarea>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

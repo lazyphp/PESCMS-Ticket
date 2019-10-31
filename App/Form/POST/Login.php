@@ -78,6 +78,11 @@ class Login extends \Core\Controller\Controller {
         $param['member_name'] = $this->isP('name', '请填写名字');
         $param['member_email'] = $this->isP('email', '请填写邮箱地址');
         $param['member_phone'] = $this->isP('phone', '请填写手机号码');
+
+        if(!empty($_POST['weixin'])){
+            $param['member_weixin'] = $this->p('weixin');
+        }
+
         $password = $this->isP('password', '请填密码');
         $repassword = $this->isP('repassword', '请填写再次确认密码');
 
@@ -209,9 +214,10 @@ class Login extends \Core\Controller\Controller {
 
         //邮件地址没有填写，则直接随机创建帐号
         if(empty($_POST['email'])){
-            $param['member_email'] = "{$param['member_weixin']}@{$param['member_weixin']}.wx";
-            $param['member_account'] = "wx_{$param['member_weixin']}";
-            $param['member_password'] = md5(\Model\Extra::getOnlyNumber());//随机写入一些字符，随机帐号无法使用滴
+            $randomAccount = \Model\Extra::getOnlyNumber();
+            $param['member_email'] = "{$randomAccount}@default.wx";
+            $param['member_account'] = "wx_{$randomAccount}";
+            $param['member_password'] = md5(\Model\Extra::getOnlyNumber());//随机写入一些字符，随机帐号无法使用
             $param['member_status'] = \Core\Func\CoreFunc::$param['system']['member_review'];
             $param['member_createtime'] = time();
             $memberID = $this->db('member')->insert($param);

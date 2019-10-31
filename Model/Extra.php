@@ -95,13 +95,16 @@ class Extra extends \Core\Model\Model {
      * 执行通知发送
      */
     public static function actionNoticeSend(){
-        foreach (\Model\Content::listContent([
+        $list = \Model\Content::listContent([
             'table' => 'send',
-            'condition' => 'send_time <= :time',
+            'condition' => "send_time <= :time AND send_result = '' ",
+            'lock' => 'FOR UPDATE',
             'param' => [
                 'time' => time()
             ]
-        ]) as $value) {
+        ]);
+
+        foreach ($list as $value) {
             switch ($value['send_type']) {
                 case '1':
                     $result = (new \Expand\Notice\Mail())->send($value);

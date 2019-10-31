@@ -42,7 +42,10 @@ class Member extends \Core\Controller\Controller {
             $this->session()->destroy();
             $url = $this->url('Login-index');
         }else{
-            $url = '';
+            $member = \Model\Content::findContent('member', $param['noset']['member_id'], 'member_id');
+            unset($member['member_password']);
+            $this->session()->set('member', $member);
+            $url = $this->url('Member-update');
         }
 
         $this->success('更新个人信息完成', $url);

@@ -28,7 +28,7 @@
                                 <div class="am-form-group pt-reply-content">
                                     <label for="">验证码: </label>
                                     <img src="<?= $label->url('Index-verify') ?>" class="refresh-verify" height="25"/>
-                                    <input type="text" name="verify" required/>
+                                    <input type="text" name="verify" maxlength="<?= $system['verifyLength'] ?>" required/>
                                 </div>
                                 <?php endif; ?>
                                 

@@ -24,7 +24,7 @@ class Mysql {
 
     public $dbh, $getLastSql, $getLastInsert, $prefix, $errorInfo = array(), $param = array();
     private $defaultDb, $tableName, $field = '*', $where = '', $join = array(), $order = '',
-        $group = '', $limit = '', $transaction = false;
+        $group = '', $limit = '', $lock = '', $transaction = false;
 
     public function __construct() {
         try {
@@ -155,6 +155,20 @@ class Mysql {
     }
 
     /**
+     * 是否设锁
+     * @param $condition
+     * @return $this
+     */
+    public function lock($condition) {
+        if (empty($condition)) {
+            $this->lock = '';
+        } else {
+            $this->lock = " {$condition}";
+        }
+        return $this;
+    }
+
+    /**
      * 单条数据查找
      * @param array $param 查询参数(一维数组)
      * @param str $fieldType 字段类型
@@ -165,9 +179,11 @@ class Mysql {
 
         $limit = ' LIMIT 1 ';
         $this->join = empty($this->join) ? array('') : $this->join;
-        $this->getLastSql = 'SELECT ' . $this->field . ' FROM ' . $this->tableName . implode('', $this->join) . $this->where . $this->group . $this->order . $limit;
+        $this->getLastSql = 'SELECT ' . $this->field . ' FROM ' . $this->tableName . implode('', $this->join) . $this->where . $this->group . $this->order . $limit. $this->lock;
         $sth = $this->PDOBindArray();
         $result = $sth->fetch();
+        $sth->closeCursor();
+
         $this->emptyParam();
         return $result;
     }
@@ -181,9 +197,11 @@ class Mysql {
     public function select($param = '', $fieldType = '') {
         $this->dealParam($param, $fieldType);
         $this->join = empty($this->join) ? array('') : $this->join;
-        $this->getLastSql = 'SELECT ' . $this->field . ' FROM ' . $this->tableName . implode('', $this->join) . $this->where . $this->group . $this->order . $this->limit;
+        $this->getLastSql = 'SELECT ' . $this->field . ' FROM ' . $this->tableName . implode('', $this->join) . $this->where . $this->group . $this->order . $this->limit. $this->lock;
         $sth = $this->PDOBindArray();
         $result = $sth->fetchALL();
+        $sth->closeCursor();
+
         $this->emptyParam();
         return $result;
     }
@@ -197,8 +215,6 @@ class Mysql {
     public function insert($param = [], $fieldType = '') {
 
         $param = $this->tableFieldParam($param);
-
-
 
         $this->dealParam($param, $fieldType);
         foreach ($this->param as $key => $value) {
@@ -227,7 +243,10 @@ class Mysql {
             return $param;
         }
 
-        $fields = $this->getAll("DESC {$this->tableName}");
+        $sth = $this->dbh->prepare("DESC {$this->tableName}");
+        $sth->execute();
+        $fields = $sth->fetchAll();
+
         $newParam = [];
         foreach ($fields as $field) {
             $newParam[$field['Field']] = !empty($param[$field['Field']]) ? $param[$field['Field']] : $this->handleFiledType($field['Type'], $field['Default'], $field['Null']);
@@ -302,7 +321,9 @@ class Mysql {
             }
 
             $sql = "SELECT @@sql_mode AS model";
-            $model = $this->fetch($sql);
+            $sth = $this->dbh->prepare($sql);
+            $sth->execute();
+            $model = $sth->fetch();
             if (strpos(strtoupper($model['model']), 'STRICT_TRANS_TABLES') !== false) {
                 $sqlModel = 'STRICT_TRANS_TABLES';
             }else{
@@ -342,10 +363,10 @@ class Mysql {
             $param = array_merge($param, $noset);
         }
 
+        $param = $this->updateFieldCover($param);
         $this->dealParam($param, $fieldType);
 
         $this->getLastSql = 'UPDATE ' . $this->tableName . ' SET ' . implode(',', $content) . $this->where;
-
         $sth = $this->PDOBindArray();
         $result = $sth->rowCount();
         $this->emptyParam();
@@ -354,6 +375,28 @@ class Mysql {
         } else {
             return false;
         }
+    }
+
+    /**
+     * 对执行更新的参数进行一次缺省值转行
+     * @param $param
+     * @return mixed
+     */
+    private function updateFieldCover($param){
+        if($this->checkSqlTransTable() == false){
+            return $param;
+        }
+        $sth = $this->dbh->prepare("DESC {$this->tableName}");
+        $sth->execute();
+        $fields = $sth->fetchAll();
+
+        foreach ($fields as $fieldItem) {
+            if(isset($param[$fieldItem['Field']]) && empty($param[$fieldItem['Field']]) && !is_numeric($param[$fieldItem['Field']]) ){
+                $param[$fieldItem['Field']] = $this->handleFiledType($fieldItem['Type'], $fieldItem['Default'], $fieldItem['Null']);
+            }
+        }
+
+        return $param;
     }
 
     /**

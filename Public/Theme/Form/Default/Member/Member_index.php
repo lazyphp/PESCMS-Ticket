@@ -75,6 +75,9 @@
                             </td>
                             <td class="am-show-lg-only"><?= date('Y-m-d H:i', $value['ticket_submit_time']) ?></td>
                             <td class="am-show-lg-only">
+
+                                <a class="am-link-muted print-ticket" href="<?= $label->url('View-printer', array('number' => $value["ticket_number"])); ?>"><span class="am-icon-print"></span></a>
+
                                 <a href="<?= $label->url('View-ticket', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>">查看详情</a>
                             </td>
                         </tr>

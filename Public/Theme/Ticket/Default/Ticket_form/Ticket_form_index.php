@@ -5,7 +5,8 @@
         <div class="am-btn-toolbar">
             <div class="am-btn-group am-btn-group-xs">
                 <a href="<?= $addUrl ?>" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</a>
-                <a class="am-btn am-btn-primary" href="<?= $label->url('Category-ticket', array('number' => $_GET['number'])); ?>" target="_blank"><span class="am-icon-pencil-square-o"></span> 预览工单</a>
+                <a class="am-btn am-btn-warning" href="<?= $label->url('Ticket-Ticket_model-action', array('id' => $label->xss($_GET['number']))); ?>" target="_blank"><span class="am-icon-edit"></span> 编辑</a>
+                <a class="am-btn am-btn-primary" href="<?= $label->url('Category-ticket', array('number' => $label->xss($_GET['number']))); ?>" target="_blank"><span class="am-icon-pencil-square-o"></span> 预览工单</a>
 
             </div>
         </div>

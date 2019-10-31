@@ -333,6 +333,9 @@ a.am-btn-white:visited{
     color: #0e90d2;
     border-bottom: 1px solid #0e90d2;
 }
+.am-alert-secondary .am-btn{
+    color: #fff ;
+}
 .am-alert-postscript{
     color: #555;
     background-color: #FBFBEA;

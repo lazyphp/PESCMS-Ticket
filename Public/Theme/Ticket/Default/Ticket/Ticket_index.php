@@ -111,6 +111,9 @@
                                 </div>
                             </td>
                             <td class="am-show-lg-only am-text-bottom am-text-right">
+
+                                <a class="am-link-muted print-ticket" href="<?= $label->url('View-printer', array('number' => $value["ticket_number"])); ?>"><span class="am-icon-print"></span></a>
+
                                 <span>
                                         耗时: <?= empty($value['ticket_run_time']) ? '未处理' : $label->timing($value['ticket_run_time']); ?>
                                     </span>
@@ -132,7 +135,7 @@
                                 <?php endif; ?>
                                 <?php if($label->checkAuth(GROUP . 'DELETETicketaction') === true): ?>
                                 <i class="am-margin-left-xs am-margin-right-xs">|</i>
-                                <a class="am-text-danger ajax-click ajax-dialog"  msg="确定删除吗？将无法恢复的！" href="<?= $label->url(GROUP . '-' . MODULE . '-action', array('id' => $value["ticket_id"], 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI']))); ?>"><span class="am-icon-trash-o"></span></a>
+                                    <a class="am-text-danger ajax-click ajax-dialog"  msg="确定删除吗？将无法恢复的！" href="<?= $label->url(GROUP . '-' . MODULE . '-action', array('id' => $value["ticket_id"], 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI']))); ?>"><span class="am-icon-trash-o"></span></a>
                                 <?php endif; ?>
                             </td>
                         </tr>

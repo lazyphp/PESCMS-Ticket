@@ -237,16 +237,17 @@ class Ticket extends \Core\Model\Model {
     /**
      * 查看工单内容
      * 注：前后台公用本方法
+     * @param $page 聊天内容的分页数
      * @return array 返回处理好得通用数组
      */
-    public static function view() {
+    public static function view($chatPage = '30') {
         $number = self::isG('number', '请选择您要查看的工单');
         $ticket = self::getTicketBaseInfo($number);
         if (empty($ticket)) {
             return false;
         }
         $form = self::getTicketContent($ticket['ticket_id']);
-        $chat = self::getTicketChat($ticket['ticket_id']);
+        $chat = self::getTicketChat($ticket['ticket_id'], $chatPage);
 
         return ['ticket' => $ticket, 'form' => $form, 'chat' => $chat];
 
@@ -268,9 +269,15 @@ class Ticket extends \Core\Model\Model {
      * @param $id 工单ID
      * @return 返回查询得到的内容
      */
-    public static function getTicketChat($id) {
+    public static function getTicketChat($id, $chatPage) {
         $sql = "SELECT %s FROM " . self::$modelPrefix . "ticket_chat WHERE ticket_id = :ticket_id ORDER BY ticket_chat_id ASC";
-        return \Model\Content::quickListContent(['count' => sprintf($sql, 'count(*)'), 'normal' => sprintf($sql, '*'), 'param' => ['ticket_id' => $id], 'page' => 30]);
+
+        return \Model\Content::quickListContent([
+            'count' => sprintf($sql, 'count(*)'),
+            'normal' => sprintf($sql, '*'),
+            'param' => ['ticket_id' => $id],
+            'page' => $chatPage
+        ]);
     }
 
     /**

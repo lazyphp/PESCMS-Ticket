@@ -3,6 +3,7 @@
 <?php if(!empty($_GET['back_url'])): ?>
         <div class="">
             <a href="<?= base64_decode($_GET['back_url']) ?>" class="am-margin-right-xs am-text-danger"><i class="am-icon-reply"></i>返回上一页</a>
+            <a class="am-link-muted print-ticket" href="<?= $label->url('View-printer', array('number' => $ticket_number)); ?>"><span class="am-icon-print"></span></a>
         </div>
         <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
         <?php endif; ?>

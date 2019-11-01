@@ -49,7 +49,7 @@ switch ($action) {
 }
 
 /* 生成上传实例对象并完成上传 */
-$up = new \Expand\Uploader($action, $fieldName, $config, $base64, $imgsuffix);
+$up = new \Expand\Uploader($action, $fieldName, $config, $base64, $upload['upload_img']);
 
 /**
  * 得到上传文件所对应的各个参数,数组结构

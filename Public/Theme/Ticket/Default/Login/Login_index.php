@@ -4,7 +4,7 @@
         <form action="" class="ajax-submit" method="POST" data-am-validator>
             <?= $label->token() ?>
             <input type="hidden" name="back_url" value="<?= $_GET['back_url']; ?>"/>
-            <h1 class="am-text-center am-text-xxxl" style="color: #fff">PESCMS Ticket</h1>
+            <h1 class="am-text-center am-text-xxxl" style="color: #fff"><?= $system['siteTitle'] ?></h1>
 
             <div class="am-input-group am-margin-bottom">
                 <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>

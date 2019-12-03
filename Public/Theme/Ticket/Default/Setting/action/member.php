@@ -54,6 +54,24 @@
             </div>
         </div>
 
+        <hr class="am-margin-top-0 am-divider-default"/>
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">微信公众号注册需要填写完整的用户资料<i class="am-text-danger">*</i></label>
+                    <label class="am-radio-inline">
+                        <input type="radio" value="0" name="weixinRegister" required="" <?= $weixinRegister['value'] == '0' ? 'checked="checked"' : '' ?>> 关闭
+                    </label>
+                    <label class="am-radio-inline">
+                        <input type="radio" value="1" name="weixinRegister" required="" <?= $weixinRegister['value'] == '1' ? 'checked="checked"' : '' ?>> 开启
+                    </label>
+                    <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
+                        <i class="am-icon-lightbulb-o"></i> 考虑用户体验，默认从微信公众号访问系统的，都开启快速注册和绑定账号。若您希望用户填写完整资料才可以完成帐号注册，请选择开启本选项。
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </div>
 </div>

@@ -36,8 +36,10 @@ class Setting extends \Core\Controller\Controller {
                 'authorize',
                 'siteKeywords',
                 'siteDescription',
+                'siteTongji',
                 'verifyLength',
                 'member_login',
+                'weixinRegister',
                 'max_upload_size',
             ],
             //基于数组的json更新设置

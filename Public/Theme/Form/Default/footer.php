@@ -19,5 +19,8 @@
         </small>
     </div>
 </footer>
+<div class="am-hide">
+    <?= $system['siteTongji'] ?>
+</div>
 </body>
 </html>

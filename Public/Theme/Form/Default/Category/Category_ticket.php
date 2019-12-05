@@ -44,7 +44,7 @@
     <div class="am-g am-g-collapse">
         <div class="am-u-sm-12 am-u-sm-centered">
             <div class="am-form-group">
-                <label class="am-block">联系信息<i class="am-text-danger">*</i></label>
+                <label class="am-block">联系信息<span class="contact_label"></span><i class="am-text-danger">*</i></label>
                 <input class="form-text-input input-leng3 am-radius" name="contact_account" placeholder="请填写您的联系信息,方便我们与您联系" type="text" value="" required="">
             </div>
         </div>
@@ -128,6 +128,9 @@
         var contact = function(){
             var dom = $('input[name=contact]:checked');
             var checkContact = dom.val();
+            var label = dom.parent().text().trim()
+
+            $('.contact_label').html(' ('+label+')')
 
             if(checkContact == '3'){
                 $('input[name=contact_account]').parent().hide()

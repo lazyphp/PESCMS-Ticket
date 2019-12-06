@@ -97,7 +97,7 @@ class Extra extends \Core\Model\Model {
     public static function actionNoticeSend(){
         foreach (\Model\Content::listContent([
             'table' => 'send',
-            'condition' => 'send_time <= :time',
+            'condition' => "send_time <= :time AND send_result = '' ",
             'param' => [
                 'time' => time()
             ]

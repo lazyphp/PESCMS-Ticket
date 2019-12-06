@@ -18,7 +18,7 @@
             <?php if(json_decode($system['login_verify'])[1] == '2'): ?>
             <div class="am-input-group am-margin-bottom">
                 <span class="am-input-group-label"><i class="am-icon-shield am-icon-fw"></i></span>
-                <input type="text" class="am-form-field" name="verify">
+                <input type="text" class="am-form-field" name="verify" maxlength="<?= $system['verifyLength'] ?>">
                 <span class="am-input-group-btn">
                     <img src="<?= $label->url('Index-verify') ?>" class="refresh-verify am-padding-left-sm">
                 </span>

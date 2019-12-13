@@ -66,11 +66,15 @@ class Setting extends \Core\Controller\Controller {
         $result = (new \Expand\sms())->send([
             'send_id' => -1,
             'send_account' => $mobile,
-            'send_title' => $template['2']
+            'send_title' => $template['2'],
+            'send_content' => $template['2'],
         ]);
         echo "<p>当前发送模板: {$template['2']}</p>";
         echo '<pre>';
+        echo "------------接口返回的原始数据-------------<br/><br/>";
         print_r($result);
+        echo "<br/><br/>------------下面格式化后的模板格式-------------<br/>";
+        print_r(json_decode($result));
         echo '</pre>';
         echo '<br/>';
         exit;

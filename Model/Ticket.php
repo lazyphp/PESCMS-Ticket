@@ -249,7 +249,9 @@ class Ticket extends \Core\Model\Model {
         $form = self::getTicketContent($ticket['ticket_id']);
         $chat = self::getTicketChat($ticket['ticket_id'], $chatPage);
 
-        return ['ticket' => $ticket, 'form' => $form, 'chat' => $chat];
+        $member = $ticket['member_id'] == '-1' ? '' : \Model\Content::findContent('member', $ticket['member_id'], 'member_id');
+
+        return ['ticket' => $ticket, 'form' => $form, 'chat' => $chat, 'member' => $member];
 
     }
 
@@ -259,9 +261,13 @@ class Ticket extends \Core\Model\Model {
      * @return mixed
      */
     public static function getTicketBaseInfo($number){
-        return self::db('ticket AS t')->join(self::$modelPrefix.'ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id')->where('ticket_number = :ticket_number')->find([
-            'ticket_number' => $number
-        ]);
+        return self::db('ticket AS t')
+            ->field('t.*, tm.*')
+            ->join(self::$modelPrefix.'ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id')
+            ->where('ticket_number = :ticket_number')
+            ->find([
+                'ticket_number' => $number
+            ]);
     }
 
     /**

@@ -167,6 +167,9 @@
 
         })
 
+        /**
+         * 选择对应的组，进行获取对应的用户列表
+         */
         $('.ticket-group').on('click', function(){
             var group = $(this).val();
             if(group == ''){
@@ -194,6 +197,20 @@
                 }
             }, 'JSON')
 
+        })
+
+        /**
+         * 工单备注登记
+         */
+        $('.ticket-remark-input').on('blur', function(){
+            var remark = $(this).val();
+            if(remark == '' || remark == $(this).attr('old')){
+                return false;
+            }
+            var number = '<?= $ticket_number ?>';
+            $.ajaxsubmit({url : '<?= $label->url('Ticket-Ticket-remark') ?>', data : {number:number, remark:remark}}, function(){
+
+            })
         })
 
     })

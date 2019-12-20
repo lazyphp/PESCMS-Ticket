@@ -17,7 +17,7 @@
             <?php endforeach; ?>
         </div>
 
-        <div class="am-padding pt-info-panel ">
+        <div class="am-padding pt-info-panel">
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div><span class="pt-text-explode">问题标题 : </span> <?= $ticket_title; ?></div>
                 <div class="am-g am-g-collapse">
@@ -47,6 +47,11 @@
                     </div>
                 </div>
             </div>
+            <?php if(!empty(self::session()->get('ticket')) && GROUP == 'Ticket' ): ?>
+            <hr/>
+            <div class="am-padding-left"><span class="pt-text-explode">备注说明 : </span> <input type="text" class="ticket-remark-input" maxlength="22" old="<?= $label->xss($ticket_remark) ?>" value="<?= $label->xss($ticket_remark) ?>" placeholder="若需要在列表标记说明，请在此处填写一句话，限22个字"></div>
+            <?php endif; ?>
+
         </div>
 
     </div>

@@ -127,5 +127,21 @@ class Ticket extends \Core\Controller\Controller {
         $this->success('工单已被关闭!', $url);
     }
 
+    /**
+     * 登记工单备注
+     */
+    public function remark(){
+        $number = $this->isP('number', '请提交要记录备注的工单号码');
+        $remark = $this->isP('remark', '请提交您要记录的备注信息');
+        $this->db('ticket')->where('ticket_number = :ticket_number')->update([
+            'noset' => [
+                'ticket_number' => $number
+            ],
+            'ticket_remark' => $remark
+        ]);
+
+        $this->success('备注已更新');
+    }
+
 
 }

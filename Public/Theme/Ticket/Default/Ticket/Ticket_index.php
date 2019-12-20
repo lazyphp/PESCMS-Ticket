@@ -110,33 +110,39 @@
                                     </a>
                                 </div>
                             </td>
-                            <td class="am-show-lg-only am-text-bottom am-text-right">
+                            <td class="am-show-lg-only am-text-right am-text-bottom ">
+                                <?php if(!empty($value['ticket_remark'])): ?>
+                                <div class="am-text-warning">
+                                    备注: <?= $label->strCut($value['ticket_remark'], '44', '') ?>
+                                </div>
+                                <?php endif; ?>
+                                <div class="admin-task-bd">
+                                    <a class="am-link-muted print-ticket" href="<?= $label->url('View-printer', array('number' => $value["ticket_number"])); ?>"><span class="am-icon-print"></span></a>
 
-                                <a class="am-link-muted print-ticket" href="<?= $label->url('View-printer', array('number' => $value["ticket_number"])); ?>"><span class="am-icon-print"></span></a>
-
-                                <span>
+                                    <span>
                                         耗时: <?= empty($value['ticket_run_time']) ? '未处理' : $label->timing($value['ticket_run_time']); ?>
                                     </span>
-                                <i class="am-margin-left-xs am-margin-right-xs">|</i>
-                                <span>
+                                    <i class="am-margin-left-xs am-margin-right-xs">|</i>
+                                    <span>
                                         责任人: <?= $value['user_id'] > 0 ? $value['user_name'] : '<span class="am-text-danger">暂无</span>'; ?>
                                 </span>
-                                <i class="am-margin-left-xs am-margin-right-xs">|</i>
+                                    <i class="am-margin-left-xs am-margin-right-xs">|</i>
 
-                                <a href="<?= $label->url('Ticket-Ticket-handle', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>"
-                                   class="am-text-primary">处理</a>
-                                <i class="am-margin-left-xs am-margin-right-xs">|</i>
+                                    <a href="<?= $label->url('Ticket-Ticket-handle', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>"
+                                       class="am-text-primary">处理</a>
+                                    <i class="am-margin-left-xs am-margin-right-xs">|</i>
 
-                                <?php if ($value['ticket_close'] == '0' && $value['ticket_status'] < 3): ?>
-                                    <a href="<?= $label->url('Ticket-Ticket-close', ['number' => $value['ticket_number'], 'method' => 'POST', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>" class="am-text-danger ajax-click ajax-dialog" msg="确定要关闭本工单吗？">关闭工单</a>
-                                <?php else: ?>
-                                    <a href="javascript:;" class="am-text-warning"><?= $value['ticket_status'] == '3' ? '已结束' : '已关闭' ?></a>
+                                    <?php if ($value['ticket_close'] == '0' && $value['ticket_status'] < 3): ?>
+                                        <a href="<?= $label->url('Ticket-Ticket-close', ['number' => $value['ticket_number'], 'method' => 'POST', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>" class="am-text-danger ajax-click ajax-dialog" msg="确定要关闭本工单吗？">关闭工单</a>
+                                    <?php else: ?>
+                                        <a href="javascript:;" class="am-text-warning"><?= $value['ticket_status'] == '3' ? '已结束' : '已关闭' ?></a>
 
-                                <?php endif; ?>
-                                <?php if($label->checkAuth(GROUP . 'DELETETicketaction') === true): ?>
-                                <i class="am-margin-left-xs am-margin-right-xs">|</i>
-                                    <a class="am-text-danger ajax-click ajax-dialog"  msg="确定删除吗？将无法恢复的！" href="<?= $label->url(GROUP . '-' . MODULE . '-action', array('id' => $value["ticket_id"], 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI']))); ?>"><span class="am-icon-trash-o"></span></a>
-                                <?php endif; ?>
+                                    <?php endif; ?>
+                                    <?php if($label->checkAuth(GROUP . 'DELETETicketaction') === true): ?>
+                                        <i class="am-margin-left-xs am-margin-right-xs">|</i>
+                                        <a class="am-text-danger ajax-click ajax-dialog"  msg="确定删除吗？将无法恢复的！" href="<?= $label->url(GROUP . '-' . MODULE . '-action', array('id' => $value["ticket_id"], 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI']))); ?>"><span class="am-icon-trash-o"></span></a>
+                                    <?php endif; ?>
+                                </div>
                             </td>
                         </tr>
 

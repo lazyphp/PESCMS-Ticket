@@ -209,9 +209,10 @@ class Login extends \Core\Controller\Controller {
 
         //邮件地址没有填写，则直接随机创建帐号
         if(empty($_POST['email'])){
-            $param['member_email'] = "{$param['member_weixin']}@{$param['member_weixin']}.wx";
-            $param['member_account'] = "wx_{$param['member_weixin']}";
-            $param['member_password'] = md5(\Model\Extra::getOnlyNumber());//随机写入一些字符，随机帐号无法使用滴
+            $randomAccount = \Model\Extra::getOnlyNumber();
+            $param['member_email'] = "{$randomAccount}@default.wx";
+            $param['member_account'] = "wx_{$randomAccount}";
+            $param['member_password'] = md5(\Model\Extra::getOnlyNumber());//随机写入一些字符，随机帐号无法使用
             $param['member_status'] = \Core\Func\CoreFunc::$param['system']['member_review'];
             $param['member_createtime'] = time();
             $memberID = $this->db('member')->insert($param);

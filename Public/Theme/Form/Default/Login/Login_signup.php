@@ -1,3 +1,4 @@
+<input type="hidden" name="weixin" value="<?= !empty($_POST['weixin']) ? $label->xss($_POST['weixin']) : '' ?>">
 <div class="am-input-group am-margin-bottom">
     <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
     <input type="text" name="account" class="am-form-field" placeholder="登陆账号" autofocus required="required">
@@ -5,7 +6,7 @@
 
 <div class="am-input-group am-margin-bottom">
     <span class="am-input-group-label"><i class="am-icon-navicon am-icon-fw"></i></span>
-    <input type="text" maxlength="10" name="name" class="am-form-field" placeholder="用户名称" required="required">
+    <input type="text" maxlength="10" name="name" class="am-form-field" value="<?= !empty($_POST['name']) ? $label->xss($_POST['name']) : '' ?>" placeholder="用户名称" required="required">
 </div>
 
 <div class="am-input-group am-margin-bottom">

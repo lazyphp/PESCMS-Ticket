@@ -78,6 +78,11 @@ class Login extends \Core\Controller\Controller {
         $param['member_name'] = $this->isP('name', '请填写名字');
         $param['member_email'] = $this->isP('email', '请填写邮箱地址');
         $param['member_phone'] = $this->isP('phone', '请填写手机号码');
+
+        if(!empty($_POST['weixin'])){
+            $param['member_weixin'] = $this->p('weixin');
+        }
+
         $password = $this->isP('password', '请填密码');
         $repassword = $this->isP('repassword', '请填写再次确认密码');
 

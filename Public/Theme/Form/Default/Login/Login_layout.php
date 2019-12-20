@@ -15,6 +15,4 @@
         </div>
     </div>
 </div>
-<!--背景版权来自NASA https://www.nasa.gov/multimedia/imagegallery/image_feature_693.html-->
-
 <?php include THEME_PATH . '/footer.php'; ?>

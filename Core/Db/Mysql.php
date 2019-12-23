@@ -198,8 +198,6 @@ class Mysql {
 
         $param = $this->tableFieldParam($param);
 
-
-
         $this->dealParam($param, $fieldType);
         foreach ($this->param as $key => $value) {
             $field[] = "`{$key}`";
@@ -227,7 +225,10 @@ class Mysql {
             return $param;
         }
 
-        $fields = $this->getAll("DESC {$this->tableName}");
+        $sth = $this->dbh->prepare("DESC {$this->tableName}");
+        $sth->execute();
+        $fields = $sth->fetchAll();
+
         $newParam = [];
         foreach ($fields as $field) {
             $newParam[$field['Field']] = !empty($param[$field['Field']]) ? $param[$field['Field']] : $this->handleFiledType($field['Type'], $field['Default'], $field['Null']);
@@ -302,7 +303,9 @@ class Mysql {
             }
 
             $sql = "SELECT @@sql_mode AS model";
-            $model = $this->fetch($sql);
+            $sth = $this->dbh->prepare($sql);
+            $sth->execute();
+            $model = $sth->fetch();
             if (strpos(strtoupper($model['model']), 'STRICT_TRANS_TABLES') !== false) {
                 $sqlModel = 'STRICT_TRANS_TABLES';
             }else{
@@ -342,10 +345,10 @@ class Mysql {
             $param = array_merge($param, $noset);
         }
 
+        $param = $this->updateFieldCover($param);
         $this->dealParam($param, $fieldType);
 
         $this->getLastSql = 'UPDATE ' . $this->tableName . ' SET ' . implode(',', $content) . $this->where;
-
         $sth = $this->PDOBindArray();
         $result = $sth->rowCount();
         $this->emptyParam();
@@ -354,6 +357,28 @@ class Mysql {
         } else {
             return false;
         }
+    }
+
+    /**
+     * 对执行更新的参数进行一次缺省值转行
+     * @param $param
+     * @return mixed
+     */
+    private function updateFieldCover($param){
+        if($this->checkSqlTransTable() == false){
+            return $param;
+        }
+        $sth = $this->dbh->prepare("DESC {$this->tableName}");
+        $sth->execute();
+        $fields = $sth->fetchAll();
+
+        foreach ($fields as $fieldItem) {
+            if(isset($param[$fieldItem['Field']]) && empty($param[$fieldItem['Field']]) && !is_numeric($param[$fieldItem['Field']]) ){
+                $param[$fieldItem['Field']] = $this->handleFiledType($fieldItem['Type'], $fieldItem['Default'], $fieldItem['Null']);
+            }
+        }
+
+        return $param;
     }
 
     /**

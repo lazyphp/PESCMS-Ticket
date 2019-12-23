@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2019-10-31 02:10:54
--- 服务器版本： 5.6.25-log
+-- Generation Time: 2019-12-23 08:22:25
+-- 服务器版本： 5.6.25
 -- PHP Version: 5.6.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `ptttest`
+-- Database: `ticket`
 --
 
 -- --------------------------------------------------------
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `pes_field` (
   PRIMARY KEY (`field_id`),
   UNIQUE KEY `modle_id` (`field_model_id`,`field_name`),
   KEY `field_name` (`field_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=252 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=253 ;
 
 --
 -- 转存表中的数据 `pes_field`
@@ -208,7 +208,8 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (248, 24, 'path', '附件地址', 'text', '', '', '', 1, 3, 1, 1, 1, 0),
 (249, 24, 'path_type', '存储位置', 'radio', '{&quot;\\u672c\\u5730\\u786c\\u76d8&quot;:&quot;0&quot;}', '', '', 1, 4, 1, 1, 1, 0),
 (250, 24, 'type', '附件类型', 'radio', '{&quot;\\u56fe\\u7247&quot;:&quot;0&quot;,&quot;\\u6587\\u4ef6&quot;:&quot;1&quot;,&quot;\\u591a\\u5a92\\u4f53&quot;:&quot;3&quot;}', '', '', 1, 1, 1, 1, 1, 0),
-(251, 24, 'owner', '上传方', 'radio', '{&quot;\\u524d\\u53f0\\u7528\\u6237&quot;:&quot;0&quot;,&quot;\\u540e\\u53f0\\u7ba1\\u7406&quot;:&quot;1&quot;}', '', '', 1, 94, 1, 1, 1, 0);
+(251, 24, 'owner', '上传方', 'radio', '{&quot;\\u524d\\u53f0\\u7528\\u6237&quot;:&quot;0&quot;,&quot;\\u540e\\u53f0\\u7ba1\\u7406&quot;:&quot;1&quot;}', '', '', 1, 94, 1, 1, 1, 0),
+(252, 6, 'view_type', '允许查看所有用户', 'radio', '{&quot;\\u5426&quot;:&quot;0&quot;,&quot;\\u662f&quot;:&quot;1&quot;}', '若您希望本用户组的用户可以查看所有用户信息，请勾选是。', '', 1, 2, 1, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -334,7 +335,7 @@ INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_l
 (16, '路由规则', 9, 'am-icon-map-o', 'Ticket-Route-index', 4, 0),
 (17, '工单列表', 13, 'am-icon-fire', 'Ticket-Ticket-index', 1, 0),
 (18, '我的工单', 13, 'am-icon-coffee', 'Ticket-Ticket-myTicket', 2, 0),
-(19, '邮件模板', 9, 'am-icon-paint-brush', 'Ticket-Mail_template-index', 6, 0),
+(19, '通知模板', 9, 'am-icon-paint-brush', 'Ticket-Mail_template-index', 6, 0),
 (21, '工单分类', 1, 'am-icon-list-alt', 'Ticket-Category-index', 1, 0),
 (23, '客户管理', 3, 'am-icon-street-view', 'Ticket-Member-index', 4, 0),
 (24, '应用商店', 9, 'am-icon-cogs', 'Ticket-Application-index', 3, 0),
@@ -377,7 +378,7 @@ INSERT INTO `pes_model` (`model_id`, `model_name`, `model_title`, `model_status`
 (13, 'Node', '节点列表', 1, 1, 2, 10),
 (15, 'ticket_model', '工单模型', 1, 1, 2, 10),
 (16, 'ticket_form', '工单表单', 1, 1, 2, 10),
-(17, 'mail_template', '邮件模板', 1, 0, 2, 10),
+(17, 'mail_template', '通知模板', 1, 0, 2, 10),
 (18, 'Category', '分类', 1, 1, 1, 10),
 (20, 'Member', '客户管理', 1, 1, 1, 10),
 (21, 'Send', '发送列表', 1, 1, 1, 10),
@@ -612,7 +613,7 @@ CREATE TABLE IF NOT EXISTS `pes_option` (
   `value` text NOT NULL,
   `option_range` varchar(128) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=32 ;
 
 --
 -- 转存表中的数据 `pes_option`
@@ -636,8 +637,8 @@ INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) 
 (15, 'cs_notice_type', '客服人员接收通知方式', '{"1":"1"}', 'system'),
 (16, 'sms', '短信接口', '', 'system'),
 (17, 'siteLogo', '网站LOGO', '/Theme/assets/i/logo.png', 'system'),
-(18, 'siteTitle', '网站名称', 'PESCMS Ticket', 'system'),
-(19, 'pescmsIntroduce', '页脚内容', '<div class="am-u-sm-12 am-u-lg-11 am-u-sm-centered">\r\n    <div class="am-g">\r\n        <div class="am-u-sm-12 am-u-lg-3">\r\n            <h4>关于我们</h4>\r\n            <p>当前正在使用PESCMS Ticket客服工单系统。页脚内容为预设，请按照业务需求设置页脚内容。</p>\r\n        </div>\r\n        <div class="am-u-sm-12 am-u-lg-3">\r\n            <h4>产品列表</h4>\r\n            <ul>\r\n                <li><a href="https://www.pescms.com/download/2.html">PESCMS TEAM 团队任务管理系统</a></li>\r\n                <li><a href="https://www.pescms.com/download/3.html">PESCMS DOC 文档管理系统</a></li>\r\n                <li><a href="https://www.pescms.com/download/5.html">PESCMS TICKET 客服工单系统</a></li>\r\n                <li><a href="https://www.pescms.com/download/4.html">PESCMS LOGIN 网站登录管理</a></li>\r\n                <li><a href="https://www.pescms.com/download/6.html">基金定投助手</a></li>\r\n            </ul>\r\n        </div>\r\n        <div class="am-u-sm-12 am-u-lg-3 am-u-end">\r\n            <h4>产品服务</h4>\r\n            <ul>\r\n                <li><a href="https://www.pescms.com/Page/Authorization.html">商业授权</a></li>\r\n                <li><a href="https://www.pescms.com/Authorize-Verify">授权查询</a></li>\r\n                <li><a href="https://www.pescms.com/service.html">有偿服务</a></li>\r\n                <li><a href="https://www.pescms.com/Page/ad.html">广告投放</a></li>\r\n                <li><a href="https://www.pescms.com/Page/donate.html">赞助捐赠</a></li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n</div>', 'system'),
+(18, 'siteTitle', '网站名称', 'PESCMS Ticket开源版', 'system'),
+(19, 'pescmsIntroduce', '页脚内容', '<div class="am-u-sm-12 am-u-lg-11 am-u-sm-centered">\r\n    <div class="am-g">\r\n        <div class="am-u-sm-12 am-u-lg-3">\r\n            <h4>关于我们</h4>\r\n            <p>当前站点正在使用<strong>PESCMS Ticket客服工单系统开源版</strong。页脚内容为开源版预设，请按照业务需求自行设置页脚内容。</p>\r\n        </div>\r\n        <div class="am-u-sm-12 am-u-lg-3">\r\n            <h4>PESCMS产品介绍</h4>\r\n            <ul>\r\n                <li><a href="https://www.pescms.com/download/2.html">PESCMS TEAM 团队任务管理系统</a></li>\r\n                <li><a href="https://www.pescms.com/download/3.html">PESCMS DOC 文档管理系统</a></li>\r\n                <li><a href="https://www.pescms.com/download/5.html">PESCMS TICKET 客服工单系统</a></li>\r\n                <li><a href="https://www.pescms.com/download/4.html">PESCMS LOGIN 网站登录管理</a></li>\r\n                <li><a href="https://www.pescms.com/download/6.html">基金定投助手</a></li>\r\n            </ul>\r\n        </div>\r\n        <div class="am-u-sm-12 am-u-lg-3 am-u-end">\r\n            <h4>PESCMS产品服务</h4>\r\n            <ul>\r\n                <li><a href="https://www.pescms.com/Page/Authorization.html">商业授权</a></li>\r\n                <li><a href="https://www.pescms.com/Authorize-Verify">授权查询</a></li>\r\n                <li><a href="https://www.pescms.com/service.html">有偿服务</a></li>\r\n                <li><a href="https://www.pescms.com/Page/ad.html">广告投放</a></li>\r\n                <li><a href="https://www.pescms.com/Page/donate.html">赞助捐赠</a></li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n</div>', 'system'),
 (20, 'siteContact', '网站联系方式', '<span class="am-margin-right-xs"><i class="am-icon-qq"></i> <a href="https://wpa.qq.com/msgrd?v=3&uin=&menu=yes" target="_blank">10000</a></span>\r\n<span class="am-margin-right-xs"><i class="am-icon-weixin"></i> <a href="javascript:;" data-am-popover="{content: ''<img src=\\''https://www.pescms.com/Theme/assets/i/weixin_test.jpg\\'' width=300>'', trigger: ''hover focus''}" >NoTSet</a></span>', 'system'),
 (21, 'authorize', '授权码', '', ''),
 (22, 'siteKeywords', '网站Keywords', 'PESCMS Ticket是一款以GPLv2协议发布的开源工单客服系统', 'system'),
@@ -647,7 +648,9 @@ INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) 
 (26, 'indexStyle', '首页样式', '0', 'system'),
 (27, 'member_login', '客户登陆方式', '0', 'system'),
 (28, 'max_upload_size', '上传大小', '1', 'upload'),
-(29, 'siteStyle', '自定义样式', '', 'system');
+(29, 'siteStyle', '自定义样式', '', 'system'),
+(30, 'siteTongji', '网站统计代码', '', 'system'),
+(31, 'weixinRegister', '微信公众号注册需要填写完整的用户资料', '0', 'system');
 
 -- --------------------------------------------------------
 
@@ -727,6 +730,7 @@ CREATE TABLE IF NOT EXISTS `pes_ticket` (
   `ticket_fix` tinyint(1) NOT NULL COMMENT '工单是否解决',
   `ticket_comment` varchar(1000) NOT NULL DEFAULT '' COMMENT '评价留言',
   `ticket_time_out_sequence` int(11) NOT NULL DEFAULT '0' COMMENT '已通知超时次数',
+  `ticket_remark` varchar(64) NOT NULL DEFAULT '' COMMENT '工单备注说明',
   PRIMARY KEY (`ticket_id`),
   KEY `ticket_number` (`ticket_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -866,6 +870,7 @@ CREATE TABLE IF NOT EXISTS `pes_user_group` (
   `user_group_createtime` int(11) NOT NULL DEFAULT '0',
   `user_group_name` varchar(255) NOT NULL DEFAULT '',
   `user_group_menu` text NOT NULL,
+  `user_group_view_type` tinyint(1) NOT NULL,
   PRIMARY KEY (`user_group_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
@@ -873,10 +878,10 @@ CREATE TABLE IF NOT EXISTS `pes_user_group` (
 -- 转存表中的数据 `pes_user_group`
 --
 
-INSERT INTO `pes_user_group` (`user_group_id`, `user_group_status`, `user_group_createtime`, `user_group_name`, `user_group_menu`) VALUES
-(1, 1, 0, '管理员', '12,13,17,18,1,2,21,3,4,14,15,23,9,6,7,16,19,10,11'),
-(2, 1, 0, '客服人员', '12,13,17,18'),
-(3, 1, 0, '投诉反馈', '33');
+INSERT INTO `pes_user_group` (`user_group_id`, `user_group_status`, `user_group_createtime`, `user_group_name`, `user_group_menu`, `user_group_view_type`) VALUES
+(1, 1, 0, '管理员', '12,13,17,18,1,2,21,3,4,14,15,23,9,6,7,16,19,10,11', 0),
+(2, 1, 0, '客服人员', '12,13,17,18', 0),
+(3, 1, 0, '投诉反馈', '33', 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

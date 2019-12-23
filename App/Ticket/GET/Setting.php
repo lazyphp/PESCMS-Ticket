@@ -93,7 +93,7 @@ class Setting extends \Core\Controller\Controller {
         $account = $this->isG('account', '请填写接收模板消息的微信openid');
         $id = $this->isG('template', '请选择模板');
 
-        $title = \Model\MailTemplate::matchTitle('123456', 3);
+        $title = \Model\MailTemplate::matchTitle('123456', $id);
 
         $template = \Model\MailTemplate::matchContent([
             'number' => '123456',

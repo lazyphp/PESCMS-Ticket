@@ -40,7 +40,10 @@ class Index extends \Core\Controller\Controller {
      * 发送通知
      */
     public function notice() {
-        $list = \Model\Content::listContent(['table' => 'ticket_notice_action']);
+        $this->db()->transaction();
+
+        $list = \Model\Content::listContent(['table' => 'ticket_notice_action', 'lock' => 'FOR UPDATE',]);
+
         if (!empty($list)) {
             foreach ($list as $item) {
                 //大于0的，则为发送给客户的，反之是给客服
@@ -59,6 +62,8 @@ class Index extends \Core\Controller\Controller {
 
         $this->ticketTimeOut();
 
+        $this->db()->commit();
+
     }
 
     private function ticketTimeOut(){
@@ -66,8 +71,10 @@ class Index extends \Core\Controller\Controller {
             'table' => 'ticket AS t',
             'field' => 't.ticket_id, t.ticket_number, t.ticket_status, t.ticket_submit_time, t.user_id, t.ticket_time_out_sequence, tm.ticket_model_group_id, tm.ticket_model_time_out, tm.ticket_model_time_out_sequence',
             'join' => "{$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id",
-            'condition' => 't.ticket_status = 0'
+            'condition' => 't.ticket_status = 0 AND ticket_time_out_sequence < ticket_model_time_out_sequence  ',
+            'lock' => 'FOR UPDATE'
         ]);
+
         if(empty($list)){
             return true;
         }

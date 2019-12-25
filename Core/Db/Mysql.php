@@ -24,7 +24,7 @@ class Mysql {
 
     public $dbh, $getLastSql, $getLastInsert, $prefix, $errorInfo = array(), $param = array();
     private $defaultDb, $tableName, $field = '*', $where = '', $join = array(), $order = '',
-        $group = '', $limit = '', $transaction = false;
+        $group = '', $limit = '', $lock = '', $transaction = false;
 
     public function __construct() {
         try {
@@ -155,6 +155,20 @@ class Mysql {
     }
 
     /**
+     * 是否设锁
+     * @param $condition
+     * @return $this
+     */
+    public function lock($condition) {
+        if (empty($condition)) {
+            $this->lock = '';
+        } else {
+            $this->lock = " {$condition}";
+        }
+        return $this;
+    }
+
+    /**
      * 单条数据查找
      * @param array $param 查询参数(一维数组)
      * @param str $fieldType 字段类型
@@ -165,9 +179,11 @@ class Mysql {
 
         $limit = ' LIMIT 1 ';
         $this->join = empty($this->join) ? array('') : $this->join;
-        $this->getLastSql = 'SELECT ' . $this->field . ' FROM ' . $this->tableName . implode('', $this->join) . $this->where . $this->group . $this->order . $limit;
+        $this->getLastSql = 'SELECT ' . $this->field . ' FROM ' . $this->tableName . implode('', $this->join) . $this->where . $this->group . $this->order . $limit. $this->lock;
         $sth = $this->PDOBindArray();
         $result = $sth->fetch();
+        $sth->closeCursor();
+
         $this->emptyParam();
         return $result;
     }
@@ -181,9 +197,11 @@ class Mysql {
     public function select($param = '', $fieldType = '') {
         $this->dealParam($param, $fieldType);
         $this->join = empty($this->join) ? array('') : $this->join;
-        $this->getLastSql = 'SELECT ' . $this->field . ' FROM ' . $this->tableName . implode('', $this->join) . $this->where . $this->group . $this->order . $this->limit;
+        $this->getLastSql = 'SELECT ' . $this->field . ' FROM ' . $this->tableName . implode('', $this->join) . $this->where . $this->group . $this->order . $this->limit. $this->lock;
         $sth = $this->PDOBindArray();
         $result = $sth->fetchALL();
+        $sth->closeCursor();
+
         $this->emptyParam();
         return $result;
     }

@@ -135,14 +135,6 @@ class Ticket extends \Core\Controller\Controller {
             \Model\Ticket::inTicketIdWithUpdate(['ticket_read' => '1', 'noset' => ['ticket_id' => $content['ticket']['ticket_id']]]);
         }
         $this->assign($content['ticket']);
-        $this->assign('user', \Model\Content::listContent([
-            'table' => 'user',
-            'condition' => 'user_id != :user_id AND user_status = 1',
-            'order' => 'user_group_id ASC',
-            'param' => [
-                'user_id' => $userID
-            ]
-        ]));
 
         //查询工单是否有新回复。
         if(!empty($_GET['replyRefresh'])){
@@ -150,6 +142,8 @@ class Ticket extends \Core\Controller\Controller {
             exit;
         }else {
 
+            $this->getTicketUserGroup($content['ticket']['ticket_model_group_id']);
+            //当前客服的回复短语
             $this->assign('phrase', \Model\Content::listContent([
                 'table' => 'phrase',
                 'condition' => 'phrase_user_id = :user_id',
@@ -160,12 +154,31 @@ class Ticket extends \Core\Controller\Controller {
             ]));
 
             $this->assign('form', $content['form']);
+            $this->assign('member', $content['member']);
             $this->assign('chat', $content['chat']['list']);
             $this->assign('page', $content['chat']['page']);
             $this->assign('pageObj', $content['chat']['pageObj']);
             $this->assign('title', '工单详情');
             $this->layout('Ticket_handle');
         }
+
+    }
+
+    /**
+     * 获取当前工单所允许的用户组信息。
+     * @param $ticketGroupID
+     */
+    private function getTicketUserGroup($ticketGroupID){
+        $myGroup = \Model\Content::findContent('user_group', $this->session()->get('ticket')['user_group_id'], 'user_group_id');
+
+        $condition = '';
+        if($myGroup['user_group_view_type'] == 0){
+            $groupID = trim($ticketGroupID, ',');//管辖组首尾是逗号需要移除
+            $condition = "user_group_id IN ({$groupID})";
+        }
+
+        $groupList = $this->db('user_group')->where($condition)->select();
+        $this->assign('groupList', $groupList);
 
     }
 
@@ -182,6 +195,25 @@ class Ticket extends \Core\Controller\Controller {
      */
     public function complainDetail(){
         $this->handle();
+    }
+
+    /**
+     * 获取可以指派的用户名单
+     */
+    public function getAssignUser(){
+
+        $groupID = $this->isP('group', '请提交用户组ID');
+
+        $field = 'IF(user_id = '.$this->session()->get('ticket')['user_id'].', "disabled", "") AS disabled';
+
+        $user = $this->db('user')->field("user_id, user_name, {$field}")->where('user_group_id = :groupID')->select([
+            'groupID' => $groupID
+        ]);
+        if(empty($user)){
+            $this->error('获取客服信息失败');
+        }else{
+            $this->success(['msg' => '获取客服信息完成', 'data' => $user]);
+        }
     }
 
 

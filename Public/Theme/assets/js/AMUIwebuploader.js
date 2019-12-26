@@ -105,7 +105,7 @@ $(function () {
                             var inputValue = response.url;
                     }
 
-                    $('#' + file.id).append('<input type="hidden" name="' + obj.name + '" value="' + inputValue + '">');
+                    $('#' + file.id).append('<input type="hidden" name="' + obj.name + '" value="' + inputValue + '" autocomplete="off" >');
                 }
                 $('#' + file.id + ' h3.am-gallery-title').html(response.state).removeClass('am-hide');
             });
@@ -216,7 +216,7 @@ var AMUIwebuploader = {
             icon +
             '</div>';
 
-        $li += '<input type="hidden" name="' + param.name + '" value="' + param.src + '">';
+        $li += '<input type="hidden" name="' + param.name + '" value="' + param.src + '" autocomplete="off">';
         $("#before" + param.id).before('<li id="' + Math.random() + '">' + $li + '</li>');
     },
 

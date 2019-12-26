@@ -237,18 +237,21 @@ class Ticket extends \Core\Model\Model {
     /**
      * 查看工单内容
      * 注：前后台公用本方法
+     * @param $page 聊天内容的分页数
      * @return array 返回处理好得通用数组
      */
-    public static function view() {
+    public static function view($chatPage = '30') {
         $number = self::isG('number', '请选择您要查看的工单');
         $ticket = self::getTicketBaseInfo($number);
         if (empty($ticket)) {
             return false;
         }
         $form = self::getTicketContent($ticket['ticket_id']);
-        $chat = self::getTicketChat($ticket['ticket_id']);
+        $chat = self::getTicketChat($ticket['ticket_id'], $chatPage);
 
-        return ['ticket' => $ticket, 'form' => $form, 'chat' => $chat];
+        $member = $ticket['member_id'] == '-1' ? '' : \Model\Content::findContent('member', $ticket['member_id'], 'member_id');
+
+        return ['ticket' => $ticket, 'form' => $form, 'chat' => $chat, 'member' => $member];
 
     }
 
@@ -258,9 +261,13 @@ class Ticket extends \Core\Model\Model {
      * @return mixed
      */
     public static function getTicketBaseInfo($number){
-        return self::db('ticket AS t')->join(self::$modelPrefix.'ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id')->where('ticket_number = :ticket_number')->find([
-            'ticket_number' => $number
-        ]);
+        return self::db('ticket AS t')
+            ->field('t.*, tm.*')
+            ->join(self::$modelPrefix.'ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id')
+            ->where('ticket_number = :ticket_number')
+            ->find([
+                'ticket_number' => $number
+            ]);
     }
 
     /**
@@ -268,9 +275,15 @@ class Ticket extends \Core\Model\Model {
      * @param $id 工单ID
      * @return 返回查询得到的内容
      */
-    public static function getTicketChat($id) {
+    public static function getTicketChat($id, $chatPage) {
         $sql = "SELECT %s FROM " . self::$modelPrefix . "ticket_chat WHERE ticket_id = :ticket_id ORDER BY ticket_chat_id ASC";
-        return \Model\Content::quickListContent(['count' => sprintf($sql, 'count(*)'), 'normal' => sprintf($sql, '*'), 'param' => ['ticket_id' => $id], 'page' => 30]);
+
+        return \Model\Content::quickListContent([
+            'count' => sprintf($sql, 'count(*)'),
+            'normal' => sprintf($sql, '*'),
+            'param' => ['ticket_id' => $id],
+            'page' => $chatPage
+        ]);
     }
 
     /**

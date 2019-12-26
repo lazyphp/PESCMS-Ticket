@@ -165,6 +165,10 @@ header('Location: {$document}?g=Ticket&m=Login&a=index');";
         $data['user_status'] = '1';
         $data['user_createtime'] = time();
 
+        if($this->p('passwd') !== $this->p('repasswd')){
+            $this->error('两次输入的密码不一致');
+        }
+
         $this->installDB();
 
         $option['version'] = $this->version;//设置系统版本

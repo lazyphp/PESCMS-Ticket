@@ -184,4 +184,13 @@ $(function () {
         $(".refresh-verify").removeClass("am-hide").attr("src", PESCMS_PATH +"/?m=Index&a=verify&time=" + Date.parse(new Date()) + Math.random());
     });
 
+    /**
+     * 打印工单
+     */
+    $('.print-ticket').on('click', function(){
+        var url = $(this).attr('href');
+        window.open(url, '', 'width=800,height=600');
+        return false;
+    })
+
 })

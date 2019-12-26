@@ -32,7 +32,12 @@ class UpdateUserGroupField extends \Core\Slice\Slice{
         foreach($userGroupList as $value){
             $userGroup[$value['user_group_name']] = $value['user_group_id'];
         }
-        $this->db('field')->where('field_name = :field_name')->update(['field_option' => json_encode($userGroup), 'noset' => ['field_name' => 'group_id'] ]);
+        $this->db('field')->where('field_name = :field_name')->update([
+            'noset' => [
+                'field_name' => 'group_id'
+            ],
+            'field_option' => json_encode($userGroup),
+        ]);
     }
 
 

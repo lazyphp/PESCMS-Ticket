@@ -42,8 +42,8 @@ class Content extends \Core\Model\Model {
         if(empty($param['table'])){
             self::error('Unkonw Table!');
         }
-        $value = array_merge(['field' => '*', 'db' => '', 'prefix' => '', 'join' => '', 'condition' => '', 'order' => '', 'group' => '', 'limit' => '', 'param' => array()], $param);
-        return self::db($value['table'], $value['db'], $value['prefix'])->field($value['field'])->join($value['join'])->where($value['condition'])->order($value['order'])->group($value['group'])->limit($value['limit'])->select($value['param']);
+        $value = array_merge(['field' => '*', 'db' => '', 'prefix' => '', 'join' => '', 'condition' => '', 'order' => '', 'group' => '', 'limit' => '', 'lock' => '', 'param' => array()], $param);
+        return self::db($value['table'], $value['db'], $value['prefix'])->field($value['field'])->join($value['join'])->where($value['condition'])->order($value['order'])->group($value['group'])->limit($value['limit'])->lock($value['lock'])->select($value['param']);
     }
 
     /**

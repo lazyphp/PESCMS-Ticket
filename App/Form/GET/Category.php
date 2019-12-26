@@ -125,7 +125,7 @@ class Category extends \Core\Controller\Controller{
         //@todo 现阶段只有三种联系方式，因此暂时用代码写死的形式展示
         $this->assign('contact', [
             '1' => [
-                'title' => '邮件',
+                'title' => '电子邮件',
                 'key' => 'member_email'
             ],
             '2' => [

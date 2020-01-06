@@ -158,7 +158,7 @@ header('Location: {$document}?g=Ticket&m=Login&a=index');";
         $option['domain'] = $this->isP('domain', '请填写域名');
 
         $data['user_account'] = $this->isP('account', '请填写管理员帐号');
-        $data['user_password'] = \Core\Func\CoreFunc::generatePwd($data['user_account'].$this->isP('passwd', '请填写管理员密码'), 'PRIVATE_KEY');
+        $data['user_password'] = \Core\Func\CoreFunc::generatePwd($data['user_account'].$this->isP('passwd', '请填写管理员密码'));
         $data['user_name'] = $this->isP('name', '请填写管理员名称');
         $data['user_mail'] = $this->isP('mail', '请填写管理员邮箱');
         $data['user_group_id'] = '1';

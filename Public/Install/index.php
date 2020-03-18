@@ -14,6 +14,8 @@ if($version < 5.6){
     echo '<h1>PESCMS系列程序需要PHP5.6 或以上版本支持!</h1>';
     exit;
 }
+//安装程序禁用PHP opcache
+ini_set('opcache.enable', '0');
 
 define('ITEM', 'App');
 //当前项目控制器所在目录

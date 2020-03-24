@@ -62,10 +62,16 @@ class Index extends \Core\Controller\Controller {
 
         $this->ticketTimeOut();
 
+        $this->autoClose();
+
         $this->db()->commit();
 
     }
 
+    /**
+     * 工单超时提醒
+     * @return bool
+     */
     private function ticketTimeOut(){
         $list = \Model\Content::listContent([
             'table' => 'ticket AS t',
@@ -108,6 +114,28 @@ class Index extends \Core\Controller\Controller {
 
         }
 
+    }
+
+    /**
+     * 自动关闭工单
+     */
+    private function autoClose(){
+        $list = \Model\Content::listContent([
+            'table' => 'ticket AS t',
+            'field' => 't.ticket_id, t.ticket_number, t.member_id, t.ticket_submit_time, t.ticket_contact_account, t.ticket_contact, tm.ticket_model_close_time',
+            'join' => "{$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id",
+            'condition' => 't.ticket_status = 0 AND t.ticket_close = 0 AND tm.ticket_model_open_close = 1',
+            'lock' => 'FOR UPDATE',
+        ]);
+
+        foreach ($list as $item){
+            if($item['ticket_submit_time'] < time() - $item['ticket_model_close_time'] * 60 ){
+                \Model\Ticket::addReply($item['ticket_id'], '工单已关闭，若还有疑问，请重新发表工单咨询!');
+                \Model\Ticket::inTicketIdWithUpdate(['ticket_close' => '1', 'noset' => ['ticket_id' => $item['ticket_id']]]);
+                \Model\Notice::addTicketNoticeAction($item['ticket_number'], $item['ticket_contact_account'], $item['ticket_contact'], 6);
+
+            }
+        }
     }
 
     /**

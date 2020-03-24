@@ -68,10 +68,8 @@ class Notice extends \Core\Model\Model {
      */
     public static function insertMemberNoticeSendTemplate(array $param){
         $title = \Model\MailTemplate::matchTitle($param['ticket_number'], $param['template_type']);
-        $content = \Model\MailTemplate::matchContent([
-            'number' => $param['ticket_number'],
-            'view' => \Model\MailTemplate::getViewLink($param['ticket_number'], $param['send_type'])
-        ], $param['template_type']);
+
+        $content = \Model\MailTemplate::matchContent($param['ticket_number'], $param['template_type']);
 
         if(\Model\Extra::insertSend($param['send_account'], $title[$param['send_type']], $content[$param['send_type']], $param['send_type'])){
             self::db('ticket_notice_action')->where('action_id = :action_id')->delete([

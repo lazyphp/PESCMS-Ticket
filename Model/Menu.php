@@ -22,6 +22,11 @@ class Menu extends \Core\Model\Model {
      * 生成后台菜单
      */
     public static function menu($groupId = '') {
+
+        if(empty(self::session()->get('ticket'))){
+            return false;
+        }
+
         $condition = "";
         if (!empty($groupId) && self::session()->get('ticket')['user_id'] > '1') {
             $group = \Model\Content::findContent('user_group', $groupId, 'user_group_id');

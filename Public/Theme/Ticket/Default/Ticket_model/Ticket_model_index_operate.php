@@ -12,7 +12,7 @@
 <i class="am-margin-left-xs am-margin-right-xs">|</i>
 
 <div class="am-dropdown" data-am-dropdown>
-    <a href="javascript:;" class="am-dropdown-toggle am-link-muted" data-am-dropdown-toggle><span class="am-icon-cog"></span> 更多 <span class="am-icon-caret-down"></span></a>
+    <a href="javascript:;" class="am-dropdown-toggle am-link-muted more-operate" data-am-dropdown-toggle><span class="am-icon-cog"></span> 更多 <span class="am-icon-caret-down"></span></a>
     <ul class="am-dropdown-content">
         <li>
             <a class="am-text-primary" href="<?= $label->url('Ticket-'.'Ticket_form-index', array('number' => $value["ticket_model_number"], 'cid' => $value['ticket_model_cid'],'back_url' => base64_encode($_SERVER['REQUEST_URI']))); ?>"><span class="am-icon-compass"></span> 管理</a>

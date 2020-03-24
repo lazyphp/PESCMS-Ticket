@@ -342,6 +342,10 @@ a.am-btn-white:visited{
     border: 1px dashed #bbbbbb;
 }
 
+.gold-badge{
+    background-color: #FFEB3B !important;
+    color: #E91E63 !important;
+}
 
 /*
 ===================

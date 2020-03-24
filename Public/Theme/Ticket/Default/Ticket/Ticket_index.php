@@ -89,6 +89,11 @@
                         <tr>
                             <td class="">
                                 <div class="admin-task-meta">
+                                    <?php if($value['ticket_close'] == 1): ?>
+                                        <span class="am-badge">已关闭</span>
+                                    <?php elseif($value['ticket_exclusive'] == 1 && $value['user_id'] == self::session()->get('ticket')['user_id']  ): ?>
+                                        <span class="am-badge gold-badge">专属工单</span>
+                                    <?php endif; ?>
                                     <span class="am-badge" style="background-color: <?= $ticketStatus[$value['ticket_status']]['color']; ?>"><?= $ticketStatus[$value['ticket_status']]['name']; ?></span>
                                     [<?= $category[$value['ticket_model_cid']]['category_name'] ?> - <?= $value['ticket_model_name'] ?>]
                                     <?= $value['ticket_number'] ?>

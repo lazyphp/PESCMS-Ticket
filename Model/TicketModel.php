@@ -30,14 +30,16 @@ class TicketModel extends \Core\Model\Model {
     /**
      * 获取工单模型
      * @param null $id 提交ID则获取指定的模型
+     * @param string $condition 筛选条件
      * @return array|mixed
      */
-    public static function getTicketModelList($id = NULL){
+    public static function getTicketModelList($id = NULL, $condition = ''){
         if(empty(self::$ticketModelList)){
             $result = \Model\Content::listContent([
                 'table' => 'ticket_model AS tm',
                 'field' => 'tm.*, c.category_name',
                 'join' => self::$modelPrefix.'category AS c ON c.category_id = tm.ticket_model_cid',
+                'condition' => $condition,
                 'order' => 'tm.ticket_model_listsort ASC, tm.ticket_model_id DESC'
             ]);
             foreach ($result as $item){

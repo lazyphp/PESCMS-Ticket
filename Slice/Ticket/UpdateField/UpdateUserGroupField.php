@@ -27,7 +27,10 @@ class UpdateUserGroupField extends \Core\Slice\Slice{
      * 更新模型字段中，绑定了用户组ID的字段选项
      */
     public function after() {
-        $userGroupList = \Model\Content::listContent(['table' => 'user_group']);
+        $userGroupList = \Model\Content::listContent([
+            'table' => 'user_group',
+            'condition' => 'user_group_status = 1'
+        ]);
         $userGroup = [];
         foreach($userGroupList as $value){
             $userGroup[$value['user_group_name']] = $value['user_group_id'];

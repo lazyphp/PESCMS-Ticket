@@ -29,17 +29,18 @@ class Controller {
      */
     public static $modelPrefix;
 
+    public static $config = [];
+
     /**
      * 当前启用的主题
      */
     protected $theme;
 
     public final function __construct() {
-        static $config;
-        if (empty($config)) {
-            $config = \Core\Func\CoreFunc::loadConfig();
+        if (empty(self::$config)) {
+            self::$config = \Core\Func\CoreFunc::loadConfig();
         }
-        $this->prefix = self::$modelPrefix = empty($config[GROUP]) ? $config['DB_PREFIX'] : $config[GROUP]['DB_PREFIX'];
+        $this->prefix = self::$modelPrefix = empty(self::$config[GROUP]) ? self::$config['DB_PREFIX'] : self::$config[GROUP]['DB_PREFIX'];
         $this->chooseTheme();
         $this->__init();
     }

@@ -18,7 +18,6 @@ class Setting extends \Core\Controller\Controller {
      * @todo 需要优化代码
      */
     public function action() {
-
         $operate = [
             //字符串形式的更新设置
             'str' => [
@@ -49,7 +48,8 @@ class Setting extends \Core\Controller\Controller {
                 'weixinWork_api',
                 'sms',
                 'login_verify',
-                'cs_notice_type'
+                'cs_notice_type',
+                'cs_text'
             ]
         ];
         foreach ($operate as $type => $item){
@@ -97,6 +97,24 @@ class Setting extends \Core\Controller\Controller {
                 'noset' => ['option_name'  => $key]
             ]);
         }
+    }
+
+    public function recordTips(){
+        switch ($this->p('name')){
+            case 'tipsManual':
+            case 'ticketModel':
+                $name = $this->p('name');
+                break;
+            default:
+                $this->error('未知参数');
+        }
+        $this->db('option')->where('option_name = :name')->update([
+            'noset' => [
+                'name' => $name
+            ],
+            'value' => '1'
+        ]);
+        $this->success('更新记录成功');
     }
 
     /**
@@ -202,9 +220,9 @@ class Setting extends \Core\Controller\Controller {
 
         $ini_array = parse_ini_file($ini, true);
 
-
         foreach ($ini_array as $iniversion => $value) {
-            if (str_replace('.', '', $iniversion) > str_replace('.', '', $version) ) {
+
+            if (version_compare($version, $iniversion) < 0) {
 
                 //更新SQL信息
                 if (!empty($value['sql'])) {

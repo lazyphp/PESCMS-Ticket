@@ -17,6 +17,7 @@
                     <li><a href="#tab2">网站信息</a></li>
                     <li><a href="#tab3">客户账号设置</a></li>
                     <li><a href="#tab4">通知设置</a></li>
+                    <li><a href="#tab5">工单回复文本</a></li>
                 </ul>
 
                 <div class="am-tabs-bd">
@@ -39,12 +40,15 @@
 
                         <?php include 'action/weixin.php';?>
                     </div>
+                    <div class="am-tab-panel am-fade" id="tab5">
+                        <?php include 'action/cs_text.php';?>
+                    </div>
                 </div>
             </div>
 
             <div class="am-g am-g-collapse am-margin-bottom am-padding-sm">
                 <div class="am-u-sm-12 am-u-sm-centered">
-                    <button type="submit" class="am-btn am-btn-primary am-btn-xs" >提交保存</button>
+                    <button type="submit" class="am-btn am-btn-primary am-btn-xs save-setting" >保存修改</button>
                 </div>
             </div>
 
@@ -83,11 +87,23 @@
 
         var authorizeKey = $('input[name=authorize]').val()
 
-        $.getJSON('<?=$label->url('Ticket-Setting-authorize')?>', {key:authorizeKey}, function(data){
-            if(data.status == 200){
-                $('input[name=siteTitle], textarea[name=siteContact], textarea[name=pescmsIntroduce], input[name=siteKeywords], textarea[name=siteDescription]').removeAttr('readonly').unbind('mouseenter mouseleave')
+        if(authorizeKey != ''){
+            $.getJSON('<?=$label->url('Ticket-Setting-authorize')?>', {key:authorizeKey}, function(data){
+                if(data.status == 200){
+                    $('input[name=siteTitle], textarea[name=siteContact], textarea[name=pescmsIntroduce], input[name=siteKeywords], textarea[name=siteDescription]').removeAttr('readonly').unbind('mouseenter mouseleave')
+                }else{
+                    $('.save-setting').attr('msg', '当前授权码未通过验证，可能会导致部分信息被重置，是否提交本次系统设置的更改？')
+                }
+            })
+        }
+
+        $('.save-setting').on('click', function(){
+            var msg = $(this).attr('msg');
+            if( msg && confirm(msg) == false){
+                return false;
             }
         })
+
 
 	})
 </script>

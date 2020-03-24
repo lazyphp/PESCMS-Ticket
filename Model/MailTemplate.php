@@ -24,6 +24,8 @@ class MailTemplate extends \Core\Model\Model {
      */
     private static $templateType = [];
 
+    private static $ticket = [];
+
     /**
      * 依据模板类型，获取模板
      * @param $type
@@ -77,7 +79,11 @@ class MailTemplate extends \Core\Model\Model {
      */
     public static function matchTitle($number, $type) {
         $template = self::getTemplate($type);
-        $title = str_replace('{number}', $number, $template['mail_template_title']);
+
+        $dictionary = self::ticketDictionary($number, $type);
+
+        $title = str_replace($dictionary['search'], $dictionary['replace'], $template['mail_template_title']);
+
         $data = [
             '1' => $title,
             '2' => $title,
@@ -92,16 +98,10 @@ class MailTemplate extends \Core\Model\Model {
      * @param $type 模板类型
      * @return mixed
      */
-    public static function matchContent(array $param, $type) {
-        $param = array_merge(['number' => '', 'view' => ''], $param);
+    public static function matchContent($number, $type) {
         $template = self::getTemplate($type);
 
-        if(\Model\Ticket::getTicketBaseInfo($param['number'])['member_id'] > 0){
-            $member = \Model\Member::getMemberWithID(\Model\Ticket::getTicketBaseInfo($param['number'])['member_id']);
-            $userName = empty($member) ? '匿名用户' : $member['member_name'];
-        }else{
-            $userName = '匿名用户';
-        }
+        $dictionary = self::ticketDictionary($number, $type);
 
         foreach ([
                     '1' => 'mail_template_content',
@@ -115,7 +115,7 @@ class MailTemplate extends \Core\Model\Model {
 
             //短信和微信需要将超链接的HTML代码移除
             if(in_array($key, [2, 3])){
-                $param['view'] = strip_tags($param['view']);
+                $param['view'] = strip_tags(self::getViewLink($number, $type));
             }
 
             //微信通知需要先将内容格式化，补充通知的超链接。
@@ -127,9 +127,54 @@ class MailTemplate extends \Core\Model\Model {
                 $template[$item] = json_encode($newFormat);
             }
 
-            $content[$key] = str_replace(['{user}', '{number}', '{view}'], [$userName, $param['number'], $param['view']], $template[$item]);
+            $content[$key] = str_replace($dictionary['search'], $dictionary['replace'], $template[$item]);
         }
+
         return $content;
+    }
+
+    /**
+     * 工单模板字典
+     * @param $number
+     * @param $type
+     * @return array
+     */
+    public static function ticketDictionary($number, $type = ''){
+        if(empty(self::$ticket)){
+            self::$ticket = \Model\Ticket::getTicketBaseInfo($number);
+        }
+        $ticket = self::$ticket;
+
+        //处理工单提交用户
+        if($ticket['member_id'] > 0){
+            $ticket['member_name'] = \Model\Member::getMemberWithID($ticket['member_id'])['member_name'];
+        }else{
+            $ticket['member_name'] = '匿名用户';
+        }
+
+        //前台跳转链接
+        $ticket['ticket_link'] = self::getViewLink($number ,$type);
+        //后台跳转链接
+        $ticket['handle_link'] = \Model\MailTemplate::getCSViewLink($number);
+
+        $ticket['time_out'] = (1 + $ticket['ticket_time_out_sequence']) * $ticket['ticket_model_time_out'];
+
+        //转换工单时间字段
+        foreach (['ticket_submit_time', 'ticket_refer_time', 'ticket_complete_time', 'ticket_score_time'] as $field){
+            $ticket[$field] = empty($ticket[$field]) ? 0 : date('Y-m-d H:i', $ticket[$field]);
+        }
+
+        $ticketField = array_keys($ticket);
+        foreach ($ticketField as $name){
+            $search[] = '{'.$name.'}';
+            $replace[] = $ticket[$name];
+        }
+
+        return [
+            'search' => $search,
+            'replace' => $replace
+        ];
+
     }
 
     /**

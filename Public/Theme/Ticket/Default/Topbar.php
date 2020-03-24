@@ -7,6 +7,7 @@
             data-am-collapse="{target: '#ticket-topbar-collapse'}">
         <span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
 
+    <?php if(!empty(self::session()->get('ticket'))): ?>
     <div class="am-collapse am-topbar-collapse" id="ticket-topbar-collapse">
         <ul class="am-nav am-nav-pills am-topbar-nav">
             <?php foreach ($menu as $topValue): ?>
@@ -56,4 +57,5 @@
             </ul>
         </div>
     </div>
+    <?php endif; ?>
 </header>

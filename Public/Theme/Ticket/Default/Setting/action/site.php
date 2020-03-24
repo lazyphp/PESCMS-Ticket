@@ -6,9 +6,7 @@
                     <label class="am-block">授权码<i class="am-text-danger">*</i></label>
                     <input name="authorize" placeholder="请输入授权码" type="text" value="<?= $authorize['value']; ?>">
                     <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
-                        <i class="am-icon-lightbulb-o"></i> 授权购买请访问:《<a
-                                href="https://www.pescms.com/Page/Authorization.html" target="_blank"
-                                style="color:#0e90d2 ">商业授权</a>》
+                        <i class="am-icon-lightbulb-o"></i> 当前域名：<?= empty($_SERVER['HTTP_HOST']) ? '获取当前域名失败' : $_SERVER['HTTP_HOST'] ?> ;  授权购买请访问:《<a href="https://www.pescms.com/Page/Authorization.html" target="_blank" tyle="color:#0e90d2 ">商业授权</a>》
                     </div>
                 </div>
             </div>

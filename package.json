@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "clean-css": "^4.2.3",
+    "uglify-js": "^3.8.0"
+  }
+}

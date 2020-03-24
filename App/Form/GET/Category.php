@@ -81,9 +81,14 @@ class Category extends \Core\Controller\Controller{
 	public function ticket(){
         $number = $this->isG('number', '请提交您要生成的工单');
         $result = \Model\TicketForm::getFormWithNumber($number);
+
+        \Model\Ticket::organizeCheck(current($result));
+
+
         if(empty($result)){
             $this->_404(false, '此工单目前还没内容!');
         }
+
 
         $field = [];
         $ticketInfo = [];
@@ -97,6 +102,8 @@ class Category extends \Core\Controller\Controller{
                 'contact' => $value['ticket_model_contact'],
                 'contact_default' => $value['ticket_model_contact_default'],
                 'postscript' => $value['ticket_model_postscript'],
+                'exclusive' => $value['ticket_model_exclusive'],
+                'organize_id' => $value['ticket_model_organize_id'],
             ];
             $field[$value['ticket_form_id']] = [
                 'field_name' => $value['ticket_form_name'],

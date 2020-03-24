@@ -23,6 +23,11 @@ class Ticket extends \Core\Model\Model {
         $field = \Model\TicketForm::getFormWithNumber($number);
 
         $firstContent = current($field);
+
+        self::loginCheck($firstContent);
+
+        self::organizeCheck($firstContent);
+
         if ($firstContent['ticket_status'] == '0') {
             self::error('该工单已禁止提交');
         }
@@ -39,6 +44,7 @@ class Ticket extends \Core\Model\Model {
 
         //工单长度限定为15
         $param['ticket_number'] = str_pad(substr(\Model\Extra::getOnlyNumber(), 0, 15), 15, 0, STR_PAD_RIGHT);
+
         $param['ticket_model_id'] = $firstContent['ticket_model_id'];
         $param['ticket_submit_time'] = time();
         $param['member_id'] = empty(self::session()->get('member')) ? '-1' : self::session()->get('member')['member_id'];
@@ -48,6 +54,13 @@ class Ticket extends \Core\Model\Model {
             if (md5($verify) != self::session()->get('verify')) {
                 self::error('验证码错误');
             }
+        }
+
+        $exclusive = self::exclusiveCSTicket();
+        if(!empty($exclusive)){
+            $param['user_id'] = $exclusive['user_id'];
+            $param['user_name'] = $exclusive['user_name'];
+            $param['ticket_exclusive'] = 1;
         }
 
 
@@ -126,7 +139,9 @@ class Ticket extends \Core\Model\Model {
         \Model\Notice::addTicketNoticeAction($param['ticket_number'], $param['ticket_contact_account'], $param['ticket_contact'], 1);
 
         //新工单后台客服通知
-        if(!empty($ticket['ticket_model_group_id'])){
+        if($param['ticket_exclusive'] == 1 && !empty($param['user_id']) ){
+            \Model\Notice::addCSNotice($param['ticket_number'], $param['user_id'], -1);
+        }elseif(!empty($ticket['ticket_model_group_id'])){
             //移除手尾,
             $ticket['ticket_model_group_id'] = trim($ticket['ticket_model_group_id'], ',');
 
@@ -137,6 +152,26 @@ class Ticket extends \Core\Model\Model {
                 }
             }
         }
+    }
+
+    /**
+     * 检测是否填写正确的客服工号
+     * @return bool|type
+     */
+    private static function exclusiveCSTicket(){
+        $jobNumber = self::p('job_number');
+        if(empty($jobNumber)){
+            return false;
+        }
+
+        $user = \Model\Content::findContent('user', $jobNumber, 'user_job_number', 'user_id, user_name, user_job_number, user_mail, user_weixinWork');
+        if(empty($user)){
+            return false;
+        }else{
+            return $user;
+        }
+
+
     }
 
     /**
@@ -353,6 +388,17 @@ class Ticket extends \Core\Model\Model {
         return self::db('ticket')->where('ticket_id = :ticket_id')->update($param);
     }
 
+
+    /**
+     * 验证工单是否开启了客户分组可见
+     * @param $ticket
+     */
+    public static function organizeCheck($ticket){
+        if(!empty($ticket['ticket_model_organize_id']) && !in_array(self::session()->get('member')['member_organize_id'], explode(',', $ticket['ticket_model_organize_id'])) ){
+            self::error('不存在的工单', self::url('Category-index'), '-1');
+        }
+    }
+
     /**
      * 工单登录验证
      * @param $ticket 工单信息
@@ -376,6 +422,13 @@ class Ticket extends \Core\Model\Model {
             }
 
             self::success('需要登录帐号', $url, -1);
+        }
+
+        /**
+         * 提交工单的请求不进行跳转。
+         */
+        if(MODULE == 'Submit' && ACTION == 'ticket'){
+            return true;
         }
 
         //非匿名工单判断用户所属，非此用户所属则跳转至我的工单

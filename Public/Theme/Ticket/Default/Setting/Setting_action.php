@@ -17,6 +17,7 @@
                     <li><a href="#tab2">网站信息</a></li>
                     <li><a href="#tab3">客户账号设置</a></li>
                     <li><a href="#tab4">通知设置</a></li>
+                    <li><a href="#tab5">工单回复文本</a></li>
                 </ul>
 
                 <div class="am-tabs-bd">
@@ -38,6 +39,9 @@
                         <?php include 'action/sms.php';?>
 
                         <?php include 'action/weixin.php';?>
+                    </div>
+                    <div class="am-tab-panel am-fade" id="tab5">
+                        <?php include 'action/cs_text.php';?>
                     </div>
                 </div>
             </div>

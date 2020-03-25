@@ -39,6 +39,8 @@
                             <?= $label->valueTheme($fv, $fieldPrefix, $value); ?>
                             <?php if($fv['field_name'] == 'cid'): ?>
                                 - <?= $value["{$fieldPrefix}name"] ?>
+                            <?php elseif($fv['field_name'] == 'number'): ?>
+                                <a href="<?= $label->url('Category-ticket', ['number' => $value["{$fieldPrefix}number"]]) ?>" target="_blank"><i class="am-icon-external-link"></i></a>
                             <?php endif; ?>
                         </td>
                     <?php endforeach; ?>

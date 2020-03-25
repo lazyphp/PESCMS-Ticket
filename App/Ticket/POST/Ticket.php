@@ -28,12 +28,14 @@ class Ticket extends \Core\Controller\Controller {
         if (empty($ticket)) {
             $this->error('该工单不存在');
         }
+        
+        $csText = \Model\Option::csText();
 
         switch ($ticket['ticket_status']) {
             case '0':
                 $status = '1';
                 $templateType = 2;
-                $content = '已收到您的工单，我们将会尽快安排人手进行处理';
+                $content = $csText['accept']['content'];
                 \Model\Ticket::setUser($ticket['ticket_id'], $this->session()->get('ticket')['user_id'], $this->session()->get('ticket')['user_name']);
                 $referTime = $ticket['ticket_submit_time'];
                 break;
@@ -54,13 +56,13 @@ class Ticket extends \Core\Controller\Controller {
                     }
                     \Model\Ticket::setUser($ticket['ticket_id'], $checkUser['user_id'], $checkUser['user_name']);
                     $templateType = 4;
-                    $content = '当前问题需要移交给其他客服人员，请耐心等待';
+                    $content = $csText['assign']['content'];
                     \Model\Notice::addCSNotice($ticket['ticket_number'], $checkUser, -$templateType);
 
                 } elseif ($_POST['assign'] == '4') {
                     $status = '3';
                     $templateType = 5;
-                    $content = "客服已经将本工单结束，如有疑问请重新发起工单咨询，谢谢!";
+                    $content = $csText['complete']['content'];
 
                     \Model\Ticket::inTicketIdWithUpdate([
                         'ticket_complete_time' => time(),
@@ -112,7 +114,7 @@ class Ticket extends \Core\Controller\Controller {
             $this->error('该工单不存在');
         }
 
-        \Model\Ticket::addReply($ticket['ticket_id'], '工单已关闭，若还有疑问，请重新发表工单咨询!');
+        \Model\Ticket::addReply($ticket['ticket_id'], \Model\Option::csText()['close']['content']);
         \Model\Ticket::inTicketIdWithUpdate(['ticket_close' => '1', 'noset' => ['ticket_id' => $ticket['ticket_id']]]);
 
         \Model\Notice::addTicketNoticeAction($number, $ticket['ticket_contact_account'], $ticket['ticket_contact'], 6);

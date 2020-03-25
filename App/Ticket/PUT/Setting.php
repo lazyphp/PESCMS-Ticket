@@ -18,7 +18,6 @@ class Setting extends \Core\Controller\Controller {
      * @todo 需要优化代码
      */
     public function action() {
-
         $operate = [
             //字符串形式的更新设置
             'str' => [
@@ -49,7 +48,8 @@ class Setting extends \Core\Controller\Controller {
                 'weixinWork_api',
                 'sms',
                 'login_verify',
-                'cs_notice_type'
+                'cs_notice_type',
+                'cs_text'
             ]
         ];
         foreach ($operate as $type => $item){

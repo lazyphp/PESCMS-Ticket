@@ -87,40 +87,25 @@ class Notice extends \Core\Model\Model {
             $ticket[$param['ticket_number']] = \Model\Ticket::getTicketBaseInfo($param['ticket_number']);
         }
 
-        switch (abs($param['template_type'])){
-            case '1':
-                $title = '新工单提醒';
-                $content = "工单《{$ticket[$param['ticket_number']]['ticket_model_name']}》有新工单: {$param['ticket_number']},请及时处理!";
-                break;
-            case '2':
-                break;
-            case '3':
-                $title = '客户回复工单提醒';
-                $content = "工单《{$ticket[$param['ticket_number']]['ticket_title']}》有新回复! 单号:{$ticket['ticket_number']},请跟进!";
-                break;
-            case '4':
-                $title = '工单转交通知';
-                $content = self::session()->get('ticket')['user_name']."将工单《{$ticket[$param['ticket_number']]['ticket_title']}》指派给了您，单号：{$param['ticket_number']}，请您协助他/她尽快解决该工单问题。";
-                break;
-            case '5':
-                break;
-            case '6':
-                break;
-            case '504':
-                $title = '工单超时提醒';
-                $timeOut = (1 + $ticket[$param['ticket_number']]['ticket_time_out_sequence']) * $ticket[$param['ticket_number']]['ticket_model_time_out'] ;
-                $content = "工单单号：{$param['ticket_number']}，《{$ticket[$param['ticket_number']]['ticket_title']}》已在{$timeOut}分钟内无人受理，请您收到本消息后，尽快处理客户提交的问题。";
-                break;
+        $dictionary = \Model\MailTemplate::ticketDictionary($param['ticket_number']);
+
+        $csTemplateList = \Model\Content::listContent(['table' => 'cssend_template']);
+        foreach ($csTemplateList as $item){
+            $csTemplate[$item['cssend_template_type']] = $item;
         }
 
-        //工单处理的超链接
-        $linkStr = "详情: ".\Model\MailTemplate::getCSViewLink($param['ticket_number']);
+        if(empty( $csTemplate[abs($param['template_type'])] )){
+            return false;
+        }
+
+        $title = str_replace($dictionary['search'], $dictionary['replace'], $csTemplate[abs($param['template_type'])]['cssend_template_title']);
+
+        //@todo 工单转交通知 待验证模板是否正常
+        $content = str_replace($dictionary['search'], $dictionary['replace'], $csTemplate[abs($param['template_type'])]['cssend_template_content']);
 
         //发送方式是邮件，则加载邮件模板
         if($param['send_type'] == 1){
-            $content = \Model\MailTemplate::mergeMailTemplate($content.$linkStr);
-        }else{
-            $content = $content.$linkStr;
+            $content = \Model\MailTemplate::mergeMailTemplate($content);
         }
 
         //生成数据完毕，删除动作

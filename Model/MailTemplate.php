@@ -139,7 +139,7 @@ class MailTemplate extends \Core\Model\Model {
      * @param $type
      * @return array
      */
-    private static function ticketDictionary($number, $type){
+    public static function ticketDictionary($number, $type = ''){
         if(empty(self::$ticket)){
             self::$ticket = \Model\Ticket::getTicketBaseInfo($number);
         }
@@ -152,7 +152,12 @@ class MailTemplate extends \Core\Model\Model {
             $ticket['member_name'] = '匿名用户';
         }
 
+        //前台跳转链接
         $ticket['ticket_link'] = self::getViewLink($number ,$type);
+        //后台跳转链接
+        $ticket['handle_link'] = \Model\MailTemplate::getCSViewLink($number);
+
+        $ticket['time_out'] = (1 + $ticket['ticket_time_out_sequence']) * $ticket['ticket_model_time_out'];
 
         //转换工单时间字段
         foreach (['ticket_submit_time', 'ticket_refer_time', 'ticket_complete_time', 'ticket_score_time'] as $field){

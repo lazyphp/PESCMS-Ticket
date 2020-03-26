@@ -42,30 +42,44 @@ class Index extends \Core\Controller\Controller {
     public function notice() {
         $this->db()->transaction();
 
-        $list = \Model\Content::listContent(['table' => 'ticket_notice_action', 'lock' => 'FOR UPDATE',]);
-
-        if (!empty($list)) {
-            foreach ($list as $item) {
-                //大于0的，则为发送给客户的，反之是给客服
-                if ($item['template_type'] > 0) {
-                    \Model\Notice::insertMemberNoticeSendTemplate($item);
-                } else {
-                    \Model\Notice::insertCSNoticeSendTemplate($item);
-                }
-            }
-        }
-
         $system = \Core\Func\CoreFunc::$param['system'];
         if (in_array($system['notice_way'], ['1', '3'])) {
             \Model\Extra::actionNoticeSend();
         }
 
-        $this->ticketTimeOut();
+        $this->db()->commit();
+    }
 
-        $this->autoClose();
+    /**
+     * 工单系统行为事件
+     */
+    public function behavior(){
+        $this->db()->transaction();
+
+        try {
+
+            $list = \Model\Content::listContent(['table' => 'ticket_notice_action', 'lock' => 'FOR UPDATE',]);
+            if (!empty($list)) {
+                foreach ($list as $item) {
+                    //大于0的，则为发送给客户的，反之是给客服
+                    if ($item['template_type'] > 0) {
+                        \Model\Notice::insertMemberNoticeSendTemplate($item);
+                    } else {
+                        \Model\Notice::insertCSNoticeSendTemplate($item);
+                    }
+                }
+            }
+
+            $this->ticketTimeOut();
+
+            $this->autoClose();
+
+        } catch (Exception $e) {
+            echo "当前程序执行出错\n";
+            $this->db()->rollback();
+        }
 
         $this->db()->commit();
-
     }
 
     /**

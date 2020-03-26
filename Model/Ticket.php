@@ -50,6 +50,13 @@ class Ticket extends \Core\Model\Model {
             }
         }
 
+        $exclusive = self::exclusiveCSTicket();
+        if(!empty($exclusive)){
+            $param['user_id'] = $exclusive['user_id'];
+            $param['user_name'] = $exclusive['user_name'];
+            $param['ticket_exclusive'] = 1;
+        }
+
 
         self::db()->transaction();
 
@@ -126,7 +133,9 @@ class Ticket extends \Core\Model\Model {
         \Model\Notice::addTicketNoticeAction($param['ticket_number'], $param['ticket_contact_account'], $param['ticket_contact'], 1);
 
         //新工单后台客服通知
-        if(!empty($ticket['ticket_model_group_id'])){
+        if($param['ticket_exclusive'] == 1 && !empty($param['user_id']) ){
+            \Model\Notice::addCSNotice($param['ticket_number'], $param['user_id'], -1);
+        }elseif(!empty($ticket['ticket_model_group_id'])){
             //移除手尾,
             $ticket['ticket_model_group_id'] = trim($ticket['ticket_model_group_id'], ',');
 
@@ -137,6 +146,26 @@ class Ticket extends \Core\Model\Model {
                 }
             }
         }
+    }
+
+    /**
+     * 检测是否填写正确的客服工号
+     * @return bool|type
+     */
+    private static function exclusiveCSTicket(){
+        $jobNumber = self::p('job_number');
+        if(empty($jobNumber)){
+            return false;
+        }
+
+        $user = \Model\Content::findContent('user', $jobNumber, 'user_job_number', 'user_id, user_name, user_job_number, user_mail, user_weixinWork');
+        if(empty($user)){
+            return false;
+        }else{
+            return $user;
+        }
+
+
     }
 
     /**

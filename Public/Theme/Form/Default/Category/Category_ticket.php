@@ -112,6 +112,19 @@
             </div>
         </div>
     <?php endif; ?>
+
+    <?php if($ticketInfo['exclusive'] == 1): ?>
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+
+                <div class="am-form-group am-form-warning">
+                    <label class="am-block">受理客服工号</label>
+                    <input type="text" class="form-text-input input-leng3 am-radius am-form-warning am-form-field" name="job_number">
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
     <div class="am-g am-g-collapse am-margin-bottom">
         <div class="am-u-sm-6">
             <button type="submit" class="am-btn am-btn-secondary am-btn-xs am-radius" >提交</button>

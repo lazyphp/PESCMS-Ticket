@@ -97,6 +97,7 @@ class Category extends \Core\Controller\Controller{
                 'contact' => $value['ticket_model_contact'],
                 'contact_default' => $value['ticket_model_contact_default'],
                 'postscript' => $value['ticket_model_postscript'],
+                'exclusive' => $value['ticket_model_exclusive'],
             ];
             $field[$value['ticket_form_id']] = [
                 'field_name' => $value['ticket_form_name'],

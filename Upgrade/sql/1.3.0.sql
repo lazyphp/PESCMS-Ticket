@@ -33,3 +33,14 @@ INSERT INTO `pes_cssend_template` (`cssend_template_id`, `cssend_template_type`,
 (2, 3, '客户回复工单提醒', '&lt;p&gt;工单单号{ticket_number}有新回复，请及时跟进处理。&lt;/p&gt;&lt;p&gt;详情: {handle_link}&lt;/p&gt;'),
 (3, 4, '工单转交通知', '{user_name}将工单号为{ticket_number}指派给了您，请您协助他/她尽快解决该工单问题。详情: {handle_link}'),
 (4, 504, '工单超时提醒', '工单号为：{ticket_number}已在{time_out}分钟内无人受理，请您收到本消息后，尽快处理客户提交的问题。详情: {handle_link}');
+
+
+
+INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_display_name`, `field_type`, `field_option`, `field_explain`, `field_default`, `field_required`, `field_listsort`, `field_list`, `field_form`, `field_status`, `field_is_null`) VALUES
+(NULL, 15, 'exclusive', '允许指定客服受理', 'radio', '{&quot;\\u5426&quot;:&quot;0&quot;,&quot;\\u662f&quot;:&quot;1&quot;}', '开启此功能后，客户在提交工单时，将直接分配给填入名称的客服帐号。', '', 0, 17, 0, 1, 1, 0),
+(NULL, 7, 'job_number', '工号', 'text', '', '', '', 1, 2, 1, 1, 1, 0);
+ALTER TABLE `pes_ticket_model` ADD `ticket_model_exclusive` TINYINT(1) NOT NULL COMMENT '允许指定客服受理';
+
+ALTER TABLE `pes_user` ADD `user_job_number` VARCHAR(255) NULL DEFAULT '' COMMENT '工号';
+
+ALTER TABLE `pes_ticket` ADD `ticket_exclusive` TINYINT(1) NOT NULL COMMENT '专属工单标记';

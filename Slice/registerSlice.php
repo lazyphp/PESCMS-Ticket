@@ -83,7 +83,7 @@ $SLICE_ARRYR = [
     'TICKET-ACCESS' => [
         'any',
         'Ticket-:m-:a',
-        ['\Ticket\Login', '\Ticket\Auth', '\Ticket\Menu'],
+        ['\Ticket\Login', '\Ticket\Menu', '\Ticket\Auth',],
     ],
 
     //注册自动更新用户组字段的信息

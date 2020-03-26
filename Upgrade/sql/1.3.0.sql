@@ -44,3 +44,7 @@ ALTER TABLE `pes_ticket_model` ADD `ticket_model_exclusive` TINYINT(1) NOT NULL 
 ALTER TABLE `pes_user` ADD `user_job_number` VARCHAR(255) NULL DEFAULT '' COMMENT '工号';
 
 ALTER TABLE `pes_ticket` ADD `ticket_exclusive` TINYINT(1) NOT NULL COMMENT '专属工单标记';
+
+INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES
+(NULL, '发送列表', 11, 0, NULL, 'GET', 'Send', '', 0, 10),
+(NULL, '清空发送列表', 43, 1, NULL, 'DELETE', 'truncate', 'TicketDELETESendtruncate', 99, 180);

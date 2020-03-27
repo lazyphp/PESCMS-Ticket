@@ -93,6 +93,13 @@ $SLICE_ARRYR = [
         ['\Ticket\UpdateField\UpdateUserGroupField']
     ],
 
+    //注册自动更新客户分组字段的信息
+    'TICKET-UPDATE-MEMBERORGANIZE' => [
+        'any',
+        ['Ticket-Member-:a', 'Ticket-Member_organize-:a'],
+        ['\Ticket\UpdateField\UpdateMemberOrganizeField']
+    ],
+
     //注册自动更新用户组字段的信息
     'TICKET-NODE-PARENT' => [
         'any',

@@ -1,4 +1,8 @@
 
+--
+-- 自定义内部消息模板
+--
+
 INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_display_name`, `field_type`, `field_option`, `field_explain`, `field_default`, `field_required`, `field_listsort`, `field_list`, `field_form`, `field_status`, `field_is_null`) VALUES
 (NULL, 15, 'open_close', '是否自动关闭工单', 'radio', '{&quot;\\u7981\\u7528&quot;:&quot;0&quot;,&quot;\\u5f00\\u542f&quot;:&quot;1&quot;}', '开启此选项后，当工单状态为0，即没有客服处理，在达到设定的时间后，将会自动关闭。', '', 1, 15, 1, 1, 1, 0),
 (NULL, 15, 'close_time', '自动关闭时长(分钟)', 'text', '', '', '', 0, 16, 0, 1, 1, 0);
@@ -35,6 +39,9 @@ INSERT INTO `pes_cssend_template` (`cssend_template_id`, `cssend_template_type`,
 (4, 504, '工单超时提醒', '工单号为：{ticket_number}已在{time_out}分钟内无人受理，请您收到本消息后，尽快处理客户提交的问题。详情: {handle_link}');
 
 
+--
+-- 专属客服工单
+--
 
 INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_display_name`, `field_type`, `field_option`, `field_explain`, `field_default`, `field_required`, `field_listsort`, `field_list`, `field_form`, `field_status`, `field_is_null`) VALUES
 (NULL, 15, 'exclusive', '允许指定客服受理', 'radio', '{&quot;\\u5426&quot;:&quot;0&quot;,&quot;\\u662f&quot;:&quot;1&quot;}', '开启此功能后，客户在提交工单时，将直接分配给填入名称的客服帐号。', '', 0, 17, 0, 1, 1, 0),
@@ -48,3 +55,32 @@ ALTER TABLE `pes_ticket` ADD `ticket_exclusive` TINYINT(1) NOT NULL COMMENT '专
 INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES
 (NULL, '发送列表', 11, 0, NULL, 'GET', 'Send', '', 0, 10),
 (NULL, '清空发送列表', 43, 1, NULL, 'DELETE', 'truncate', 'TicketDELETESendtruncate', 99, 180);
+
+--
+-- 客户分组
+--
+
+INSERT INTO `pes_model` (`model_id`, `model_name`, `model_title`, `model_status`, `model_search`, `model_attr`, `model_page`) VALUES
+(26, 'member_organize', '客户分组', 1, 0, 2, 10);
+
+INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_display_name`, `field_type`, `field_option`, `field_explain`, `field_default`, `field_required`, `field_listsort`, `field_list`, `field_form`, `field_status`, `field_is_null`) VALUES
+(NULL, 26, 'name', '分组名称', 'text', '', '', '', 1, 1, 1, 1, 1, 0),
+(NULL, 20, 'organize_id', '所属分组', 'select', '{\"\\u9ed8\\u8ba4\\u5206\\u7ec4\":\"1\"}', '', '', 1, 1, 1, 1, 1, 0),
+(NULL, 15, 'organize_id', '指定客户分组可见', 'multiple', '{\"\\u9ed8\\u8ba4\\u5206\\u7ec4\":\"1\"}', '若您需要指定客户才可以见到此工单，那么请选择该客户对应的客户分组。', '', 0, 98, 0, 1, 1, 0);
+
+INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_link`, `menu_listsort`, `menu_type`) VALUES
+(36, '客户分组', 3, 'am-icon-user-secret', 'Ticket-Member_organize-index', 5, 0);
+
+CREATE TABLE `pes_member_organize` (
+  `member_organize_id` int(11) NOT NULL,
+  `member_organize_name` varchar(255) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `pes_member_organize` ADD PRIMARY KEY (`member_organize_id`);
+
+INSERT INTO `pes_member_organize` (`member_organize_id`, `member_organize_name`) VALUES
+(1, '默认分组');
+
+ALTER TABLE `pes_member` ADD `member_organize_id` INT NOT NULL;
+
+ALTER TABLE `pes_ticket_model` ADD `ticket_model_organize_id` TEXT NOT NULL;

@@ -1,6 +1,23 @@
 var fs = require('fs');
 var uglify = require('uglify-js');
 var CleanCSS = require('clean-css');
+var program = require('commander');
+
+program
+    .version('0.0.1')
+    .option('-h, --recourse', '')
+    .option('-c, --cheese [type]', 'Add the specified type of cheese [marble]', '')
+    .parse(process.argv);
+
+
+// console.log('you ordered a pizza with:');
+if (program.recourse){
+    console.log("    [使用说明] 不输入命令则压缩所有设定文件\n\n" +
+        "    -h                                查看帮助说明\n" +
+        "    -c 压缩的文件名称                 压缩指定的文件。 如 node minify -c app\n")
+    return false;
+}
+
 
 //js文件压缩方法
 function jsMinify(flieIn, fileOut) {
@@ -23,22 +40,32 @@ function cssMinify(flieIn, fileOut) {
 }
 
 //开始压缩JS资源
-jsMinify('./Public/Theme/assets/js/spectrum.js', './Public/Theme/assets/js/spectrum.min.js');
-jsMinify('./Public/Theme/assets/js/webuploader.js', './Public/Theme/assets/js/webuploader.min.js');
-jsMinify('./Public/Theme/assets/js/AMUIwebuploader.js', './Public/Theme/assets/js/AMUIwebuploader.min.js');
-jsMinify('./Public/Theme/assets/js/app.js', './Public/Theme/assets/js/app.min.js');
-jsMinify('./Public/Theme/assets/js/ticket.js', './Public/Theme/assets/js/ticket.min.js');
+var js = ['spectrum', 'webuploader', 'AMUIwebuploader', 'app', 'ticket'];
+for(var i in js){
+    if(program.cheese != '' && js[i] != program.cheese){
+        continue;
+    }
+    jsMinify('./Public/Theme/assets/js/'+js[i]+'.js', './Public/Theme/assets/js/'+js[i]+'.min.js');
+    console.log('压缩了Javascript: '+js[i]+'.js');
+}
 
 //百度编辑器
-jsMinify('./Public/Theme/assets/ueditor/ueditor.config.js', './Public/Theme/assets/ueditor/ueditor.config.min.js');
-jsMinify('./Public/Theme/assets/ueditor/ueditor_ticket.config.js', './Public/Theme/assets/ueditor/ueditor_ticket.config.min.js');
-jsMinify('./Public/Theme/assets/ueditor/ueditor.all.js', './Public/Theme/assets/ueditor/ueditor.all.min.js');
-jsMinify('./Public/Theme/assets/ueditor/lang/zh-cn/zh-cn.js', './Public/Theme/assets/ueditor/lang/zh-cn/zh-cn.min.js');
+var ueditor = ['ueditor.config', 'ueditor_ticket.config', 'ueditor.all', 'lang/zh-cn/zh-cn'];
+for(var i in ueditor){
+    if(program.cheese !='' && ueditor[i] != program.cheese){
+        continue;
+    }
+    jsMinify('./Public/Theme/assets/ueditor/'+ueditor[i]+'.js', './Public/Theme/assets/ueditor/'+ueditor[i]+'.min.js');
+    console.log('压缩了百度编辑器: '+ueditor[i]+'.js');
+}
+
 
 //开始压缩CSS资源
-cssMinify(['./Public/Theme/assets/css/app.css'], './Public/Theme/assets/css/app.min.css');
-cssMinify(['./Public/Theme/assets/css/index.css'], './Public/Theme/assets/css/index.min.css');
-cssMinify(['./Public/Theme/assets/css/ui-dialog.css'], './Public/Theme/assets/css/ui-dialog.min.css');
-cssMinify(['./Public/Theme/assets/css/webuploader.css'], './Public/Theme/assets/css/webuploader.min.css');
-cssMinify(['./Public/Theme/assets/css/ticket.css'], './Public/Theme/assets/css/ticket.min.css');
-cssMinify(['./Public/Theme/assets/css/spectrum.css'], './Public/Theme/assets/css/spectrum.min.css');
+var css = ['app', 'index', 'ui-dialog', 'webuploader', 'ticket', 'spectrum'];
+for(var i in css){
+    if(program.cheese !='' && css[i] != program.cheese){
+        continue;
+    }
+    cssMinify(['./Public/Theme/assets/css/'+css[i]+'.css'], './Public/Theme/assets/css/'+css[i]+'.min.css');
+    console.log('压缩了样式: '+css[i]+'.css');
+}

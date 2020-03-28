@@ -87,3 +87,5 @@ INSERT INTO `pes_member_organize` (`member_organize_id`, `member_organize_name`)
 ALTER TABLE `pes_member` ADD `member_organize_id` INT NOT NULL;
 
 ALTER TABLE `pes_ticket_model` ADD `ticket_model_organize_id` TEXT NOT NULL;
+
+INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_link`, `menu_listsort`, `menu_type`) VALUES (NULL, '模板管理', '9', 'am-icon-magic', 'Ticket-Theme-index', '10', '0');

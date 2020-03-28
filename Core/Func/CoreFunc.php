@@ -30,7 +30,7 @@ class CoreFunc {
      * 快速获取程序当前的主题名称
      * @var string
      */
-    private static $ThemeName;
+    private static $ThemeName = [];
 
     /**
      * 用于存储赋值变量
@@ -188,21 +188,21 @@ class CoreFunc {
      * 获取主题目录的名称
      */
     public static function getThemeName($group) {
-        if (empty(self::$ThemeName)) {
+        if (empty(self::$ThemeName[$group])) {
             $privateKey = md5($group . self::loadConfig('PRIVATE_KEY'));
             $checkTheme = THEME . "/" . $group . "/{$privateKey}";
             if (is_file($checkTheme)) {
-                self::$ThemeName = trim(file($checkTheme)['0']);
+                self::$ThemeName[$group] = trim(file($checkTheme)['0']);
             } else {
-                self::$ThemeName = 'Default';
+                self::$ThemeName[$group] = 'Default';
                 $f = fopen($checkTheme, 'w');
-                fwrite($f, self::$ThemeName);
+                fwrite($f, self::$ThemeName[$group]);
                 fclose($f);
             }
             //设置一个主题目录常量
-            defined('THEME_PATH') or define('THEME_PATH', THEME . '/' . $group . '/' . self::$ThemeName);
+            defined('THEME_PATH') or define('THEME_PATH', THEME . '/' . $group . '/' . self::$ThemeName[$group]);
         }
-        return self::$ThemeName;
+        return self::$ThemeName[$group];
     }
 
     /**

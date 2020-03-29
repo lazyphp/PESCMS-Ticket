@@ -99,6 +99,24 @@ class Setting extends \Core\Controller\Controller {
         }
     }
 
+    public function recordTips(){
+        switch ($this->p('name')){
+            case 'tipsManual':
+            case 'ticketModel':
+                $name = $this->p('name');
+                break;
+            default:
+                $this->error('未知参数');
+        }
+        $this->db('option')->where('option_name = :name')->update([
+            'noset' => [
+                'name' => $name
+            ],
+            'value' => '1'
+        ]);
+        $this->success('更新记录成功');
+    }
+
     /**
      * 自动更新
      */

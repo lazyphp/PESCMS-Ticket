@@ -89,3 +89,7 @@ ALTER TABLE `pes_member` ADD `member_organize_id` INT NOT NULL;
 ALTER TABLE `pes_ticket_model` ADD `ticket_model_organize_id` TEXT NOT NULL;
 
 INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_link`, `menu_listsort`, `menu_type`) VALUES (NULL, '模板管理', '9', 'am-icon-magic', 'Ticket-Theme-index', '10', '0');
+
+INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) VALUES (NULL, 'tipsManual', '首次按照提醒指引', '0', 'system');
+
+INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) VALUES (NULL, 'ticketModel', '工单模型提醒', '0', 'system');

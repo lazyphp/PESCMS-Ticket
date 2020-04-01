@@ -111,13 +111,11 @@ class CoreFunc {
             if (!empty($routeUrl[$hash])) {
                 //是否显示index.php
                 $url = $urlModel['INDEX'] == '0' ? '/index.php/' : '/';
-                //替换参数占位符
-                $replaceurl = str_replace(['{', '}'], '', $routeUrl[$hash]);
 
                 //代入参数值
                 if (!empty($param)) {
                     foreach ($param as $key => $value) {
-                        $replaceurl = str_replace($key, $value, $replaceurl);
+                        $replaceurl = str_replace('{'.$key.'}', $value, $routeUrl[$hash]);
                     }
                 }
                 $url .= $replaceurl . $suffix;

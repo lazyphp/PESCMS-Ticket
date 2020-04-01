@@ -220,9 +220,9 @@ class Setting extends \Core\Controller\Controller {
 
         $ini_array = parse_ini_file($ini, true);
 
-
         foreach ($ini_array as $iniversion => $value) {
-            if (str_replace('.', '', $iniversion) > str_replace('.', '', $version) ) {
+
+            if (version_compare($version, $iniversion) < 0) {
 
                 //更新SQL信息
                 if (!empty($value['sql'])) {

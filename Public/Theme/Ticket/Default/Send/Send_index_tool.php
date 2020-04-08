@@ -6,6 +6,7 @@
                 <?php $addUrl = empty($addUrl) ? $label->url(GROUP . '-' . MODULE . '-action', array('back_url' => base64_encode($_SERVER['REQUEST_URI']))) : $addUrl ?>
                 <a href="<?= $addUrl ?>" class="am-btn am-btn-default am-radius"><span class="am-icon-plus"></span> 新增</a>
                 <a href="<?= $label->url(GROUP . '-' . MODULE . '-truncate', ['method' => 'DELETE']) ?>" class="am-btn am-btn-warning am-radius ajax-click ajax-dialog" msg="确定要清空发送列表吗？"><span class="am-icon-folder-open-o"></span> 清空发送列表</a>
+                <?php $label->toolEvent() ?>
             </div>
         </div>
     </div>

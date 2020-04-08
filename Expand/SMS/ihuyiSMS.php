@@ -1,28 +1,27 @@
 <?php
 
-namespace Expand;
+namespace Expand\SMS;
 
 /**
- * 短信接口
+ * 互亿无线短信接口
  */
-class sms {
+class ihuyiSMS implements SMSInterface {
 
     private $APIID, $APIKEY, $error;
 
-    public function __construct() {
-        $sms_api = json_decode(\Core\Func\CoreFunc::$param['system']['sms'], true);
-        if(empty($sms_api['APIID']) || empty($sms_api['APIKEY']) ){
-            $this->error = '未配置短信接口信息';
+    public function __construct($config) {
+        if(empty($config['ihuyi_APIID']) || empty($config['ihuyi_APIKEY']) ){
+            $this->error = '未配置互亿无线短信接口';
             return $this->error;
         }
 
-        $this->APIID = $sms_api['APIID'];
-        $this->APIKEY = $sms_api['APIKEY'];
+        $this->APIID = $config['ihuyi_APIID'];
+        $this->APIKEY = $config['ihuyi_APIKEY'];
     }
 
     public function send($param){
         if(!empty($this->error)){
-            \Model\Extra::errorSendResult($param['send_id'], $this->error);
+            \Model\Extra::stopSend($param['send_id'], $this->error);
             return $this->error;
         }
 
@@ -30,19 +29,24 @@ class sms {
         $result=  $this->xml_to_array((new \Expand\cURL())->init('http://106.ihuyi.cn/webservice/sms.php?method=Submit', $post_data));
 
         if($result['SubmitResult']['code'] == 2){
-            \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->delete([
-                'send_id' => $param['send_id']
-            ]);
+            $sendStatus = [
+                'msg' => '短信发送成功。',
+                'status' => 2,
+                'second' => 0,
+            ];
         }else{
-            \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->update([
-                'noset' => [
-                    'send_id' => $param['send_id']
-                ],
-                'send_result' => $result['SubmitResult']['code']
-            ]);
+            $sendStatus = [
+                'msg' => "短信发送失败！{$result['SubmitResult']['code']}",
+                'status' => 1,
+                'second' => 600,
+            ];
         }
+        $sendStatus['id'] = $param['send_id'];
+        $sendStatus['sequence'] = $param['send_sequence'];
 
-        return json_encode($result);
+        \Model\Extra::updateSendStatus($sendStatus);
+
+        return $sendStatus['msg'];
     }
 
     //将 xml数据转换为数组格式。

@@ -59,7 +59,7 @@ class Mail {
      */
     public function send(array $email) {
         if(!empty($this->error)){
-            \Model\Extra::errorSendResult($email['send_id'], $this->error);
+            \Model\Extra::stopSend($email['send_id'], $this->error);
             return $this->error;
         }
 
@@ -76,16 +76,26 @@ class Mail {
         $this->PHPMailer->Body = htmlspecialchars_decode($email['send_content']);
 
         if ($this->PHPMailer->send() !== false) {
-            //发送成功，移除成功记录
-            \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->delete([
-                'send_id' => $email['send_id']
-            ]);
+            $sendStatus = [
+                'msg' => '邮件发送成功。',
+                'status' => 2,
+                'second' => 0,
+            ];
         }else{
-            $msg = '邮件发送失败';
-            \Model\Extra::errorSendResult($email['send_id'], $msg);
+            $sendStatus = [
+                'msg' => '邮件发送失败!',
+                'status' => 1,
+                'second' => 600,
+            ];
         }
+        $sendStatus['id'] = $email['send_id'];
+        $sendStatus['sequence'] = $email['send_sequence'];
+
+        \Model\Extra::updateSendStatus($sendStatus);
+
         $this->PHPMailer->ClearAddresses();
-        return $msg;
+
+        return $sendStatus['msg'];
     }
 
 	/**

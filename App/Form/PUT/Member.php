@@ -6,7 +6,7 @@ class Member extends \Core\Controller\Controller {
     /**
      * 更新个人信息
      */
-    public function update(){
+    public function index(){
         $param['noset']['member_id'] = $this->session()->get('member')['member_id'];
         $param['member_phone'] = $this->isP('phone', '请提交手机号码');
         $param['member_name'] = $this->isP('name', '请提交用户昵称');
@@ -28,11 +28,8 @@ class Member extends \Core\Controller\Controller {
             }
 
             $updatepasswd = true;
-            $password = $this->p('password');
-            $repassword = $this->p('repassword');
-            if (strcmp($password, $repassword) != 0) {
-                $this->error('两次输入的密码不一致');
-            }
+            $password = \Model\Extra::verifyPassword();
+
             $param['member_password'] = \Core\Func\CoreFunc::generatePwd($password, 'USER_KEY');
         }
 
@@ -45,7 +42,7 @@ class Member extends \Core\Controller\Controller {
             $member = \Model\Content::findContent('member', $param['noset']['member_id'], 'member_id');
             unset($member['member_password']);
             $this->session()->set('member', $member);
-            $url = $this->url('Member-update');
+            $url = $this->url('Member-index');
         }
 
         $this->success('更新个人信息完成', $url);

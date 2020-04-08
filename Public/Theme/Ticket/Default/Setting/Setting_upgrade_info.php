@@ -9,7 +9,7 @@
             </div>
             <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
 
-            <div class="am-alert am-alert-secondary" data-am-alert>
+            <div class="pes-alert pes-alert-info" >
                 <?php if(!empty($info)): ?>
                     <?php foreach ($info as $value): ?>
                         <p><?= $value ?></p>

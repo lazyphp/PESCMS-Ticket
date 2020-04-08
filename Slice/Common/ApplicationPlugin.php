@@ -14,7 +14,7 @@
 namespace Slice\Common;
 
 /**
- * 插件切片
+ * 插件控制器切片
  * Class ApplicationPlugin
  * @package Slice\Ticket
  */

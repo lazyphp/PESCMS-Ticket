@@ -72,10 +72,10 @@ $SLICE_ARRYR = [
     ],
 
     //跨域的设置
-//    'CROSSDOMAIN' => [
-//        'any',
-//        ['Form-Submit-ticket', 'Form-Index-getSession', 'Form-Index-verify', 'Form-Upload-ueditor'], ['\Form\CrossDomain']
-//    ],
+    'CROSSDOMAIN' => [
+        'any',
+        ['Form-Submit-ticket', 'Form-Index-getSession', 'Form-Index-verify', 'Form-Upload-ueditor'], ['\Form\CrossDomain']
+    ],
 
     /*----------------后台部分----------------*/
 
@@ -180,6 +180,13 @@ $SLICE_ARRYR = [
         'any',
         ['Ticket-Application-Init'],
         ['\Common\ApplicationPlugin']
+    ],
+
+    //插件全局事件
+    'APPLICATION-GLOBAL-EVENT' => [
+        'get',
+        ['Ticket-:m-:a', 'Form-:m-:a'],
+        ['\Common\ApplicationGlobalEvent'],
     ],
 
 ];

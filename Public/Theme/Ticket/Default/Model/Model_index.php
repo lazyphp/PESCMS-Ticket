@@ -8,6 +8,7 @@
                 <?php $addUrl = empty($addUrl) ? $label->url(GROUP . '-' . MODULE . '-action', array('back_url' => base64_encode($_SERVER['REQUEST_URI']))) : $addUrl ?>
                 <a href="<?= $addUrl ?>" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</a>
                 <a href="<?= $label->url(GROUP . '-' . MODULE . '-import', array('back_url' => base64_encode($_SERVER['REQUEST_URI']))) ?>" class="am-btn am-btn-success"><span class="am-icon-cloud-download"></span> 导入模型</a>
+                <?php $label->toolEvent() ?>
             </div>
         </div>
     </div>

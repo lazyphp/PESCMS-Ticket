@@ -2,14 +2,14 @@ var WEBSITE_URL = '{domain}';
 var PT = {
     createForm: function (dom) {
         this.loadjscssfile(WEBSITE_URL + '/Theme/assets/css/amazeui.min.css', 'css')
-        this.loadjscssfile(WEBSITE_URL + '/Theme/assets/css/ui-dialog.css', 'css')
-        this.loadjscssfile(WEBSITE_URL + '/Theme/assets/css/webuploader.css', 'css')
+        this.loadjscssfile(WEBSITE_URL + '/Theme/assets/css/ui-dialog.min.css', 'css')
+        this.loadjscssfile(WEBSITE_URL + '/Theme/assets/css/webuploader.min.css', 'css')
 
         this.loadjscssfile(WEBSITE_URL + '/Theme/assets/js/amazeui.min.js', 'js')
-        this.loadjscssfile(WEBSITE_URL + '/Theme/assets/js/webuploader.js', 'js')
-        this.loadjscssfile(WEBSITE_URL + '/Theme/assets/js/AMUIwebuploader.js', 'js')
+        this.loadjscssfile(WEBSITE_URL + '/Theme/assets/js/webuploader.min.js', 'js')
+        this.loadjscssfile(WEBSITE_URL + '/Theme/assets/js/AMUIwebuploader.min.js', 'js')
         this.loadjscssfile(WEBSITE_URL + '/Theme/assets/js/dialog-min.js', 'js')
-        this.loadjscssfile(WEBSITE_URL + '/Theme/assets/js/pt-base.js', 'js')
+        this.loadjscssfile(WEBSITE_URL + '/Theme/assets/js/pt-base.min.js', 'js')
         $('#' + dom + ', .' + dom).after(formString);
         return PT
     },

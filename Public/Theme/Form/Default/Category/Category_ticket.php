@@ -2,7 +2,7 @@
 <hr class="am-margin-top-0" />
 <?php endif;?>
 <h3>新工单 > <?= $ticketInfo['category']['category_name'] ?> > <?= $ticketInfo['title'] ?></h3>
-<form action="<?= $label->url('Submit-ticket') ?>" method="POST" class="am-form ajax-submit am-form-horizontal" data-am-validator>
+<form action="<?= ACTION != 'createJS' ? '' : $system['domain'] ?><?= $label->url('Submit-ticket') ?>" method="POST" class="am-form ajax-submit am-form-horizontal" data-am-validator>
     <input type="hidden" name="number" value="<?= $ticketInfo['number'] ?>">
     <?= $label->token() ?>
 
@@ -53,8 +53,8 @@
     <div class="am-g am-g-collapse">
         <div class="am-u-sm-12 am-u-sm-centered">
             <div class="am-form-group">
-                <label class="am-block">工单标题<i class="am-text-danger">*</i></label>
-                <input class="form-text-input input-leng3 am-radius" name="title" placeholder="简单扼要描述本次工单遇到的问题" type="text" value="" required="">
+                <label class="am-block"><?= empty($ticketInfo['title_description']) ? '工单标题' : explode('|', $ticketInfo['title_description'])['0'] ?><i class="am-text-danger">*</i></label>
+                <input class="form-text-input input-leng3 am-radius" name="title" placeholder="<?=empty($ticketInfo['title_description']) ? '简单扼要描述本次工单遇到的问题' : explode('|', $ticketInfo['title_description'])['1']?>" type="text" value="" required="">
             </div>
         </div>
     </div>
@@ -136,6 +136,7 @@
         </div>
     </div>
 </form>
+<?php if(ACTION != 'createJS'): ?>
 <script>
     $(function(){
         var contact = function(){
@@ -161,3 +162,4 @@
         })
     })
 </script>
+<?php endif; ?>

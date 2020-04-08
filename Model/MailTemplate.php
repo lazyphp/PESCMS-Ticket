@@ -26,6 +26,8 @@ class MailTemplate extends \Core\Model\Model {
 
     private static $ticket = [];
 
+    private static $system = [];
+
     /**
      * 依据模板类型，获取模板
      * @param $type
@@ -41,22 +43,22 @@ class MailTemplate extends \Core\Model\Model {
     /**
      * 快速生成查看工单的链接
      * @param $number 工单号
-     * @param $type 发送类型特殊标记
+     * @param $contactType 发送类型特殊标记
      * @return string
      */
-    public static function getViewLink($number, $type = '') {
-        $system = \Core\Func\CoreFunc::$param['system'];
+    public static function getViewLink($number, $contactType = '') {
+        self::setSystemParam();
 
         $urlParam = [
             'number' => $number
         ];
 
         //微信通知带上微信标记,用于指向用户自动登录
-        if($type == 3){
+        if($contactType == 3){
             $urlParam['loginType'] = 'weixin';
         }
 
-        $link = $system['domain'] . self::url('Form-View-ticket', $urlParam);
+        $link = self::$system['domain'] . self::url('Form-View-ticket', $urlParam);
         return '<a href="' . $link . '">' . $link . '</a>';
     }
 
@@ -66,8 +68,9 @@ class MailTemplate extends \Core\Model\Model {
      * @return string
      */
     public static function getCSViewLink($number) {
-        $system = \Core\Func\CoreFunc::$param['system'];
-        $link = $system['domain'] . self::url('Ticket-Ticket-handle', ['number' => $number]);
+        self::setSystemParam();
+
+        $link = self::$system['domain'] . self::url('Ticket-Ticket-handle', ['number' => $number]);
         return '<a href="' . $link . '">' . $link . '</a>';
     }
 
@@ -80,7 +83,7 @@ class MailTemplate extends \Core\Model\Model {
     public static function matchTitle($number, $type) {
         $template = self::getTemplate($type);
 
-        $dictionary = self::ticketDictionary($number, $type);
+        $dictionary = self::ticketDictionary($number);
 
         $title = str_replace($dictionary['search'], $dictionary['replace'], $template['mail_template_title']);
 
@@ -99,9 +102,16 @@ class MailTemplate extends \Core\Model\Model {
      * @return mixed
      */
     public static function matchContent($number, $type) {
+        self::setSystemParam();
+
+        static $SMS;
+        if(empty($SMS)){
+            $SMS = json_decode(self::$system['sms'], true);
+        }
+
         $template = self::getTemplate($type);
 
-        $dictionary = self::ticketDictionary($number, $type);
+        $dictionary = self::ticketDictionary($number);
 
         foreach ([
                     '1' => 'mail_template_content',
@@ -115,7 +125,16 @@ class MailTemplate extends \Core\Model\Model {
 
             //短信和微信需要将超链接的HTML代码移除
             if(in_array($key, [2, 3])){
-                $param['view'] = strip_tags(self::getViewLink($number, $type));
+                $param['view'] = strip_tags(self::getViewLink($number, $key));
+            }
+
+            //阿里云短信需要特殊组装数据
+            if($key == 2 && $SMS['COMPANY'] == 1){
+                $newFormat = [
+                    'TemplateCode' => $SMS['aliyun_TemplateCode'][$type],
+                    'TemplateParam' => htmlspecialchars_decode($template[$item])
+                ];
+                $template[$item] = json_encode($newFormat);
             }
 
             //微信通知需要先将内容格式化，补充通知的超链接。
@@ -136,13 +155,13 @@ class MailTemplate extends \Core\Model\Model {
     /**
      * 工单模板字典
      * @param $number
-     * @param $type
      * @return array
      */
-    public static function ticketDictionary($number, $type = ''){
+    public static function ticketDictionary($number){
         if(empty(self::$ticket)){
             self::$ticket = \Model\Ticket::getTicketBaseInfo($number);
         }
+        
         $ticket = self::$ticket;
 
         //处理工单提交用户
@@ -153,7 +172,8 @@ class MailTemplate extends \Core\Model\Model {
         }
 
         //前台跳转链接
-        $ticket['ticket_link'] = self::getViewLink($number ,$type);
+        $ticket['ticket_link'] = self::getViewLink($number , self::$ticket['ticket_contact']);
+
         //后台跳转链接
         $ticket['handle_link'] = \Model\MailTemplate::getCSViewLink($number);
 
@@ -183,9 +203,11 @@ class MailTemplate extends \Core\Model\Model {
      * @return mixed
      */
     public static function mergeMailTemplate($content){
-        $host = \Core\Func\CoreFunc::$param['system']['domain'];
-        $siteLogo = \Core\Func\CoreFunc::$param['system']['siteLogo'];
-        $siteTitle = \Core\Func\CoreFunc::$param['system']['siteTitle'];
+        self::setSystemParam();
+
+        $host = self::$system['domain'];
+        $siteLogo = self::$system['siteLogo'];
+        $siteTitle = self::$system['siteTitle'];
         $authorize_type = \Core\Func\CoreFunc::$param['authorize_type'];
 
 
@@ -211,6 +233,15 @@ class MailTemplate extends \Core\Model\Model {
 
         return str_replace($search, $replace, $emailTemplate);
 
+    }
+
+    /**
+     * 设置全局的system变量
+     */
+    private static function setSystemParam(){
+        if(empty(self::$system)){
+            self::$system = \Core\Func\CoreFunc::$param['system'];
+        }
     }
 
 }

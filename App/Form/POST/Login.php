@@ -46,8 +46,10 @@ class Login extends \Core\Controller\Controller {
             $this->error('帐号不存在或者密码错误');
         }
 
+
         if($member['member_status'] == 0){
-            $this->error('当前账号处于待审核/被禁用，请联系网站管理员解决。');
+            $statusMsg = $system['member_review'] == 2 ? '请先打开邮箱完成账号激活。' : '当前账号处于待审核/被禁用，请联系网站管理员解决。';
+            $this->error($statusMsg);
         }
 
         unset($member['member_password']);
@@ -68,23 +70,23 @@ class Login extends \Core\Controller\Controller {
      * 注册帐号
      */
     public function signup() {
+        $review = \Core\Func\CoreFunc::$param['system']['member_review'];
         $param = [
-            'member_status' => \Core\Func\CoreFunc::$param['system']['member_review'],
+            'member_status' => $review == 1 ? 1 : 0,
             'member_createtime' => time(),
         ];
-
 
         $param['member_account'] = $this->isP('account', '请填写登陆账号');
         $param['member_name'] = $this->isP('name', '请填写名字');
         $param['member_email'] = $this->isP('email', '请填写邮箱地址');
         $param['member_phone'] = $this->isP('phone', '请填写手机号码');
+        $param['member_organize_id'] = 1;
 
         if(!empty($_POST['weixin'])){
             $param['member_weixin'] = $this->p('weixin');
         }
 
-        $password = $this->isP('password', '请填密码');
-        $repassword = $this->isP('repassword', '请填写再次确认密码');
+        $password = \Model\Extra::verifyPassword();
 
         if (\Model\Extra::checkInputValueType($param['member_email'], 1) == false) {
             $this->error('请输入正确的邮箱地址');
@@ -101,23 +103,13 @@ class Login extends \Core\Controller\Controller {
             $this->checkRepeatInfo($field, $param, $msg);
         }
 
-
-        if (strcmp($password, $repassword) != 0) {
-            $this->error('两次输入的密码不一致');
-        }
-
         $param['member_password'] = \Core\Func\CoreFunc::generatePwd($password, 'USER_KEY');
 
-        $this->db('member')->insert($param);
+        $memberID = $this->db('member')->insert($param);
 
-        //关闭审核状态，发送欢迎注册邮件
-        if($param['member_status'] == 1){
-            $title = '欢迎来到'.\Core\Func\CoreFunc::$param['system']['siteTitle'];
-            $emailContent = \Model\MailTemplate::mergeMailTemplate("<p>您好！</p><p>{$title}，您可以使用此帐号登录系统。尔后，您可以提交和管理工单。</p>");
-            \Model\Extra::insertSend($param['member_email'], $title, $emailContent, '1');
-        }
+        $this->sendSignUpEmail($memberID, $param, $review);
 
-        $this->success('注册成功', $this->url('Member-index'));
+        $this->success('注册成功', $this->url('Login-index', ['signup_complete' => $review]));
     }
 
     /**
@@ -133,6 +125,39 @@ class Login extends \Core\Controller\Controller {
 
         if(!empty($checkRepeat)){
             $this->error($msg);
+        }
+    }
+
+    /**
+     * 发送欢迎或者激活账号的邮件
+     * @param $memberID 收到通知的账号
+     * @param $param 注册时提交的参数
+     * @param $review 系统的注册审核设置
+     */
+    private function sendSignUpEmail($memberID, $param, $review){
+
+        switch ($review){
+            //关闭审核状态，发送欢迎注册邮件
+            case '1':
+                $title = '欢迎来到'.\Core\Func\CoreFunc::$param['system']['siteTitle'];
+                $emailContent = \Model\MailTemplate::mergeMailTemplate("<p>您好！</p><p>{$title}，您可以使用此帐号登录系统。尔后，您可以提交和管理工单。</p>");
+                \Model\Extra::insertSend($param['member_email'], $title, $emailContent, '1');
+                break;
+            //开启邮件激活验证
+            case '2':
+                $activationCode = \Model\Extra::getOnlyNumber();
+                $this->db('member_activation')->insert([
+                    'member_id' => $memberID,
+                    'activation_code' => $activationCode,
+                    'activation_time' => time()
+                ]);
+
+                $url = \Core\Func\CoreFunc::$param['system']['domain'].$this->url('Login-activation', ['code' => $activationCode]);
+
+                $title = '欢迎来到'.\Core\Func\CoreFunc::$param['system']['siteTitle'].'！您需要进行邮件激活。';
+                $emailContent = \Model\MailTemplate::mergeMailTemplate("<p>您好！</p><p>{$title}</p><p><a href='{$url}' style='color: #bb0200;font-weight: bold;text-decoration: underline;'>请点击这里立即完成激活</a></p><p>如果上述文字点击无效，请将以下网址复制到浏览器地址栏打开（该链接使用一次或24小时后失效）：<br/>{$url}</p>");
+                \Model\Extra::insertSend($param['member_email'], $title, $emailContent, '1');
+                break;
         }
     }
 
@@ -160,7 +185,8 @@ class Login extends \Core\Controller\Controller {
         ]);
 
         //创建邮件
-        $mailContent = "<p>您已提交找回密码的请求，请点击此链接完成操作：" . \Core\Func\CoreFunc::$param['system']['domain'] . $this->url(GROUP . '-Login-resetpw', ['mark' => $mark]);
+        $restPWUrl = \Core\Func\CoreFunc::$param['system']['domain'] . $this->url(GROUP . '-Login-resetpw', ['mark' => $mark]);
+        $mailContent = \Model\MailTemplate::mergeMailTemplate("<p>您已提交找回密码的请求，请点击此链接完成操作：<a href=\"{$restPWUrl}\">{$restPWUrl}</a>");
 
         \Model\Extra::insertSend($checkmember['member_email'], '重置密码请求', $mailContent, 1);
 
@@ -183,12 +209,7 @@ class Login extends \Core\Controller\Controller {
             $this->error('MARK不正确或者不存在', $loginUrl);
         }
 
-        $password = $this->isP('passwd', '请输入新密码');
-        $repasswd = $this->isP('repasswd', '请输入确认新密码');
-
-        if ($password !== $repasswd) {
-            $this->error('两次密码不正确');
-        }
+        $password = \Model\Extra::verifyPassword();
 
         $member = \Model\Content::findContent('member', $checkMark['member_id'], 'member_id');
 
@@ -204,6 +225,7 @@ class Login extends \Core\Controller\Controller {
 
         $this->success('密码修改成功!', $loginUrl);
     }
+
 
     /**
      * 微信登录

@@ -78,17 +78,16 @@ $(function () {
         $.extend(obj, param)
 
         var progress = $.AMUI.progress;
-        var d = dialog({title: '系统提示', zIndex: '9999', fixed:true});
-        if(obj.dialog == true){
-            d.showModal()
-        }
+        var dialogOption = {id:'submit-tips', zIndex: '9999', fixed:true, skin:'submit-warning'};
+
         progress.start();
 
         $.post(obj.url, obj.data, function (data) {
 
             if (obj.dialog == true) {
                 if (data.status == 200) {
-
+                    dialogOption.content = '<i class="am-icon-check-circle"></i>  ';
+                    dialogOption.skin = 'submit-success';
                     if(data.waitSecond == -1){
                         window.location.href = data.url
                         return false;
@@ -97,8 +96,10 @@ $(function () {
                     setTimeout(function () {
                         data.url ? window.location.href = data.url : location.reload();
                     }, 2000);
+                }else{
+                    dialogOption.content = '<i class="am-icon-exclamation-circle"></i>  ';
                 }
-                d.content(data.msg);
+                dialogOption.content += data.msg;
 
             }
             $.refreshToken(data.token);
@@ -120,12 +121,15 @@ $(function () {
             }catch (e){
 
             }
-            d.content(msg);
+            dialogOption.skin = 'submit-error';
+            dialogOption.content = '<i class="am-icon-times-circle"></i> '+msg;
         }).complete(function(){
+            var d = dialog(dialogOption).showModal();
+
             var src = $('.refresh-verify').attr('src')
             $('.refresh-verify').attr('src', src + '&time=' + Math.random());
             setTimeout(function () {
-                d.close();
+                d.close().remove();
             }, 3000);
             progress.done();
         });

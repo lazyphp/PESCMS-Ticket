@@ -13,6 +13,7 @@
     -moz-box-shadow: 0 2px 5px 0 rgba(30,30,30,.09);
     box-shadow: 0 2px 5px 0 rgba(30,30,30,.09);
     background: #fff;
+    margin-bottom:0;
 }
 @media only screen and (min-width: 1025px) {
     .tool-container ul:only-child>li>a{
@@ -34,6 +35,14 @@
 }
 .logo img{
     max-height: 30px;
+}
+
+#wrapper{
+    padding-top: 1.6rem;
+    min-height: 73vh;
+}
+.index-background{
+    background-color: #fff;
 }
 
 /*解决手机版内边距异常问题*/
@@ -140,45 +149,67 @@
 }
 .login{
     min-height: 46rem;
-    padding: 10rem 0 10px 0;
+    padding: 5rem 0 10px 0;
 }
-.login h2{
-    background-color: #32beff;
-    background-image: linear-gradient(45deg,#19b1f0,#0b70d8);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: #32beff!important;
-    font-family: Lato;
-    font-weight: 300;
-    text-transform: uppercase;
-}
-.login .am-panel{
+.login-panel{
 
 }
-.login a{
-
+#login-enterplorer{
+    padding: 0 24px 30px;
+}
+.login-tab{
+    display: inline-block;
+    color: #444;
+    font-size: 16px;
+    line-height: 60px;
+    height: 60px;
+    margin-right: 24px;
+    cursor: pointer;
+}
+.login-tab.am-active{
+    border-bottom: 2px solid #0084ff;
 }
 
-.login-text-danger{
-    margin: 1.3rem 0 0 0;
-}
-#login-enterplorer .am-input-group-label{
-    border-radius: 4px 0 0 4px;
-}
-#login-enterplorer input{
-    border-radius: 0 4px 4px 0px;
+.loginFlow{
+    margin: 1rem 0;
 }
 
+.pes-login-input{
+    padding: 1.6rem 1.6rem 1.6rem 0 !important;
+    border: none !important;
+    border-bottom: 1px solid #ebebeb !important;
+    border-bottom-color: rgb(235, 235, 235);
+    -webkit-box-shadow: none !important;
+}
+.pes-login-input:focus{
+    -webkit-box-shadow: none !important;
+}
+.pes-login-input.am-field-error{
+    border-bottom: 1px solid #dd514c !important;
+    -webkit-box-shadow: inset 0 0px 1px 0px rgba(0,0,0,.075) !important;
+}
 
 .login-verify{
-    width: 44% !important;
-    display: inline-block !important;
+
 }
-.login-form .refresh-verify{
-    width: 54% !important;
-    height: 38px;
-    padding-top: 1px;
+
+.login-options{
+    margin: 20px 0;
+}
+.login-options, .login-options a{
+    color: grey;
+}
+.login-signup-link{
+    color: #e56c0c !important;
+}
+.signBAT{
+    margin-top: 10px;
+    justify-content: space-between;
+    color: #8590a6;
+    height: 60px;
+    line-height: 60px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 /*fqa问答指引*/
@@ -229,6 +260,17 @@
 .fqa-ul li{
     margin: 0.5rem 0;
 }
+/*个人中心*/
+@media only screen and (min-width: 1025px) {
+    .member-center{
+        padding: 30px 50px
+    }
+    .member-info th{
+        width: 10%;
+    }
+}
+
+/*个人中心*/
 
 /*页脚*/
 .my-footer{

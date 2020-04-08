@@ -15,17 +15,16 @@
 <?php endif; ?>
 
 <div class="account" style="display: none">
-    <div class="am-input-group am-margin-bottom">
-        <span class="am-input-group-label"><i class="am-icon-envelope am-icon-fw"></i></span>
-        <input type="email" name="email" class="am-form-field" placeholder="要绑定的已注册邮箱地址" required="required">
+
+    <div class="loginFlow">
+        <input type="email" name="email" class="pes-login-input" placeholder="要绑定的已注册邮箱地址" required="required">
     </div>
 
-    <div class="am-input-group am-margin-bottom">
-        <span class="am-input-group-label"><i class="am-icon-lock am-icon-fw"></i></span>
-        <input type="password" name="password" class="am-form-field" placeholder="密码" required="required">
+    <div class="loginFlow">
+        <input type="password" name="password" class="pes-login-input" placeholder="密码" required="required">
     </div>
 
-    <button type="submit" class="am-btn am-btn-secondary am-radius am-btn-sm am-margin-top-sm">提交</button>
+    <button type="submit" class="am-btn am-btn-primary am-radius am-btn-sm am-margin-top am-btn-block">提交</button>
 
 </div>
 <script>

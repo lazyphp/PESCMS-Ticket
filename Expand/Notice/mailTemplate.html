@@ -13,6 +13,15 @@
         #table-panel{
             border-radius:10px; border:1px solid #dedede; margin:0 auto; background-color:#ffffff;
         }
+        .site-title{
+            margin-top: 20px;
+        }
+        .site-title a{
+            color: #7b7b7b;
+        }
+        .site-title span{
+            box-sizing: border-box;
+        }
         #logo{
             width:100px;
             border-top-left-radius:10px;
@@ -29,8 +38,11 @@
             display:inline;
         }
         .mail-content{
-            font-size: 15px;
+            font-size: 14px;
             line-height: 1.5;
+        }
+        .mail-content a{
+            color: #7b7b7b;
         }
         .footerContent, .footerContent a{
             color: #7b7b7b;
@@ -65,6 +77,56 @@
                 text-align: left;
             }
         }
+
+        .selectTdClass {
+            background-color: #edf5fa !important
+        }
+
+        .mail-content table.noBorderTable td, .mail-content table.noBorderTable th, .mail-content table.noBorderTable caption {
+            border: 1px dashed #ddd !important
+        }
+
+        .mail-content table {
+            font-size: 14px;
+            margin-bottom: 10px;
+            border-collapse: collapse;
+            display: table;
+        }
+
+        .mail-content table td, .mail-content table th {
+            padding: 5px 10px;
+            border: 1px solid #DDD;
+        }
+
+        .mail-content table caption {
+            border: 1px dashed #DDD;
+            border-bottom: 0;
+            padding: 3px;
+            text-align: center;
+        }
+
+        .mail-content table th {
+            border-top: 1px solid #BBB;
+            background-color: #F7F7F7;
+        }
+
+        .mail-content table tr.firstRow th {
+            border-top-width: 2px;
+        }
+
+        .mail-content table .ue-table-interlace-color-single {
+            background-color: #fcfcfc;
+        }
+
+        .mail-content table .ue-table-interlace-color-double {
+            background-color: #f7faff;
+        }
+
+        .mail-content table td p {
+            margin: 0;
+            padding: 0;
+        }
+
     </style>
 </head>
 <body>
@@ -74,7 +136,7 @@
         <td align="center" style="background: #f7f9fa;padding:22px 0 15px 0" class="responsive-table">
             <table width="552" border="0" cellpadding="0" cellspacing="0" id="table-panel"  class="responsive-table">
                 <tr>
-                    <td style="padding:0 0 40px 0;" align="center" class="padding2">
+                    <td style="padding:0 0 20px 0;" align="center" class="padding2">
                         <a href="{host}" target="_blank"><img style="" src="{logo}" id="logo"></a>
                     </td>
                 </tr>

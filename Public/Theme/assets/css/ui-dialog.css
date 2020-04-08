@@ -12,15 +12,14 @@
     _float: left;
     position: relative;
     background-color: #000;
-    background-color: rgba(0,0,0,.618);
-    border: 3px solid rgb(76, 76, 76);
-    border-color: rgba(76, 76, 76, 0.3);
+    background-color: rgba(255,255,255, 0.99);
+    border: 1px solid #ebeef5;
+    border-radius: 4px;
     outline: 0;
     background-clip: padding-box;
-    font-family: Helvetica, arial, sans-serif;
     font-size: 14px;
     line-height: 1.428571429;
-    color: #fff;
+    color: #303133;
     opacity: 0;
     -webkit-transform: scale(0);
     transform: scale(0);
@@ -64,20 +63,20 @@
 }
 .ui-dialog-header {
     white-space: nowrap;
-    border-bottom: 1px solid #E5E5E5;
 }
 .ui-dialog-close {
     position: relative;
     _position: absolute;
     float: right;
-    top: 5px;
+    top: 11px;
     right: 7px;
     _height: 26px;
     padding: 0 4px;
-    font-size: 37px;
-    font-weight: bold;
+    font-size: 32px;
     line-height: 1;
-    color: #f00;
+    color: #909399;
+    font-style: normal;
+    font-weight: 400;
     text-shadow: 0 1px 0 #fff;
     opacity: 0.8;
     filter: alpha(opacity=20);
@@ -89,7 +88,7 @@
 }
 .ui-dialog-close:hover,
 .ui-dialog-close:focus {
-    color: #ff6363;
+    color: #409eff;
     text-decoration: none;
     cursor: pointer;
     outline: 0;
@@ -104,7 +103,7 @@
     overflow:hidden; 
     white-space: nowrap;
     text-overflow: ellipsis;
-    font-weight: bold;
+    font-size: 18px;
     cursor: default;
 }
 .ui-dialog-body {
@@ -431,4 +430,27 @@
     transform: rotate(360deg);
     animation: ui-dialog-loading 1.5s infinite linear;
     display: none\9;
+}
+
+.submit-success, .submit-warning, .submit-error{
+    transform: translateX(-50%);
+    transition: opacity .3s,transform .4s,top .4s;
+}
+.submit-success .ui-dialog-body, .submit-warning .ui-dialog-body, .submit-error .ui-dialog-body{
+    padding: 15px 15px 15px 20px;
+}
+.submit-success{
+    background-color: #f0f9eb;
+    border-color: #e1f3d8;
+    color: #67c23a;
+}
+.submit-warning{
+    background-color: #fdf6ec;
+    border-color: #faecd8;
+    color: #e6a23c;
+}
+.submit-error{
+    background-color: #fef0f0;
+    border-color: #fde2e2;
+    color: #f56c6c;
 }

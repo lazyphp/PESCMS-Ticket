@@ -7,7 +7,7 @@
                 <a href="<?= $addUrl ?>" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</a>
                 <a class="am-btn am-btn-warning" href="<?= $label->url('Ticket-Ticket_model-action', array('id' => $label->xss($_GET['number']))); ?>" target="_blank"><span class="am-icon-edit"></span> 编辑</a>
                 <a class="am-btn am-btn-primary" href="<?= $label->url('Category-ticket', array('number' => $label->xss($_GET['number']))); ?>" target="_blank"><span class="am-icon-pencil-square-o"></span> 预览工单</a>
-
+                <?php $label->toolEvent() ?>
             </div>
         </div>
     </div>
@@ -15,8 +15,8 @@
 <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed" />
 
 <?php if (empty($list)): ?>
-    <div class="am-alert am-alert-secondary am-margin-top am-margin-bottom am-text-center" data-am-alert>
-        <p>本页面没有数据 :-(</p>
+    <div class="pes-alert pes-alert-info am-margin-top am-margin-bottom am-text-center" >
+        <p class="am-margin-0">本页面没有数据 :-(</p>
     </div>
 <?php else: ?>
     <form class="am-form ajax-submit" action="<?= $label->url(GROUP . '-' . MODULE . '-listsort'); ?>" method="POST">

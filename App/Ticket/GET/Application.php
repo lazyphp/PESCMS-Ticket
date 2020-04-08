@@ -121,6 +121,10 @@ class Application extends \Core\Controller\Controller {
     private function downloadPlugin($plugin, $version = ''){
         $fileName = \Model\Extra::getOnlyNumber().'.zip';
 
+        if(!is_dir(APP_PATH.'Temp') && mkdir(APP_PATH.'Temp') === false ){
+            $this->error('程序创建临时目录失败，请检查程序目录是否有足够的写入权限。');
+        }
+
         $patchSave = APP_PATH.'Temp/'.$fileName;
 
         $getFile = $this->fetchPlugin($plugin, $version);

@@ -104,6 +104,7 @@ class Category extends \Core\Controller\Controller{
                 'postscript' => $value['ticket_model_postscript'],
                 'exclusive' => $value['ticket_model_exclusive'],
                 'organize_id' => $value['ticket_model_organize_id'],
+                'title_description' => $value['ticket_model_title_description'],
             ];
             $field[$value['ticket_form_id']] = [
                 'field_name' => $value['ticket_form_name'],
@@ -162,6 +163,7 @@ class Category extends \Core\Controller\Controller{
 	        $this->_404();
         }
 	    $this->ticket();
+	    $this->session()->delete('member');
         ob_start();
 	    $this->display('Category_ticket');
         $javascript = "var formString = '" . addslashes(preg_replace("/\\n||\\r||\\n\\r/m ", '', ob_get_contents())) . "'\n";

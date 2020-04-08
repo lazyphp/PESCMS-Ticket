@@ -1,4 +1,4 @@
-<div class="am-panel am-panel-default">
+<div class="am-panel am-panel-default am-panel-hover am-panel-striped">
     <div class="am-panel-hd">发送设置</div>
     <div class="am-panel-bd">
 
@@ -18,7 +18,7 @@
                         <input type="radio" value="3" name="notice_way" required="" <?= $notice_way['value'] == '3' ? 'checked="checked"' : '' ?>>
                         两者兼有
                     </label>
-                    <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
+                    <div class="pes-alert pes-alert-info am-text-xs " >
                         <i class="am-icon-lightbulb-o"></i> 请填写正确的域名，以便工单能够正确地提交！
                     </div>
                 </div>
@@ -36,10 +36,13 @@
                     <label class="am-checkbox-inline" data-am-popover="{content: '勾选企业微信，请确保下面企业微信的API填写正确', trigger: 'hover focus'}">
                         <input type="checkbox" value="4" name="cs_notice_type[4]" <?= $cs_notice_type['4'] == '4' ? 'checked="checked"' : '' ?>> 企业微信
                     </label>
+                    <label class="am-checkbox-inline" data-am-popover="{content: '勾选钉钉企业，请确保下面钉钉企业的API填写正确', trigger: 'hover focus'}">
+                        <input type="checkbox" value="5" name="cs_notice_type[5]" <?= $cs_notice_type['5'] == '5' ? 'checked="checked"' : '' ?>> 钉钉企业
+                    </label>
                     <label class="am-checkbox-inline" data-am-popover="{content: '欢迎反馈给官方', trigger: 'hover focus'}">
                         <input type="checkbox" value="99" name="cs_notice_type[99]" <?= $cs_notice_type['99'] == '99' ? 'checked="checked"' : '' ?> disabled="disabled"> 其他方式
                     </label>
-                    <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
+                    <div class="pes-alert pes-alert-info am-text-xs " >
                         <i class="am-icon-lightbulb-o"></i> 勾选上述选项，当系统有消息通知，将按照勾选的写入发送列表。建议只选用一种常用的接收方式，以免给内部人员造成消息接收压力。
                     </div>
                 </div>

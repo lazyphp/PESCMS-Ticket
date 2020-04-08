@@ -27,6 +27,7 @@ class Login extends \Core\Controller\Controller {
         $this->layout('', 'Login_layout');
     }
 
+
     /**
      * 重置密码
      */
@@ -42,6 +43,36 @@ class Login extends \Core\Controller\Controller {
 
         $this->assign('title', '重置密码');
         $this->layout('', 'Login_layout');
+    }
+
+    /**
+     * 激活账号
+     */
+    public function activation(){
+
+        $code = $this->isG('code', '请提交正确的激活码');
+        $checkCode = $this->db('member_activation')->where('activation_time >= :time AND activation_code = :code ')->find([
+            'time' => time() - 86400,
+            'code' => $code
+        ]);
+
+        if (empty($checkCode)) {
+            $this->error('激活码不存在', '/');
+        }
+
+        $this->db('member')->where('member_id = :member_id')->update([
+            'noset' => [
+                'member_id' => $checkCode['member_id']
+            ],
+            'member_status' => 1
+        ]);
+
+        $this->db('member_activation')->where('activation_code = :code')->delete([
+            'code' => $code
+        ]);
+
+        $this->success('您的账号已经成功激活！', $this->url('Login-index'));
+
     }
 
     /**

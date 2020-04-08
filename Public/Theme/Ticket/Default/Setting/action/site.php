@@ -5,7 +5,7 @@
                 <div class="am-form-group">
                     <label class="am-block">授权码<i class="am-text-danger">*</i></label>
                     <input name="authorize" placeholder="请输入授权码" type="text" value="<?= $authorize['value']; ?>">
-                    <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
+                    <div class="pes-alert pes-alert-info am-text-xs " >
                         <i class="am-icon-lightbulb-o"></i> 当前域名：<?= empty($_SERVER['HTTP_HOST']) ? '获取当前域名失败' : $_SERVER['HTTP_HOST'] ?> ;  授权购买请访问:《<a href="https://www.pescms.com/Page/Authorization.html" target="_blank" tyle="color:#0e90d2 ">商业授权</a>》
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                     <label class="am-block">页脚内容</label>
                     <textarea rows="10"
                               name="pescmsIntroduce" <?= $license == 1 ? '' : 'readonly="readonly" data-am-popover="{content: \'需求购买使用授权方解除限制\', trigger: \'hover\', theme:\'sm\'}"' ?>><?= $pescmsIntroduce['value']; ?></textarea>
-                    <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
+                    <div class="pes-alert pes-alert-info am-text-xs " >
                         <i class="am-icon-lightbulb-o"></i> 网站联系方式和页脚内容的设置，可以阅读这里查看教程:《<a
                                 href="https://www.pescms.com/d/v/1.2.7/22/149.html" target="_blank" style="color:#0e90d2 ">自定义网站设置</a>》
                     </div>

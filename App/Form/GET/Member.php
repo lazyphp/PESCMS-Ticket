@@ -4,13 +4,30 @@ namespace App\Form\GET;
 class Member extends \Core\Controller\Controller {
 
     /**
+     * 查看和更新个人信息
+     */
+    public function index(){
+        $this->assign('title', '个人中心');
+        $this->assign('member', \Model\Content::findContent('member', $this->session()->get('member')['member_id'], 'member_id'));
+        $this->ticketList('5');
+
+        //经常提交的工单模型
+        $oftenTicket = $this->db('ticket AS t')->field('tm.ticket_model_name, tm.ticket_model_number')->join("{$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id")->where('t.member_id = :member_id')->group('t.ticket_model_id')->select([
+            'member_id' => $this->session()->get('member')['member_id']
+        ]);
+        $this->assign('oftenTicket', $oftenTicket);
+
+        $this->layout();
+    }
+
+    /**
      * 我的工单
      * @todo 本来打算将个人的工单编写在Ticket控制器
      * 但考虑到我的工单应该是登录后可以直接查看的
      * 因此我将此方法放置于Member控制器
      * 若以后有调整，在将此方法进行细分.
      */
-    public function index(){
+    public function ticket(){
 
         foreach (range(0,3) as $item){
             $statistics[$item] = [
@@ -61,7 +78,7 @@ class Member extends \Core\Controller\Controller {
     /**
      * 工单列表
      */
-    private function ticketList(){
+    private function ticketList($page = 15){
         $condition = '';
         $param = ['member_id' => $this->session()->get('member')['member_id']];
         //关键词搜索
@@ -109,22 +126,13 @@ class Member extends \Core\Controller\Controller {
             'count' => sprintf($sql, 'count(*)'),
             'normal' => sprintf($sql, 't.*, tm.ticket_model_name, tm.ticket_model_cid'),
             'param' => $param,
-            'page' => 15
+            'page' => $page
         ]);
 
         $this->assign('page', $result['page']);
         $this->assign('list', $result['list']);
 
         $this->assign('keyword', empty($keyword) ? '' : $keyword);
-    }
-
-    /**
-     * 查看和更新个人信息
-     */
-    public function update(){
-        $this->assign('title', '更新个人信息');
-        $this->assign('member', \Model\Content::findContent('member', $this->session()->get('member')['member_id'], 'member_id'));
-        $this->layout();
     }
 
 }

@@ -27,7 +27,7 @@
 <?php case 'thumb': ?>
     <?php if(!empty($value[$prefix . $field['field_name']])): ?>
         <a href="<?= $value[$prefix . $field['field_name']]; ?>" data-fancybox>
-            <img class="am-radius" alt="<?= $value[$prefix . $field['field_name']]; ?>" src="<?= $value[$prefix . $field['field_name']]; ?>"  width="140" height="140" />
+            <img class="am-radius" alt="<?= $value[$prefix . $field['field_name']]; ?>" src="<?= $value[$prefix . $field['field_name']]; ?>"  width="140" />
         </a>
     <?php endif; ?>
 <?php break;?>

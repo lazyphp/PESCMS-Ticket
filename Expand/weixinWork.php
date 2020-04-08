@@ -48,26 +48,31 @@ class weixinWork {
      */
     public function send_notice($param) {
         if(!empty($this->error)){
-            \Model\Extra::errorSendResult($param['send_id'], $this->error);
+            \Model\Extra::stopSend($param['send_id'], $this->error);
             return $this->error;
         }
         $result = json_decode($this->notice($param['send_account'], $param['send_content']), true);
 
         //发送成功，删除消息
         if($result['errmsg'] == 'ok' && empty($result['invaliduser']) ){
-            \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->delete([
-                'send_id' => $param['send_id']
-            ]);
+            $sendStatus = [
+                'msg' => '企业微信通知发送成功。',
+                'status' => 2,
+                'second' => 0,
+            ];
         }else{
-            \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->update([
-                'noset' => [
-                    'send_id' => $param['send_id']
-                ],
-                'send_result' => $result['errmsg']
-            ]);
+            $sendStatus = [
+                'msg' => "企业微信通知发送失败！{$result['errmsg']}",
+                'status' => 1,
+                'second' => 600,
+            ];
         }
+        $sendStatus['id'] = $param['send_id'];
+        $sendStatus['sequence'] = $param['send_sequence'];
 
-        return json_encode($result);
+        \Model\Extra::updateSendStatus($sendStatus);
+
+        return $sendStatus['msg'];
 
     }
 

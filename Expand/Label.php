@@ -36,9 +36,11 @@ class Label {
      */
     public function __call($name, $arguments) {
         switch ($name) {
-            case 'addButton':
-            case 'opButton':
-                return (new \Core\Plugin\Plugin())->button($name, $arguments);
+            case 'toolEvent':
+            case 'opEvent':
+            case 'loginEvent':
+            case 'footerEvent':
+                return (new \Core\Plugin\Plugin())->event($name, $arguments);
                 break;
             default :
                 return '不存在此方法';

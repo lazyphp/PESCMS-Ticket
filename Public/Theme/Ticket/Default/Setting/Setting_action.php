@@ -11,7 +11,7 @@
         <form class="am-form am-form-horizontal ajax-submit" action="<?= $url; ?>" method="post" data-am-validator>
             <input type="hidden" name="method" value="PUT"/>
 
-            <div class="am-tabs" data-am-tabs="{noSwipe: 1}">
+            <div class="am-tabs pes-tabs" data-am-tabs="{noSwipe: 1}">
                 <ul class="am-tabs-nav am-nav am-nav-tabs am-padding-left-sm">
                     <li class="am-active"><a href="#tab1">基础信息</a></li>
                     <li><a href="#tab2">网站信息</a></li>
@@ -39,6 +39,8 @@
                         <?php include 'action/sms.php';?>
 
                         <?php include 'action/weixin.php';?>
+
+                        <?php include 'action/dingtalk.php';?>
                     </div>
                     <div class="am-tab-panel am-fade" id="tab5">
                         <?php include 'action/cs_text.php';?>

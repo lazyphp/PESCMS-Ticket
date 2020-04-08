@@ -49,15 +49,14 @@ class Verify {
         //设置验证码大小
         $im = imagecreatetruecolor($length * 32, $this->height);
         //设置背景颜色
-        $background = imagecolorallocate($im, 128, 212, 246);
+        $background = imagecolorallocate($im, 238, 238, 238);
         imagefilledrectangle($im, 0, 0, $length * 32, $this->height, $background);
 
         //验证码
         $verify = array_slice($str, 0, $length);
         $text = implode(' ', $verify);
 
-        $sessionID = defined('PHPSESSIONID') ? PHPSESSIONID : '';
-        \Core\Func\CoreFunc::session($sessionID)->set('verify', md5(strtolower(implode('', $verify))));
+        \Core\Func\CoreFunc::session()->set('verify', md5(strtolower(implode('', $verify))));
         //加载字体
         $font = PES_CORE.'/Expand/Font/RobotoSlab-Regular.ttf';
 

@@ -168,6 +168,20 @@ $SLICE_ARRYR = [
         ['\Ticket\HandleForm\HandleSetting']
     ],
 
+    //注册全局插件访问入口
+    'GLOBAL-APPLICATION-PLUGIN' => [
+        'any',
+        [':g-Application-Plugin'],
+        ['\Common\ApplicationPlugin']
+    ],
+
+    //注册插件初始化入口
+    'TICKET-APPLICATION-Init' => [
+        'any',
+        ['Ticket-Application-Init'],
+        ['\Common\ApplicationPlugin']
+    ],
+
 ];
 
 //执行切片注册

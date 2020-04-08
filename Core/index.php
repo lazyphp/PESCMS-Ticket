@@ -23,6 +23,8 @@ defined('CONFIG_PATH') or define('CONFIG_PATH', PES_CORE . 'Config/');
 //vendor目录
 defined('VENDOR_PATH') or define('VENDOR_PATH', PES_CORE . 'vendor');
 
+define('PESCMS_URL', 'https://www.pescms.com');
+
 //解决二级目录的问题
 define('IS_CGI', (0 === strpos(PHP_SAPI, 'cgi') || false !== strpos(PHP_SAPI, 'fcgi')) ? 1 : 0 );
 if (!defined('_PHP_FILE_')) {

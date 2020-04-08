@@ -11,6 +11,7 @@
 <a class="am-text-warning" href="<?= $label->url('Ticket-Fqa-index', ['ticket_model_id' => $value["ticket_model_id"], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>"><span class="am-icon-question-circle"></span> FQA列表</a>
 <i class="am-margin-left-xs am-margin-right-xs">|</i>
 
+
 <div class="am-dropdown" data-am-dropdown>
     <a href="javascript:;" class="am-dropdown-toggle am-link-muted more-operate" data-am-dropdown-toggle><span class="am-icon-cog"></span> 更多 <span class="am-icon-caret-down"></span></a>
     <ul class="am-dropdown-content">
@@ -28,3 +29,6 @@
         </li>
     </ul>
 </div>
+
+<?php $label->opButton(['id' => $value["ticket_model_number"]]) ?>
+

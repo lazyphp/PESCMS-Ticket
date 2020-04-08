@@ -27,7 +27,7 @@ class zip {
     public function unzip($zipfile) {
         $zip = zip_open($zipfile);
         if (!is_resource($zip)) {
-            return "压缩包无法打开";
+            return false;
         }
 
         $this->simulateInstall($zip);

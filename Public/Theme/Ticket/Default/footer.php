@@ -41,46 +41,73 @@
         })
         
         <?php if($system['tipsManual'] == 0): ?>
-        dialog({
+        var topTips = dialog({
             fixed: true,
             title:'欢迎使用PESCMS Ticket',
             content: $('.tips-manual')[0],
             width: '300px',
-            okValue: '我知道了',
-            ok: function () {
-                $.post('<?= $label->url('Ticket-Setting-recordTips') ?>', {name:'tipsManual', method:'PUT'}, function(){}, 'JSON')
-            }
-        }).showModal()
+        }).showModal();
+
+        $('.btn-loading-example').button('loading').html('加载完成还需要5秒...');
+        setTimeout(function(){
+            $('.btn-loading-example').button('reset');
+        }, 5000);
+
+        $('body').on('click', '.btn-loading-example', function () {
+            $.post('<?= $label->url('Ticket-Setting-recordTips') ?>', {name:'tipsManual', method:'PUT'}, function(){}, 'JSON')
+            topTips.close();
+        })
         <?php endif; ?>
 
 
         <?php if($system['ticketModel'] == 0 && MODULE == 'Ticket_model' && ACTION == 'index'): ?>
-        dialog({
-            content: '当前工单模型还没完善，点击 更多 - 管理，添加您需要记录的工单表单。',
-            okValue: '我知道了',
-            ok: function () {
-                $.post('<?= $label->url('Ticket-Setting-recordTips') ?>', {name:'ticketModel', method:'PUT'}, function(){}, 'JSON')
-            }
-        }).show($('.more-operate').last()[0])
+        if($('.more-operate').last()[0]){
+            dialog({
+                content: '当前工单模型还没完善，点击 更多 - 管理，添加您需要记录的工单表单。',
+                okValue: '我知道了',
+                ok: function () {
+                    $.post('<?= $label->url('Ticket-Setting-recordTips') ?>', {name:'ticketModel', method:'PUT'}, function(){}, 'JSON')
+                }
+            }).show($('.more-operate').last()[0])
+        }
+
         <?php endif; ?>
     })
 </script>
 <div class="tips-manual" style="display: none">
-    <a href="https://www.pescms.com/d/index/22.html" class="am-btn am-btn-warning am-btn-xs am-radius" target="_blank">PESCMS Ticket 使用教程</a>
+    <a href="https://www.pescms.com/d/index/22.html" class="am-btn am-btn-warning am-btn-xs am-radius" target="_blank"><i class="am-icon-book"></i> 查看PESCMS Ticket 使用教程</a>
     <p>
         常见问题
     </p>
     <ol class=" list-paddingleft-2" style="list-style-type: decimal;">
         <li>
-            <a href="https://www.pescms.com/d/v/1.2.7/22/137.html" target="_blank">创建工单教程</a>
+            <a href="https://www.pescms.com/d/v/1.3.x/22/154.html" target="_blank">创建工单教程</a>
         </li>
         <li>
-            <a href="https://www.pescms.com/d/v/1.2.7/22/147.html" target="_blank">访问工单404</a>
+            <a href="https://www.pescms.com/d/v/1.3.x/22/163.html" target="_blank">访问工单404或工单不显示</a>
         </li>
         <li>
             <a href="https://www.pescms.com/different/5.html" target="_blank">开源版和授权版差异</a>
         </li>
     </ol>
+
+    <hr>
+    <article class="am-article">
+        <div class="am-article-hd">
+            <h3 class="am-text-success">PESCMS推荐您使用阿里云服务器</h3>
+        </div>
+
+        <div class="am-article-bd">
+            <p ><a href="https://www.aliyun.com/minisite/goods?userCode=dwpuyec3" target="_blank" style="color: #fff"><i class="am-icon-external-link"></i> 点击领取2000元代金券</a></p>
+            <p ><a href="https://www.aliyun.com/minisite/goods?userCode=dwpuyec3" target="_blank" style="color: #fff"><i class="am-icon-external-link"></i> 新用户专享1折起</a></p>
+            <p ><a href="https://www.aliyun.com/minisite/goods?userCode=dwpuyec3" target="_blank" style="color: #fff"><i class="am-icon-external-link"></i> 更多优惠云产品，点击查看详情</a></p>
+        </div>
+    </article>
+
+    <div class=" am-text-right ">
+        <button type="button" class="am-btn am-btn-primary am-btn-sm am-radius btn-loading-example">朕已阅</button>
+    </div>
+
 </div>
 <?php endif; ?>
 </body>

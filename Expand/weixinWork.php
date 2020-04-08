@@ -51,7 +51,6 @@ class weixinWork {
             \Model\Extra::errorSendResult($param['send_id'], $this->error);
             return $this->error;
         }
-
         $result = json_decode($this->notice($param['send_account'], $param['send_content']), true);
 
         //发送成功，删除消息
@@ -84,7 +83,7 @@ class weixinWork {
             "msgtype" => "text",
             "agentid" => $this->AgentId,
             "text" => [
-                "content" => $content
+                "content" => strip_tags(htmlspecialchars_decode($content), '<a><br>')
             ]
         ]));
     }

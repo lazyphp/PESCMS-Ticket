@@ -65,8 +65,7 @@
         <li class="am-text-gray-background">
             <div class="am-g">
                 <div class="am-u-sm-2 am-u-lg-1">
-                    <img src="<?= DOCUMENT_ROOT . '/Theme/assets/i/custom.ico'; ?>" alt=""
-                         class="am-comment-avatar" width="48" height="48">
+                    <i class="am-icon-btn am-primary am-icon-user"></i>
                 </div>
                 <div class="am-u-sm-10 am-u-lg-11">
                     <div class="am-block">
@@ -98,9 +97,11 @@
                 <li class="<?= $value['user_id'] == '-1' ? 'am-text-gray am-text-gray-background' : '' ?> ">
                     <div class="am-g">
                         <div class="am-u-sm-1">
-                            <img src="<?= DOCUMENT_ROOT . '/Theme/assets/i/'; ?><?= $value['user_id'] == '-1' ? 'custom.ico' : 'service.ico' ?>"
-                                 alt=""
-                                 class="am-comment-avatar" width="48" height="48">
+                            <?php if($value['user_id'] == '-1'): ?>
+                                <i class="am-icon-btn am-primary am-icon-user"></i>
+                            <?php else: ?>
+                                <i class="am-icon-btn am-danger am-icon-slideshare"></i>
+                            <?php endif; ?>
                         </div>
                         <div class="am-u-sm-11">
                             <div class="am-block am-nbfc">

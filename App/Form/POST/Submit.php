@@ -41,6 +41,9 @@ class Submit extends \Core\Controller\Controller{
 
         $number = $this->isP('number', '请选择您要查看的工单');
         $content = $this->isP('content', '请提交回复内容');
+
+        \Model\Extra::limitSubmit('submitTicket', '1', '10');
+
         $ticket = \Model\Ticket::getTicketBaseInfo($number);
 
         if(!empty($_POST['back_url'])){

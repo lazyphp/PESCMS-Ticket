@@ -177,4 +177,41 @@ class Extra extends \Core\Model\Model {
         }
     }
 
+    /**
+     * 限制提交频率
+     * @todo #1 实际上，这个功能应该交给redis来实现才对。可考虑到PT属于通用软件，让用户部署redis不现实，才使用PHP的session文件来实现。
+     * @todo #2 此功能还应该结合redis/数据库/文件缓存，通过记录IP来实现进一步的限制。
+     * @param $mark 标记名称
+     * @param $frequency 合法的提交次数
+     * @param $interval 提交间隔次数
+     * @param string $msg 提示信息
+     * @return bool
+     */
+    public static function limitSubmit($mark, $frequency, $interval, $msg = '你手速有点快，请休息一下再来'){
+        $res = self::session()->get($mark);
+        if(empty($res)){
+            $res = [
+                'frequency' => 1,
+                'interval' => time()
+            ];
+            self::session()->set($mark, $res);
+            return true;
+        }
+
+        if($res['frequency'] >= $frequency && $res['interval'] > time() - $interval){
+            $res['interval'] = time();
+            self::session()->set($mark, $res);
+            self::error($msg);
+        }elseif($res['frequency'] >= $frequency && $res['interval'] <= time() - $interval){
+            $res['frequency'] = 1;
+            $res['interval'] = time();
+        }else{
+            $res['frequency'] += 1;
+            $res['interval'] = time();
+        }
+        self::session()->set($mark, $res);
+        return true;
+
+    }
+
 }

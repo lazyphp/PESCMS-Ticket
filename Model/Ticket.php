@@ -42,6 +42,8 @@ class Ticket extends \Core\Model\Model {
             self::error('您填写联系方式的信息格式不正确。');
         }
 
+        \Model\Extra::limitSubmit('submitTicket', '1', '10');
+
         //工单长度限定为15
         $param['ticket_number'] = str_pad(substr(\Model\Extra::getOnlyNumber(), 0, 15), 15, 0, STR_PAD_RIGHT);
 

@@ -18,6 +18,9 @@ class Plugin{
 
     /**
      * 插件按钮事件
+     * @param $type 事件类型
+     * @param $arguments 传递参数
+     * @return bool
      */
     public function event($type, $arguments){
 
@@ -28,6 +31,9 @@ class Plugin{
             }
         }
 
+        /**
+         * @todo 随着应用增多，应该先依据GMA判断存在符合的事件。因此应该将self::$pluginObj调整一个可判断的应用对象变量。
+         */
         foreach(self::$pluginJson as $key => $item){
             if(!$this->checkPluginFile(explode("\\", $key)) || empty($item[$type]) ){
                 continue;

@@ -5,25 +5,45 @@ namespace Core\Plugin;
 class Plugin{
 
     /**
+     * 应用插件的注册方法
+     * @var array
+     */
+    private static $pluginJson = [];
+
+    /**
+     * 记录初始化过的应用插件的对象
+     * @var array
+     */
+    private static $pluginObj =  [];
+
+    /**
      * 插件按钮事件
      */
-    public function button($type, $arguments){
-        $json = json_decode(file_get_contents(PES_CORE.'plugin.json'), true);
-        if(empty($json) && !is_array($json)){
-            return false;
+    public function event($type, $arguments){
+
+        if(empty(self::$pluginJson)){
+            self::$pluginJson = json_decode(file_get_contents(PES_CORE.'plugin.json'), true);
+            if(empty(self::$pluginJson) && !is_array(self::$pluginJson)){
+                return false;
+            }
         }
-        foreach($json as $key => $item){
+
+        foreach(self::$pluginJson as $key => $item){
             if(!$this->checkPluginFile(explode("\\", $key)) || empty($item[$type]) ){
                 continue;
             }
-            $obj[$key] = new $key();
             foreach ($item[$type] as $action => $auth){
                 if(strcmp($auth, GROUP.MODULE.ACTION) !== 0){
                     return false;
                 }
-                $obj[$key]->$action($arguments);
+
+                if(empty(self::$pluginObj[$key])){
+                    self::$pluginObj[$key] = new $key();
+                }
+                self::$pluginObj[$key]->$action($arguments);
             }
         }
+
     }
 
     /**
@@ -31,6 +51,7 @@ class Plugin{
      */
     public function register($class, $action){
         $this->writePluginJson($class, $action);
+        return $this;
     }
 
     /**
@@ -38,6 +59,7 @@ class Plugin{
      */
     public function unRegister($class){
         $this->writePluginJson($class);
+        return $this;
     }
 
     /**

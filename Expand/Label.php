@@ -38,7 +38,7 @@ class Label {
         switch ($name) {
             case 'addButton':
             case 'opButton':
-                return (new \Core\Plugin\Plugin())->button($name, $arguments);
+                return (new \Core\Plugin\Plugin())->event($name, $arguments);
                 break;
             default :
                 return '不存在此方法';

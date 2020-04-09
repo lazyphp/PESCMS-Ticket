@@ -182,6 +182,13 @@ $SLICE_ARRYR = [
         ['\Common\ApplicationPlugin']
     ],
 
+    //插件全局事件
+    'APPLICATION-GLOBAL-EVENT' => [
+        'get',
+        ['Ticket-:m-:a', 'Form-:m-:a'],
+        ['\Common\ApplicationGlobalEvent'],
+    ],
+
 ];
 
 //执行切片注册

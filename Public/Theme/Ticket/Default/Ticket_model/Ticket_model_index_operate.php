@@ -30,5 +30,5 @@
     </ul>
 </div>
 
-<?php $label->opButton(['id' => $value["ticket_model_number"]]) ?>
+<?php $label->opEvent(['id' => $value["ticket_model_number"]]) ?>
 

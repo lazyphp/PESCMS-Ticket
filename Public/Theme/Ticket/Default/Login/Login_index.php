@@ -34,6 +34,9 @@
             </div>
 
             <button class="am-btn am-btn-primary am-btn-block">登录</button>
+
+            <?= $label->loginEvent(); ?>
+            
         </form>
     </div>
 </div>

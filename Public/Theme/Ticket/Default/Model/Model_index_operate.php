@@ -7,5 +7,6 @@
         <a class="am-text-success" href="<?= $label->url(GROUP.'-'.'Model-export', array('model_id' => $value["model_id"], 'back_url' => base64_encode($_SERVER['REQUEST_URI']))); ?>"><span class="am-icon-cloud-upload"></span> 导出模型</a>
         <i class="am-margin-left-xs am-margin-right-xs">|</i>
         <a class="am-text-danger ajax-click ajax-dialog"  msg="确定删除吗？将无法恢复的！" href="<?= $label->url(GROUP.'-'.MODULE . '-action', array('id' => $value["model_id"], 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI']))); ?>"><span class="am-icon-trash-o"></span> 删除</a>
+        <?php $label->opEvent(['id' => $value["{$fieldPrefix}id"]]) ?>
     </div>
 </div>

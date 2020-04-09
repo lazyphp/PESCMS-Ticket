@@ -36,8 +36,10 @@ class Label {
      */
     public function __call($name, $arguments) {
         switch ($name) {
-            case 'addButton':
-            case 'opButton':
+            case 'toolEvent':
+            case 'opEvent':
+            case 'loginEvent':
+            case 'footerEvent':
                 return (new \Core\Plugin\Plugin())->event($name, $arguments);
                 break;
             default :

@@ -39,7 +39,7 @@ class Plugin{
                 continue;
             }
             foreach ($item[$type] as $action => $auth){
-                if(strcmp($auth, GROUP.MODULE.ACTION) !== 0){
+                if(strcmp($auth, GROUP.'-'.MODULE.'-'.ACTION) !== 0){
                     return false;
                 }
 

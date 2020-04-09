@@ -11,6 +11,7 @@
                         <span class="am-icon-refresh"></span> 更新首页工单样式
                     </a>
                 <?php endif; ?>
+                <?php $label->toolEvent() ?>
 
             </div>
         </div>

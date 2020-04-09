@@ -42,7 +42,7 @@
 
 <a href="<?= $label->url('Login-findpw') ?>" class="am-btn am-btn-white am-radius am-btn-sm am-margin-top-sm">忘记密码</a>
 
-<div class="ddd"></div>
+<?= $label->loginEvent(); ?>
 
 <script>
     /**

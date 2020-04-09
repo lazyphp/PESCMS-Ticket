@@ -110,5 +110,6 @@
 
 </div>
 <?php endif; ?>
+<?php $label->footerEvent() ?>
 </body>
 </html>

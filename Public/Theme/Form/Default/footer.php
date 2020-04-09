@@ -22,5 +22,6 @@
 <div class="am-hide">
     <?= $system['siteTongji'] ?>
 </div>
+<?php $label->footerEvent() ?>
 </body>
 </html>

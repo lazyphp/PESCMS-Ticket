@@ -11,7 +11,7 @@
                 <?php ?>
                 <?php $addUrl = empty($addUrl) ? $label->url(GROUP . '-' . MODULE . '-action', array('back_url' => base64_encode($_SERVER['REQUEST_URI']))) : $addUrl ?>
                 <a href="<?= $addUrl ?>" class="am-btn am-btn-default am-radius"><span class="am-icon-plus"></span> 新增</a>
-                <?php $label->addButton() ?>
+                <?php $label->toolEvent() ?>
             </div>
         </div>
     </div>

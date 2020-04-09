@@ -10,11 +10,11 @@ namespace Slice\Common;
 class ApplicationGlobalEvent extends \Core\Slice\Slice{
 
     public function before() {
-        (new \Core\Plugin\Plugin())->event('before', NULL);
+        (new \Core\Plugin\Plugin())->event('beforeEvent', NULL);
     }
 
     public function after() {
-        (new \Core\Plugin\Plugin())->event('after', NULL);
+        (new \Core\Plugin\Plugin())->event('afterEvent', NULL);
     }
 
 }

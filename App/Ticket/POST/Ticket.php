@@ -120,10 +120,10 @@ class Ticket extends \Core\Controller\Controller {
         \Model\Notice::addTicketNoticeAction($number, $ticket['ticket_contact_account'], $ticket['ticket_contact'], 6);
 
 
-        if (empty($_POST['back_url'])) {
+        if (empty($_GET['back_url'])) {
             $url = $this->url('Ticket-Ticket-index');
         } else {
-            $url = $_POST['back_url'];
+            $url = base64_decode($_GET['back_url']);
         }
 
         $this->success('工单已被关闭!', $url);

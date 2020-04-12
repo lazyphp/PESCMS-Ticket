@@ -104,7 +104,7 @@ class weixin {
      */
     public function sendTemplate($param){
         if(!empty($this->error)){
-            \Model\Extra::errorSendResult($param['send_id'], $this->error);
+            \Model\Extra::stopSend($param['send_id'], $this->error);
             return $this->error;
         }
 
@@ -121,19 +121,25 @@ class weixin {
         $result = json_decode((new cURL())->init("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={$this->access_token}", json_encode($data)), true);
 
         if($result['errcode'] == 0){
-            \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->delete([
-                'send_id' => $param['send_id']
-            ]);
+            $sendStatus = [
+                'msg' => '模板消息发送成功。',
+                'status' => 2,
+                'second' => 0,
+            ];
         }else{
-            \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->update([
-                'noset' => [
-                    'send_id' => $param['send_id']
-                ],
-                'send_result' => $result['errcode']
-            ]);
+            $sendStatus = [
+                'msg' => "模板消息发送失败！{$result['errcode']}",
+                'status' => 1,
+                'second' => 600,
+            ];
         }
 
-        return json_encode($result);
+        $sendStatus['id'] = $param['send_id'];
+        $sendStatus['sequence'] = $param['send_sequence'];
+
+        \Model\Extra::updateSendStatus($sendStatus);
+
+        return $sendStatus['msg'];
     }
 
     /**

@@ -95,9 +95,16 @@ class Extra extends \Core\Model\Model {
      * 执行通知发送
      */
     public static function actionNoticeSend(){
+
+        //删除7天发送失败和成功的记录
+        self::db('send')->where('send_time < :time AND send_status > 0')->delete([
+            'time' => time() - 86400 * 7
+        ]);
+
+        //获取未发送或者重发少于5次的通知
         $list = \Model\Content::listContent([
             'table' => 'send',
-            'condition' => "send_time <= :time AND send_result = '' ",
+            'condition' => "send_time <= :time AND send_status < 2 AND send_sequence < 5 ",
             'lock' => 'FOR UPDATE',
             'param' => [
                 'time' => time()
@@ -127,13 +134,35 @@ class Extra extends \Core\Model\Model {
         }
     }
 
-    public static function errorSendResult($sendID, $msg){
+    /**
+     * 因配置等信息，直接终止发送
+     * @param $sendID
+     * @param $msg
+     */
+    public static function stopSend($sendID, $msg){
         \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->update([
             'noset' => [
                 'send_id' => $sendID
             ],
             'send_result' => $msg,
-            'send_time' => time() + 600, //发送失败，则增加600秒时间，再重发
+            'send_status' => 1,
+            'send_sequence' => 5,
+        ]);
+    }
+
+    /**
+     * 更新发送状态
+     * @param array $param 参数有 id, msg, status, second
+     */
+    public static function updateSendStatus(array $param){
+        \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->update([
+            'noset' => [
+                'send_id' => $param['id']
+            ],
+            'send_result' => $param['msg'],
+            'send_status' => $param['status'],
+            'send_time' => time() + $param['second'], //发送失败，则增加600秒时间，再重发
+            'send_sequence' => $param['sequence'] + 1,
         ]);
     }
 

@@ -160,7 +160,8 @@ class Login extends \Core\Controller\Controller {
         ]);
 
         //创建邮件
-        $mailContent = "<p>您已提交找回密码的请求，请点击此链接完成操作：" . \Core\Func\CoreFunc::$param['system']['domain'] . $this->url(GROUP . '-Login-resetpw', ['mark' => $mark]);
+        $restPWUrl = \Core\Func\CoreFunc::$param['system']['domain'] . $this->url(GROUP . '-Login-resetpw', ['mark' => $mark]);
+        $mailContent = \Model\MailTemplate::mergeMailTemplate("<p>您已提交找回密码的请求，请点击此链接完成操作：<a href=\"{$restPWUrl}\">{$restPWUrl}</a>");
 
         \Model\Extra::insertSend($checkmember['member_email'], '重置密码请求', $mailContent, 1);
 

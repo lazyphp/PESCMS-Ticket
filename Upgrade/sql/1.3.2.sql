@@ -5,3 +5,11 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 UPDATE `pes_field` SET `field_required` = '0' WHERE `field_model_id` = 21 AND field_name = 'result';
 
 ALTER TABLE `pes_send` ADD `send_status` INT NOT NULL , ADD `send_sequence` INT NOT NULL;
+
+INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) VALUES
+(NULL, 'dingtalk', '钉钉接口', '', 'system');
+
+INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_display_name`, `field_type`, `field_option`, `field_explain`, `field_default`, `field_required`, `field_listsort`, `field_list`, `field_form`, `field_status`, `field_is_null`) VALUES
+(NULL, 7, 'dingtalk', '钉钉企业ID', 'text', '', '', '', 0, 8, 1, 1, 1, 1);
+
+ALTER TABLE `pes_user` ADD `user_dingtalk` VARCHAR(255) NULL DEFAULT NULL AFTER `user_weixinWork`, ADD UNIQUE (`user_dingtalk`);

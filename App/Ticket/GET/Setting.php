@@ -147,6 +147,31 @@ class Setting extends \Core\Controller\Controller {
     }
 
     /**
+     * 钉钉企业测试
+     */
+    public function dingtalkTest(){
+        if(!empty($_GET['debug_access_token'])){
+            (new \Expand\dingtalk())->debug_access_token();
+        }
+
+        $account = $this->isG('account', '请填写接收消息的钉钉企业帐号');
+
+        $result = (new \Expand\dingtalk())->notice($account, '这是测试的消息内容');
+
+        echo '<pre>';
+        echo "您发送消息的帐号是: {$account} <br/>";
+        echo '<br/>';
+        echo "------------下面格式化后的模板格式-------------<br/>";
+        print_r(json_decode($result, true));
+        echo '<br/>';
+        echo "------------下面是钉钉企业返回的结果---------------<br/>";
+        print_r($result);
+        echo '</pre>';
+        echo '<br/>';
+        exit;
+    }
+
+    /**
      * 检查更新模板
      */
     public function upgrade(){

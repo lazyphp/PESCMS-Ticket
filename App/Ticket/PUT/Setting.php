@@ -49,7 +49,8 @@ class Setting extends \Core\Controller\Controller {
                 'sms',
                 'login_verify',
                 'cs_notice_type',
-                'cs_text'
+                'cs_text',
+                'dingtalk',
             ]
         ];
         foreach ($operate as $type => $item){

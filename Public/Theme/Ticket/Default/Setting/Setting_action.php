@@ -39,6 +39,8 @@
                         <?php include 'action/sms.php';?>
 
                         <?php include 'action/weixin.php';?>
+
+                        <?php include 'action/dingtalk.php';?>
                     </div>
                     <div class="am-tab-panel am-fade" id="tab5">
                         <?php include 'action/cs_text.php';?>

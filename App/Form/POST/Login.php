@@ -68,11 +68,11 @@ class Login extends \Core\Controller\Controller {
      * 注册帐号
      */
     public function signup() {
+        $review = \Core\Func\CoreFunc::$param['system']['member_review'];
         $param = [
-            'member_status' => \Core\Func\CoreFunc::$param['system']['member_review'],
+            'member_status' => $review == 1 ? 1 : 0,
             'member_createtime' => time(),
         ];
-
 
         $param['member_account'] = $this->isP('account', '请填写登陆账号');
         $param['member_name'] = $this->isP('name', '请填写名字');
@@ -108,16 +108,11 @@ class Login extends \Core\Controller\Controller {
 
         $param['member_password'] = \Core\Func\CoreFunc::generatePwd($password, 'USER_KEY');
 
-        $this->db('member')->insert($param);
+        $memberID = $this->db('member')->insert($param);
 
-        //关闭审核状态，发送欢迎注册邮件
-        if($param['member_status'] == 1){
-            $title = '欢迎来到'.\Core\Func\CoreFunc::$param['system']['siteTitle'];
-            $emailContent = \Model\MailTemplate::mergeMailTemplate("<p>您好！</p><p>{$title}，您可以使用此帐号登录系统。尔后，您可以提交和管理工单。</p>");
-            \Model\Extra::insertSend($param['member_email'], $title, $emailContent, '1');
-        }
+        $this->sendSignUpEmail($memberID, $param, $review);
 
-        $this->success('注册成功', $this->url('Member-index'));
+        $this->success('注册成功', $this->url('Login-index', ['signup_complete' => $review]));
     }
 
     /**
@@ -133,6 +128,39 @@ class Login extends \Core\Controller\Controller {
 
         if(!empty($checkRepeat)){
             $this->error($msg);
+        }
+    }
+
+    /**
+     * 发送欢迎或者激活账号的邮件
+     * @param $memberID 收到通知的账号
+     * @param $param 注册时提交的参数
+     * @param $review 系统的注册审核设置
+     */
+    private function sendSignUpEmail($memberID, $param, $review){
+
+        switch ($review){
+            //关闭审核状态，发送欢迎注册邮件
+            case '1':
+                $title = '欢迎来到'.\Core\Func\CoreFunc::$param['system']['siteTitle'];
+                $emailContent = \Model\MailTemplate::mergeMailTemplate("<p>您好！</p><p>{$title}，您可以使用此帐号登录系统。尔后，您可以提交和管理工单。</p>");
+                \Model\Extra::insertSend($param['member_email'], $title, $emailContent, '1');
+                break;
+            //开启邮件激活验证
+            case '2':
+                $activationCode = \Model\Extra::getOnlyNumber();
+                $this->db('member_activation')->insert([
+                    'member_id' => $memberID,
+                    'activation_code' => $activationCode,
+                    'activation_time' => time()
+                ]);
+
+                $url = \Core\Func\CoreFunc::$param['system']['domain'].$this->url('Login-activation', ['code' => $activationCode]);
+
+                $title = '欢迎来到'.\Core\Func\CoreFunc::$param['system']['siteTitle'].'！您需要进行邮件激活。';
+                $emailContent = \Model\MailTemplate::mergeMailTemplate("<p>您好！</p><p>{$title}</p><p><a href='{$url}' style='color: #bb0200;font-weight: bold;text-decoration: underline;'>请点击这里立即完成激活</a></p><p>如果上述文字点击无效，请将以下网址复制到浏览器地址栏打开（该链接使用一次或24小时后失效）：<br/>{$url}</p>");
+                \Model\Extra::insertSend($param['member_email'], $title, $emailContent, '1');
+                break;
         }
     }
 

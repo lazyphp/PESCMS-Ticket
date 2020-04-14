@@ -29,8 +29,11 @@
                     <label class="am-radio-inline">
                         <input type="radio" value="1" name="member_review" required="" <?= $member_review['value'] == '1' ? 'checked="checked"' : '' ?>> 关闭审核
                     </label>
+                    <label class="am-radio-inline">
+                        <input type="radio" value="2" name="member_review" required="" <?= $member_review['value'] == '2' ? 'checked="checked"' : '' ?>> 邮件激活验证
+                    </label>
                     <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
-                        <i class="am-icon-lightbulb-o"></i> 通过注册的客户是否需要进行审核。
+                        <i class="am-icon-lightbulb-o"></i> 注册的客户是否需要进行审核。选择邮件激活验证的话，用户点击邮件的链接地址则完成审核。
                     </div>
                 </div>
             </div>

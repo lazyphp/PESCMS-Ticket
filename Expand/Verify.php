@@ -49,7 +49,7 @@ class Verify {
         //设置验证码大小
         $im = imagecreatetruecolor($length * 32, $this->height);
         //设置背景颜色
-        $background = imagecolorallocate($im, 128, 212, 246);
+        $background = imagecolorallocate($im, 238, 238, 238);
         imagefilledrectangle($im, 0, 0, $length * 32, $this->height, $background);
 
         //验证码

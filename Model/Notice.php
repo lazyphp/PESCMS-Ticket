@@ -46,9 +46,6 @@ class Notice extends \Core\Model\Model {
     public static function addCSNotice($number, array $user, $templateType){
         $cs_notice_type = json_decode(\Core\Func\CoreFunc::$param['system']['cs_notice_type'], true);
         foreach ($cs_notice_type as $type){
-            if($type == 4 && empty($user['user_weixinWork']) ){
-                continue;
-            }
             switch ($type){
                 case 1:
                     $account = $user['user_mail'];
@@ -56,6 +53,13 @@ class Notice extends \Core\Model\Model {
                 case 4:
                     $account = $user['user_weixinWork'];
                     break;
+                case 5:
+                    $account = $user['user_dingtalk'];
+                    break;
+            }
+
+            if(empty($account)){
+                continue;
             }
 
             self::addTicketNoticeAction($number, $account, $type, $templateType);

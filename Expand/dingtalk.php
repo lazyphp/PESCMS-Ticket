@@ -54,8 +54,10 @@ class dingtalk {
         }
         $result = json_decode($this->notice($param['send_account'], $param['send_content']), true);
 
+
+
         //发送成功，删除消息
-        if($result['errmsg'] == 'ok' && empty($result['invaliduser']) ){
+        if($result['errcode'] == '0' && !empty($result['task_id']) ){
             $sendStatus = [
                 'msg' => '钉钉企业通知发送成功。',
                 'status' => 2,

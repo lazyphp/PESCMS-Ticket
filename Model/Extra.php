@@ -112,6 +112,7 @@ class Extra extends \Core\Model\Model {
         ]);
 
         foreach ($list as $value) {
+            //@todo 此处代码可优化。基本上整个发送模式大部分代码都是相似的。唔……有时间再优化了。毕竟不影响运行效率，暂时以开发进度为主。
             switch ($value['send_type']) {
                 case '1':
                     $result = (new \Expand\Notice\Mail())->send($value);
@@ -124,6 +125,9 @@ class Extra extends \Core\Model\Model {
                     break;
                 case '4':
                     $result = (new \Expand\weixinWork())->send_notice($value);
+                    break;
+                case '5':
+                    $result = (new \Expand\dingtalk())->send_notice($value);
                     break;
             }
 

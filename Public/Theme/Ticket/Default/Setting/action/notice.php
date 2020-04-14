@@ -37,7 +37,7 @@
                         <input type="checkbox" value="4" name="cs_notice_type[4]" <?= $cs_notice_type['4'] == '4' ? 'checked="checked"' : '' ?>> 企业微信
                     </label>
                     <label class="am-checkbox-inline" data-am-popover="{content: '勾选钉钉企业，请确保下面钉钉企业的API填写正确', trigger: 'hover focus'}">
-                        <input type="checkbox" value="5" name="cs_notice_type[4]" <?= $cs_notice_type['5'] == '5' ? 'checked="checked"' : '' ?>> 钉钉企业
+                        <input type="checkbox" value="5" name="cs_notice_type[5]" <?= $cs_notice_type['5'] == '5' ? 'checked="checked"' : '' ?>> 钉钉企业
                     </label>
                     <label class="am-checkbox-inline" data-am-popover="{content: '欢迎反馈给官方', trigger: 'hover focus'}">
                         <input type="checkbox" value="99" name="cs_notice_type[99]" <?= $cs_notice_type['99'] == '99' ? 'checked="checked"' : '' ?> disabled="disabled"> 其他方式

@@ -13,3 +13,13 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (NULL, 7, 'dingtalk', '钉钉企业ID', 'text', '', '', '', 0, 8, 1, 1, 1, 1);
 
 ALTER TABLE `pes_user` ADD `user_dingtalk` VARCHAR(255) NULL DEFAULT NULL AFTER `user_weixinWork`, ADD UNIQUE (`user_dingtalk`);
+
+CREATE TABLE `pes_member_activation` (
+  `activation_id` int(11) NOT NULL,
+  `member_id` int(11) NOT NULL,
+  `activation_code` varchar(255) NOT NULL,
+  `activation_time` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='账号激活表';
+
+ALTER TABLE `pes_member_activation`
+  ADD PRIMARY KEY (`activation_id`);

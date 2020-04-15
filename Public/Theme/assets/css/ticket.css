@@ -41,3 +41,8 @@
     font-weight: bold;
     color: #FF4500;
 }
+
+/*短信设置样式*/
+.sms-1, .sms-2{
+    display: none;
+}

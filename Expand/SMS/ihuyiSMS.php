@@ -1,23 +1,22 @@
 <?php
 
-namespace Expand;
+namespace Expand\SMS;
 
 /**
- * 短信接口
+ * 互亿无线短信接口
  */
-class sms {
+class ihuyiSMS implements SMSInterface {
 
     private $APIID, $APIKEY, $error;
 
-    public function __construct() {
-        $sms_api = json_decode(\Core\Func\CoreFunc::$param['system']['sms'], true);
-        if(empty($sms_api['APIID']) || empty($sms_api['APIKEY']) ){
-            $this->error = '未配置短信接口信息';
+    public function __construct($config) {
+        if(empty($config['ihuyi_APIID']) || empty($config['ihuyi_APIKEY']) ){
+            $this->error = '未配置互亿无线短信接口';
             return $this->error;
         }
 
-        $this->APIID = $sms_api['APIID'];
-        $this->APIKEY = $sms_api['APIKEY'];
+        $this->APIID = $config['ihuyi_APIID'];
+        $this->APIKEY = $config['ihuyi_APIKEY'];
     }
 
     public function send($param){

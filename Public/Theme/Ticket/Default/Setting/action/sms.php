@@ -53,7 +53,7 @@
             </div>
         <?php endforeach; ?>
         <div class="am-alert am-alert-warning am-text-xs sms-1" data-am-alert>
-            <i class="am-icon-lightbulb-o"></i> 阿里云短信注册享优惠：<a href="https://www.pescms.com/?m=Index&a=sms" target="_blank" style="color:#0e90d2 "><b>点击注册</b></a>。短信的设置教程:<a href="https://www.pescms.com/d/v/1.2.7/22/145.html" target="_blank" style="color:#0e90d2 "> <b>教程</b></a>
+            <i class="am-icon-lightbulb-o"></i> 阿里云短信注册享优惠：<a href="https://www.pescms.com/goAd/10.html" target="_blank" style="color:#0e90d2 "><b>点击注册</b></a>。短信的设置教程:<a href="" target="_blank" style="color:#0e90d2 "> <b>教程</b></a>
         </div>
 
         <!--阿里云API参数-->
@@ -78,7 +78,7 @@
         </div>
 
         <div class="am-alert am-alert-secondary am-text-xs sms-2" data-am-alert>
-            <i class="am-icon-lightbulb-o"></i> 使用短信业务，需要先进行注册：<a href="https://www.pescms.com/?m=Index&a=sms" target="_blank" style="color:#0e90d2 "><b>点击注册</b></a>。短信的设置教程:<a href="https://www.pescms.com/d/v/1.2.7/22/145.html" target="_blank" style="color:#0e90d2 "> <b>教程</b></a>
+            <i class="am-icon-lightbulb-o"></i> 使用短信业务，需要先进行注册：<a href="https://www.pescms.com/goAd/11.html" target="_blank" style="color:#0e90d2 "><b>点击注册</b></a>。短信的设置教程:<a href="https://www.pescms.com/d/v/1.2.7/22/145.html" target="_blank" style="color:#0e90d2 "> <b>教程</b></a>
         </div>
         <!--互亿无线API参数-->
 

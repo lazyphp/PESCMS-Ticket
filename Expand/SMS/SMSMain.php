@@ -7,7 +7,7 @@ namespace Expand\SMS;
  */
 class SMSMain {
 
-    public function __construct(array $param) {
+    public function send(array $param) {
         $smsConfig = json_decode(\Core\Func\CoreFunc::$param['system']['sms'], true);
 
         switch ($smsConfig['COMPANY']){

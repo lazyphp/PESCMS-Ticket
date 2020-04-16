@@ -61,14 +61,17 @@ class Setting extends \Core\Controller\Controller {
 
         $viewTicketLinke = \Model\MailTemplate::getViewLink('123456');
 
-        $template = \Model\MailTemplate::matchContent(['number' => '123456', 'content' => '测试的内容', 'view' => $viewTicketLinke], $id);
+        $template = \Model\MailTemplate::matchContent('123456', $id);
 
-        $result = (new \Expand\sms())->send([
+        $param = [
             'send_id' => -1,
             'send_account' => $mobile,
-            'send_title' => $template['2'],
+            'send_title' => '短信测试',
             'send_content' => $template['2'],
-        ]);
+        ];
+
+        $result = (new \Expand\SMS\SMSMain())->send($param);
+
         echo "<p>当前发送模板: {$template['2']}</p>";
         echo '<pre>';
         echo "------------接口返回的原始数据-------------<br/><br/>";

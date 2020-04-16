@@ -118,7 +118,7 @@ class Extra extends \Core\Model\Model {
                     $result = (new \Expand\Notice\Mail())->send($value);
                     break;
                 case '2':
-                    $result = new \Expand\SMS\SMSMain($value);
+                    $result = (new \Expand\SMS\SMSMain())->send($value);
                     break;
                 case '3':
                     $result = (new \Expand\weixin())->sendTemplate($value);

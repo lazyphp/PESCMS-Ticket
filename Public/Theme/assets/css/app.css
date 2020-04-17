@@ -159,6 +159,21 @@ html,body{
 .table-sort{
     width: 60px;
 }
+.am-table{
+    color: #606266;
+}
+.am-table th {
+    color: #909399;
+    font-weight: 500;
+}
+.am-table-striped>tbody>tr:nth-child(odd)>td, .am-table-striped>tbody>tr:nth-child(odd)>th, .am-table-hover>tbody>tr:hover>td, .am-table-hover>tbody>tr:hover>th{
+    background: #f5f7fa;
+}
+.am-table-bordered, .am-table-bordered tr th, .am-table-bordered tr td  {
+    transition: background-color .25s ease;
+    border-color: #ebeef5 !important;
+    box-shadow:none;
+}
 /*---------------移除分页外边距---------------*/
 .am-pagination>li>a, .am-pagination>li>span {
     margin-bottom: 0!important;
@@ -345,6 +360,39 @@ a.am-btn-white:visited{
 .gold-badge{
     background-color: #FFEB3B !important;
     color: #E91E63 !important;
+}
+.pes-alert{
+    width: 100%;
+    padding: 8px 16px;
+    margin: 1rem 0 0;
+    box-sizing: border-box;
+    border-radius: 4px;
+    position: relative;
+    background-color: #fff;
+    overflow: hidden;
+    opacity: 1;
+    display: flex;
+    align-items: center;
+    transition: opacity .2s;
+}
+.pes-alert [class*=am-icon-]{
+    padding-right: 8px;;
+}
+.pes-alert-success {
+    background-color: #f0f9eb;
+    color: #67c23a;
+}
+.pes-alert-info{
+    background-color: #f4f4f5;
+    color: #909399;
+}
+.pes-alert-warning{
+    background-color: #fdf6ec;
+    color: #e6a23c;
+}
+.pes-alert-error{
+    background-color: #fef0f0;
+    color: #f56c6c;
 }
 
 /*

@@ -3,8 +3,8 @@
 <?php include $tool_column; ?>
 
 <?php if (empty($list)): ?>
-    <div class="am-alert am-alert-secondary am-margin-top am-margin-bottom am-text-center" data-am-alert>
-        <p>本页面没有数据 :-(</p>
+    <div class="pes-alert pes-alert-info am-margin-top am-margin-bottom am-text-center" >
+        <p class="am-margin-0">本页面没有数据 :-(</p>
     </div>
 <?php else: ?>
     <form class="am-form ajax-submit" action="<?= $label->url(GROUP . '-' . MODULE . '-listsort'); ?>" method="POST">

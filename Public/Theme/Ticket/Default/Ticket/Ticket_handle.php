@@ -103,7 +103,7 @@
                                         <input type="checkbox" name="notice" value="1" <?= $ticket_model_default_send == 1 ? 'checked="checked"' : '' ?>>
                                         告知客户
                                     </label>
-                                    <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
+                                    <div class="pes-alert pes-alert-warning am-text-xs " data-am-alert>
                                         <i class="am-icon-lightbulb-o"></i> 若回复内容非常重要，请勾选告知客户，以便客户知道业务解决情况。
                                     </div>
                                 </div>

@@ -398,11 +398,9 @@ a.am-btn-white:visited{
     margin: 1rem 0 0;
     box-sizing: border-box;
     border-radius: 4px;
-    position: relative;
     background-color: #fff;
     overflow: hidden;
     opacity: 1;
-    display: flex;
     align-items: center;
     transition: opacity .2s;
 }

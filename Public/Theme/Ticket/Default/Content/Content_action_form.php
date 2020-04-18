@@ -12,7 +12,7 @@
                     <label class="am-block"><?= $value['field_display_name'] ?><?= $value['field_required'] == '1' ? '<i class="am-text-danger">*</i>' : '' ?></label>
                     <?= $form->formList($value); ?>
                     <?php if (!empty($value['field_explain'])): ?>
-                        <div class="am-alert am-alert-secondary am-text-xs " data-am-alert>
+                        <div class="pes-alert pes-alert-info am-text-xs ">
                             <i class="am-icon-lightbulb-o"></i> <?= $value['field_explain'] ?>
                         </div>
                     <?php endif; ?>

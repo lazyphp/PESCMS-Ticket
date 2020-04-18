@@ -1,4 +1,4 @@
-<div class="am-panel am-panel-default">
+<div class="am-panel am-panel-default am-panel-hover am-panel-striped">
     <div class="am-panel-hd">钉钉设置</div>
     <div class="am-panel-bd">
 

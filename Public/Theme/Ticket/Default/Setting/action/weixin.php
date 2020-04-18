@@ -1,4 +1,4 @@
-<div class="am-panel am-panel-default">
+<div class="am-panel am-panel-default am-panel-hover am-panel-striped">
     <div class="am-panel-hd">微信公众号设置</div>
     <div class="am-panel-bd">
         <div class="am-g am-g-collapse">
@@ -42,7 +42,7 @@
     </div>
 </div>
 
-<div class="am-panel am-panel-default">
+<div class="am-panel am-panel-default am-panel-hover am-panel-striped">
     <div class="am-panel-hd">企业微信设置</div>
     <div class="am-panel-bd">
 

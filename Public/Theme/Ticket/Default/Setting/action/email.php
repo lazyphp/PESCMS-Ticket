@@ -1,4 +1,4 @@
-<div class="am-panel am-panel-default">
+<div class="am-panel am-panel-default am-panel-hover am-panel-striped">
     <div class="am-panel-hd">邮件通知</div>
     <div class="am-panel-bd">
         <div class="am-g am-g-collapse">

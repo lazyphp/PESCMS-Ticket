@@ -152,6 +152,9 @@ html,body{
     min-height: 50rem;
 }
 /*---------------表格---------------*/
+.am-remove-border tr th, .am-remove-border tr td{
+    border: none !important;
+}
 .am-table-bordered{
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
     background-color: #FFFFFF;
@@ -423,6 +426,51 @@ a.am-btn-white:visited{
     background-color: #fef0f0;
     color: #f56c6c;
 }
+.pes-alert-dark{
+    background-color: #409eff;
+    color: #fff;
+}
+
+/*tabs标签页*/
+.pes-tabs{
+
+}
+.pes-tabs .am-nav-tabs{
+    border-bottom: 2px solid #ddd;
+}
+.pes-tabs .am-nav-tabs a{
+    color: #303133;
+}
+.pes-tabs .am-nav-tabs>li{
+    margin-bottom: -2px;
+}
+.pes-tabs .am-nav-tabs>li.am-active>a{
+    color: #409eff;
+    padding-top: 6px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid #409eff;
+}
+.pes-tabs .am-nav-tabs>li a{
+    padding-top: 6px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid #ddd;
+}
+.pes-tabs .am-nav-tabs>li>a:hover, .pes-tabs .am-nav-tabs>li>a:focus{
+    color: #409eff;
+    background-color: #fff;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    padding-top: 6px;
+}
+.pes-tabs .am-tabs-bd{
+    border: none;
+}
+/*tabs标签页*/
 
 /*
 ===================

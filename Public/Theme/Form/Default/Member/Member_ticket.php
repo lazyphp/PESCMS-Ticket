@@ -1,5 +1,5 @@
 <div class="am-g">
-    <div class="am-u-sm-12 am-u-sm-centered">
+    <div class="am-u-sm-12 am-u-lg-11 am-u-sm-centered">
 
         <?php if(!empty($statistics)): ?>
         <div class="am-panel am-panel-default">
@@ -7,7 +7,7 @@
                 <div class="am-g">
                     <?php foreach ($statistics as $key => $value): ?>
                         <div class="am-u-sm-3">
-                            <a href="<?= $label->url(MODULE.'-index', ['status' => $value['ticket_status']]) ?>">
+                            <a href="<?= $label->url(MODULE.'-ticket', ['status' => $value['ticket_status']]) ?>">
                                 <div class="am-text-xxxl"><?= $value['total'] ?></div>
                                 <div><?= $ticketStatus[$value['ticket_status']]['name']; ?></div>
                             </a>
@@ -22,11 +22,11 @@
             <div class="am-u-sm-12 am-u-md-6">
                 <div class="am-btn-toolbar">
                     <div class="am-btn-group am-btn-group-sm">
-                        <a href="<?= $label->url(MODULE.'-index') ?>" class="am-btn am-btn-white <?= empty($_GET['dataType']) && empty($_GET['close'])  ? 'am-disabled' : '' ?>">全部</a>
+                        <a href="<?= $label->url(MODULE.'-ticket') ?>" class="am-btn am-btn-white <?= empty($_GET['dataType']) && empty($_GET['close'])  ? 'am-disabled' : '' ?>">全部</a>
                         <?php foreach (['1' => '今天', '-1' => '昨天', '-7' => '本周'] as $key => $value): ?>
-                            <a href="<?= $label->url(MODULE.'-index', ['dataType' => $key, 'keyword' => $keyword]) ?>" class="am-btn am-btn-white <?= $_GET['dataType'] == $key ? 'am-disabled' : '' ?>"><?= $value ?></a>
+                            <a href="<?= $label->url(MODULE.'-ticket', ['dataType' => $key, 'keyword' => $keyword]) ?>" class="am-btn am-btn-white <?= $_GET['dataType'] == $key ? 'am-disabled' : '' ?>"><?= $value ?></a>
                         <?php endforeach; ?>
-                        <a href="<?= $label->url(MODULE.'-index', ['close' => 1, 'keyword' => $keyword]) ?>" class="am-btn am-btn-white <?= $_GET['close'] == 1 ? 'am-disabled' : '' ?>">已关闭: <?=$close?></a>
+                        <a href="<?= $label->url(MODULE.'-ticket', ['close' => 1, 'keyword' => $keyword]) ?>" class="am-btn am-btn-white <?= $_GET['close'] == 1 ? 'am-disabled' : '' ?>">已关闭: <?=$close?></a>
                     </div>
                 </div>
             </div>

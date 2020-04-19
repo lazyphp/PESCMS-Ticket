@@ -9,6 +9,14 @@ class Member extends \Core\Controller\Controller {
     public function index(){
         $this->assign('title', '个人中心');
         $this->assign('member', \Model\Content::findContent('member', $this->session()->get('member')['member_id'], 'member_id'));
+        $this->ticketList('5');
+
+        //经常提交的工单模型
+        $oftenTicket = $this->db('ticket AS t')->field('tm.ticket_model_name, tm.ticket_model_number')->join("{$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id")->where('t.member_id = :member_id')->group('t.ticket_model_id')->select([
+            'member_id' => $this->session()->get('member')['member_id']
+        ]);
+        $this->assign('oftenTicket', $oftenTicket);
+
         $this->layout();
     }
 
@@ -70,7 +78,7 @@ class Member extends \Core\Controller\Controller {
     /**
      * 工单列表
      */
-    private function ticketList(){
+    private function ticketList($page = 15){
         $condition = '';
         $param = ['member_id' => $this->session()->get('member')['member_id']];
         //关键词搜索
@@ -118,7 +126,7 @@ class Member extends \Core\Controller\Controller {
             'count' => sprintf($sql, 'count(*)'),
             'normal' => sprintf($sql, 't.*, tm.ticket_model_name, tm.ticket_model_cid'),
             'param' => $param,
-            'page' => 15
+            'page' => $page
         ]);
 
         $this->assign('page', $result['page']);

@@ -24,7 +24,7 @@
                     <li>
                         <a href="javascript:;"><?= self::session()->get('member')['member_name'] ?> 先生/女士, 您好</a>
                     </li>
-                    <li><a href="<?= $label->url('Member-index') ?>"><i class="am-icon-info-circle"></i> 我的信息</a></li>
+                    <li><a href="<?= $label->url('Member-index') ?>"><i class="am-icon-info-circle"></i> 个人中心</a></li>
                     <li>
                         <a href="<?= $label->url('Login-logout'); ?>"><i class="am-icon-sign-out"></i> 退出登录</a>
                     </li>

@@ -13,6 +13,7 @@
     -moz-box-shadow: 0 2px 5px 0 rgba(30,30,30,.09);
     box-shadow: 0 2px 5px 0 rgba(30,30,30,.09);
     background: #fff;
+    margin-bottom:0;
 }
 @media only screen and (min-width: 1025px) {
     .tool-container ul:only-child>li>a{
@@ -37,7 +38,11 @@
 }
 
 #wrapper{
+    padding-top: 1.6rem;
     min-height: 73vh;
+}
+.index-background{
+    background-color: #fff;
 }
 
 /*解决手机版内边距异常问题*/
@@ -255,6 +260,17 @@
 .fqa-ul li{
     margin: 0.5rem 0;
 }
+/*个人中心*/
+@media only screen and (min-width: 1025px) {
+    .member-center{
+        padding: 30px 50px
+    }
+    .member-info th{
+        width: 10%;
+    }
+}
+
+/*个人中心*/
 
 /*页脚*/
 .my-footer{

@@ -36,6 +36,10 @@
     max-height: 30px;
 }
 
+#wrapper{
+    height: 100vh;
+}
+
 /*解决手机版内边距异常问题*/
 @media only screen and (max-width: 1024px){
     #ticket-nav .am-u-sm-centered, .tool-container .am-u-sm-centered{

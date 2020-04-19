@@ -394,7 +394,7 @@ a.am-btn-white:visited{
 }
 .pes-alert{
     width: 100%;
-    padding: 8px 16px;
+    padding: 8px 10px;
     margin: 1rem 0 0;
     box-sizing: border-box;
     border-radius: 4px;
@@ -405,7 +405,7 @@ a.am-btn-white:visited{
     transition: opacity .2s;
 }
 .pes-alert [class*=am-icon-]{
-    padding-right: 8px;;
+    padding-right: 5px;;
 }
 .pes-alert-success {
     background-color: #f0f9eb;

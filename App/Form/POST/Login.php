@@ -46,8 +46,10 @@ class Login extends \Core\Controller\Controller {
             $this->error('帐号不存在或者密码错误');
         }
 
+
         if($member['member_status'] == 0){
-            $this->error('当前账号处于待审核/被禁用，请联系网站管理员解决。');
+            $statusMsg = $system['member_review'] == 2 ? '请先打开邮箱完成账号激活。' : '当前账号处于待审核/被禁用，请联系网站管理员解决。';
+            $this->error($statusMsg);
         }
 
         unset($member['member_password']);
@@ -78,13 +80,13 @@ class Login extends \Core\Controller\Controller {
         $param['member_name'] = $this->isP('name', '请填写名字');
         $param['member_email'] = $this->isP('email', '请填写邮箱地址');
         $param['member_phone'] = $this->isP('phone', '请填写手机号码');
+        $param['member_organize_id'] = 1;
 
         if(!empty($_POST['weixin'])){
             $param['member_weixin'] = $this->p('weixin');
         }
 
-        $password = $this->isP('password', '请填密码');
-        $repassword = $this->isP('repassword', '请填写再次确认密码');
+        $password = $this->verifyPassword();
 
         if (\Model\Extra::checkInputValueType($param['member_email'], 1) == false) {
             $this->error('请输入正确的邮箱地址');
@@ -99,11 +101,6 @@ class Login extends \Core\Controller\Controller {
             'phone' => '该手机号码已存在'
                  ] as $field => $msg){
             $this->checkRepeatInfo($field, $param, $msg);
-        }
-
-
-        if (strcmp($password, $repassword) != 0) {
-            $this->error('两次输入的密码不一致');
         }
 
         $param['member_password'] = \Core\Func\CoreFunc::generatePwd($password, 'USER_KEY');
@@ -212,12 +209,7 @@ class Login extends \Core\Controller\Controller {
             $this->error('MARK不正确或者不存在', $loginUrl);
         }
 
-        $password = $this->isP('passwd', '请输入新密码');
-        $repasswd = $this->isP('repasswd', '请输入确认新密码');
-
-        if ($password !== $repasswd) {
-            $this->error('两次密码不正确');
-        }
+        $password = $password = $this->verifyPassword();
 
         $member = \Model\Content::findContent('member', $checkMark['member_id'], 'member_id');
 
@@ -232,6 +224,25 @@ class Login extends \Core\Controller\Controller {
         ]);
 
         $this->success('密码修改成功!', $loginUrl);
+    }
+
+    /**
+     * 验证提交过来的密码
+     * @return mixed|string
+     */
+    private function verifyPassword(){
+        $password = $this->isP('password', '请填密码');
+        $repassword = $this->isP('repassword', '请填写再次确认密码');
+
+        if(strlen($password) < 6){
+            $this->error('登录密码长度至少需要6位，请重新填写。');
+        }
+
+        if (strcmp($password, $repassword) != 0) {
+            $this->error('两次输入的密码不一致');
+        }
+
+        return $password;
     }
 
     /**

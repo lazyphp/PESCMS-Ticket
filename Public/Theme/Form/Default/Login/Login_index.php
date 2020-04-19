@@ -9,7 +9,7 @@
 </div>
 
 <div class="loginFlow">
-    <input type="password" name="password" class="pes-login-input" placeholder="登录密码" required="required">
+    <input type="password" name="password" class="pes-login-input" placeholder="登录密码" minlength="6" required="required">
 </div>
 
 <?php if(json_decode($system['login_verify'])[0] == '1'): ?>

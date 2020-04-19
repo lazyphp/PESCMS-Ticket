@@ -125,10 +125,11 @@ $(function () {
             dialogOption.content = '<i class="am-icon-times-circle"></i> '+msg;
         }).complete(function(){
             var d = dialog(dialogOption).showModal();
+
             var src = $('.refresh-verify').attr('src')
             $('.refresh-verify').attr('src', src + '&time=' + Math.random());
             setTimeout(function () {
-                d.close();
+                d.close().remove();
             }, 3000);
             progress.done();
         });

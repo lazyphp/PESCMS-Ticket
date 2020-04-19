@@ -1,9 +1,9 @@
 <div class="loginFlow">
-    <input type="password" name="passwd" class="pes-login-input" placeholder="密码" required="required">
+    <input type="password" name="passwd" class="pes-login-input" placeholder="密码" minlength="6" required="required">
 </div>
 
 <div class="loginFlow">
-    <input type="password" name="repasswd" class="pes-login-input" placeholder="确认密码" required="required">
+    <input type="password" name="repasswd" class="pes-login-input" placeholder="确认密码" minlength="6" required="required">
 </div>
 
 <div class="login-verify">

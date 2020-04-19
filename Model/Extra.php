@@ -247,4 +247,23 @@ class Extra extends \Core\Model\Model {
 
     }
 
+    /**
+     * 验证提交过来的密码
+     * @return mixed|string
+     */
+    public static function verifyPassword(){
+        $password = self::isP('password', '请填密码');
+        $repassword = self::isP('repassword', '请填写再次确认密码');
+
+        if(strlen($password) < 6){
+            self::error('登录密码长度至少需要6位，请重新填写。');
+        }
+
+        if (strcmp($password, $repassword) != 0) {
+            self::error('两次输入的密码不一致');
+        }
+
+        return $password;
+    }
+
 }

@@ -86,7 +86,7 @@ class Login extends \Core\Controller\Controller {
             $param['member_weixin'] = $this->p('weixin');
         }
 
-        $password = $this->verifyPassword();
+        $password = \Model\Extra::verifyPassword();
 
         if (\Model\Extra::checkInputValueType($param['member_email'], 1) == false) {
             $this->error('请输入正确的邮箱地址');
@@ -209,7 +209,7 @@ class Login extends \Core\Controller\Controller {
             $this->error('MARK不正确或者不存在', $loginUrl);
         }
 
-        $password = $password = $this->verifyPassword();
+        $password = \Model\Extra::verifyPassword();
 
         $member = \Model\Content::findContent('member', $checkMark['member_id'], 'member_id');
 
@@ -226,24 +226,6 @@ class Login extends \Core\Controller\Controller {
         $this->success('密码修改成功!', $loginUrl);
     }
 
-    /**
-     * 验证提交过来的密码
-     * @return mixed|string
-     */
-    private function verifyPassword(){
-        $password = $this->isP('password', '请填密码');
-        $repassword = $this->isP('repassword', '请填写再次确认密码');
-
-        if(strlen($password) < 6){
-            $this->error('登录密码长度至少需要6位，请重新填写。');
-        }
-
-        if (strcmp($password, $repassword) != 0) {
-            $this->error('两次输入的密码不一致');
-        }
-
-        return $password;
-    }
 
     /**
      * 微信登录

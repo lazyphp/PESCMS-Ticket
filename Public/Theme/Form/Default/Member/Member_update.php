@@ -54,7 +54,7 @@
                     <div class="am-panel-bd am-padding-xs">
                         <h3 class="am-margin-0">更新信息</h3>
                     </div>
-                    <form class="am-form ajax-submit" id="login-enterplorer" method="post" data-am-validator>
+                    <form class="am-form ajax-submit"  method="post" data-am-validator>
                         <input type="hidden" name="method" value="PUT">
                         <?= $label->token() ?>
                         <table class="am-table">
@@ -78,11 +78,11 @@
                                 <td>
                                     <div class="am-form-group">
                                         <div class="am-margin-bottom-xs">旧密码:</div>
-                                        <input type="password" name="oldpassword" placeholder="旧密码" >
+                                        <input type="password" name="oldpassword" placeholder="旧密码" minlength="6" >
                                     </div>
                                     <div class="am-form-group">
                                         <div class="am-margin-bottom-xs">新密码:</div>
-                                        <input type="password" name="password" placeholder="新密码" >
+                                        <input type="password" name="password" placeholder="新密码" minlength="6" >
                                     </div>
                                     <div class="am-form-group">
                                         <div class="am-margin-bottom-xs">确认新密码:</div>

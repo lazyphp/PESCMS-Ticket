@@ -28,11 +28,8 @@ class Member extends \Core\Controller\Controller {
             }
 
             $updatepasswd = true;
-            $password = $this->p('password');
-            $repassword = $this->p('repassword');
-            if (strcmp($password, $repassword) != 0) {
-                $this->error('两次输入的密码不一致');
-            }
+            $password = \Model\Extra::verifyPassword();
+
             $param['member_password'] = \Core\Func\CoreFunc::generatePwd($password, 'USER_KEY');
         }
 

@@ -37,7 +37,7 @@
 }
 
 #wrapper{
-    height: 100vh;
+    min-height: 73vh;
 }
 
 /*解决手机版内边距异常问题*/

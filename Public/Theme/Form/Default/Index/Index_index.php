@@ -1,4 +1,4 @@
-<div class="am-g">
+<div class="am-g set-min-height">
     <!--    logo-->
     <div class="am-text-center index-logo am-margin-bottom">
         <img src="<?= $system['siteLogo'] ?>" width="180"/>

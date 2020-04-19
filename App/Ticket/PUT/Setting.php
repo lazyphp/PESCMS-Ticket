@@ -79,7 +79,7 @@ class Setting extends \Core\Controller\Controller {
             $data[$value] = json_encode(explode(',', str_replace(["\r\n", "\r", "\n", " "], '', $_POST[$value])));
         }
 
-        //        $data['crossdomain'] = !empty($_POST['crossdomain']) ? json_encode(explode("\n", str_replace("\r", "", $this->p('crossdomain')))) : '';
+        $data['crossdomain'] = !empty($_POST['crossdomain']) ? json_encode(explode("\n", str_replace("\r", "", $this->p('crossdomain')))) : '';
 
         if(count($_POST['customstatus']) != '4' && count($_POST['customcolor']) != '4'){
             $this->error('请提交工单状态');

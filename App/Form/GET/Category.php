@@ -162,6 +162,7 @@ class Category extends \Core\Controller\Controller{
 	        $this->_404();
         }
 	    $this->ticket();
+	    $this->session()->delete('member');
         ob_start();
 	    $this->display('Category_ticket');
         $javascript = "var formString = '" . addslashes(preg_replace("/\\n||\\r||\\n\\r/m ", '', ob_get_contents())) . "'\n";

@@ -40,7 +40,7 @@ function cssMinify(flieIn, fileOut) {
 }
 
 //开始压缩JS资源
-var js = ['spectrum', 'webuploader', 'AMUIwebuploader', 'app', 'ticket'];
+var js = ['spectrum', 'webuploader', 'AMUIwebuploader', 'app', 'ticket', 'pt-base'];
 for(var i in js){
     if(program.cheese != '' && js[i] != program.cheese){
         continue;

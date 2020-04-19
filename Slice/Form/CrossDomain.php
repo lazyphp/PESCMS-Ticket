@@ -21,31 +21,27 @@ namespace Slice\Form;
 class CrossDomain extends \Core\Slice\Slice {
 
     public function before() {
-        $crossDomainOption = \Model\Content::findContent('option', 'crossdomain', 'option_name');
+        $crossDomainOption = \Model\Content::findContent('option', 'crossdomain', 'option_name')['value'];
 
         //设置跨域相关的
-        header("Access-Control-Allow-Origin:*");
+        header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
         header('Access-Control-Allow-Methods:POST,GET');
         header('Access-Control-Allow-Credentials:true');
         //下面两个设置是声明程序返回的为json
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $_SERVER['HTTP_ACCEPT'] = 'application/json';
         header('HTTP_ACCEPT:application/json');
 
-        $crossDomain = json_decode($crossDomainOption['value'], true);
+        $crossDomain = json_decode($crossDomainOption, true);
 
-        if( !empty($crossDomainOption['value'] ) && !in_array(str_replace(['http://', 'https://'], '', $_SERVER['HTTP_ORIGIN']), $crossDomain)){
-            //@todo 验证码不参与跨域验证 = =. 好像会有点问题
+
+        if( empty($crossDomain) || !in_array(str_replace(['http://', 'https://'], '', $_SERVER['HTTP_ORIGIN']), $crossDomain)){
+            //验证码不参与跨域验证
             if(ACTION != 'verify'){
                 $this->error('非法请求!');
                 exit;
             }
         }
-
-        //强制覆盖SESSION
-        if (!empty($_REQUEST['PHPSESSIONID'])) {
-            defined('PHPSESSIONID') or define('PHPSESSIONID', $_REQUEST['PHPSESSIONID']);
-        }
-
     }
 
     public function after() {

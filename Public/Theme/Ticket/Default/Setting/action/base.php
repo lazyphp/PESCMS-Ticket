@@ -23,20 +23,18 @@
             </div>
         </div>
 
-        <!--暂时屏蔽白名单
         <hr class="am-margin-top-0 am-divider-default"/>
         <div class="am-g am-g-collapse">
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
-                    <label class="am-block">域名白名单<i class="am-text-danger">*</i></label>
+                    <label class="am-block">域名白名单</label>
                     <textarea rows="5" name="crossdomain"><?= empty($crossdomain) ? '' : implode("\n", $crossdomain); ?></textarea>
                     <div class="pes-alert pes-alert-info am-text-xs " >
-                        <i class="am-icon-lightbulb-o"></i> 默认情况下，所有请求可以正常提交工单，若指定域名白名单，请一行一个域名的形式填写
+                        <i class="am-icon-lightbulb-o"></i> 需要填写白名单才可以启用跨域工单！域名白名单，请一行一个域名的形式填写
                     </div>
                 </div>
             </div>
         </div>
-        -->
 
         <hr class="am-margin-top-0 am-divider-default"/>
         <div class="am-g am-g-collapse">

@@ -2,7 +2,7 @@
 <hr class="am-margin-top-0" />
 <?php endif;?>
 <h3>新工单 > <?= $ticketInfo['category']['category_name'] ?> > <?= $ticketInfo['title'] ?></h3>
-<form action="<?= $label->url('Submit-ticket') ?>" method="POST" class="am-form ajax-submit am-form-horizontal" data-am-validator>
+<form action="<?= ACTION != 'createJS' ? '' : $system['domain'] ?><?= $label->url('Submit-ticket') ?>" method="POST" class="am-form ajax-submit am-form-horizontal" data-am-validator>
     <input type="hidden" name="number" value="<?= $ticketInfo['number'] ?>">
     <?= $label->token() ?>
 
@@ -136,6 +136,7 @@
         </div>
     </div>
 </form>
+<?php if(ACTION != 'createJS'): ?>
 <script>
     $(function(){
         var contact = function(){
@@ -161,3 +162,4 @@
         })
     })
 </script>
+<?php endif; ?>

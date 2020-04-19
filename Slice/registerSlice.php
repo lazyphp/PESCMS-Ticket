@@ -72,10 +72,10 @@ $SLICE_ARRYR = [
     ],
 
     //跨域的设置
-//    'CROSSDOMAIN' => [
-//        'any',
-//        ['Form-Submit-ticket', 'Form-Index-getSession', 'Form-Index-verify', 'Form-Upload-ueditor'], ['\Form\CrossDomain']
-//    ],
+    'CROSSDOMAIN' => [
+        'any',
+        ['Form-Submit-ticket', 'Form-Index-getSession', 'Form-Index-verify', 'Form-Upload-ueditor'], ['\Form\CrossDomain']
+    ],
 
     /*----------------后台部分----------------*/
 

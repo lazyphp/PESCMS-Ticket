@@ -15,7 +15,7 @@
             </div>
         </div>
         <!--阿里云API参数-->
-        <div class="pes-alert pes-alert-error am-text-xs sms-1 am-margin-top-0" >
+        <div class="pes-alert pes-alert-error am-text-sm sms-1 am-margin-top-0" >
             <i class="am-icon-lightbulb-o"></i> 阿里云短信注册享优惠：<a href="https://www.pescms.com/goAd/10.html" target="_blank" style="color:#0e90d2 "><b>点击注册</b></a>。短信的设置教程:<a href="https://www.pescms.com/d/v/1.3.x/22/161.html" target="_blank" style="color:#0e90d2 "> <b>教程</b></a>
         </div>
 

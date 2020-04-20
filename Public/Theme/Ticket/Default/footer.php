@@ -81,7 +81,7 @@
     </p>
     <ol class=" list-paddingleft-2" style="list-style-type: decimal;">
         <li>
-            大部分问题官方文档有解决方案！！！
+            <strong class="am-text-danger">大部分问题官方文档有解决方案！！！</strong>
         </li>
         <li>
             <a href="https://www.pescms.com/d/v/1.3.x/22/154.html" target="_blank">创建工单教程</a>
@@ -101,9 +101,9 @@
             <h3 class="am-text-success">PESCMS推荐您使用阿里云服务器</h3>
         </div>
         <div class="am-article-bd">
-            <p ><a href="https://www.pescms.com/goAd/12.html" target="_blank" style="color: #fff"><i class="am-icon-external-link"></i>【采购季】上云仅¥223/3年</a></p>
-            <p ><a href="https://www.pescms.com/goAd/12.html" target="_blank" style="color: #fff"><i class="am-icon-external-link"></i> &nbsp;新用户福利专场，云服务器ECS低至102元/年</a></p>
-            <p ><a href="https://www.pescms.com/goAd/12.html" target="_blank" style="color: #fff"><i class="am-icon-external-link"></i> &nbsp;更多优惠云产品，点击查看详情</a></p>
+            <p ><a href="https://www.pescms.com/goAd/12.html" target="_blank" style="color: #f56c6c"><i class="am-icon-external-link"></i>【采购季】上云仅¥223/3年</a></p>
+            <p ><a href="https://www.pescms.com/goAd/12.html" target="_blank" style="color: #f56c6c"><i class="am-icon-external-link"></i> &nbsp;新用户福利专场，云服务器ECS低至102元/年</a></p>
+            <p ><a href="https://www.pescms.com/goAd/12.html" target="_blank" style="color: #f56c6c"><i class="am-icon-external-link"></i> &nbsp;更多优惠云产品，点击查看详情</a></p>
         </div>
     </article>
     <!--今年开发者经济收益不好，只能在程序投发广告。截至2020年4月16日，今年0收入。-->

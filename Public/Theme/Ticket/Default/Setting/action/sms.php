@@ -6,7 +6,7 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">业务提供商</label>
-                    <select name="sms[COMPANY]" required>
+                    <select name="sms[COMPANY]">
                         <option value="">请选择短信业务提供商</option>
                         <option value="1" <?= $sms['COMPANY'] == 1 ? 'selected="selected"' :'' ?>>阿里云</option>
                         <option value="2" <?= $sms['COMPANY'] == 2 ? 'selected="selected"' :'' ?>>互亿无线</option>

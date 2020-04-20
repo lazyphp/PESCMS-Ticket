@@ -22,6 +22,10 @@ class CrossDomain extends \Core\Slice\Slice {
 
     public function before() {
         $crossDomainOption = \Model\Content::findContent('option', 'crossdomain', 'option_name')['value'];
+        //为空则表示不进行跨域请求
+        if(empty($crossDomainOption)){
+            return false;
+        }
 
         //设置跨域相关的
         header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
@@ -35,7 +39,7 @@ class CrossDomain extends \Core\Slice\Slice {
         $crossDomain = json_decode($crossDomainOption, true);
 
 
-        if( empty($crossDomain) || !in_array(str_replace(['http://', 'https://'], '', $_SERVER['HTTP_ORIGIN']), $crossDomain)){
+        if(!in_array(str_replace(['http://', 'https://'], '', $_SERVER['HTTP_ORIGIN']), $crossDomain)){
             //验证码不参与跨域验证
             if(ACTION != 'verify'){
                 $this->error('非法请求!');

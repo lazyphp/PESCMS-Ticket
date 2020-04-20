@@ -29,8 +29,8 @@
                 <div class="am-form-group">
                     <label class="am-block">域名白名单</label>
                     <textarea rows="5" name="crossdomain"><?= empty($crossdomain) ? '' : implode("\n", $crossdomain); ?></textarea>
-                    <div class="pes-alert pes-alert-info am-text-xs " >
-                        <i class="am-icon-lightbulb-o"></i> 需要填写白名单才可以启用跨域工单！域名白名单，请一行一个域名的形式填写
+                    <div class="pes-alert pes-alert-error am-text-xs " >
+                        <i class="am-icon-lightbulb-o"></i> 需要填写白名单才可以启用跨域工单！域名白名单，请一行一个域名的形式填写。开启跨域工单后，除了填写跨域的域名，还需要填写当前程序所在的网站URL，否则站内工单将无法提交！！
                     </div>
                 </div>
             </div>

@@ -43,10 +43,10 @@ class MailTemplate extends \Core\Model\Model {
     /**
      * 快速生成查看工单的链接
      * @param $number 工单号
-     * @param $type 发送类型特殊标记
+     * @param $contactType 发送类型特殊标记
      * @return string
      */
-    public static function getViewLink($number, $type = '') {
+    public static function getViewLink($number, $contactType = '') {
         self::setSystemParam();
 
         $urlParam = [
@@ -54,7 +54,7 @@ class MailTemplate extends \Core\Model\Model {
         ];
 
         //微信通知带上微信标记,用于指向用户自动登录
-        if($type == 3){
+        if($contactType == 3){
             $urlParam['loginType'] = 'weixin';
         }
 
@@ -83,7 +83,7 @@ class MailTemplate extends \Core\Model\Model {
     public static function matchTitle($number, $type) {
         $template = self::getTemplate($type);
 
-        $dictionary = self::ticketDictionary($number, $type);
+        $dictionary = self::ticketDictionary($number);
 
         $title = str_replace($dictionary['search'], $dictionary['replace'], $template['mail_template_title']);
 
@@ -111,7 +111,7 @@ class MailTemplate extends \Core\Model\Model {
 
         $template = self::getTemplate($type);
 
-        $dictionary = self::ticketDictionary($number, $type);
+        $dictionary = self::ticketDictionary($number);
 
         foreach ([
                     '1' => 'mail_template_content',
@@ -125,7 +125,7 @@ class MailTemplate extends \Core\Model\Model {
 
             //短信和微信需要将超链接的HTML代码移除
             if(in_array($key, [2, 3])){
-                $param['view'] = strip_tags(self::getViewLink($number, $type));
+                $param['view'] = strip_tags(self::getViewLink($number, $key));
             }
 
             //阿里云短信需要特殊组装数据
@@ -155,13 +155,13 @@ class MailTemplate extends \Core\Model\Model {
     /**
      * 工单模板字典
      * @param $number
-     * @param $type
      * @return array
      */
-    public static function ticketDictionary($number, $type = ''){
+    public static function ticketDictionary($number){
         if(empty(self::$ticket)){
             self::$ticket = \Model\Ticket::getTicketBaseInfo($number);
         }
+        
         $ticket = self::$ticket;
 
         //处理工单提交用户
@@ -172,7 +172,8 @@ class MailTemplate extends \Core\Model\Model {
         }
 
         //前台跳转链接
-        $ticket['ticket_link'] = self::getViewLink($number ,$type);
+        $ticket['ticket_link'] = self::getViewLink($number , self::$ticket['ticket_contact']);
+
         //后台跳转链接
         $ticket['handle_link'] = \Model\MailTemplate::getCSViewLink($number);
 

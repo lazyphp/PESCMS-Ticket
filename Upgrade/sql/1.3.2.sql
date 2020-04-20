@@ -22,8 +22,11 @@ CREATE TABLE `pes_member_activation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='账号激活表';
 
 ALTER TABLE `pes_member_activation` ADD PRIMARY KEY (`activation_id`);
+ALTER TABLE `pes_member_activation` MODIFY `activation_id` int(11) NOT NULL AUTO_INCREMENT;
 
 INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_display_name`, `field_type`, `field_option`, `field_explain`, `field_default`, `field_required`, `field_listsort`, `field_list`, `field_form`, `field_status`, `field_is_null`) VALUES
 (NULL, 15, 'title_description', '工单标题描述', 'text', '', '要修改工单详细页的工单标题名称，请在此处填写您要显示的描述。格式为：描述名称|输入框显示的提示信息 。如：工单标题|简单扼要描述本次工单遇到的问题', '', 0, 6, 0, 1, 1, 0);
 
 ALTER TABLE `pes_ticket_model` ADD `ticket_model_title_description` VARCHAR(255) NOT NULL DEFAULT '';
+
+ALTER TABLE `pes_member_organize` CHANGE `member_organize_id` `member_organize_id` INT(11) NOT NULL AUTO_INCREMENT;

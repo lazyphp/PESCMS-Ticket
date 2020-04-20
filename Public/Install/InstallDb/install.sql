@@ -81,12 +81,12 @@ DROP TABLE IF EXISTS `pes_cssend_template`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pes_cssend_template` (
-  `cssend_template_id` int(11) NOT NULL,
+  `cssend_template_id` int(11) NOT NULL AUTO_INCREMENT,
   `cssend_template_type` int(11) NOT NULL DEFAULT '0',
   `cssend_template_title` varchar(255) NOT NULL DEFAULT '',
   `cssend_template_content` text NOT NULL,
   PRIMARY KEY (`cssend_template_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -265,7 +265,7 @@ DROP TABLE IF EXISTS `pes_member_activation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pes_member_activation` (
-  `activation_id` int(11) NOT NULL,
+  `activation_id` int(11) NOT NULL AUTO_INCREMENT,
   `member_id` int(11) NOT NULL,
   `activation_code` varchar(255) NOT NULL,
   `activation_time` int(11) NOT NULL,
@@ -290,10 +290,10 @@ DROP TABLE IF EXISTS `pes_member_organize`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pes_member_organize` (
-  `member_organize_id` int(11) NOT NULL,
+  `member_organize_id` int(11) NOT NULL AUTO_INCREMENT,
   `member_organize_name` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`member_organize_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -814,4 +814,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-20 10:10:42
+-- Dump completed on 2020-04-20 14:16:24

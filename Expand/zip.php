@@ -24,6 +24,17 @@ class zip {
      */
     private $installFile = [];
 
+    /**
+     * 打包的目录文件列表
+     * @var array
+     */
+    private $packageFile = [];
+
+    /**
+     * 解压文件
+     * @param $zipfile
+     * @return array|bool
+     */
     public function unzip($zipfile) {
         $zip = zip_open($zipfile);
         if (!is_resource($zip)) {
@@ -93,6 +104,42 @@ class zip {
                 };
                 fclose($fopen);
             }
+        }
+    }
+
+    /**
+     * 打包目录
+     * @param $zipName 打包的文件名称
+     * @param $path 要打包的目录
+     */
+    public function package($zipName, $path){
+        $this->recursion($path);
+
+        $zip = new \ZipArchive();
+        $zip->open($zipName, \ZipArchive::CREATE);   //打开压缩包
+
+        foreach ($this->packageFile as $item){
+            $zip->addFile($item, str_replace(PES_CORE, '', $item));
+        }
+        $zip->close();
+    }
+
+    /**
+     * 递归指定目录所有文件信息
+     * @param $dirName
+     */
+    private function recursion($dirName){
+        if ($handle = opendir("$dirName")) {
+            while (false !== ($item = readdir($handle))) {
+                if ($item != "." && $item != "..") {
+                    if (is_dir("{$dirName}/{$item}")) {
+                        $this->recursion("{$dirName}/{$item}");
+                    } else {
+                        $this->packageFile[] = "{$dirName}/{$item}";
+                    }
+                }
+            }
+            closedir($handle);
         }
     }
 

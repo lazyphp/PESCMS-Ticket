@@ -39,7 +39,7 @@ class Plugin{
                 continue;
             }
             foreach ($item[$type] as $action => $auth){
-                if(strcmp($auth, GROUP.'-'.MODULE.'-'.ACTION) !== 0){
+                if(strcmp($this->placeholder($auth), GROUP.'-'.MODULE.'-'.ACTION) !== 0){
                     return false;
                 }
 
@@ -50,6 +50,15 @@ class Plugin{
             }
         }
 
+    }
+
+    /**
+     * 快速处理路由的占位符
+     * @param $str 需要处理的路由规则
+     * @return mixed
+     */
+    private static function placeholder($str){
+        return str_replace([':g', ':m', ':a'], [GROUP, MODULE, ACTION], $str);
     }
 
     /**

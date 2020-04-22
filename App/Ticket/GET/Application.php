@@ -64,8 +64,16 @@ class Application extends \Core\Controller\Controller {
      */
     public function install(){
         $plugin = $this->isP('name', '请提交您要安装的应用');
+        $enName = $this->isP('enname', '请提交应用的名称');
 
         $this->downloadPlugin($plugin);
+
+        //获取插件初始化类命名空间。
+        $pluginInitNameSpace = "\\Plugin\\{$enName}\\Init";
+        $pluginInit = new $pluginInitNameSpace();
+
+        //执行应用插件预设的安装事件
+        $pluginInit->install();
 
         $this->success('应用安装完毕');
 

@@ -24,15 +24,16 @@
     </div>
 </div>
 <div class="pes-installed am-hide"><?= empty($installed) ? json_encode([]) : $installed ?></div>
-<script src="<?= PESCMS_URL ?>/Theme/Api/App/1.0/pescms_app.js?mt=<?= time() ?>"></script>
+<script src="<?= PESCMS_URL ?>/Theme/Api/App/1.0/pescms_app.min.js?mt=<?= time() ?>"></script>
 <script>
     $(function(){
         $('body').on('click', '.pes-plugin-install', function(){
             var name = $(this).attr('data')
+            var enname = $(this).attr('enname')
             var appkey = $('input[name=appkey]').val();
             $.ajaxsubmit({
                 url:'<?= $label->url(GROUP.'-Application-install', ['method' => 'GET']) ?>',
-                data:{name:name, appkey:appkey}
+                data:{name:name, enname:enname, appkey:appkey}
             }, function(){
 
             })

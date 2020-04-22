@@ -35,7 +35,13 @@ interface PluginImplements{
     public function remove();
 
     /**
-     * 升级插件
+     * 安装插件执行的事件
+     * @return mixed
+     */
+    public function install();
+
+    /**
+     * 升级插件执行的事件
      * @return mixed
      */
     public function upgrade();

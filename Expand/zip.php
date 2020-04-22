@@ -113,13 +113,18 @@ class zip {
      * @param $path 要打包的目录
      */
     public function package($zipName, $path){
+        $this->packageFile = [];
         $this->recursion($path);
 
         $zip = new \ZipArchive();
         $zip->open($zipName, \ZipArchive::CREATE);   //打开压缩包
 
         foreach ($this->packageFile as $item){
-            $zip->addFile($item, str_replace(PES_CORE, '', $item));
+            if(is_dir($item)){
+                $zip->addEmptyDir(str_replace(PES_CORE, '', $item));
+            }else{
+                $zip->addFile($item, str_replace(PES_CORE, '', $item));
+            }
         }
         $zip->close();
     }
@@ -129,6 +134,7 @@ class zip {
      * @param $dirName
      */
     private function recursion($dirName){
+        $this->packageFile[] = $dirName;
         if ($handle = opendir("$dirName")) {
             while (false !== ($item = readdir($handle))) {
                 if ($item != "." && $item != "..") {

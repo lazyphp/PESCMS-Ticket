@@ -86,11 +86,13 @@ class Label {
     /**
      * 插件URL快速生成
      * @param array $param
+     * @param null $group
      * @param bool $filterHtmlSuffix
      * @return type
      */
-    public function pluginUrl(array $param, $filterHtmlSuffix = false){
-        return $this->url(GROUP.'-Application-Plugin', $param, $filterHtmlSuffix);
+    protected function pluginUrl(array $param, $group = NULL, $filterHtmlSuffix = false){
+        $group = empty($group) ? GROUP : $group;
+        return $this->url("{$group}-Application-Plugin", $param, $filterHtmlSuffix);
     }
 
     /**

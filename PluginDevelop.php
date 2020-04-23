@@ -55,7 +55,7 @@ class PluginDevelop {
      * 创建一个新的应用插件
      */
     public function create($name) {
-        $initPath = [PES_CORE."Plugin/{$name}", PES_CORE."Public/Plugin/{$name}"];
+        $initPath = [PES_CORE."Plugin/{$name}", PES_CORE."Public/Plugin/{$name}", PES_CORE."Public/Plugin/{$name}/view"];
         foreach ($initPath as $item){
             if(is_dir($item) == false && mkdir($item) == false  ){
                 die(msg("创建'{$name}'应用插件{$item}目录失败，请检查是否有写入权限。"));

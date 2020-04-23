@@ -90,7 +90,7 @@ class Label {
      * @param bool $filterHtmlSuffix
      * @return type
      */
-    protected function pluginUrl(array $param, $group = NULL, $filterHtmlSuffix = false){
+    public function pluginUrl(array $param, $group = NULL, $filterHtmlSuffix = false){
         $group = empty($group) ? GROUP : $group;
         return $this->url("{$group}-Application-Plugin", $param, $filterHtmlSuffix);
     }

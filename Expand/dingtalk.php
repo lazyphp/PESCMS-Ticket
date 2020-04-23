@@ -8,7 +8,7 @@ namespace Expand;
 class dingtalk {
 
     public $access_token = '';
-    private $AgentId, $AppKey, $AppSecret, $error;
+    public $AgentId, $AppKey, $AppSecret, $error;
 
     public function __construct() {
         $dingtalkSetting = json_decode(\Core\Func\CoreFunc::$param['system']['dingtalk'], true);

@@ -8,7 +8,7 @@ namespace Expand;
 class weixinWork {
 
     public $access_token = '';
-    private $corpid, $AgentId, $Secret, $error;
+    public $corpid, $AgentId, $Secret, $error;
 
     public function __construct() {
         $weixinWork_api = json_decode(\Core\Func\CoreFunc::$param['system']['weixinWork_api'], true);

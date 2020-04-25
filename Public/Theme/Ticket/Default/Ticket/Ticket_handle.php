@@ -14,6 +14,13 @@
                         <div class="am-g am-g-collapse">
                             <div class="am-u-lg-12">
 
+                                <?php if($label->checkAuth('TicketPOSTTicketclose') === true): ?>
+                                    <div class="am-form-group">
+                                        <label class="am-form-label am-margin-bottom-0">关闭工单 : </label>
+                                        <a href="<?= $label->url('Ticket-Ticket-close', ['number' => $ticket_number, 'method' => 'POST', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>" class="am-text-danger ajax-click ajax-dialog" msg="确定要关闭本工单吗？"> 点击关闭</a>
+                                    </div>
+                                <?php endif; ?>
+
                                 <?php if ($ticket_status == '0'): ?>
                                     <div class="am-form-group">
                                         <label class="am-form-label am-margin-bottom-0">受理工单 : </label>
@@ -46,11 +53,6 @@
                                             <input type="radio" name="assign" value="4">
                                             标记完成
                                         </label>
-                                    </div>
-
-                                    <div class="am-form-group">
-                                        <label class="am-form-label am-margin-bottom-0">关闭工单 : </label>
-                                        <a href="<?= $label->url('Ticket-Ticket-close', ['number' => $ticket_number, 'method' => 'POST', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>" class="am-text-danger ajax-click ajax-dialog" msg="确定要关闭本工单吗？"> 点击关闭</a>
                                     </div>
                                     <?php endif; ?>
 
@@ -96,6 +98,7 @@
                                         </script>
                                     </div>
                                 <?php endif; ?>
+
 
                                 <div class="am-form-group">
                                     <label class="am-form-label am-margin-bottom-0">是否通知 : </label>
@@ -175,7 +178,7 @@
         /**
          * 选择对应的组，进行获取对应的用户列表
          */
-        $('.ticket-group').on('click', function(){
+        $('.ticket-group').on('change', function(){
             var group = $(this).val();
             if(group == ''){
                 return false;
@@ -191,8 +194,8 @@
                     $('select[name=uid]').html(option);
                 }else{
                     var d = dialog({
-                        title: '系统提示',
                         id:'tisp',
+                        skin:'submit-warning',
                         content: result.msg
                     })
                     d.showModal();

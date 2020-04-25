@@ -179,12 +179,12 @@ $SLICE_ARRYR = [
     'TICKET-APPLICATION-Init' => [
         'any',
         ['Ticket-Application-Init'],
-        ['\Common\ApplicationPlugin']
+        ['\Ticket\ApplicationInit']
     ],
 
     //插件全局事件
     'APPLICATION-GLOBAL-EVENT' => [
-        'get',
+        'any',
         ['Ticket-:m-:a', 'Form-:m-:a'],
         ['\Common\ApplicationGlobalEvent'],
     ],

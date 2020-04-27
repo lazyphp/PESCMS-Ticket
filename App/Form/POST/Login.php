@@ -241,6 +241,7 @@ class Login extends \Core\Controller\Controller {
             $param['member_account'] = "wx_{$randomAccount}";
             $param['member_password'] = md5(\Model\Extra::getOnlyNumber());//随机写入一些字符，随机帐号无法使用
             $param['member_status'] = \Core\Func\CoreFunc::$param['system']['member_review'] == 2 ? 0 : \Core\Func\CoreFunc::$param['system']['member_review'];
+            $param['member_organize_id'] = 1 ; //默认客户分组为 1
             $param['member_createtime'] = time();
             $memberID = $this->db('member')->insert($param);
 

@@ -9,7 +9,7 @@
 </div>
 
 <div class="loginFlow">
-    <input type="password" name="password" class="pes-login-input" placeholder="登录密码" minlength="6" required="required">
+    <input type="password" name="password" class="pes-login-input" placeholder="登录密码" minlength="6" data-am-popover="{trigger:'focus', theme: 'danger sm', content: '请输入不小于6位数的登录密码'}" required="required">
 </div>
 
 <?php if(json_decode($system['login_verify'])[0] == '1'): ?>
@@ -20,7 +20,7 @@
     </div>
 
     <div class="loginFlow">
-        <input type="text" class="pes-login-input" name="verify" placeholder="验证码" maxlength="<?= $system['verifyLength'] ?>" required>
+        <input type="text" class="pes-login-input" name="verify" placeholder="验证码" maxlength="<?= $system['verifyLength'] ?>" autocomplete="off" required>
     </div>
 </div>
 

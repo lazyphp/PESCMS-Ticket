@@ -9,7 +9,7 @@
     </div>
 
     <div class="loginFlow">
-        <input type="text" class="pes-login-input" name="verify" placeholder="验证码" maxlength="<?= $system['verifyLength'] ?>" required>
+        <input type="text" class="pes-login-input" name="verify" placeholder="验证码" maxlength="<?= $system['verifyLength'] ?>" autocomplete="off" required>
     </div>
 </div>
 

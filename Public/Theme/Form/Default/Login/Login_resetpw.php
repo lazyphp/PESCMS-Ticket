@@ -1,9 +1,9 @@
 <div class="loginFlow">
-    <input type="password" name="passwd" class="pes-login-input" placeholder="密码" minlength="6" required="required">
+    <input type="password" name="passwd" class="pes-login-input" placeholder="密码" minlength="6" data-am-popover="{trigger:'focus', theme: 'danger sm', content: '请输入不小于6位数的密码'}" required="required">
 </div>
 
 <div class="loginFlow">
-    <input type="password" name="repasswd" class="pes-login-input" placeholder="确认密码" minlength="6" required="required">
+    <input type="password" name="repasswd" class="pes-login-input" placeholder="确认密码" minlength="6" data-am-popover="{trigger:'focus', theme: 'danger sm', content: '请输入不小于6位数的密码'}" required="required">
 </div>
 
 <div class="login-verify">
@@ -13,7 +13,7 @@
     </div>
 
     <div class="loginFlow">
-        <input type="text" class="pes-login-input" name="verify" placeholder="验证码" maxlength="<?= $system['verifyLength'] ?>" required>
+        <input type="text" class="pes-login-input" name="verify" placeholder="验证码" maxlength="<?= $system['verifyLength'] ?>" autocomplete="off" required>
     </div>
 </div>
 

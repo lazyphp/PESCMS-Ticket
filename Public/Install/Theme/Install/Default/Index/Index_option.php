@@ -18,14 +18,14 @@
 <div class="am-form-group">
     <label class="am-u-sm-2 am-form-label">管理员密码:</label>
     <div class="am-u-sm-10">
-        <input type="text" name="passwd" placeholder="管理员密码" minlength="6" required>
+        <input type="text" name="passwd" placeholder="管理员密码" minlength="6" data-am-popover="{trigger:'focus', theme: 'danger sm', content: '请输入不小于6位数的密码'}" required>
     </div>
 </div>
 
 <div class="am-form-group">
     <label class="am-u-sm-2 am-form-label">再次确认密码:</label>
     <div class="am-u-sm-10">
-        <input type="text" name="repasswd" placeholder="再次确认密码" minlength="6" required>
+        <input type="text" name="repasswd" placeholder="再次确认密码"  minlength="6" data-am-popover="{trigger:'focus', theme: 'danger sm', content: '请输入不小于6位数的密码'}" required>
     </div>
 </div>
 

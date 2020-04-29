@@ -37,7 +37,7 @@
                         <tr>
                             <td>
                                 <?= $value['info']['name']  ?>
-                                <span class="am-badge am-radius"><?= $value['info']['status'] == 'enabled' ? '启用中' : '未启用' ?>
+                                <span class="am-badge <?= $value['info']['status'] == 'enabled' ? 'am-badge-success' : '' ?> am-radius"><?= $value['info']['status'] == 'enabled' ? '启用中' : '未启用' ?>
                                 </span>
                             </td>
                             <td><?= $value['info']['version'] ?></td>

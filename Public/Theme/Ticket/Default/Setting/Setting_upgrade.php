@@ -10,6 +10,9 @@
             <strong class="am-text-primary am-text-lg"><?= $title; ?></strong>
         </div>
     </div>
+    <div class="pes-alert pes-alert-error am-margin-bottom"  >
+        <i class="am-icon-warning"></i> 每次执行升级前，请务必备份数据库！
+    </div>
     <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
 
     <div class="pes-alert pes-alert-info" id="patch" >
@@ -20,7 +23,7 @@
             <hr/>
             <a href="<?= $label->url(GROUP . '-Setting-atUpgrade', ['method' => 'PUT']) ?>" class="am-btn am-radius am-btn-success am-btn-xs">执行自动更新</a>
             <hr/>
-            <div class="pes-alert pes-alert-info"  >
+            <div class="pes-alert pes-alert-info am-margin-bottom"  >
                 当自动更新多次失败时，您可以尝试将补丁下载到本地，执行手动升级。
             </div>
             <form action="<?= $label->url(GROUP . '-Setting-mtUpgrade') ?>" method="POST" enctype="multipart/form-data">

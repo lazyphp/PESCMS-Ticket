@@ -96,14 +96,14 @@
             <?php foreach ($chat as $value): ?>
                 <li class="<?= $value['user_id'] == '-1' ? 'am-text-gray am-text-gray-background' : '' ?> ">
                     <div class="am-g">
-                        <div class="am-u-sm-1">
+                        <div class="am-u-sm-2 am-u-lg-1">
                             <?php if($value['user_id'] == '-1'): ?>
                                 <i class="am-icon-btn am-primary am-icon-user"></i>
                             <?php else: ?>
                                 <i class="am-icon-btn am-danger am-icon-slideshare"></i>
                             <?php endif; ?>
                         </div>
-                        <div class="am-u-sm-11">
+                        <div class="am-u-sm-10 am-u-lg-11">
                             <div class="am-block am-nbfc">
                                 <?= $value['user_id'] == '-1' ? (empty($member) ? '匿名用户 : ' : "{$member['member_name']} : " ) : "{$value['user_name']} : " ?><?=  $label->xss(htmlspecialchars_decode($value['ticket_chat_content'])) ?>
                             </div>

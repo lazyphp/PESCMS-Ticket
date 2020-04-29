@@ -27,11 +27,11 @@
     transition: transform .15s ease-in-out, opacity .15s ease-in-out;
 }
 .ui-dialog .am-table-striped>tbody>tr>td, .ui-dialog .am-table-striped>tbody>tr>th{
-    background-color: #000;
-    background-color: rgba(0,0,0,.618);
+    background-color: #f5f5f5;
+    background-color: rgba(245, 245, 245, 0.618);
 }
 .ui-dialog .am-table-hover>tbody>tr:hover>td, .ui-dialog .am-table-hover>tbody>tr:hover>th{
-    background-color: rgba(52,59,78,.618);
+    background-color: rgba(202, 202, 202, 0.618);
 }
 
 .ui-popup-show .ui-dialog {

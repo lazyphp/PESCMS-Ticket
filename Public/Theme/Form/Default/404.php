@@ -1,6 +1,6 @@
 <?php include THEME_PATH . '/header.php'; ?>
 <?php include  THEME_PATH .'/Topbar.php'; ?>
-<div class="am-g">
+<div class="am-g am-margin-top">
     <div class="am-u-sm-12 am-u-sm-centered">
         <div class="am-panel am-panel-default">
             <div class="am-panel-bd">

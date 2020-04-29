@@ -21,7 +21,7 @@
     </div>
 
     <div class="loginFlow">
-        <input type="password" name="password" class="pes-login-input" placeholder="密码" required="required">
+        <input type="password" name="password" class="pes-login-input" placeholder="密码" data-am-popover="{trigger:'focus', theme: 'danger sm', content: '请输入不小于6位数的密码'}" required="required">
     </div>
 
     <button type="submit" class="am-btn am-btn-primary am-radius am-btn-sm am-margin-top am-btn-block">提交</button>

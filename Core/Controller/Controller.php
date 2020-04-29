@@ -380,6 +380,18 @@ class Controller {
     }
 
     /**
+     * 插件URL快速生成
+     * @param array $param
+     * @param null $group
+     * @param bool $filterHtmlSuffix
+     * @return type
+     */
+    protected function pluginUrl(array $param, $group = NULL, $filterHtmlSuffix = false){
+        $group = empty($group) ? GROUP : $group;
+        return $this->url("{$group}-Application-Plugin", $param, $filterHtmlSuffix);
+    }
+
+    /**
      * restful方法
      */
     protected function routeMethod($type) {

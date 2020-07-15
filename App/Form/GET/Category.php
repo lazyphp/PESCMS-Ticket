@@ -97,6 +97,7 @@ class Category extends \Core\Controller\Controller{
                 'title' => $value['ticket_model_name'],
                 'number' => $value['ticket_model_number'],
                 'login' => $value['ticket_model_login'],
+                'ticket_model_login' => $value['ticket_model_login'],
                 'verify' => $value['ticket_model_verify'],
                 'cid' => $value['ticket_model_cid'],
                 'contact' => $value['ticket_model_contact'],
@@ -121,9 +122,8 @@ class Category extends \Core\Controller\Controller{
         }
 
         //检查是否开启登录验证
-        if($ticketInfo['login'] == 1 && empty($this->session()->get('member'))){
-            $this->jump($this->url('Login-index', ['back_url' => base64_encode($_SERVER['REQUEST_URI'])]));
-        }
+        \Model\Ticket::loginCheck($ticketInfo);
+
 
         $ticketInfo['category'] = \Model\Content::findContent('category', $ticketInfo['cid'], 'category_id');
         $this->assign('title', $ticketInfo['title']);

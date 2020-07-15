@@ -19,6 +19,9 @@ class SendNotice extends Core {
         if (in_array($noticeWay, ['2', '3'])) {
             \Model\Extra::actionNoticeSend();
         }
+
+        (new \Expand\cURL())->init(\Core\Func\CoreFunc::$param['system']['domain'].'/?m=Index&a=behavior');
+
     }
 
 }

@@ -68,7 +68,7 @@ class Ticket extends \Core\Controller\Controller {
             'count' => sprintf($sql, 'count(*)'),
             'normal' => sprintf($sql, 't.*, tm.ticket_model_name, tm.ticket_model_cid, tm.ticket_model_time_out'),
             'param' => $this->param,
-            'page' => '20'
+            'page' => !empty($_GET['csv']) ? '9919999' : '20'
         ]);
 
         $this->assign('ticketModel', \Model\Content::listContent(['table' => 'ticket_model']));
@@ -79,6 +79,8 @@ class Ticket extends \Core\Controller\Controller {
         $this->assign('category', $this->category);
         $this->assign('member', \Model\Member::getMemberWithID());
         $this->assign('title', \Model\Menu::getTitleWithMenu()['menu_name']);
+        
+        $this->csv();
 
         $this->layout($template);
     }
@@ -97,6 +99,65 @@ class Ticket extends \Core\Controller\Controller {
         $this->param['user_id'] = $this->session()->get('ticket')['user_id'];
         $this->condition .= ' AND t.user_id = :user_id';
         $this->index();
+    }
+
+    public function csv(){
+        if(empty($_GET['csv'])){
+            return false;
+        }
+
+        if(empty($_GET['debug_dev'])){
+            header('Content-type: text/csv; charset=UTF-8');
+            header('Content-Disposition: attachment;filename=工单列表导出CSV-'.date('YmdHis').'.csv');
+            header('Cache-Control: max-age=0');
+
+            echo "\xEF\xBB\xBF"; //输出BOM头，解决中文问题
+        }
+
+        $fp = fopen('php://output', 'a');
+        $title = [
+            '工单单号',
+            '工单类型',
+            '工单标题',
+            '工单状态',
+            '提交者',
+            '责任人',
+            '工单提交时间',
+        ];
+        fputcsv($fp, $title);
+
+        $content = [];
+
+        $statsu = \Core\Func\CoreFunc::$param['ticketStatus'];
+        $category = \Core\Func\CoreFunc::$param['category'];
+        $member = \Core\Func\CoreFunc::$param['member'];
+
+        $num = 0;
+
+        foreach (\Core\Func\CoreFunc::$param['list'] as $key => $item){
+
+            if ($num == 1) {
+                ob_flush();
+                flush();
+                $num = 0;
+            }
+            $num++;
+
+            $content = [
+                $item['ticket_number'],
+                "{$category[$item['ticket_model_cid']]['category_name']} - {$item['ticket_model_name']}",
+                $item['ticket_title'],
+                $statsu[$item['ticket_status']]['name'],
+                $item['member_id'] == '-1' ? '匿名用户' :$member[$item['member_id']]['member_name'],
+                $item['user_name'],
+                date('Y-m-d H:i'),
+            ];
+            fputcsv($fp, $content);
+        }
+
+        fclose($fp);
+        
+        exit;
     }
 
     /**

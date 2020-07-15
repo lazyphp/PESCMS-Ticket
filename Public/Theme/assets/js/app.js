@@ -197,4 +197,38 @@ $(function () {
         return false;
     })
 
+    /**
+     * 批量删除全选按钮
+     */
+    $('.checkbox-all').on('click, change', function () {
+        if($(this).prop('checked') == true){
+            $('.checkbox-all-children').prop('checked', 'checked')
+        }else{
+            $('.checkbox-all-children').removeAttr('checked');
+        }
+    })
+
+    /**
+     * 批量删除
+     */
+    $('.delete-batch').on('click', function () {
+        var url = $(this).attr('data');
+        var children = $('.checkbox-all-children').serialize()
+        if(!children){
+            alert('您没有勾选要删除的数据.')
+            return false;
+        }
+
+        if(confirm('确认进行批量删除所勾选数据吗？')){
+
+            $.ajaxsubmit({url:url, data:children}, function () {
+
+            })
+
+            return false;
+        }
+
+        return false;
+    })
+
 })

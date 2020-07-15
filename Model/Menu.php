@@ -30,6 +30,9 @@ class Menu extends \Core\Model\Model {
         $condition = "";
         if (!empty($groupId) && self::session()->get('ticket')['user_id'] > '1') {
             $group = \Model\Content::findContent('user_group', $groupId, 'user_group_id');
+            if(empty($group['user_group_menu'])){
+                self::error('当前账号分组没有设置系统菜单，请联系管理人添加。', '/', '60');
+            }
             $condition .= "m.menu_id in ({$group['user_group_menu']})";
         }
 

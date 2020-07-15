@@ -21,6 +21,14 @@ namespace Slice\Ticket;
 class Login extends \Core\Slice\Slice{
 
     public function before() {
+
+        if(!empty($_GET['_notice_login'])){
+            $notice_login = $this->g('_notice_login');
+            if(strcmp($notice_login, \Model\Option::getNoticeLoginParam()) === 0){
+                $this->session()->set('backstage', '1');
+            }
+        }
+
         if(empty($this->session()->get('backstage'))){
             $this->jump('/');
         }

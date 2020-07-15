@@ -11,6 +11,7 @@
         <input type="hidden" name="method" value="PUT"/>
         <table class="am-table am-table-bordered am-table-striped am-table-hover am-text-sm">
             <tr>
+                <th><input type="checkbox" class="checkbox-all"></th>
                 <?php if ($listsort): ?>
                     <th class="table-sort">排序</th>
                 <?php endif; ?>
@@ -27,6 +28,9 @@
             </tr>
             <?php foreach ($list as $key => $value) : ?>
                 <tr>
+                    <td class="am-text-middle">
+                        <input type="checkbox" class="checkbox-all-children" name="id[<?= $value["{$fieldPrefix}id"]; ?>]" value="<?= $value["{$fieldPrefix}id"]; ?>" >
+                    </td>
                     <?php if ($listsort): ?>
                         <td class="am-text-middle">
                             <input type="text" class="am-input-sm" name="id[<?= $value["{$fieldPrefix}id"]; ?>]"
@@ -70,6 +74,7 @@
                 <?php if ($listsort): ?>
                     <button type="submit" class="am-btn am-btn-primary am-btn-sm am-radius">排序</button>
                 <?php endif; ?>
+                <button type="button" class="am-btn am-btn-danger am-btn-xs am-radius delete-batch" data="<?= $label->url(GROUP . '-' . MODULE . '-action', ['method' => 'DELETE']) ?>">删除</button>
             </div>
             <div class="am-u-sm-12 am-u-lg-6">
                 <ul class="am-pagination am-pagination-right am-text-sm am-margin-0">

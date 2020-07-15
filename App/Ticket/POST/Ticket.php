@@ -49,6 +49,7 @@ class Ticket extends \Core\Controller\Controller {
                     $templateType = 3;
 
                 } elseif ($_POST['assign'] == '3') {
+                    $status = '0';//转派用户，工单状态应该为待解决
                     $userID = $this->isP('uid', '请选择您要指派的用户');
                     $checkUser = \Model\Content::findContent('user', $userID, 'user_id');
                     if (empty($checkUser)) {

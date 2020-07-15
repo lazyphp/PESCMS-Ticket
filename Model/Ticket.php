@@ -52,17 +52,19 @@ class Ticket extends \Core\Model\Model {
         $param['member_id'] = empty(self::session()->get('member')) ? '-1' : self::session()->get('member')['member_id'];
 
         if ($firstContent['ticket_model_verify'] == '1') {
-            $verify = self::isP('verify', '请填写验证码');
-            if (md5($verify) != self::session()->get('verify')) {
-                self::error('验证码错误');
-            }
+            self::checkVerify();
         }
 
-        $exclusive = self::exclusiveCSTicket();
-        if(!empty($exclusive)){
-            $param['user_id'] = $exclusive['user_id'];
-            $param['user_name'] = $exclusive['user_name'];
-            $param['ticket_exclusive'] = 1;
+        $csUserInfo = self::autoAssign($firstContent['ticket_model_auto'], $firstContent);
+
+        $exclusiveCS = self::exclusiveCSTicket($firstContent['ticket_model_exclusive']);
+        if(!empty($exclusiveCS)){
+            $csUserInfo = $exclusiveCS;
+        }
+        if(!empty($csUserInfo)){
+            $param['user_id'] = $csUserInfo['user_id'];
+            $param['user_name'] = $csUserInfo['user_name'];
+            $param['ticket_exclusive'] = empty($csUserInfo['exclusive']) ? 0 : 1;
         }
 
 
@@ -102,9 +104,9 @@ class Ticket extends \Core\Model\Model {
             if ($value['ticket_form_required'] == '1' || $value['ticket_form_bind'] > 0) {
                 $msg = empty($value['ticket_form_msg']) ? "{$value['ticket_form_description']}为必填项" : $value['ticket_form_msg'];
 
-                if (empty($form) && !is_numeric($form) && !is_string($form) && $value['ticket_form_bind'] == 0) {
+                if (empty($form) && !is_numeric($form) && $value['ticket_form_bind'] == 0) {
                     self::error($msg);
-                } elseif ($value['ticket_form_bind'] > 0 && in_array($_POST[$formID[$value['ticket_form_bind']]], explode(',', $value['ticket_form_bind_value'])) && $value['ticket_form_required'] == '1' && empty($form) && !is_numeric($form) && !is_string($form)) {
+                } elseif ($value['ticket_form_bind'] > 0 && in_array($_POST[$formID[$value['ticket_form_bind']]], explode(',', $value['ticket_form_bind_value'])) && $value['ticket_form_required'] == '1' && empty($form) && !is_numeric($form) ) {
                     self::error($msg);
                 }
             }
@@ -114,7 +116,15 @@ class Ticket extends \Core\Model\Model {
                 $form = (new \Expand\OpenSSL(\Core\Func\CoreFunc::loadConfig('USER_KEY', true)))->encrypt($form);
             }
 
-            //@todo 这里还差一个工单表单类型验证功能
+            switch ($value['ticket_form_verify']){
+                case 'noVerify':
+                    break;
+                default:
+                    if(\Model\Extra::checkInputValueType($form, $value['ticket_form_verify']) == false){
+                        self::error("表单'{$value['ticket_form_description']}'只能提交".array_flip(\Model\Extra::$checkType)[$value['ticket_form_verify']]);
+                    }
+            }
+
 
             $result = self::db('ticket_content')->insert([
                 'ticket_id' => $ticketID,
@@ -141,8 +151,10 @@ class Ticket extends \Core\Model\Model {
         \Model\Notice::addTicketNoticeAction($param['ticket_number'], $param['ticket_contact_account'], $param['ticket_contact'], 1);
 
         //新工单后台客服通知
-        if($param['ticket_exclusive'] == 1 && !empty($param['user_id']) ){
-            \Model\Notice::addCSNotice($param['ticket_number'], $param['user_id'], -1);
+        if(($param['ticket_exclusive'] == 1 || $ticket['ticket_model_auto'] == 1 ) && !empty($param['user_id']) ){
+            $user = \Model\Content::findContent('user', $param['user_id'], 'user_id');
+            \Model\Notice::addCSNotice($param['ticket_number'], $user, -1);
+
         }elseif(!empty($ticket['ticket_model_group_id'])){
             //移除手尾,
             $ticket['ticket_model_group_id'] = trim($ticket['ticket_model_group_id'], ',');
@@ -157,19 +169,91 @@ class Ticket extends \Core\Model\Model {
     }
 
     /**
+     * 自动分单功能
+     * @param bool $isOpen
+     * @param $ticket
+     * @return bool
+     */
+    private static function autoAssign($isOpen = false, $ticket){
+        if($isOpen !== 1){
+            return false;
+        }
+
+        $ticket['ticket_model_group_id'] = trim($ticket['ticket_model_group_id'], ',');
+
+        switch ($ticket['ticket_model_auto_logic']){
+            case '1':
+                $userList = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']})")->select();
+                if(empty($userList)){
+                    return false;
+                }
+
+                $userSort = [];
+                foreach ($userList as $item){
+                    $user[$item['user_id']] = $item;
+                    $user[$item['user_id']]['total'] = 0;
+                    $userSort[$item['user_id']] = 0;
+                }
+
+                $ticket = self::db('user AS u')->field('u.user_id, COUNT(t.user_id) as total')->join(self::$modelPrefix.'ticket AS t ON t.user_id = u.user_id')->where("user_group_id IN ({$ticket['ticket_model_group_id']}) AND t.ticket_close = 0 AND t.ticket_submit_time >= :ticket_submit_time ")->group('t.user_id')->select([
+                    'ticket_submit_time' => time() - 86400 * 30
+                ]);
+                $avgSubTotal = 0;
+                $avgTotal = count($user);
+
+                array_walk($ticket, function ($value) use (&$user, &$avgSubTotal, &$userSort) {
+                    $user[$value['user_id']]['total'] = $value['total'];
+                    $avgSubTotal += $value['total'];
+                    $userSort[$value['user_id']] = $value['total'];
+                });
+                
+                array_multisort($userSort, SORT_ASC, $user);
+
+                $avg = round($avgSubTotal/$avgTotal, 2);
+
+                foreach ($user as $item){
+                    $item['total'] = $item['total'] > $avg ? $avg + 2 : $avg + 1;
+                    if($item['total'] > $avg){
+                        return $item;
+                    }elseif($item['total'] + 1 > $avg){
+                        return $item;
+                    }
+                }
+
+                //分配失败，则返回false，产生全局工单通知
+                return false;
+                break;
+            case '0':
+            default:
+                $user = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']})")->order('RAND()')->find();
+                if(!empty($user)){
+                    return $user;
+                }
+                break;
+        }
+        return false;
+    }
+
+    /**
      * 检测是否填写正确的客服工号
      * @return bool|type
      */
-    private static function exclusiveCSTicket(){
+    private static function exclusiveCSTicket($isOpen = false){
+        if($isOpen !== 1){
+            return false;
+        }
+
         $jobNumber = self::p('job_number');
         if(empty($jobNumber)){
             return false;
         }
 
-        $user = \Model\Content::findContent('user', $jobNumber, 'user_job_number', 'user_id, user_name, user_job_number, user_mail, user_weixinWork');
+        $user = \Model\Content::findContent('user', $jobNumber, 'user_job_number', 'user_id, user_name, user_job_number, user_mail, user_weixinWork, user_dingtalk');
         if(empty($user)){
             return false;
         }else{
+            //标记专属客服
+            $user['exclusive'] = 1;
             return $user;
         }
 
@@ -429,7 +513,7 @@ class Ticket extends \Core\Model\Model {
         /**
          * 提交工单的请求不进行跳转。
          */
-        if(MODULE == 'Submit' && ACTION == 'ticket'){
+        if( (MODULE == 'Submit' && ACTION == 'ticket') || (MODULE == 'Category' && ACTION == 'ticket') ){
             return true;
         }
 

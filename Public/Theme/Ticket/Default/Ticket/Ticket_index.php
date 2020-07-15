@@ -73,6 +73,7 @@
                             </div>
 
                             <button type="submit" class="am-btn am-btn-default am-btn-sm am-radius">搜索</button>
+                            <button type="submit" name="csv" value="1" class="am-btn am-btn-success am-btn-sm am-radius"><i class="am-icon-file-excel-o"></i> 导出CSV</button>
                         </div>
 
                     </form>

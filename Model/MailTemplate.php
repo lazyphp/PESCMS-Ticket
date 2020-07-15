@@ -70,7 +70,12 @@ class MailTemplate extends \Core\Model\Model {
     public static function getCSViewLink($number) {
         self::setSystemParam();
 
-        $link = self::$system['domain'] . self::url('Ticket-Ticket-handle', ['number' => $number]);
+        $param = ['number' => $number];
+
+        $param['_notice_login'] = \Model\Option::getNoticeLoginParam();
+
+        $link = self::$system['domain'] . self::url('Ticket-Ticket-handle', $param);
+
         return '<a href="' . $link . '">' . $link . '</a>';
     }
 

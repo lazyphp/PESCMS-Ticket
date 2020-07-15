@@ -30,6 +30,7 @@ class Setting extends \Core\Controller\Controller {
                 'open_register',
                 'member_review',
                 'notice_way',
+                'rowlock',
                 'siteContact',
                 'siteStyle',
                 'authorize',

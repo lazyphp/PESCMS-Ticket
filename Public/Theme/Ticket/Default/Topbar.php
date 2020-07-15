@@ -9,6 +9,7 @@
 
     <?php if(!empty(self::session()->get('ticket'))): ?>
     <div class="am-collapse am-topbar-collapse" id="ticket-topbar-collapse">
+        <?php if(!empty($menu)): ?>
         <ul class="am-nav am-nav-pills am-topbar-nav">
             <?php foreach ($menu as $topValue): ?>
                 <?php if (!empty($topValue['menu_child'])): ?>
@@ -27,6 +28,7 @@
                 <?php endif; ?>
             <?php endforeach; ?>
         </ul>
+        <?php endif; ?>
 
         <div class="am-topbar-right">
             <ul class="am-nav am-nav-pills am-topbar-nav admin-header-list">

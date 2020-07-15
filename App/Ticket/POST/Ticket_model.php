@@ -45,11 +45,27 @@ class Ticket_model extends Content {
             'ticket_form_model_id' => $ticket['ticket_model_id']
         ]);
         if(!empty($form)){
+
+            $bindID = [];
             foreach ($form as $key => $value){
+                $ticket_form_id = $value['ticket_form_id'];
                 unset($value['ticket_form_id']);
                 $value['ticket_form_model_id'] = $id;
-                $this->db('ticket_form')->insert($value);
+                $newFormID = $this->db('ticket_form')->insert($value);
+                $bindID[$ticket_form_id] = $newFormID;
             }
+
+            //批量更新对应联动的新ID
+            foreach ($bindID as $oldBindID => $newBindID){
+                $this->db('ticket_form')->where('ticket_form_model_id = :ticket_form_model_id AND ticket_form_bind = :oldBingID')->update([
+                    'noset' => [
+                        'ticket_form_model_id' => $id,
+                        'oldBingID' => $oldBindID
+                    ],
+                    'ticket_form_bind' => $newBindID
+                ]);
+            }
+
         }
     }
 

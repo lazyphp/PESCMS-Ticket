@@ -39,6 +39,9 @@ function cssMinify(flieIn, fileOut) {
     })
 }
 
+var myDate = new Date();
+console.log('开始时间: '+ myDate.getHours() + ':'+myDate.getMinutes()+':'+myDate.getSeconds());
+
 //开始压缩JS资源
 var js = ['spectrum', 'webuploader', 'AMUIwebuploader', 'app', 'ticket', 'pt-base'];
 for(var i in js){

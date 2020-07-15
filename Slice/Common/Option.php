@@ -30,6 +30,7 @@ class Option extends \Core\Slice\Slice{
 
         $this->checkInterior($system['interior_ticket']);
 
+        $this->assign('resources', substr(md5($system['domain'].substr(md5(self::$config['USER_KEY']), 5, 10). $system['version'].$system['openindex'].$system['notice_way']), 4, 10));
         $this->assign('system', $system);
 
         $this->authorize();

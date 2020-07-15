@@ -18,46 +18,46 @@
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
 
     <!-- Tile icon for Win8 (144x144 + tile color) -->
-    <link rel="icon" type="image/png" href="<?= DOCUMENT_ROOT ?>/favicon.ico?v=<?= $system['version'] ?>">
-    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/amazeui.min.css?v=<?= $system['version'] ?>">
-    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/app.min.css?v=<?= $system['version'] ?>">
-    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/ticket.min.css?v=<?= $system['version'] ?>">
-    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/ui-dialog.min.css?v=<?= $system['version'] ?>">
-    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/amazeui.datetimepicker.css?v=<?= $system['version'] ?>">
+    <link rel="icon" type="image/png" href="<?= DOCUMENT_ROOT ?>/favicon.ico?v=<?= $resources ?>">
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/amazeui.min.css?v=<?= $resources ?>">
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/app.min.css?v=<?= $resources ?>">
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/ticket.min.css?v=<?= $resources ?>">
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/ui-dialog.min.css?v=<?= $resources ?>">
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/amazeui.datetimepicker.css?v=<?= $resources ?>">
     <script>
         var PESCMS_URL = 'https://www.pescms.com';
         var PESCMS_PATH = '<?= DOCUMENT_ROOT; ?>';
     </script>
-    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/jquery.min.js?v=<?= $system['version'] ?>"></script>
-    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/amazeui.min.js?v=<?= $system['version'] ?>"></script>
-    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/dialog-min.js?v=<?= $system['version'] ?>"></script>
-    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/dialog-plus-min.js?v=<?= $system['version'] ?>"></script>
-    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/amazeui.datetimepicker.min.js?v=<?= $system['version'] ?>"></script>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/jquery.min.js?v=<?= $resources ?>"></script>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/amazeui.min.js?v=<?= $resources ?>"></script>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/dialog-min.js?v=<?= $resources ?>"></script>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/dialog-plus-min.js?v=<?= $resources ?>"></script>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/amazeui.datetimepicker.min.js?v=<?= $resources ?>"></script>
 
 
     <script>var path = '<?= DOCUMENT_ROOT; ?>';</script>
-    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor_ticket.config.min.js?v=<?= $system['version'] ?>"></script>
-    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.all.min.js?v=<?= $system['version'] ?>"></script>
-    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/lang/zh-cn/zh-cn.min.js?v=<?= $system['version'] ?>"></script>
+    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor_ticket.config.min.js?v=<?= $resources ?>"></script>
+    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/ueditor.all.min.js?v=<?= $resources ?>"></script>
+    <script src="<?= DOCUMENT_ROOT ?>/Theme/assets/ueditor/lang/zh-cn/zh-cn.min.js?v=<?= $resources ?>"></script>
 
 
-    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/spectrum.min.js?v=<?= $system['version'] ?>"></script>
-    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/spectrum.min.css?v=<?= $system['version'] ?>"/>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/spectrum.min.js?v=<?= $resources ?>"></script>
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/spectrum.min.css?v=<?= $resources ?>"/>
 
     <!--图片放大器-->
-    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/jquery.fancybox.min.js?v=<?=$system['version']?>"></script>
-    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/jquery.fancybox.min.css?v=<?=$system['version']?>"/>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/jquery.fancybox.min.js?v=<?=$resources?>"></script>
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/jquery.fancybox.min.css?v=<?=$resources?>"/>
     <!--图片放大器-->
 
 
-    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/app.min.js?v=<?= $system['version'] ?>"></script>
-    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/ticket.min.js?v=<?= $system['version'] ?>"></script>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/app.min.js?v=<?= $resources ?>"></script>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/ticket.min.js?v=<?= $resources ?>"></script>
 
 
     <!--百度上传控件-->
-    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/webuploader.min.css?v=<?= $system['version'] ?>"/>
-    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/webuploader.min.js?v=<?= $system['version'] ?>"></script>
-    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/AMUIwebuploader.min.js?v=<?= $system['version'] ?>"></script>
+    <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/webuploader.min.css?v=<?= $resources ?>"/>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/webuploader.min.js?v=<?= $resources ?>"></script>
+    <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/AMUIwebuploader.min.js?v=<?= $resources ?>"></script>
     <script>
         $(function(){
             $.webuploaderConfig({

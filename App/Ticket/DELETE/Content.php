@@ -30,13 +30,31 @@ class Content extends \Core\Controller\Controller {
      * 执行删除动作
      */
     public function delete() {
-        $id = $this->isG('id', '请选择要删除的数据!');
-        $result = \Model\ModelManage::deleteFromModelId(MODULE, $id);
-        if (empty($result)) {
-            $this->error('删除失败');
-        } else {
-            $this->success('删除成功');
+
+        if(!empty($_POST['id'])){
+            $tips = [];
+            foreach ($_POST['id'] as $id){
+                $result = \Model\ModelManage::deleteFromModelId(MODULE, (int) $id);
+                if($result == false){
+                    $tips[$id] = $id;
+                }
+            }
+            if(!empty($tips)){
+                $this->error("ID: '".implode(',', $tips)."' 删除失败", '', '10');
+            }else{
+                $this->success('批量删除完成');
+            }
+
+        }else{
+            $id = $this->isG('id', '请选择要删除的数据!');
+            $result = \Model\ModelManage::deleteFromModelId(MODULE, $id);
+            if (empty($result)) {
+                $this->error('删除失败');
+            } else {
+                $this->success('删除成功');
+            }
         }
+
     }
 
 }

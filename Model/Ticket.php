@@ -52,10 +52,7 @@ class Ticket extends \Core\Model\Model {
         $param['member_id'] = empty(self::session()->get('member')) ? '-1' : self::session()->get('member')['member_id'];
 
         if ($firstContent['ticket_model_verify'] == '1') {
-            $verify = self::isP('verify', '请填写验证码');
-            if (md5($verify) != self::session()->get('verify')) {
-                self::error('验证码错误');
-            }
+            self::checkVerify();
         }
 
         $exclusive = self::exclusiveCSTicket();
@@ -102,7 +99,7 @@ class Ticket extends \Core\Model\Model {
             if ($value['ticket_form_required'] == '1' || $value['ticket_form_bind'] > 0) {
                 $msg = empty($value['ticket_form_msg']) ? "{$value['ticket_form_description']}为必填项" : $value['ticket_form_msg'];
 
-                if (empty($form) && !is_numeric($form) && !is_string($form) && $value['ticket_form_bind'] == 0) {
+                if (empty($form) && !is_numeric($form) && $value['ticket_form_bind'] == 0) {
                     self::error($msg);
                 } elseif ($value['ticket_form_bind'] > 0 && in_array($_POST[$formID[$value['ticket_form_bind']]], explode(',', $value['ticket_form_bind_value'])) && $value['ticket_form_required'] == '1' && empty($form) && !is_numeric($form) && !is_string($form)) {
                     self::error($msg);

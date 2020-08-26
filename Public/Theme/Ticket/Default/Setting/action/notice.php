@@ -19,7 +19,26 @@
                         两者兼有
                     </label>
                     <div class="pes-alert pes-alert-info am-text-xs " >
-                        <i class="am-icon-lightbulb-o"></i> 请填写正确的域名，以便工单能够正确地提交！
+                        <i class="am-icon-lightbulb-o"></i> 被动触发需要系统有人访问才生效。建议有动手能力的，选用定时触发。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">开启行锁<i class="am-text-danger">*</i></label>
+                    <label class="am-radio-inline">
+                        <input type="radio" value="0" name="rowlock" required="" <?= $rowlock['value'] == '0' ? 'checked="checked"' : '' ?>>
+                        关闭
+                    </label>
+                    <label class="am-radio-inline">
+                        <input type="radio" value="1" name="rowlock" required="" <?= $rowlock['value'] == '1' ? 'checked="checked"' : '' ?>>
+                        开启
+                    </label>
+                    <div class="pes-alert pes-alert-info am-text-xs " >
+                        <i class="am-icon-lightbulb-o"></i> 若系统消息频繁重复发送，可以尝试开启行锁。但这样可能会导致系统打开缓慢。
                     </div>
                 </div>
             </div>

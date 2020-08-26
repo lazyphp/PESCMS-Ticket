@@ -16,6 +16,8 @@ use Model\Content;
 
 class Index extends \Core\Controller\Controller {
 
+    private $rowlock = '';
+
     public function index() {
         $system = \Core\Func\CoreFunc::$param['system'];
         if ($system['openindex'] == '0') {
@@ -56,11 +58,16 @@ class Index extends \Core\Controller\Controller {
      * 工单系统行为事件
      */
     public function behavior(){
+
+        $system = \Core\Func\CoreFunc::$param['system'];
+        $this->rowlock = $system['rowlock'] == 1 ? 'FOR UPDATE' : '';
+
+
         $this->db()->transaction();
 
         try {
 
-            $list = \Model\Content::listContent(['table' => 'ticket_notice_action', 'lock' => 'FOR UPDATE',]);
+            $list = \Model\Content::listContent(['table' => 'ticket_notice_action', 'lock' => $this->rowlock,]);
             if (!empty($list)) {
                 foreach ($list as $item) {
                     //大于0的，则为发送给客户的，反之是给客服
@@ -94,7 +101,7 @@ class Index extends \Core\Controller\Controller {
             'field' => 't.ticket_id, t.ticket_number, t.ticket_status, t.ticket_submit_time, t.user_id, t.ticket_time_out_sequence, t.ticket_exclusive, tm.ticket_model_group_id, tm.ticket_model_time_out, tm.ticket_model_time_out_sequence',
             'join' => "{$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id",
             'condition' => 't.ticket_status = 0 AND t.ticket_close = 0 AND ticket_time_out_sequence < ticket_model_time_out_sequence  ',
-            'lock' => 'FOR UPDATE'
+            'lock' => $this->rowlock
         ]);
 
         if(empty($list)){
@@ -148,7 +155,7 @@ class Index extends \Core\Controller\Controller {
             'field' => 't.ticket_id, t.ticket_number, t.member_id, t.ticket_submit_time, t.ticket_contact_account, t.ticket_contact, tm.ticket_model_close_time',
             'join' => "{$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id",
             'condition' => 't.ticket_status = 0 AND t.ticket_close = 0 AND tm.ticket_model_open_close = 1',
-            'lock' => 'FOR UPDATE',
+            'lock' => $this->rowlock,
         ]);
 
         foreach ($list as $item){

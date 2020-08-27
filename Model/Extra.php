@@ -221,6 +221,9 @@ class Extra extends \Core\Model\Model {
      * @return bool
      */
     public static function limitSubmit($mark, $frequency, $interval, $msg = '你手速有点快，请休息一下再来'){
+        if(DEBUG == true){
+            return true;
+        }
         $res = self::session()->get($mark);
         if(empty($res)){
             $res = [

@@ -55,11 +55,16 @@ class Ticket extends \Core\Model\Model {
             self::checkVerify();
         }
 
-        $exclusive = self::exclusiveCSTicket();
-        if(!empty($exclusive)){
-            $param['user_id'] = $exclusive['user_id'];
-            $param['user_name'] = $exclusive['user_name'];
-            $param['ticket_exclusive'] = 1;
+        $csUserInfo = self::autoAssign($firstContent['ticket_model_auto'], $firstContent);
+
+        $exclusiveCS = self::exclusiveCSTicket($firstContent['ticket_model_exclusive']);
+        if(!empty($exclusiveCS)){
+            $csUserInfo = $exclusiveCS;
+        }
+        if(!empty($csUserInfo)){
+            $param['user_id'] = $csUserInfo['user_id'];
+            $param['user_name'] = $csUserInfo['user_name'];
+            $param['ticket_exclusive'] = empty($csUserInfo['exclusive']) ? 0 : 1;
         }
 
 
@@ -138,8 +143,10 @@ class Ticket extends \Core\Model\Model {
         \Model\Notice::addTicketNoticeAction($param['ticket_number'], $param['ticket_contact_account'], $param['ticket_contact'], 1);
 
         //新工单后台客服通知
-        if($param['ticket_exclusive'] == 1 && !empty($param['user_id']) ){
-            \Model\Notice::addCSNotice($param['ticket_number'], $param['user_id'], -1);
+        if(($param['ticket_exclusive'] == 1 || $ticket['ticket_model_auto'] == 1 ) && !empty($param['user_id']) ){
+            $user = \Model\Content::findContent('user', $param['user_id'], 'user_id');
+            \Model\Notice::addCSNotice($param['ticket_number'], $user, -1);
+
         }elseif(!empty($ticket['ticket_model_group_id'])){
             //移除手尾,
             $ticket['ticket_model_group_id'] = trim($ticket['ticket_model_group_id'], ',');
@@ -154,10 +161,37 @@ class Ticket extends \Core\Model\Model {
     }
 
     /**
+     * 自动分单功能
+     * @param bool $isOpen
+     * @param $ticket
+     * @return bool
+     */
+    private static function autoAssign($isOpen = false, $ticket){
+        if($isOpen !== 1){
+            return false;
+        }
+
+        $ticket['ticket_model_group_id'] = trim($ticket['ticket_model_group_id'], ',');
+
+        $user = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']})")->order('RAND()')->find();
+        if(!empty($user)){
+            return $user;
+        }else{
+            return false;
+        }
+
+
+    }
+
+    /**
      * 检测是否填写正确的客服工号
      * @return bool|type
      */
-    private static function exclusiveCSTicket(){
+    private static function exclusiveCSTicket($isOpen = false){
+        if($isOpen !== 1){
+            return false;
+        }
+
         $jobNumber = self::p('job_number');
         if(empty($jobNumber)){
             return false;
@@ -167,6 +201,8 @@ class Ticket extends \Core\Model\Model {
         if(empty($user)){
             return false;
         }else{
+            //标记专属客服
+            $user['exclusive'] = 1;
             return $user;
         }
 

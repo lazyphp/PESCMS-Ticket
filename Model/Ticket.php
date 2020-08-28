@@ -173,14 +173,57 @@ class Ticket extends \Core\Model\Model {
 
         $ticket['ticket_model_group_id'] = trim($ticket['ticket_model_group_id'], ',');
 
-        $user = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']})")->order('RAND()')->find();
-        if(!empty($user)){
-            return $user;
-        }else{
-            return false;
+        switch ($ticket['ticket_model_auto_logic']){
+            case '1':
+                $userList = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']})")->select();
+                if(empty($userList)){
+                    return false;
+                }
+
+                $userSort = [];
+                foreach ($userList as $item){
+                    $user[$item['user_id']] = $item;
+                    $user[$item['user_id']]['total'] = 0;
+                    $userSort[$item['user_id']] = 0;
+                }
+
+                $ticket = self::db('user AS u')->field('u.user_id, COUNT(t.user_id) as total')->join(self::$modelPrefix.'ticket AS t ON t.user_id = u.user_id')->where("user_group_id IN ({$ticket['ticket_model_group_id']}) AND t.ticket_close = 0 AND t.ticket_submit_time >= :ticket_submit_time ")->group('t.user_id')->select([
+                    'ticket_submit_time' => time() - 86400 * 30
+                ]);
+                $avgSubTotal = 0;
+                $avgTotal = count($user);
+
+                array_walk($ticket, function ($value) use (&$user, &$avgSubTotal, &$userSort) {
+                    $user[$value['user_id']]['total'] = $value['total'];
+                    $avgSubTotal += $value['total'];
+                    $userSort[$value['user_id']] = $value['total'];
+                });
+                
+                array_multisort($userSort, SORT_ASC, $user);
+
+                $avg = round($avgSubTotal/$avgTotal, 2);
+
+                foreach ($user as $item){
+                    $item['total'] = $item['total'] > $avg ? $avg + 2 : $avg + 1;
+                    if($item['total'] > $avg){
+                        return $item;
+                    }elseif($item['total'] + 1 > $avg){
+                        return $item;
+                    }
+                }
+
+                //分配失败，则返回false，产生全局工单通知
+                return false;
+                break;
+            case '0':
+            default:
+                $user = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']})")->order('RAND()')->find();
+                if(!empty($user)){
+                    return $user;
+                }
+                break;
         }
-
-
+        return false;
     }
 
     /**
@@ -197,7 +240,7 @@ class Ticket extends \Core\Model\Model {
             return false;
         }
 
-        $user = \Model\Content::findContent('user', $jobNumber, 'user_job_number', 'user_id, user_name, user_job_number, user_mail, user_weixinWork');
+        $user = \Model\Content::findContent('user', $jobNumber, 'user_job_number', 'user_id, user_name, user_job_number, user_mail, user_weixinWork, user_dingtalk');
         if(empty($user)){
             return false;
         }else{

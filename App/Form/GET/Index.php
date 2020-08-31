@@ -152,14 +152,35 @@ class Index extends \Core\Controller\Controller {
     private function autoClose(){
         $list = \Model\Content::listContent([
             'table' => 'ticket AS t',
-            'field' => 't.ticket_id, t.ticket_number, t.member_id, t.ticket_submit_time, t.ticket_contact_account, t.ticket_contact, tm.ticket_model_close_time',
+            'field' => 't.ticket_id, t.ticket_status, t.ticket_number, t.member_id, t.ticket_submit_time, t.ticket_refer_time, t.ticket_contact_account, t.ticket_contact, tm.ticket_model_close_time, tm.ticket_model_close_type',
             'join' => "{$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id",
-            'condition' => 't.ticket_status = 0 AND t.ticket_close = 0 AND tm.ticket_model_open_close = 1',
+            'condition' => 't.ticket_status IN (0, 2) AND t.ticket_close = 0 AND tm.ticket_model_open_close = 1',
             'lock' => $this->rowlock,
         ]);
 
         foreach ($list as $item){
-            if($item['ticket_submit_time'] < time() - $item['ticket_model_close_time'] * 60 ){
+            $closeType = explode(',', $item['ticket_model_close_type']);
+            if(!in_array($item['ticket_status'], $closeType)){
+                continue;
+            }
+
+            switch ($item['ticket_status']){
+                case '0':
+                    if($item['ticket_submit_time'] < time() - $item['ticket_model_close_time'] * 60 ){
+                        $close = true;
+                    }
+                    break;
+                case '2':
+                    if($item['ticket_refer_time'] < time() - $item['ticket_model_close_time'] * 60 ){
+                        $close = true;
+                    }
+                    break;
+                default:
+                    continue;
+                    break;
+            }
+
+            if($close == true){
                 \Model\Ticket::addReply($item['ticket_id'], '工单已关闭，若还有疑问，请重新发表工单咨询!');
                 \Model\Ticket::inTicketIdWithUpdate(['ticket_close' => '1', 'noset' => ['ticket_id' => $item['ticket_id']]]);
                 \Model\Notice::addTicketNoticeAction($item['ticket_number'], $item['ticket_contact_account'], $item['ticket_contact'], 6);

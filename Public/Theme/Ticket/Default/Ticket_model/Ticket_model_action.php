@@ -10,11 +10,14 @@
     $(function () {
         var closeTicket = function(val){
             console.dir(val)
+            var showCloseType = $('input[name="close_type[]"]').parent().parent()
             var showCloseSetting = $('input[name="close_time"]').parent()
 
             if(val == "1"){
+                showCloseType.show();
                 showCloseSetting.show();
             }else{
+                showCloseType.hide();
                 showCloseSetting.hide();
             }
         }

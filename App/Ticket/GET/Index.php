@@ -122,8 +122,9 @@ class Index extends \Core\Controller\Controller {
         $type = [
             'am-panel-primary' => [
                 'title' => '新提交工单',
-                'condition' => 't.ticket_status = 0 AND t.user_id = 0 AND t.ticket_close = 0 AND tm.ticket_model_group_id LIKE :group_id ',
+                'condition' => 't.ticket_status = 0 AND (t.user_id = 0 OR t.user_id = :user_id ) AND t.ticket_close = 0 AND tm.ticket_model_group_id LIKE :group_id ',
                 'param' => [
+                    'user_id' => $this->session()->get('ticket')['user_id'],
                     'group_id' => "%,{$this->session()->get('ticket')['user_group_id']},%"
                 ],
                 'url' => $this->url('Ticket-Ticket-index', ['status' => 0, 'close' => '0']),

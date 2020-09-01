@@ -505,7 +505,7 @@ class Ticket extends \Core\Model\Model {
         /**
          * 提交工单的请求不进行跳转。
          */
-        if(MODULE == 'Submit' && ACTION == 'ticket'){
+        if( (MODULE == 'Submit' && ACTION == 'ticket') || (MODULE == 'Category' && ACTION == 'ticket') ){
             return true;
         }
 

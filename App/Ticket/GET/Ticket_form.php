@@ -32,7 +32,7 @@ class Ticket_form extends Content {
         $this->assign('formType', $form);
 
         //验证类型
-        $checkType = ['不验证' => 'noVerify', '电子邮箱' => 'email', '网址' => 'url', '国内手机号码' => 'phone', '数字' => 'number', '英文' => 'english', '英文数字' => 'alphanumeric'];
+        $checkType = ['不验证' => 'noVerify', '电子邮箱' => '1', '网址' => '5', '国内手机号码' => '2', '数字' => '3', '英文' => '4', '英文数字' => '6'];
         $this->assign('checkType', $checkType);
 
         $this->ticket = \Model\TicketModel::numberFind($_GET['number']);

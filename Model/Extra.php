@@ -23,6 +23,16 @@ class Extra extends \Core\Model\Model {
     const ALPHANUMERIC = 4;
     const PHONE = 5;
 
+    public static $checkType = [
+        '不验证' => 'noVerify',
+        '电子邮箱' => '1',
+        '国内手机号码' => '2',
+        '数字' => '3',
+        '英文' => '4',
+        '网址' => '5',
+        '英文数字' => '6'
+    ];
+
     /**
      * 生成唯一的ID
      */
@@ -55,7 +65,6 @@ class Extra extends \Core\Model\Model {
                 if (!preg_match($preg, $value)) {
                     return false;
                 }
-
                 break;
             case 3:
                 if (!is_numeric($value)) {
@@ -69,6 +78,10 @@ class Extra extends \Core\Model\Model {
                 break;
             case 5:
                 return filter_var($value, FILTER_VALIDATE_URL);
+            case 6:
+                if(!preg_match("/^[a-z0-9\d]$/i",$value)){
+                    return false;
+                }
         }
         return true;
     }

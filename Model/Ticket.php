@@ -106,7 +106,7 @@ class Ticket extends \Core\Model\Model {
 
                 if (empty($form) && !is_numeric($form) && $value['ticket_form_bind'] == 0) {
                     self::error($msg);
-                } elseif ($value['ticket_form_bind'] > 0 && in_array($_POST[$formID[$value['ticket_form_bind']]], explode(',', $value['ticket_form_bind_value'])) && $value['ticket_form_required'] == '1' && empty($form) && !is_numeric($form) && !is_string($form)) {
+                } elseif ($value['ticket_form_bind'] > 0 && in_array($_POST[$formID[$value['ticket_form_bind']]], explode(',', $value['ticket_form_bind_value'])) && $value['ticket_form_required'] == '1' && empty($form) && !is_numeric($form) ) {
                     self::error($msg);
                 }
             }
@@ -116,7 +116,15 @@ class Ticket extends \Core\Model\Model {
                 $form = (new \Expand\OpenSSL(\Core\Func\CoreFunc::loadConfig('USER_KEY', true)))->encrypt($form);
             }
 
-            //@todo 这里还差一个工单表单类型验证功能
+            switch ($value['ticket_form_verify']){
+                case 'noVerify':
+                    break;
+                default:
+                    if(\Model\Extra::checkInputValueType($form, $value['ticket_form_verify']) == false){
+                        self::error("表单'{$value['ticket_form_description']}'只能提交".array_flip(\Model\Extra::$checkType)[$value['ticket_form_verify']]);
+                    }
+            }
+
 
             $result = self::db('ticket_content')->insert([
                 'ticket_id' => $ticketID,

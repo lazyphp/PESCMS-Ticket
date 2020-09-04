@@ -8,6 +8,10 @@ $echoDeleteUrl = empty($deleteUrl) ? $label->url(GROUP . '-' . MODULE . '-action
 ?>
 <?php if($label->checkAuth(GROUP.'GET'.MODULE.'action') === true): ?>
 <a class="am-text-secondary" href="<?= $echoEditUrl ?>"><span class="am-icon-pencil-square-o"></span> 编辑</a>
+
+<i class="am-margin-left-xs am-margin-right-xs">|</i>
+<a class="am-link-muted" href="<?= $label->url('Ticket-'.MODULE . '-action', array('id' => $value["{$fieldPrefix}id"], 'copy' => true, 'back_url' => base64_encode($_SERVER['REQUEST_URI']))); ?>"><span class="am-icon-copy"></span> 复制</a>
+
 <?php endif; ?>
 
 <i class="am-margin-left-xs am-margin-right-xs">|</i>

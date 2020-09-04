@@ -114,6 +114,11 @@ class Content extends \Core\Controller\Controller {
             }
         }
 
+        if(!empty($_GET['copy'])){
+            $this->assign('title', "复制 - {$this->model['model_title']}");
+            $this->assign('method', 'POST');
+        }
+
         $this->assign('field', $this->field);
         $this->assign('form', new \Expand\Form\Form());
 

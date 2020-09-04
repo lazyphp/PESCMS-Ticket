@@ -65,6 +65,9 @@
                     <a class="am-text-secondary" href="<?= $label->url(GROUP . '-' . MODULE . '-action', ['id' => $value["category_id"], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>"><span class="am-icon-pencil-square-o"></span> 编辑</a>
 
                     <i class="am-margin-left-xs am-margin-right-xs">|</i>
+                    <a class="am-link-muted" href="<?= $label->url('Ticket-'.MODULE . '-action', array('id' => $value["{$fieldPrefix}id"], 'copy' => true, 'back_url' => base64_encode($_SERVER['REQUEST_URI']))); ?>"><span class="am-icon-copy"></span> 复制</a>
+
+                    <i class="am-margin-left-xs am-margin-right-xs">|</i>
                     <a class="am-text-warning" href="<?= $label->url('Category-index', ['id' => $value["{$fieldPrefix}id"]]) ?>" target="_blank" ><span class="am-icon-external-link"></span> 预览</a>
 
                     <i class="am-margin-left-xs am-margin-right-xs">|</i>

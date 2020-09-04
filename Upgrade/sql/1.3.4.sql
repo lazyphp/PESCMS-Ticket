@@ -14,3 +14,5 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 ALTER TABLE `pes_ticket_model` ADD `ticket_model_close_type` VARCHAR(16) NOT NULL;
 
 UPDATE `pes_ticket_model` SET `ticket_model_close_type` = '0';
+
+UPDATE `pes_field` SET `field_type` = 'checkbox', `field_explain` = '此选项，若您没有类似VIP客户可见需求，不要勾选上述客户组。否则非登陆状态，且非此组的客户账号，将无法看到本工单。' WHERE `field_model_id` = 15 AND `field_name` = 'organize_id';

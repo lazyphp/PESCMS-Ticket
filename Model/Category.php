@@ -64,4 +64,37 @@ class Category extends \Core\Model\Model {
         return $category;
     }
 
+    public static function getCategoryORTicketList(){
+
+        $id = self::g('id');
+
+        $category = \Model\Content::listContent([
+            'table' => 'category',
+            'field' => 'category_id, category_name, category_description',
+            'condition' => 'category_parent = :category_parent AND category_status = 1',
+            'order' => 'category_listsort ASC, category_id DESC',
+            'param' => [
+                'category_parent' => empty($id) ? 0 : $id
+            ]
+        ]);
+
+        if(!empty($id)){
+            sleep(3);
+            $ticketList = \Model\Content::listContent([
+                'table' => 'ticket_model',
+                'field' => 'ticket_model_number, ticket_model_name, ticket_model_explain, ticket_model_organize_id',
+                'condition' => 'ticket_model_cid = :id AND ticket_model_status = 1',
+                'order' => 'ticket_model_listsort ASC, ticket_model_id DESC',
+                'param' => [
+                    'id' => $id
+                ]
+            ]);
+        }
+
+        return [
+            'category' => empty($category) ? false : $category,
+            'ticket' => empty($ticketList) ? false : $ticketList,
+        ];
+    }
+
 }

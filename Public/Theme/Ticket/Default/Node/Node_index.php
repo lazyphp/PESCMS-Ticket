@@ -68,6 +68,6 @@
                 <?php endforeach; ?>
             <?php endif; ?>
         </table>
-        <button type="submit" class="am-btn am-btn-primary am-btn-xs">排序</button>
+        <button type="submit" class="am-btn am-btn-primary am-btn-xs am-radius">排序</button>
     </form>
 <?php include THEME_PATH . "/Content/Content_index_footer.php"; ?>

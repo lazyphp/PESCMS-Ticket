@@ -58,7 +58,7 @@
         <div class="am-g am-g-collapse">
             <div class="am-u-sm-12 am-u-lg-6">
                 <?php if ($listsort): ?>
-                    <button type="submit" class="am-btn am-btn-primary am-btn-sm am-radius">排序</button>
+                    <button type="submit" class="am-btn am-btn-primary am-btn-xs am-radius">排序</button>
                 <?php endif; ?>
             </div>
             <div class="am-u-sm-12 am-u-lg-6">

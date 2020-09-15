@@ -31,7 +31,7 @@ class Content extends \Core\Controller\Controller {
      */
     public function delete() {
 
-        if(!empty($_POST['id'])){
+        if(!empty($_POST['id']) && is_array($_POST['id']) ){
             $tips = [];
             foreach ($_POST['id'] as $id){
                 $result = \Model\ModelManage::deleteFromModelId(MODULE, (int) $id);

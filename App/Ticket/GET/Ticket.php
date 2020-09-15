@@ -150,7 +150,7 @@ class Ticket extends \Core\Controller\Controller {
                 $statsu[$item['ticket_status']]['name'],
                 $item['member_id'] == '-1' ? '匿名用户' :$member[$item['member_id']]['member_name'],
                 $item['user_name'],
-                date('Y-m-d H:i'),
+                date('Y-m-d H:i', $item['ticket_submit_time']),
             ];
             fputcsv($fp, $content);
         }

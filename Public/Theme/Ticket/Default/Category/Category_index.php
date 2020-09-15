@@ -79,7 +79,7 @@
         <?php endif; ?>
 	</table>
     <div class="am-margin-top">
-        <button type="submit" class="am-btn am-btn-primary am-btn-xs">排序</button>
+        <button type="submit" class="am-btn am-btn-primary am-btn-xs am-radius">排序</button>
     </div>
 </form>
 

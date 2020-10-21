@@ -1,0 +1,41 @@
+<include src="/pages/common/header.wxml" />
+
+<van-panel custom-class="pes-panel">
+
+  <van-row>
+    <van-col span="4">
+      <van-image round width="3rem" height="3rem" src="{{avatar}}" custom-class="pes-padding-xs" />
+    </van-col>
+    <van-col span="14">
+      <view class="pes-margin-left-xs pes-margin-top-xs">
+        <text class="pes-text-strong pes-text-default">{{username}}</text>
+        <text class="pes-text-sm pes-margin-left-xs">先生/女士</text>
+        <view class="pes-margin-top-xs pes-text-s pes-text-info">欢迎您的到来</view>
+      </view>
+    </van-col>
+    <van-col span="6"></van-col>
+  </van-row>
+
+  <van-row custom-class="pes-text-center pes-margin-top member-ticket-grid">
+    <van-col span="6">
+      <view class="pes-text-info">工单</view>
+      <view>0</view>
+    </van-col>
+    <van-col span="6">
+      <view class="pes-text-info">已受理</view>
+      <view>0</view>
+    </van-col>
+    <van-col span="6">
+      <view class="pes-text-info">待回复</view>
+      <view>0</view>
+    </van-col>
+    <van-col span="6" custom-class="remove-right-border">
+      <view class="pes-text-info">完成</view>
+      <view>0</view>
+    </van-col>
+  </van-row>
+
+
+</van-panel>
+
+<footer></footer>

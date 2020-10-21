@@ -1,0 +1,179 @@
+<!--pages/common/form.wxml-->
+<block wx:if="{{ form }}">
+  <form class="ticket-form" bindsubmit="formSubmit" bindreset="formReset">
+
+    <!-- 工单基础信息 -->
+    <van-field value="{{ ticket.number }}" name="number" style="display:none" />
+
+    <!-- 联系方式 -->
+    <view class="form-title">联系方式 <text class="pes-text-danger">*</text></view>
+
+
+    <van-radio-group value="{{radio['contact'] || ticket['contact_default']  }}" name="contact" bind:change="radioChange"
+      bindtap="changeContact" data-name="contact">
+
+
+      <block wx:for="{{ ticket['contact'] }}" wx:key="unique" wx:for-item="item">
+        <van-radio wx:if="{{item == 1}}" name="1"  custom-class="pes-margin-top-xs pes-margin-right-sm"
+          style="display:inline-block">电子邮件
+        </van-radio>
+        <van-radio wx:if="{{item == 2}}" name="2" custom-class="pes-margin-top-xs pes-margin-right-sm"
+          style="display:inline-block">手机号码
+        </van-radio>
+        <!-- <van-radio wx:if="{{item == 3}}" name="3" custom-class="pes-margin-top-xs pes-margin-right-sm" style="display:inline-block">微信</van-radio> -->
+        <van-radio wx:if="{{item == 6}}" name="6" custom-class="pes-margin-top-xs pes-margin-right-sm"
+          style="display:inline-block">小程序
+        </van-radio>
+
+      </block>
+
+
+    </van-radio-group>
+
+    <!-- 联系信息 -->
+    <block wx:if="{{showContactInput }}">
+      <view class="form-title">联系信息 <text class="pes-text-danger">*</text></view>
+      <van-cell-group>
+        <van-field custom-class="pes-form-cell" name="contact_account" value="{{contactAccount}}"
+          placeholder="请填写您的联系信息,方便我们与您联系" border="true" custom-style="padding:0px" />
+      </van-cell-group>
+    </block>
+
+    <!-- 工单标题 -->
+    <view class="form-title">{{ticket['title_description'][0]}} <text class="pes-text-danger">*</text></view>
+    <van-cell-group>
+      <van-field custom-class="pes-form-cell" name="title" value="" placeholder="{{ticket['title_description'][1]}}"
+        border="true" custom-style="padding:0px" />
+    </van-cell-group>
+
+    <!-- 工单表单渲染 -->
+    <block wx:for="{{ form }}" wx:key="unique" wx:for-item="item">
+
+      <view class="form_{{item.field_bind}}" bindtap="linkage" data-id="{{item.id}}" data-name="{{item.field_name}}"
+        data-bind="{{item.field_bind}}" data-bindvalue="{{item.field_bind_value }}"
+        data-option="{{item.field_option_str}}"
+        style="{{item.field_bind == 0 || showBind[item.field_bind][item.id] ? '' : 'display:none'}}">
+
+        <block wx:if="{{item.field_bind == 0 || showBind[item.field_bind][item.id]}}">
+
+          <view class="form-title">{{item.field_display_name}} <text wx:if="{{item.field_required == 1}}"
+              class="pes-text-danger">*</text></view>
+
+          <!-- 输入框 -->
+          <block wx:if="{{item.field_type == 'text' || item.field_type == 'editor' || item.field_type == 'textarea'}}">
+            <van-cell-group>
+              <van-field type="{{item.field_type == 'text' ? '' : 'textarea'}}"
+                autosize="{{item.field_type == 'text' ? '' :  { maxHeight: 100, minHeight: 100 } }}"
+                custom-class="pes-form-cell" name="{{item.field_name}}" value=""
+                placeholder="{{item.field_display_name}}" border="true" />
+            </van-cell-group>
+
+          </block>
+
+          <!-- 单选框 -->
+          <block wx:if="{{item.field_type == 'radio'}}">
+            <van-radio-group value="{{radio[item.field_name]}}" name="{{item.field_name}}" bind:change="radioChange"
+              data-name="{{item.field_name}}">
+              <block wx:for="{{ item.field_option }}" wx:key="o_k" wx:for-index="o_name" wx:for-item="option">
+                <van-radio name="{{option}}" custom-class="pes-margin-top-xs pes-margin-right-sm"
+                  style="display:inline-block">{{o_name}}</van-radio>
+              </block>
+            </van-radio-group>
+          </block>
+
+          <!-- 复选框 -->
+          <block wx:if="{{item.field_type == 'checkbox'}}">
+            <van-checkbox-group value="{{checkbox[item.field_name]}}" name="{{item.field_name}}"
+              bind:change="checkboxChange" data-name="{{item.field_name}}">
+
+              <block wx:for="{{ item.field_option }}" wx:key="o_k" wx:for-index="o_name" wx:for-item="option">
+                <van-checkbox shape="square" name="{{option}}" custom-class="pes-margin-top-xs">{{o_name}}
+                </van-checkbox>
+              </block>
+
+            </van-checkbox-group>
+          </block>
+
+
+          <!-- 下拉菜单 -->
+          <block wx:if="{{item.field_type == 'select'}}">
+            <van-cell title="{{ pickerValue[item.field_name] || '请选择'  }}" bind:click="showPicker"
+              data-name="{{item.field_name}}" custom-class="pes-form-cell" />
+
+            <van-popup show="{{ popupPicker[item.field_name] }}" position="bottom" custom-style="height: 40%;"
+              bind:close="pickerClose" data-name="{{item.field_name}}">
+
+              <van-picker columns="{{ item.field_option_key }}" show-toolbar title="{{ item.field_display_name }}"
+                data-name="{{item.field_name}}" bind:change="pickerChange" bind:cancel="pickerClose"
+                bind:confirm="pickerSelected" />
+            </van-popup>
+
+            <van-field value="{{ item.field_option[pickerValue[item.field_name]] }}" name="{{item.field_name}}"
+              style="display:none" />
+
+          </block>
+
+
+          <!-- 上传文件 -->
+          <block wx:if="{{item.field_type == 'img' || item.field_type == 'thumb' || item.field_type == 'file'  }}">
+            <van-uploader file-list="{{ fileList[item.field_name] }}" bind:after-read="afterRead"
+              bind:delete="removeUpload" data-type="{{item.field_type}}"
+              max-count="{{item.field_type == 'thumb' ? 1 : 999}}"
+              upload-text="{{item.field_type == 'file' ? '选择文件' : '选择图片'}}"
+              upload-icon="{{item.field_type == 'file' ? 'notes-o' : 'photo-o'}}" data-name="{{item.field_name}}"
+              accept="{{item.field_type == 'file' ? 'file' : 'image'}}" />
+
+            <block wx:for="{{ fileList[item.field_name] }}" wx:key="f_key" wx:for-index="f_index" wx:for-item="f_item">
+              <van-field wx:if="{{f_item.upload_url}}" value="{{f_item.upload_url}}"
+                name="{{item.field_name}}[{{f_index}}]" style="display:none" />
+            </block>
+
+
+          </block>
+
+          <!-- 日期 -->
+          <block wx:if="{{item.field_type == 'date' }}">
+
+            <van-cell title="选择日期" value="{{ date[item.field_name] }}" bind:click="displayCalendar"
+              data-name="{{item.field_name}}" custom-class="pes-form-cell" />
+
+            <van-calendar show="{{ showDate[item.field_name] }}" bind:close="closeCalendar"
+              bind:confirm="confirmCalendar" data-name="{{item.field_name}}" default-date="2020-09-16"
+              min-date="2019-12" max-date="2021-12" />
+
+            <van-field value="{{ date[item.field_name] }}" name="{{item.field_name}}" style="display:none" />
+
+          </block>
+
+          <!-- 工单表单的说明对话框 -->
+          <block wx:if="{{item.field_explain}}">
+            <view class="pes-alert pes-alert-warning">
+              {{item.field_explain}}
+            </view>
+          </block>
+
+        </block>
+
+      </view>
+
+    </block>
+
+    <view class="pes-text-center" style="width: 100px;margin:10px auto">
+      <van-button icon="completed" square type="primary" size="small" block disabled="{{submitLoading}}"
+        loading="{{submitLoading}}" loading-text="正在提交..." formType="submit">提交</van-button>
+    </view>
+
+  </form>
+</block>
+<block wx:elif="{{loading}}">
+  <view class="pes-text-center pes-margin">
+    <van-loading size="24px">加载中...</van-loading>
+  </view>
+</block>
+<block wx:else>
+  <van-empty image="error" description="没有可发起的工单。" />
+
+  <view class="pes-text-center">
+    <van-button type="default" icon="replay" size="small" bind:click="refresh">重新选择工单</van-button>
+  </view>
+</block>

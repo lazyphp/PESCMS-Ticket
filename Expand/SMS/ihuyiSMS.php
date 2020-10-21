@@ -43,10 +43,11 @@ class ihuyiSMS implements SMSInterface {
         }
         $sendStatus['id'] = $param['send_id'];
         $sendStatus['sequence'] = $param['send_sequence'];
+        $sendStatus['full'] = $result;
 
         \Model\Extra::updateSendStatus($sendStatus);
 
-        return $sendStatus['msg'];
+        return $sendStatus;
     }
 
     //将 xml数据转换为数组格式。

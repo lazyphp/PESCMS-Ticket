@@ -1,0 +1,28 @@
+/**index.wxss**/
+
+.ticket-panel{
+  margin: 20px 5px 60px 5px !important;
+  padding:0 10px 5px 10px !important;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-color: #ebeef5;
+  border-radius: 0;
+  box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  border-radius: 4px;
+}
+
+.ticket-card{
+  font-size: 12px;
+  background-color: #fafafa;
+  color: #646566;
+  margin: 10px 10px;
+}
+.ticket-card-title{
+  color: #000 !important;
+  font-weight: bold !important;
+  font-size: 14px !important;
+  margin-bottom: 10px;
+}
+.ticket-card-desc{
+  margin-top: 10px;
+}

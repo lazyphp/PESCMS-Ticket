@@ -1,0 +1,21 @@
+@import "/app.wxss";
+
+.ticket-form{
+  font-size: var(--card-font-size,12px);
+  padding: 10px;
+  display: block;
+}
+
+.form-title{
+  padding: 10px 0 0px;
+  font-weight: 600;
+  color: #303133;
+  line-height: 40px;
+}
+
+.pes-form-cell{
+  padding: 5px 0 !important;
+}
+.pes-form-cell::after{
+  left: 0 !important;
+}

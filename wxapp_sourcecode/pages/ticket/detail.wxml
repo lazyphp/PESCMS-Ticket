@@ -1,0 +1,100 @@
+<include src="/pages/common/header.wxml" />
+
+<block wx:if="{{data.ticket.number}}">
+
+  <view class="pes-panel">
+    <van-row>
+      <van-col span="6" class="pes-text-left">{{data.ticketStatus[data.ticket.status]['name']}}</van-col>
+      <van-col span="18" class="pes-text-right pes-text-success">工单号：{{data.ticket.number}}</van-col>
+    </van-row>
+    <van-divider />
+
+    <van-row>
+      <van-col span="6" class="pes-text-left">类目</van-col>
+      <van-col span="18" class="pes-text-right">{{data.ticket.category_name}} - {{data.ticket.model_name}}</van-col>
+    </van-row>
+
+    <van-row custom-class="pes-margin-top-sm">
+      <van-col span="6" class="pes-text-left">问题</van-col>
+      <van-col span="18" class="pes-text-right">{{data.ticket.title}}
+      </van-col>
+    </van-row>
+
+    <van-row custom-class="pes-margin-top-sm">
+      <van-col span="6" class="pes-text-left">提交时间</van-col>
+      <van-col span="18" class="pes-text-right">{{data.ticket.submit_time}}</van-col>
+    </van-row>
+  </view>
+
+  <!-- 客户提交的工单表单内容 -->
+  <view class="pes-panel pes-margin-top pes-background-warning" style="padding-bottom:0px !important">
+
+    <van-row custom-class="">
+      <van-col span="4">
+        <van-icon name="manager" size="50" />
+      </van-col>
+      <van-col span="20">
+        <block wx:for="{{ data.form }}" wx:key="unique" wx:for-item="item">
+          <view class="pes-ticket-from">
+            <view class="pes-text-info pes-margin-top-xs">{{item.name}}：</view>
+            <view class="pes-margin-top-xs pes-text-sm">{{item.value}}</view>
+          </view>
+        </block>
+      </van-col>
+    </van-row>
+    <van-divider custom-class="pes-margin-bottom-0" />
+
+  </view>
+  <!-- 客户提交的工单表单内容 -->
+
+  <view class="pes-panel">
+    <block wx:for="{{ data.chat }}" wx:key="unique" wx:index="index" wx:for-item="item">
+
+      <van-divider wx:if="{{index != 0}}" />
+
+      <van-row>
+        <van-col span="4">
+
+          <van-icon wx:if="{{item.id == '-1'}}" name="manager" size="50" />
+          <van-icon wx:else name="service" size="50" />
+        </van-col>
+        <van-col span="20">
+
+          <rich-text class="test" nodes="{{item.content}}"></rich-text>
+
+          <view class="pes-text-info pes-margin-top">{{item.time}}</view>
+        </van-col>
+      </van-row>
+    </block>
+
+  </view>
+
+  <!-- 回复工单 -->
+  <view class="pes-panel pes-margin-top">
+    <form bindsubmit="reply">
+      <textarea placeholder="回复或补充工单说明" value="{{textarea}}" name="content" class="reply-textarea" >
+      </textarea>
+      <van-divider  />
+      <van-button size="small" type="primary" disabled="{{submitLoading}}" loading="{{submitLoading}}" loading-text="正在提交..." form-type="submit">提交</van-button>
+    </form>
+  </view>
+
+  <!-- 回复工单 -->
+
+<view style="position: fixed;bottom: 100px;right: 12px;">
+  <van-icon name="back-top" size="20px" custom-style="color:#6f6e6e;border-radius:20px;padding:3px;background:#fff;box-shadow: 0px 0px 1px 1px rgba(154, 154, 154, 0.53);" bindtap="scrollTop" />
+</view>
+
+</block>
+
+<block wx:if="{{Loading}}">
+  <view class="pes-text-center pes-margin">
+    <van-loading size="24px">加载中...</van-loading>
+  </view>
+</block>
+
+<block wx:if="{{error}}">
+  <van-empty image="error" description="{{error}}" />
+</block>
+
+<footer></footer>

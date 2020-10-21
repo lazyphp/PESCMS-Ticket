@@ -103,7 +103,7 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">验证码<i class="am-text-danger">*</i></label>
-                    <input type="text" name="verify" class="am-inline am-input-sm am-radius" maxlength="<?= $system['verifyLength'] ?>" style="width: 15%" required/>
+                    <input type="text" name="verify" class="am-inline-block am-input-sm am-radius" maxlength="<?= $system['verifyLength'] ?>" style="width: 15%" required/>
                     <span class="display-verify">
                         <a href="javascript:;">点击显示验证码</a>
                     </span>

@@ -1,0 +1,76 @@
+<include src="/pages/common/header.wxml" />
+
+<van-search value="{{ message }}" shape="round" show-action placeholder="请输入您要搜索的工单信息" bind:search="onSearch" />
+
+
+<van-panel title="发起工单" custom-class="ticket-panel">
+
+  <van-steps steps="{{ steps }}" active="{{ stepsActive }}" bind:click-step="stepFunc" />
+
+
+  <block wx:if="{{ticket.status == '200'}}">
+
+    <!-- 工单类型 -->
+    <block wx:if="{{ticket.data.category}}">
+
+      <view wx:for="{{ ticket.data.category }}" wx:key="unique" wx:for-item="item" class="pes-panel ticket-card"
+        bindtap="getTicketList" data-id="{{item.category_id}}">
+        <view class="ticket-card-title">{{item.category_name}}</view>
+        <rich-text class="ticket-card-desc" nodes="{{item.category_description}}"></rich-text>
+      </view>
+
+
+    </block>
+
+    <!-- 工单模型 -->
+    <block wx:elif="{{ticket.data.ticket}}">
+      <view class="pes-panel ticket-card" wx:for="{{ ticket.data.ticket }}" wx:key="unique" wx:for-item="item"
+        bindtap="openTicket" data-id="{{item.ticket_model_number}}">
+        <view class="ticket-card-title">{{item.ticket_model_name}}</view>
+        <rich-text class="ticket-card-desc" nodes="{{item.ticket_model_explain}}"></rich-text>
+      </view>
+
+    </block>
+
+    <block wx:else>
+      <van-empty image="error" description="没有找到可发起的工单。" />
+
+      <view class="pes-text-center">
+        <van-button type="default" icon="replay" size="small" bind:click="refresh">重新选择问题类型</van-button>
+      </view>
+
+    </block>
+
+  </block>
+
+  <block wx:elif="{{ticket.status != '200' && ticket.msg && loading == false }}">
+    <van-empty description="{{ticket.msg}}" />
+
+    <view class="pes-text-center">
+      <van-button type="default" icon="replay" size="small" bind:click="refresh">重新选择问题类型</van-button>
+    </view>
+  </block>
+
+  <!-- 工单表单 -->
+  <block wx:elif="{{tNumber}}">
+    <form tNumber="{{tNumber}}" loading="true" bind:stepFunc="stepFunc"></form>
+  </block>
+
+  <block wx:elif="{{loading}}">
+    <view class="pes-text-center pes-margin">
+      <van-loading size="24px">加载中...</van-loading>
+    </view>
+  </block>
+
+  <block wx:else>
+    <van-empty image="error" description="向服务器请求数据失败。" />
+
+    <view class="pes-text-center">
+      <van-button type="default" icon="replay" size="small" bind:click="refresh">刷新页面</van-button>
+    </view>
+
+  </block>
+
+</van-panel>
+
+<footer></footer>

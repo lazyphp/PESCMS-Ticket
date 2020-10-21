@@ -177,6 +177,43 @@ class Setting extends \Core\Controller\Controller {
     }
 
     /**
+     * 微信模板测试
+     */
+    public function wxappTest(){
+
+        if(!empty($_GET['debug_access_token'])){
+            (new \Expand\wxapp())->debug_access_token();
+        }
+
+        $account = $this->isG('account', '请填写接收模板消息的微信小程序openid');
+        $id = $this->isG('template', '请选择模板');
+
+        $title = \Model\MailTemplate::matchTitle('123456', $id);
+
+        $template = \Model\MailTemplate::matchContent('123456', $id);
+
+        $result = (new \Expand\wxapp())->send([
+            'send_id' => -1,
+            'send_account' => $account,
+            'send_title' => $title[6],
+            'send_content' => $template[6]
+        ]);
+
+        echo '<pre>';
+        echo "您使用的模板ID: {$title['6']} <br/>";
+        echo "模板格式: {$template['6']} <br/>";
+        echo '<br/>';
+        echo "------------下面格式化后的模板格式-------------<br/>";
+        print_r(json_decode($template[3], true));
+        echo '<br/>';
+        echo "------------下面是微信返回的结果---------------<br/>";
+        print_r($result);
+        echo '</pre>';
+        echo '<br/>';
+        exit;
+    }
+
+    /**
      * 检查更新模板
      */
     public function upgrade(){
@@ -210,6 +247,19 @@ class Setting extends \Core\Controller\Controller {
         }else{
             is_file($license) ? unlink($license) : '';
             $this->error('获取授权失败');
+        }
+    }
+
+    /**
+     * 生成微信小程序
+     */
+    public function wxapp(){
+        $wxapp = new \Expand\wxapp();
+        $result = $wxapp->make();
+        if($result['status'] == 200){
+            $this->success($result['msg']);
+        }else{
+            $this->error($result['msg']);
         }
     }
 

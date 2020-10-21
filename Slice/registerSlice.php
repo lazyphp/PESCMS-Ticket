@@ -39,7 +39,7 @@ $SLICE_ARRYR = [
     //全局切片
     'GLOBAL-SLICE' => [
         'any',
-        ['Ticket-:m-:a', 'Form-:m-:a'],
+        ['Ticket-:m-:a', 'Form-:m-:a', 'API-:m-:a'],
         //注册系统设置
         ['\Common\Option']
     ],
@@ -56,7 +56,7 @@ $SLICE_ARRYR = [
     //全局的工单状态get请求输出
     'TICKET-STATUS' => [
         'get',
-        ['Ticket-Index-:a', 'Ticket-Ticket-:a', 'Form-View-:a', 'Form-Member-ticket'],
+        ['Ticket-Index-:a', 'Ticket-Ticket-:a', 'Form-View-:a', 'Form-Member-ticket', 'API-:m-:a'],
         ['\Common\TicketStatus'],
         ['Ticket-Ticket-Login']
     ],

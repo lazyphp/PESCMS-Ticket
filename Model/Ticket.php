@@ -19,14 +19,40 @@ class Ticket extends \Core\Model\Model {
      * 插入用户提交过来的工单内容
      */
     public static function insert() {
+
+        $result = self::getSubmitTicketBase();
+        $field = $result['field'];
+        $firstContent = $result['firstContent'];
+        $param = $result['param'];
+
+        self::loginCheck($firstContent);
+
+        self::organizeCheck($firstContent, self::session()->get('member')['member_organize_id']);
+
+        $param['member_id'] = empty(self::session()->get('member')) ? '-1' : self::session()->get('member')['member_id'];
+
+        \Model\Extra::limitSubmit('submitTicket', '1', '10');
+
+        if ($firstContent['ticket_model_verify'] == '1') {
+            self::checkVerify();
+        }
+
+        $param = array_merge($param, self::csInfoParam($firstContent));
+
+        self::createTicket($param, $field, $firstContent);
+
+        return $param;
+    }
+
+    /**
+     * 获取提交工单基础信息
+     * @return mixed
+     */
+    public static function getSubmitTicketBase() {
         $number = self::isP('number', '请提交您要生成的工单');
         $field = \Model\TicketForm::getFormWithNumber($number);
 
         $firstContent = current($field);
-
-        self::loginCheck($firstContent);
-
-        self::organizeCheck($firstContent);
 
         if ($firstContent['ticket_status'] == '0') {
             self::error('该工单已禁止提交');
@@ -37,37 +63,55 @@ class Ticket extends \Core\Model\Model {
         $param['ticket_contact'] = self::isP('contact', '请选择联系方式');
         $param['ticket_contact_account'] = self::isP('contact_account', '请填写您的联系信息');
 
-        //微信的值为3，所以不需要验证数据格式
-        if (\Model\Extra::checkInputValueType($param['ticket_contact_account'], $param['ticket_contact']) === false && $param['ticket_contact'] != 3 ) {
+        //微信和小程序选项不验证格式
+        if (\Model\Extra::checkInputValueType($param['ticket_contact_account'], $param['ticket_contact']) === false && !in_array($param['ticket_contact'], ['3', '6'])) {
             self::error('您填写联系方式的信息格式不正确。');
         }
-
-        \Model\Extra::limitSubmit('submitTicket', '1', '10');
 
         //工单长度限定为15
         $param['ticket_number'] = str_pad(substr(\Model\Extra::getOnlyNumber(), 0, 15), 15, 0, STR_PAD_RIGHT);
 
         $param['ticket_model_id'] = $firstContent['ticket_model_id'];
         $param['ticket_submit_time'] = time();
-        $param['member_id'] = empty(self::session()->get('member')) ? '-1' : self::session()->get('member')['member_id'];
 
-        if ($firstContent['ticket_model_verify'] == '1') {
-            self::checkVerify();
-        }
+        return [
+            'field'        => $field,
+            'firstContent' => $firstContent,
+            'param'        => $param,
+        ];
+    }
+
+    /**
+     * 自动分单和专属客服的参数
+     * @param $firstContent
+     * @return mixed
+     */
+    public static function csInfoParam($firstContent) {
 
         $csUserInfo = self::autoAssign($firstContent['ticket_model_auto'], $firstContent);
 
         $exclusiveCS = self::exclusiveCSTicket($firstContent['ticket_model_exclusive']);
-        if(!empty($exclusiveCS)){
+        if (!empty($exclusiveCS)) {
             $csUserInfo = $exclusiveCS;
         }
-        if(!empty($csUserInfo)){
+
+        $param = [];
+
+        if (!empty($csUserInfo)) {
             $param['user_id'] = $csUserInfo['user_id'];
             $param['user_name'] = $csUserInfo['user_name'];
             $param['ticket_exclusive'] = empty($csUserInfo['exclusive']) ? 0 : 1;
         }
+        return $param;
+    }
 
-
+    /**
+     * 执行创建工单
+     * @param $param
+     * @param $field
+     * @param $firstContent
+     */
+    public static function createTicket($param, $field, $firstContent) {
         self::db()->transaction();
 
         $createTicket = self::db('ticket')->insert($param);
@@ -80,8 +124,6 @@ class Ticket extends \Core\Model\Model {
         self::newTicketNotice($firstContent, $param);
 
         self::db()->commit();
-        $domain = \Model\Content::findContent('option', 'domain', 'option_name');
-        return $param;
     }
 
     /**
@@ -106,30 +148,30 @@ class Ticket extends \Core\Model\Model {
 
                 if (empty($form) && !is_numeric($form) && $value['ticket_form_bind'] == 0) {
                     self::error($msg);
-                } elseif ($value['ticket_form_bind'] > 0 && in_array($_POST[$formID[$value['ticket_form_bind']]], explode(',', $value['ticket_form_bind_value'])) && $value['ticket_form_required'] == '1' && empty($form) && !is_numeric($form) ) {
+                } elseif ($value['ticket_form_bind'] > 0 && in_array($_POST[$formID[$value['ticket_form_bind']]], explode(',', $value['ticket_form_bind_value'])) && $value['ticket_form_required'] == '1' && empty($form) && !is_numeric($form)) {
                     self::error($msg);
                 }
             }
 
             //加密
-            if($value['ticket_form_type'] == 'encrypt' && !empty($form) ){
+            if ($value['ticket_form_type'] == 'encrypt' && !empty($form)) {
                 $form = (new \Expand\OpenSSL(\Core\Func\CoreFunc::loadConfig('USER_KEY', true)))->encrypt($form);
             }
 
-            switch ($value['ticket_form_verify']){
+            switch ($value['ticket_form_verify']) {
                 case 'noVerify':
                     break;
                 default:
-                    if(\Model\Extra::checkInputValueType($form, $value['ticket_form_verify']) == false){
-                        self::error("表单'{$value['ticket_form_description']}'只能提交".array_flip(\Model\Extra::$checkType)[$value['ticket_form_verify']]);
+                    if (\Model\Extra::checkInputValueType($form, $value['ticket_form_verify']) == false) {
+                        self::error("表单'{$value['ticket_form_description']}'只能提交" . array_flip(\Model\Extra::$checkType)[$value['ticket_form_verify']]);
                     }
             }
 
 
             $result = self::db('ticket_content')->insert([
-                'ticket_id' => $ticketID,
-                'ticket_form_id' => $value['ticket_form_id'],
-                'ticket_form_content' => $form
+                'ticket_id'           => $ticketID,
+                'ticket_form_id'      => $value['ticket_form_id'],
+                'ticket_form_content' => $form,
             ]);
             if ($result === false) {
                 self::db()->rollback();
@@ -145,23 +187,23 @@ class Ticket extends \Core\Model\Model {
      * @param $ticket 工单基础信息
      * @param $param 内容参数
      */
-    private static function newTicketNotice($ticket, $param){
+    private static function newTicketNotice($ticket, $param) {
 
         //将工单单号发给发起者
         \Model\Notice::addTicketNoticeAction($param['ticket_number'], $param['ticket_contact_account'], $param['ticket_contact'], 1);
 
         //新工单后台客服通知
-        if(($param['ticket_exclusive'] == 1 || $ticket['ticket_model_auto'] == 1 ) && !empty($param['user_id']) ){
+        if (($param['ticket_exclusive'] == 1 || $ticket['ticket_model_auto'] == 1) && !empty($param['user_id'])) {
             $user = \Model\Content::findContent('user', $param['user_id'], 'user_id');
             \Model\Notice::addCSNotice($param['ticket_number'], $user, -1);
 
-        }elseif(!empty($ticket['ticket_model_group_id'])){
+        } elseif (!empty($ticket['ticket_model_group_id'])) {
             //移除手尾,
             $ticket['ticket_model_group_id'] = trim($ticket['ticket_model_group_id'], ',');
 
             $userList = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']})")->select();
-            if(!empty($userList)){
-                foreach ($userList as $user){
+            if (!empty($userList)) {
+                foreach ($userList as $user) {
                     \Model\Notice::addCSNotice($param['ticket_number'], $user, -1);
                 }
             }
@@ -174,29 +216,29 @@ class Ticket extends \Core\Model\Model {
      * @param $ticket
      * @return bool
      */
-    private static function autoAssign($isOpen = false, $ticket){
-        if($isOpen !== 1){
+    private static function autoAssign($isOpen = false, $ticket) {
+        if ($isOpen !== 1) {
             return false;
         }
 
         $ticket['ticket_model_group_id'] = trim($ticket['ticket_model_group_id'], ',');
 
-        switch ($ticket['ticket_model_auto_logic']){
+        switch ($ticket['ticket_model_auto_logic']) {
             case '1':
                 $userList = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']})")->select();
-                if(empty($userList)){
+                if (empty($userList)) {
                     return false;
                 }
 
                 $userSort = [];
-                foreach ($userList as $item){
+                foreach ($userList as $item) {
                     $user[$item['user_id']] = $item;
                     $user[$item['user_id']]['total'] = 0;
                     $userSort[$item['user_id']] = 0;
                 }
 
-                $ticket = self::db('user AS u')->field('u.user_id, COUNT(t.user_id) as total')->join(self::$modelPrefix.'ticket AS t ON t.user_id = u.user_id')->where("user_group_id IN ({$ticket['ticket_model_group_id']}) AND t.ticket_close = 0 AND t.ticket_submit_time >= :ticket_submit_time ")->group('t.user_id')->select([
-                    'ticket_submit_time' => time() - 86400 * 30
+                $ticket = self::db('user AS u')->field('u.user_id, COUNT(t.user_id) as total')->join(self::$modelPrefix . 'ticket AS t ON t.user_id = u.user_id')->where("user_group_id IN ({$ticket['ticket_model_group_id']}) AND t.ticket_close = 0 AND t.ticket_submit_time >= :ticket_submit_time ")->group('t.user_id')->select([
+                    'ticket_submit_time' => time() - 86400 * 30,
                 ]);
                 $avgSubTotal = 0;
                 $avgTotal = count($user);
@@ -206,16 +248,15 @@ class Ticket extends \Core\Model\Model {
                     $avgSubTotal += $value['total'];
                     $userSort[$value['user_id']] = $value['total'];
                 });
-                
                 array_multisort($userSort, SORT_ASC, $user);
 
-                $avg = round($avgSubTotal/$avgTotal, 2);
+                $avg = round($avgSubTotal / $avgTotal, 2);
 
-                foreach ($user as $item){
+                foreach ($user as $item) {
                     $item['total'] = $item['total'] > $avg ? $avg + 2 : $avg + 1;
-                    if($item['total'] > $avg){
+                    if ($item['total'] > $avg) {
                         return $item;
-                    }elseif($item['total'] + 1 > $avg){
+                    } elseif ($item['total'] + 1 > $avg) {
                         return $item;
                     }
                 }
@@ -226,7 +267,7 @@ class Ticket extends \Core\Model\Model {
             case '0':
             default:
                 $user = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']})")->order('RAND()')->find();
-                if(!empty($user)){
+                if (!empty($user)) {
                     return $user;
                 }
                 break;
@@ -238,20 +279,20 @@ class Ticket extends \Core\Model\Model {
      * 检测是否填写正确的客服工号
      * @return bool|type
      */
-    private static function exclusiveCSTicket($isOpen = false){
-        if($isOpen !== 1){
+    private static function exclusiveCSTicket($isOpen = false) {
+        if ($isOpen !== 1) {
             return false;
         }
 
         $jobNumber = self::p('job_number');
-        if(empty($jobNumber)){
+        if (empty($jobNumber)) {
             return false;
         }
 
         $user = \Model\Content::findContent('user', $jobNumber, 'user_job_number', 'user_id, user_name, user_job_number, user_mail, user_weixinWork, user_dingtalk');
-        if(empty($user)){
+        if (empty($user)) {
             return false;
-        }else{
+        } else {
             //标记专属客服
             $user['exclusive'] = 1;
             return $user;
@@ -271,13 +312,13 @@ class Ticket extends \Core\Model\Model {
         if (empty($result)) {
             return $form;
         }
-        
+
 
         //组装一下，让他ticket_form_id成为键值
         foreach ($result as $value) {
             $form[$value['ticket_form_id']] = $value;
 
-            switch ($value['ticket_form_type']){
+            switch ($value['ticket_form_type']) {
                 case 'radio':
                 case 'checkbox':
                 case 'select':
@@ -285,13 +326,13 @@ class Ticket extends \Core\Model\Model {
                     //获取相应工单字段的选项值
                     $form[$value['ticket_form_id']]['ticket_form_option'] = json_decode(htmlspecialchars_decode($value['ticket_form_option']), true);
                     //复选项要做特殊处理
-                    if($value['ticket_form_type'] == 'checkbox'){
+                    if ($value['ticket_form_type'] == 'checkbox') {
                         $ticketValue = [];
-                        foreach (explode(',', $value['ticket_form_content']) as $item){
+                        foreach (explode(',', $value['ticket_form_content']) as $item) {
                             $ticketValue[] = array_search($item, $form[$value['ticket_form_id']]['ticket_form_option']);
                         }
                         $form[$value['ticket_form_id']]['ticket_value'] = implode(' , ', $ticketValue);
-                    }else{
+                    } else {
                         $form[$value['ticket_form_id']]['ticket_value'] = array_search($value['ticket_form_content'], $form[$value['ticket_form_id']]['ticket_form_option']);
                     }
 
@@ -301,17 +342,17 @@ class Ticket extends \Core\Model\Model {
                     $suffix = pathinfo($value['ticket_form_content']);
                     $small = "{$value['ticket_form_content']}_50x50.{$suffix['extension']}";
 
-                    $form[$value['ticket_form_id']]['ticket_value'] = empty($value['ticket_form_content']) ? '' : '<a href="'.$value['ticket_form_content'].'" data-fancybox="gallery"><img src="'.$small.'" alt="'.$value['ticket_form_content'].'" class="am-img-thumbnail" width="50" height="50" /></a>';
+                    $form[$value['ticket_form_id']]['ticket_value'] = empty($value['ticket_form_content']) ? '' : '<a href="' . $value['ticket_form_content'] . '" data-fancybox="gallery"><img src="' . $small . '" alt="' . $value['ticket_form_content'] . '" class="am-img-thumbnail" width="50" height="50" /></a>';
                     break;
                 case 'img':
                     $splitImg = explode(',', $value['ticket_form_content']);
                     $imgStr = '<ul class="am-avg-sm am-thumbnails">';
-                    if(!empty($value['ticket_form_content'])){
-                        foreach ($splitImg as $item){
+                    if (!empty($value['ticket_form_content'])) {
+                        foreach ($splitImg as $item) {
                             $suffix = pathinfo($item);
                             $small = "{$item}_50x50.{$suffix['extension']}";
                             $imgStr .= '<li>
-<a href="'.$item.'" data-fancybox="gallery" ><img src="'.$small.'" alt="'.imgs.'" class="am-img-thumbnail" width="50" height="50" /></a>
+<a href="' . $item . '" data-fancybox="gallery" ><img src="' . $small . '" alt="' . imgs . '" class="am-img-thumbnail" width="50" height="50" /></a>
 </li>';
                         }
                     }
@@ -322,19 +363,19 @@ class Ticket extends \Core\Model\Model {
                     //@todo 待优化,下载应该基于header方法
 
                     $downloadFile = (new \Expand\UBB())->url($value['ticket_form_content']);
-                    if($downloadFile == false){
+                    if ($downloadFile == false) {
                         $splitImg = explode(',', $value['ticket_form_content']);
                         $imgStr = '<ul class="am-avg-sm am-thumbnails">';
-                        if(!empty($value['ticket_form_content'])){
-                            foreach ($splitImg as $key => $item){
-                                $imgStr .= '<li><a href="'.$item.'">下载附件'.($key +1) .'</a></li>';
+                        if (!empty($value['ticket_form_content'])) {
+                            foreach ($splitImg as $key => $item) {
+                                $imgStr .= '<li><a href="' . $item . '">下载附件' . ($key + 1) . '</a></li>';
                             }
                         }
                         $imgStr .= '</ul>';
                         $form[$value['ticket_form_id']]['ticket_value'] = $imgStr;
-                    }else{
+                    } else {
                         $imgStr = '<ul class="am-avg-sm am-thumbnails">';
-                        foreach ($downloadFile as $item){
+                        foreach ($downloadFile as $item) {
                             $imgStr .= "<li>{$item}</li>";
                         }
                         $imgStr .= '</ul>';
@@ -342,10 +383,10 @@ class Ticket extends \Core\Model\Model {
                     }
                     break;
                 case 'encrypt':
-                    $form[$value['ticket_form_id']]['ticket_value'] = !empty(self::session()->get('ticket')['user_id']) ? (new \Expand\OpenSSL(\Core\Func\CoreFunc::loadConfig('USER_KEY', true)))->decrypt($value['ticket_form_content']) : '<i class="am-text-warning">您提交了加密信息,此部分只有客服可知.</i>' ;
+                    $form[$value['ticket_form_id']]['ticket_value'] = !empty(self::session()->get('ticket')['user_id']) ? (new \Expand\OpenSSL(\Core\Func\CoreFunc::loadConfig('USER_KEY', true)))->decrypt($value['ticket_form_content']) : '<i class="am-text-warning">您提交了加密信息,此部分只有客服可知.</i>';
                     break;
                 default:
-                    $form[$value['ticket_form_id']]['ticket_value'] = (new \voku\helper\AntiXSS())->xss_clean(htmlspecialchars_decode( $value['ticket_form_content'] ));
+                    $form[$value['ticket_form_id']]['ticket_value'] = (new \voku\helper\AntiXSS())->xss_clean(htmlspecialchars_decode($value['ticket_form_content']));
             }
 
             if ($value['ticket_form_bind'] > 0) {
@@ -381,13 +422,14 @@ class Ticket extends \Core\Model\Model {
      * @param $number
      * @return mixed
      */
-    public static function getTicketBaseInfo($number){
+    public static function getTicketBaseInfo($number) {
         return self::db('ticket AS t')
-            ->field('t.*, tm.*')
-            ->join(self::$modelPrefix.'ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id')
+            ->field('t.*, tm.*, c.category_name')
+            ->join(self::$modelPrefix . 'ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id')
+            ->join(self::$modelPrefix . 'category AS c ON c.category_id = tm.ticket_model_cid')
             ->where('ticket_number = :ticket_number')
             ->find([
-                'ticket_number' => $number
+                'ticket_number' => $number,
             ]);
     }
 
@@ -400,10 +442,10 @@ class Ticket extends \Core\Model\Model {
         $sql = "SELECT %s FROM " . self::$modelPrefix . "ticket_chat WHERE ticket_id = :ticket_id ORDER BY ticket_chat_id ASC";
 
         return \Model\Content::quickListContent([
-            'count' => sprintf($sql, 'count(*)'),
+            'count'  => sprintf($sql, 'count(*)'),
             'normal' => sprintf($sql, '*'),
-            'param' => ['ticket_id' => $id],
-            'page' => $chatPage
+            'param'  => ['ticket_id' => $id],
+            'page'   => $chatPage,
         ]);
     }
 
@@ -478,10 +520,11 @@ class Ticket extends \Core\Model\Model {
     /**
      * 验证工单是否开启了客户分组可见
      * @param $ticket
+     * @param $member_organize_id 客户组
      */
-    public static function organizeCheck($ticket){
-        if(!empty($ticket['ticket_model_organize_id']) && !in_array(self::session()->get('member')['member_organize_id'], explode(',', $ticket['ticket_model_organize_id'])) ){
-            self::error('不存在的工单', self::url('Category-index'), '-1');
+    public static function organizeCheck($ticket, $member_organize_id) {
+        if (!empty($ticket['ticket_model_organize_id']) && !in_array($member_organize_id, explode(',', $ticket['ticket_model_organize_id']))) {
+            self::error('您无法在当前页面提交新工单，请联系网站管理员。', self::url('Category-index'), '-1');
         }
     }
 
@@ -490,16 +533,16 @@ class Ticket extends \Core\Model\Model {
      * @param $ticket 工单信息
      * @param string $back_url 返回的地址
      */
-    public static function loginCheck($ticket, $back_url = ''){
+    public static function loginCheck($ticket, $back_url = '') {
 
-        if(empty($back_url)){
+        if (empty($back_url)) {
             $back_url = base64_encode($_SERVER['REQUEST_URI']);
         }
 
         //判断工单模型是否设置登录验证.
-        if($ticket['ticket_model_login'] == 1 && empty(self::session()->get('member'))){
+        if ($ticket['ticket_model_login'] == 1 && empty(self::session()->get('member'))) {
 
-            switch ($_GET['loginType']){
+            switch ($_GET['loginType']) {
                 case 'weixin':
                     $url = self::url('Login-weixinAgree', ['back_url' => $back_url]);
                     break;
@@ -513,12 +556,12 @@ class Ticket extends \Core\Model\Model {
         /**
          * 提交工单的请求不进行跳转。
          */
-        if( (MODULE == 'Submit' && ACTION == 'ticket') || (MODULE == 'Category' && ACTION == 'ticket') ){
+        if ((MODULE == 'Submit' && ACTION == 'ticket') || (MODULE == 'Category' && ACTION == 'ticket')) {
             return true;
         }
 
         //非匿名工单判断用户所属，非此用户所属则跳转至我的工单
-        if($ticket['member_id'] != '-1' && $ticket['member_id'] != self::session()->get('member')['member_id'] ){
+        if ($ticket['member_id'] != '-1' && $ticket['member_id'] != self::session()->get('member')['member_id']) {
             self::success('获取工单成功，系统将指引您返回工单列表', self::url('Member-index'), -1);
         }
     }

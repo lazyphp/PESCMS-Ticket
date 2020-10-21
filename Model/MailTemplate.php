@@ -95,7 +95,8 @@ class MailTemplate extends \Core\Model\Model {
         $data = [
             '1' => $title,
             '2' => $title,
-            '3' => $template['mail_template_weixin_template_id']
+            '3' => $template['mail_template_weixin_template_id'],
+            '6' => $template['mail_template_wxapp_template_id'],
         ];
         return $data;
     }
@@ -121,7 +122,8 @@ class MailTemplate extends \Core\Model\Model {
         foreach ([
                     '1' => 'mail_template_content',
                     '2' => 'mail_template_sms',
-                    '3' => 'mail_template_weixin_template'
+                    '3' => 'mail_template_weixin_template',
+                    '6' => 'mail_template_wxapp_template',
                  ] as $key => $item){
 
             if($key == 1){
@@ -129,7 +131,7 @@ class MailTemplate extends \Core\Model\Model {
             }
 
             //短信和微信需要将超链接的HTML代码移除
-            if(in_array($key, [2, 3])){
+            if(in_array($key, [2, 3, 6])){
                 $param['view'] = strip_tags(self::getViewLink($number, $key));
             }
 
@@ -143,10 +145,11 @@ class MailTemplate extends \Core\Model\Model {
             }
 
             //微信通知需要先将内容格式化，补充通知的超链接。
-            if($key == 3){
+            if(in_array($key, ['3', '6'])){
                 $newFormat = [
                     'data' => json_decode(htmlspecialchars_decode($template[$item]), true),
-                    'link' => strip_tags($param['view'])
+                    'link' => strip_tags($param['view']),
+                    'ticket_number' => $number,
                 ];
                 $template[$item] = json_encode($newFormat);
             }

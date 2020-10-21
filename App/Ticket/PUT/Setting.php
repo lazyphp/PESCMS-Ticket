@@ -51,6 +51,7 @@ class Setting extends \Core\Controller\Controller {
                 'login_verify',
                 'cs_notice_type',
                 'cs_text',
+                'wxapp_api',
                 'dingtalk',
             ]
         ];

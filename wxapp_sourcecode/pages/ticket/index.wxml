@@ -1,0 +1,72 @@
+<include src="/pages/common/header.wxml" />
+
+<van-panel custom-class="pes-panel">
+
+  <van-row>
+    <van-col span="4">
+      <van-image round width="3rem" height="3rem" src="{{avatar}}" custom-class="pes-padding-xs" />
+    </van-col>
+    <van-col span="14">
+      <view class="pes-margin-left-xs pes-margin-top-xs">
+        <text class="pes-text-strong pes-text-default">{{username}}</text>
+        <text class="pes-text-sm pes-margin-left-xs">先生/女士</text>
+        
+        <view class="pes-margin-top-xs pes-text-s pes-text-info">欢迎您的到来</view>
+      </view>
+    </van-col>
+    <van-col span="6">
+      <van-button wx:if="{{signup == '0'}}" icon="plus" type="warning" size="mini" custom-class="pes-margin-top-xs" bindtap="signup">注册账号</van-button>
+    </van-col>
+  </van-row>
+
+</van-panel>
+
+<block wx:if="{{ticketStatus}}">
+  <van-tabs active="{{tabs}}" bind:click="getTicketStatus">
+    <van-tab title="全部" name="{{-1}}"></van-tab>
+    <block wx:for="{{ ticketStatus }}" wx:key="unique" wx:for-index="idx" wx:for-item="item">
+      <van-tab title="{{item.name}}" name="{{idx}}"></van-tab>
+    </block>
+
+  </van-tabs>
+</block>
+
+<block wx:if="{{tabsLoading}}">
+  <view class="pes-text-center pes-margin">
+    <van-loading size="24px">加载中...</van-loading>
+  </view>
+</block>
+
+<block wx:if="{{data}}">
+
+  <block wx:for="{{ data }}" wx:key="unique" wx:for-item="item">
+    <navigator url="/pages/ticket/detail?number={{item.ticket_number}}">
+      <view class="pes-panel pes-margin-top-sm">
+        <view class="pes-panel-title">
+          <view class="pes-inline-block pes-text-middle">
+            {{item.ticket_title}}
+          </view>
+          <view class="pes-badge pes-round pes-inline-block pes-text-middle pes-margin-left-xs"
+            style="background-color: {{ticketStatus[item.ticket_status]['color']}}">
+            {{ticketStatus[item.ticket_status]['name']}}</view>
+        </view>
+
+        <view class="pes-panel-content">
+          <view>工单号：{{item.ticket_number}}</view>
+          <view>提交时间：{{item.ticket_submit_time}}</view>
+        </view>
+      </view>
+    </navigator>
+  </block>
+
+
+</block>
+<block wx:elif="{{data == false}}">
+  <van-empty image="search" description="暂无工单" />
+</block>
+
+<block wx:if="{{error}}">
+  <van-empty image="error" description="{{error}}" />
+</block>
+
+<footer></footer>

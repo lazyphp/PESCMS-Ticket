@@ -1,0 +1,14 @@
+/* pages/ticket/detail.wxss */
+.pes-ticket-from {
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #ebedf0;
+}
+
+.pes-ticket-from:last-child {
+  padding-bottom: 0px;
+  border: none;
+}
+
+.reply-textarea {
+  width: 100%;
+}

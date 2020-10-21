@@ -34,6 +34,16 @@ class HandleMail_template extends \Core\Slice\Slice {
 
             }
 
+            if(!empty($_POST['wxapp_key'])){
+                $data = [];
+                foreach ($_POST['wxapp_key'] as $key => $value){
+                    $data[$value]['value'] = $_POST['wxapp_content'][$key];
+                    $data[$value]['color'] = $_POST['wxapp_color'][$key];
+                }
+
+                $_POST['wxapp_template'] = json_encode($data);
+
+            }
 
             /*
             'data' => [

@@ -21,29 +21,12 @@ class Category extends \Core\Controller\Controller{
      */
 	public function index(){
 
-		$id = $this->g('id');
-		$param['category_parent'] = empty($id) ? 0 : $id;
+		$result = \Model\Category::getCategoryORTicketList();
 
-		$category = \Model\Content::listContent([
-			'table' => 'category',
-			'condition' => 'category_parent = :category_parent AND category_status = 1',
-			'order' => 'category_listsort ASC, category_id DESC',
-			'param' => $param
-		]);
-
-		if(!empty($id)){
-			$ticketList = \Model\Content::listContent([
-				'table' => 'ticket_model',
-				'condition' => 'ticket_model_cid = :id AND ticket_model_status = 1',
-				'order' => 'ticket_model_listsort ASC, ticket_model_id DESC',
-				'param' => [
-					'id' => $id
-				]
-			]);
-			$this->assign('ticket', $ticketList);
-		}
         $this->assign('title', '提交工单');
-		$this->assign('category', $category);
+
+        $this->assign('ticket', $result['ticket']);
+		$this->assign('category', $result['category']);
 
         $this->displayTicket();
 
@@ -82,7 +65,7 @@ class Category extends \Core\Controller\Controller{
         $number = $this->isG('number', '请提交您要生成的工单');
         $result = \Model\TicketForm::getFormWithNumber($number);
 
-        \Model\Ticket::organizeCheck(current($result));
+        \Model\Ticket::organizeCheck(current($result), self::session()->get('member')['member_organize_id']);
 
 
         if(empty($result)){

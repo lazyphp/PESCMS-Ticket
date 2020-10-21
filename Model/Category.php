@@ -64,4 +64,48 @@ class Category extends \Core\Model\Model {
         return $category;
     }
 
+    public static function getCategoryORTicketList(){
+
+        $id = self::g('id');
+
+        $categoryList = \Model\Content::listContent([
+            'table' => 'category',
+            'field' => 'category_id, category_name, category_description',
+            'condition' => 'category_parent = :category_parent AND category_status = 1',
+            'order' => 'category_listsort ASC, category_id DESC',
+            'param' => [
+                'category_parent' => empty($id) ? 0 : $id
+            ]
+        ]);
+        if(!empty($categoryList)){
+            foreach ($categoryList as $key => $value){
+                $category[$key] = $value;
+                $category[$key]['category_description'] = htmlspecialchars_decode($value['category_description']);
+            }
+        }
+
+        if(!empty($id)){
+            $getTicketModelResult = \Model\Content::listContent([
+                'table' => 'ticket_model',
+                'field' => 'ticket_model_number, ticket_model_name, ticket_model_explain, ticket_model_organize_id',
+                'condition' => 'ticket_model_cid = :id AND ticket_model_status = 1',
+                'order' => 'ticket_model_listsort ASC, ticket_model_id DESC',
+                'param' => [
+                    'id' => $id
+                ]
+            ]);
+            if(!empty($getTicketModelResult)){
+                foreach ($getTicketModelResult as $key => $value){
+                    $ticketModelList[$key] = $value;
+                    $ticketModelList[$key]['ticket_model_explain'] = htmlspecialchars_decode($value['ticket_model_explain']);
+                }
+            }
+        }
+
+        return [
+            'category' => empty($category) ? false : $category,
+            'ticket' => empty($ticketModelList) ? false : $ticketModelList,
+        ];
+    }
+
 }

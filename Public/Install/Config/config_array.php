@@ -1,7 +1,7 @@
 <?php
 return array(
     'ERROR_PROMPT' => '/Core/Theme/error.php',
-    'APP_GROUP_LIST' => 'Form,Ticket',
+    'APP_GROUP_LIST' => 'Form,Ticket,API',
     'DEFAULT_GROUP' => 'Form',
     'FILE_CACHE_PATH' => '/Temp',
     'FILE_CACHE_TIME' => '1800',

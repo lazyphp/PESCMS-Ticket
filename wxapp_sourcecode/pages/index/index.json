@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "van-search": "@vant/weapp/search/index",
+    "form": "/pages/common/form",
+    "van-steps": "@vant/weapp/steps/index",
+    "van-card": "@vant/weapp/card/index"
+  }
+}

@@ -1,0 +1,10 @@
+.member-ticket-grid .van-col{
+  border-right: 1px solid #cfcfcf;
+}
+.remove-right-border{
+  border-right: none !important;
+}
+.member-ticket-grid .van-col>view:last-child{
+  font-size: 14px;
+  margin: 7px;
+}

@@ -1,0 +1,70 @@
+<view class="bottom-bar"></view>
+
+<van-popup show="{{showSignUp}}" custom-style="height: 35%;" position="bottom" bind:close="closeSingup" closeable
+  custom-class="pes-padding-xs pes-text-center">
+  <view style=" width:300px;margin:0 auto;">
+    <view class=" pes-text-strong">PESCMS Ticket 账号注册</view>
+
+    <view class="pes-margin-top-xs pes-text-sm pes-alert pes-alert-info">为了更便捷处理您反馈的问题，在使用本系统前，需要先完成账号注册或者绑定系统已有账号。
+    </view>
+
+    <view class="">
+      <van-button icon="clock-o" type="primary" size="small" block custom-class="pes-margin-top-sm"
+        open-type="getUserInfo" bindgetuserinfo="quickSignUp">快速注册</van-button>
+    </view>
+
+    <view class="">
+      <van-button icon="exchange" type="primary" size="small" block custom-class="pes-margin-top-sm"
+        bind:click="bindAccount">绑定已有账号</van-button>
+    </view>
+
+    <view class="">
+      <van-button icon="cross" type="warning" size="small" block custom-class="pes-margin-top-sm"
+        bind:click="closeSingup">暂不显示</van-button>
+    </view>
+
+  </view>
+
+
+</van-popup>
+
+<van-popup show="{{ bindAccount }}" position="top" bind:close="onClose" custom-style="height: 100%;">
+
+  <van-row custom-class="pes-margin-top-xl">
+    <van-col span="4" custom-class="pes-margin-left-xs pes-text-center" bindtap="closeBindAccount">
+      <view style="display: flex;flex-direction: row;align-items: center;justify-content: center;">
+        <van-icon name="arrow-left" /> 返回
+      </view>
+    </van-col>
+    <van-col span="15">
+      <view class="pes-text-center pes-text-strong">
+        绑定账号
+      </view>
+    </van-col>
+    <van-col span="5"></van-col>
+  </van-row>
+
+  <van-divider />
+
+  <form bindsubmit="formSubmit" bindreset="formReset">
+    <view class=" pes-padding-xs">
+      <van-cell-group>
+        <van-field name="account" label="绑定的账号" type="textarea" placeholder="请输入账号" required
+          error-message="{{accountError}}" />
+
+        <van-field name="password" type="password" label="账号密码" placeholder="请输入账号密码" required
+          error-message="{{passwordError}}" />
+      </van-cell-group>
+    </view>
+
+    <view class="pes-text-center" style="width: 100px;margin:10px auto">
+      <van-button icon="completed" square type="primary" size="small" block formType="submit">绑定</van-button>
+    </view>
+  </form>
+
+</van-popup>
+
+<van-tabbar active="{{ tabbarActive }}" bind:change="appNavigateTo">
+  <van-tabbar-item icon="home-o">首页</van-tabbar-item>
+  <van-tabbar-item icon="setting-o">我的工单</van-tabbar-item>
+</van-tabbar>

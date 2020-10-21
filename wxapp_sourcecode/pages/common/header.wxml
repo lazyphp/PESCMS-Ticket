@@ -1,0 +1,12 @@
+<van-nav-bar title="{{title}}" bind:click-left="goback"   >
+  
+  <view wx:if="{{goback}}" slot="left" class="pes-text-primary">{{goback}}</view>
+
+  <view wx:else slot="left" >
+    <image style="width: 20px; height: 20px;vertical-align: middle;" src="{{siteLogo}}"></image>
+  </view>
+  
+
+</van-nav-bar>
+<van-dialog id="van-dialog" />
+<van-toast id="van-toast" />

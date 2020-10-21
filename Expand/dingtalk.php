@@ -72,10 +72,11 @@ class dingtalk {
         }
         $sendStatus['id'] = $param['send_id'];
         $sendStatus['sequence'] = $param['send_sequence'];
+        $sendStatus['full'] = $result;
 
         \Model\Extra::updateSendStatus($sendStatus);
 
-        return $sendStatus['msg'];
+        return $sendStatus;
 
     }
 

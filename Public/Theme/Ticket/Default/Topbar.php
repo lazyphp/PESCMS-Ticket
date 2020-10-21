@@ -32,6 +32,9 @@
 
         <div class="am-topbar-right">
             <ul class="am-nav am-nav-pills am-topbar-nav admin-header-list">
+                <?php if($label->checkAuth(GROUP . 'GETMemberissue') === true): ?>
+                    <li><a href="<?= $label->url('Ticket-Member-issue') ?>"><i class="am-icon-plus"></i> 新工单</a></li>
+                <?php endif; ?>
                 <li><a href="javascript:;">您好,<?= self::session()->get('ticket')['user_name']; ?></a></li>
                 <li class="am-dropdown" data-am-dropdown="">
                     <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">

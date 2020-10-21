@@ -212,7 +212,7 @@ class CoreFunc {
      * @return boolean|json|xml|str 返回对应的数据类型
      */
     public static function isAjax($data, $code, $jumpUrl = '', $waitSecond = 3){
-        if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+        if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strcasecmp($_SERVER['HTTP_X_REQUESTED_WITH'], 'XMLHttpRequest') != 0 ) {
             return FALSE;
         }
 

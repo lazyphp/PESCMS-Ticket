@@ -40,6 +40,8 @@
 
                         <?php include 'action/weixin.php';?>
 
+                        <?php include 'action/wxapp.php';?>
+
                         <?php include 'action/dingtalk.php';?>
                     </div>
                     <div class="am-tab-panel am-fade" id="tab5">

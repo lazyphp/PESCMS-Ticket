@@ -90,12 +90,13 @@ class Mail {
         }
         $sendStatus['id'] = $email['send_id'];
         $sendStatus['sequence'] = $email['send_sequence'];
+        $sendStatus['full'] = '邮件发送没有详细信息';
 
         \Model\Extra::updateSendStatus($sendStatus);
 
         $this->PHPMailer->ClearAddresses();
 
-        return $sendStatus['msg'];
+        return $sendStatus;
     }
 
 	/**

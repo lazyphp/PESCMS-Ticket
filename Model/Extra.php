@@ -142,10 +142,13 @@ class Extra extends \Core\Model\Model {
                 case '5':
                     $result = (new \Expand\dingtalk())->send_notice($value);
                     break;
+                case '6':
+                    $result = (new \Expand\wxapp())->send($value);
+                    break;
             }
 
             if(DEBUG == true){
-                echo "<p>{$value['send_type']}T: {$result}</p>";
+                echo "<p>{$value['send_type']}T: {$result['msg']}, 详细JSON格式: ".json_encode($result)."</p>";
             }
 
         }

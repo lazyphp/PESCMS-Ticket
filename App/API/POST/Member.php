@@ -148,7 +148,7 @@ class Member extends \Core\Controller\Controller {
                 ]
             ]);
 
-        }elseif(!empty($data['nickName']) && !empty($data['avatarUrl']) ){
+        }elseif( !empty($data['nickName']) ){
             $randomAccount = \Model\Extra::getOnlyNumber();
 
             $this->db('member')->insert([
@@ -167,7 +167,7 @@ class Member extends \Core\Controller\Controller {
                 'msg' => '快速注册完成',
                 'data' => [
                     'username' => $data['nickName'],
-                    'avatar' => $data['avatarUrl']
+                    'avatar' => empty($data['avatarUrl']) ? '' : $data['avatarUrl']
                 ]
             ]);
         }else{

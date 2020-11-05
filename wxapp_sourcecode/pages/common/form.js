@@ -44,7 +44,9 @@ Component({
       var tNumber = this.data.tNumber
 
       app.getTemplateList(function (res) {
-        gt.setData({templateList: res})
+        gt.setData({
+          templateList: res
+        })
       })
 
       app.ajaxSubmit({
@@ -155,7 +157,7 @@ Component({
 
 
       wx.uploadFile({
-        url: '{{siteUrl}}/?m=Upload&a=ueditor&method=POST&action=' + action,
+        url: 'http://www.pt.com/?m=Upload&a=ueditor&method=POST&action=' + action,
         filePath: file.path,
         name: 'upfile',
         success(res) {
@@ -249,15 +251,6 @@ Component({
     },
 
     formSubmit(e) {
-      
-      //选择小程序留言方式，则检查订阅生效
-      if(this.data.radio['contact'] == '6'){
-          wx.requestSubscribeMessage({
-            tmplIds: [this.data.templateList[1], this.data.templateList[3], this.data.templateList[6]],
-            success(res) { }
-          })
-      }
-      
 
       if (this.data.submitLoading == true) {
         Toast.fail('工单提交中...');
@@ -265,6 +258,15 @@ Component({
       }
 
       var data = e.detail.value;
+
+      //选择小程序留言方式，则检查订阅生效
+      if (data.contact == '6') {
+        wx.requestSubscribeMessage({
+          tmplIds: [this.data.templateList[1], this.data.templateList[3], this.data.templateList[6]],
+          success(res) {
+          }
+        })
+      }
 
       var gt = this;
 

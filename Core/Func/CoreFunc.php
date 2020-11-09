@@ -147,7 +147,7 @@ class CoreFunc {
     private static function urlLinkStr($param) {
         $url = "";
         foreach ($param as $key => $value) {
-            $url .= "&{$key}={$value}";
+            $url .= "&".htmlspecialchars($key)."=".htmlspecialchars($value);
         }
         return $url;
     }

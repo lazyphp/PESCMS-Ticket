@@ -20,7 +20,7 @@ Page({
     value: '',
     ticket: '',
     tNumber: '',
-    title: 'PESCMS Ticket工单系统',
+    title: '{{wxapp_title}}',
     loading: true
   },
 

@@ -157,7 +157,7 @@ Component({
 
 
       wx.uploadFile({
-        url: 'http://www.pt.com/?m=Upload&a=ueditor&method=POST&action=' + action,
+        url: '{{siteUrl}}/?m=Upload&a=ueditor&method=POST&action=' + action,
         filePath: file.path,
         name: 'upfile',
         success(res) {

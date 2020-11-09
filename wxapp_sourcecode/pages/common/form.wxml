@@ -2,11 +2,14 @@
 <block wx:if="{{ form }}">
   <form class="ticket-form" bindsubmit="formSubmit" bindreset="formReset">
 
+  <view class="pes-text-sm pes-text-info">新工单 >> {{ticket.category.category_name}} >> {{ticket.title}}</view>
+  <van-divider dashed custom-style="margin-bottom:0px;" />
+
     <!-- 工单基础信息 -->
     <van-field value="{{ ticket.number }}" name="number" style="display:none" />
 
     <!-- 联系方式 -->
-    <view class="form-title">联系方式 <text class="pes-text-danger">*</text></view>
+    <view class="form-title pes-margin-top-0">联系方式 <text class="pes-text-danger">*</text></view>
 
 
     <van-radio-group value="{{radio['contact'] || ticket['contact_default']  }}" name="contact" bind:change="radioChange"
@@ -159,7 +162,7 @@
     </block>
 
     <view class="pes-text-center" style="width: 200px;margin:10px auto">
-      <van-button icon="completed" square type="primary" size="small" disabled="{{submitLoading}}"
+      <van-button icon="completed" square type="primary" size="small"  disabled="{{submitLoading}}"
         loading="{{submitLoading}}" loading-text="正在提交..." formType="submit">提交</van-button>
     </view>
 

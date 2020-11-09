@@ -3,7 +3,7 @@
 <van-search value="{{ message }}" shape="round" show-action placeholder="请输入您要搜索的工单信息" bind:search="onSearch" />
 
 
-<van-panel title="发起工单" custom-class="ticket-panel">
+<van-panel title="发起工单" desc="—— 点击步骤条文字可返回上一层"  custom-class="ticket-panel">
 
   <van-steps steps="{{ steps }}" active="{{ stepsActive }}" bind:click-step="stepFunc" />
 

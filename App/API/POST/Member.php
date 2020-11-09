@@ -12,7 +12,7 @@ namespace App\API\POST;
 class Member extends \Core\Controller\Controller {
 
     /**
-     * 执行微信登陆和生成登录鉴权token.
+     * 执行微信登录和生成登录鉴权token.
      */
     public function weixinLogin(){
 
@@ -130,7 +130,7 @@ class Member extends \Core\Controller\Controller {
                 'member_password' => \Core\Func\CoreFunc::generatePwd($data['password'], 'USER_KEY')
             ]);
             if (empty($member)) {
-                $this->error('帐号绑定失败!帐号可能不存在、待审核/被禁用、密码错误或已绑定!');
+                $this->error('账号绑定失败!账号可能不存在、待审核/被禁用、密码错误或已绑定!');
             }
 
             $this->db('member')->where('member_id = :member_id')->update([

@@ -16,7 +16,7 @@ class Login extends \Core\Controller\Controller {
     }
 
     /**
-     * 登录帐号
+     * 登录账号
      */
     public function index() {
 
@@ -43,7 +43,7 @@ class Login extends \Core\Controller\Controller {
 
         $member = $this->db('member')->where("{$condition} AND member_password = :member_password")->find($param);
         if (empty($member)) {
-            $this->error('帐号不存在或者密码错误');
+            $this->error('账号不存在或者密码错误');
         }
 
 
@@ -67,19 +67,30 @@ class Login extends \Core\Controller\Controller {
     }
 
     /**
-     * 注册帐号
+     * 注册账号
      */
     public function signup() {
         $review = \Core\Func\CoreFunc::$param['system']['member_review'];
+        $registerForm = json_decode(\Core\Func\CoreFunc::$param['system']['register_form'], true);
+
         $param = [
             'member_status' => $review == 1 ? 1 : 0,
             'member_createtime' => time(),
         ];
 
-        $param['member_account'] = $this->isP('account', '请填写登陆账号');
+        $param['member_email'] = empty($registerForm['email']) ? \Model\Extra::getOnlyNumber().time().'@default.com' : $this->isP('email', '请填写邮箱地址');
+
+
+        $param['member_account'] = empty($registerForm['account']) ? \Model\Extra::getOnlyNumber().time() : $this->isP('account', '请填写登录账号');
+
+        if(!empty($registerForm['phone'])){
+            $param['member_phone'] = $this->isP('phone', '请填写手机号码');
+            if (\Model\Extra::checkInputValueType($param['member_phone'], 2) == false) {
+                $this->error('请输入正确的手机号码');
+            }
+        }
+
         $param['member_name'] = $this->isP('name', '请填写名字');
-        $param['member_email'] = $this->isP('email', '请填写邮箱地址');
-        $param['member_phone'] = $this->isP('phone', '请填写手机号码');
         $param['member_organize_id'] = 1;
 
         if(!empty($_POST['weixin'])){
@@ -91,9 +102,7 @@ class Login extends \Core\Controller\Controller {
         if (\Model\Extra::checkInputValueType($param['member_email'], 1) == false) {
             $this->error('请输入正确的邮箱地址');
         }
-        if (\Model\Extra::checkInputValueType($param['member_phone'], 2) == false) {
-            $this->error('请输入正确的手机号码');
-        }
+
 
         foreach ([
             'email' => '该邮箱地址已存在',
@@ -119,6 +128,9 @@ class Login extends \Core\Controller\Controller {
      * @param $msg 提示信息
      */
     private function checkRepeatInfo($type, $param, $msg){
+        if(empty($param["member_{$type}"])){
+            return true;
+        }
         $checkRepeat = $this->db('member')->where("member_{$type} = :member_{$type}")->find([
             "member_{$type}" => $param["member_{$type}"]
         ]);
@@ -140,7 +152,7 @@ class Login extends \Core\Controller\Controller {
             //关闭审核状态，发送欢迎注册邮件
             case '1':
                 $title = '欢迎来到'.\Core\Func\CoreFunc::$param['system']['siteTitle'];
-                $emailContent = \Model\MailTemplate::mergeMailTemplate("<p>您好！</p><p>{$title}，您可以使用此帐号登录系统。尔后，您可以提交和管理工单。</p>");
+                $emailContent = \Model\MailTemplate::mergeMailTemplate("<p>您好！</p><p>{$title}，您可以使用此账号登录系统。尔后，您可以提交和管理工单。</p>");
                 \Model\Extra::insertSend($param['member_email'], $title, $emailContent, '1');
                 break;
             //开启邮件激活验证
@@ -234,12 +246,12 @@ class Login extends \Core\Controller\Controller {
         $param['member_weixin'] = $this->isP('openid', '获取openid失败');
         $param['member_name'] = $this->isP('name', '获取用户名失败');
 
-        //邮件地址没有填写，则直接随机创建帐号
+        //邮件地址没有填写，则直接随机创建账号
         if(empty($_POST['email'])){
             $randomAccount = \Model\Extra::getOnlyNumber();
             $param['member_email'] = "{$randomAccount}@default.wx";
             $param['member_account'] = "wx_{$randomAccount}";
-            $param['member_password'] = md5(\Model\Extra::getOnlyNumber());//随机写入一些字符，随机帐号无法使用
+            $param['member_password'] = md5(\Model\Extra::getOnlyNumber());//随机写入一些字符，随机账号无法使用
             $param['member_status'] = \Core\Func\CoreFunc::$param['system']['member_review'] == 2 ? 0 : \Core\Func\CoreFunc::$param['system']['member_review'];
             $param['member_organize_id'] = 1 ; //默认客户分组为 1
             $param['member_createtime'] = time();
@@ -254,7 +266,7 @@ class Login extends \Core\Controller\Controller {
 
             $member = $this->db('member')->where('member_email = :member_email AND member_password = :member_password AND member_status = 1 AND member_weixin IS NULL ')->find($data);
             if (empty($member)) {
-                $this->error('帐号绑定失败!帐号可能不存在、待审核/被禁用、密码错误或已绑定!');
+                $this->error('账号绑定失败!账号可能不存在、待审核/被禁用、密码错误或已绑定!');
             }
 
             $this->db('member')->where('member_id = :member_id')->update([

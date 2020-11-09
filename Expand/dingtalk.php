@@ -82,7 +82,7 @@ class dingtalk {
 
     /**
      * 发送钉钉企业应用消息通知
-     * @param $account 接收消息帐号
+     * @param $account 接收消息账号
      * @param $content 发送的内容
      * @return mixed
      */

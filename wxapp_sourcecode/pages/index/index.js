@@ -20,7 +20,7 @@ Page({
     value: '',
     ticket: '',
     tNumber: '',
-    title: 'PESCMS Ticket工单系统',
+    title: '{{wxapp_title}}',
     loading: true
   },
 
@@ -37,6 +37,7 @@ Page({
     })
   },
 
+  
   /**
    * 步骤条动作
    * @param {*} event 
@@ -57,6 +58,12 @@ Page({
         id = 0;
     }
 
+    this.data.steps[1]['id'] = id; //将当前的ID值记录在 第二个参数的步骤条
+
+    this.setData({
+      steps:this.data.steps
+    })
+
     this.commonRequest(id, event.detail);
 
   },
@@ -66,6 +73,8 @@ Page({
    * @param {*} event 
    */
   getTicketList(event) {
+
+    
     var id = event.currentTarget.dataset.id;
 
     this.setData({
@@ -83,6 +92,10 @@ Page({
     }
 
     this.data.steps[1]['id'] = id; //将当前的ID值记录在 第二个参数的步骤条
+
+    this.setData({
+      steps:this.data.steps
+    })
 
     this.commonRequest(id, 1);
 
@@ -142,6 +155,11 @@ Page({
 
       url: '/?g=API&m=Index&a=index&id=' + id,
       success(res) {
+
+        if(stepsActive == 1 && res.data.data.ticket == false){
+          stepsActive = 0
+        }
+
         dom.setData({
           ticket: res.data,
           loading: false,

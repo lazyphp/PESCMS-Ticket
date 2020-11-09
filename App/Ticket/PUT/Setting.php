@@ -53,6 +53,7 @@ class Setting extends \Core\Controller\Controller {
                 'cs_text',
                 'wxapp_api',
                 'dingtalk',
+                'register_form',
             ]
         ];
         foreach ($operate as $type => $item){

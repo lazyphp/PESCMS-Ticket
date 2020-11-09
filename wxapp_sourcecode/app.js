@@ -84,7 +84,7 @@ App({
           Dialog.alert({
             title: '系统提示',
             message: res.data.msg || '与服务器校验数据失败',
-            confirmButtonText: '重新登陆',
+            confirmButtonText: '重新登录',
             zIndex: 999
           }).then(() => {
             gt.loginAction();
@@ -128,7 +128,7 @@ App({
   },
 
   /**
-   * 执行登陆动作
+   * 执行登录动作
    */
   loginAction() {
 
@@ -190,7 +190,7 @@ App({
   },
 
   /**
-   * 判断登陆状态
+   * 判断登录状态
    */
   authLogin() {
     var gt = this;
@@ -214,7 +214,7 @@ App({
             Dialog.alert({
               title: '系统提示',
               message: res.data.msg || '与服务器校验数据失败',
-              confirmButtonText: '重新登陆',
+              confirmButtonText: '重新登录',
               zIndex: 999
             }).then(() => {
               gt.loginAction();
@@ -229,7 +229,7 @@ App({
   },
 
   /**
-   * 获取记录在本地的登陆验证Token
+   * 获取记录在本地的登录验证Token
    */
   getLoginToken() {
     var token = wx.getStorageSync('login_token')

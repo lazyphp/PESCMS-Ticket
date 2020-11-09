@@ -416,7 +416,13 @@ class Ticket extends \Core\Model\Model {
 
         $member = $ticket['member_id'] == '-1' ? '' : \Model\Content::findContent('member', $ticket['member_id'], 'member_id');
 
-        return ['ticket' => $ticket, 'form' => $form, 'chat' => $chat, 'member' => $member];
+        return [
+            'ticket' => $ticket,
+            'form' => $form,
+            'chat' => $chat,
+            'member' => $member,
+            'global_contact' => array_flip(\Model\Field::findField('240', true)->deFieldOptionToArray()),
+        ];
 
     }
 
@@ -475,10 +481,17 @@ class Ticket extends \Core\Model\Model {
      * @param $id 工单ID
      * @param $userID 用户的ID
      * @param $userName 用户名称
+     * @param $oldID 记录转派前负责人的ID
      * @description 此处需要手动填写用户的ID和名称是由于，除了当前的客户外，还会有一个转指派的。这时候他就需要手动声明用户信息了。
      */
-    public static function setUser($id, $userID, $userName) {
-        return self::inTicketIdWithUpdate(['user_id' => $userID, 'user_name' => $userName, 'noset' => ['ticket_id' => $id]]);
+    public static function setUser($id, $userID, $userName, $oldID = NULL) {
+        $param = ['user_id' => $userID, 'user_name' => $userName, 'noset' => ['ticket_id' => $id]];
+
+        if(!empty($oldID)){
+            $param['old_user_id'] = $oldID;
+        }
+
+        return self::inTicketIdWithUpdate($param);
     }
 
     /**
@@ -506,7 +519,9 @@ class Ticket extends \Core\Model\Model {
      * @return mixed
      */
     public static function runTime($id, $referTime, $runTime) {
-        $runTime = (time() - $referTime) + $runTime;
+        if($referTime > 0 ){
+            $runTime = (time() - $referTime) + $runTime;
+        }
         return self::inTicketIdWithUpdate(['ticket_run_time' => $runTime, 'noset' => ['ticket_id' => $id]]);
     }
 
@@ -553,7 +568,7 @@ class Ticket extends \Core\Model\Model {
                     $url = self::url('Login-index', ['back_url' => $back_url]);
             }
 
-            self::success('需要登录帐号', $url, -1);
+            self::success('需要登录账号', $url, -1);
         }
 
         /**

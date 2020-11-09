@@ -36,6 +36,16 @@
                     <li><a href="<?= $label->url('Ticket-Member-issue') ?>"><i class="am-icon-plus"></i> 新工单</a></li>
                 <?php endif; ?>
                 <li><a href="javascript:;">您好,<?= self::session()->get('ticket')['user_name']; ?></a></li>
+                <li class="am-dropdown am-dropdown-flip" data-am-dropdown>
+                    <a href="<?= $label->url('Ticket-User-notice') ?>">
+                        <i class="am-icon-envelope-o am-icon-sm"></i>
+                        <span class="msg-tips" style="display: none"></span>
+                    </a>
+                    <ul class="am-dropdown-content new-ticket">
+                        <li><a href="javascript:;" class="close-tips">暂无新工单</a></li>
+                    </ul>
+                </li>
+
                 <li class="am-dropdown" data-am-dropdown="">
                     <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
                         <i class="am-icon-male"></i> 个人中心 <span class="am-icon-caret-down"></span>
@@ -45,15 +55,7 @@
                         <li><a href="<?= $label->url('Ticket-Phrase-index') ?>"><i class="am-icon-tags"></i> 回复短语</a></li>
                     </ul>
                 </li>
-                <li class="am-dropdown am-dropdown-flip" data-am-dropdown>
-                    <a href="javascript:;">
-                        <i class="am-icon-envelope-o am-icon-sm"></i>
-                        <span class="msg-tips" style="display: none"></span>
-                    </a>
-                    <ul class="am-dropdown-content">
-                        <li><a href="javascript:;" class="close-tips">暂无新工单</a></li>
-                    </ul>
-                </li>
+
                 <?php if($label->checkAuth(GROUP . 'GETSettingaction') === true): ?>
                 <li><a href="<?= $label->url('Ticket-Index-clean', ['method' => 'GET']); ?>" class="ajax-click ajax-dialog" msg="确认需要清空缓存吗?" ><i class="am-icon-recycle"></i> 清空缓存</a></li>
                 <?php endif; ?>

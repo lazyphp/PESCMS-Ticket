@@ -23,7 +23,7 @@ class Notice extends \Core\Model\Model {
     /**
      * 生成工作消息通知发送动作
      * @param $number 工单单号
-     * @param $account 接收通知的帐号
+     * @param $account 接收通知的账号
      * @param $sendType 发送方式
      * @param $templateType 发送模版类型 | 负数则表示为 客服用的消息
      * @return mixed
@@ -40,11 +40,12 @@ class Notice extends \Core\Model\Model {
     /**
      * 添加客服消息通知
      * @param $number 工单单号
-     * @param array $user 客服帐号信息
+     * @param array $user 客服账号信息
      * @param $templateType 模版类型
      */
     public static function addCSNotice($number, array $user, $templateType){
         $cs_notice_type = json_decode(\Core\Func\CoreFunc::$param['system']['cs_notice_type'], true);
+
         foreach ($cs_notice_type as $type){
             switch ($type){
                 case 1:
@@ -61,6 +62,10 @@ class Notice extends \Core\Model\Model {
             if(empty($account)){
                 continue;
             }
+
+
+            //生成站内消息
+            \Model\CSnotice::addCSNotice($number, $user['user_id'], $templateType);
 
             self::addTicketNoticeAction($number, $account, $type, $templateType);
         }

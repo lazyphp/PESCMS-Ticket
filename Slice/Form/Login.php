@@ -24,7 +24,7 @@ class Login extends \Core\Slice\Slice{
             $this->jump($this->url('Member-index'));
         }elseif ( MODULE != 'Login' && ( empty($member)  || (!empty($member) && $expire) ) ){
             $this->session()->delete('member');
-            $this->success('请登录帐号后再访问', $this->url('Login-index', ['back_url' => base64_encode($_SERVER['REQUEST_URI'])]), -1);
+            $this->success('请登录账号后再访问', $this->url('Login-index', ['back_url' => base64_encode($_SERVER['REQUEST_URI'])]), -1);
         }else{
             $this->session()->set('login_expire', time());
         }

@@ -1,1 +1,7 @@
-/node_modules
+pages
+utils
+app.js
+app.json
+app.wxss
+package.json
+project.config.json

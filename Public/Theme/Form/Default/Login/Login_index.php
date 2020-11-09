@@ -1,6 +1,6 @@
 <div class="loginFlow">
 <?php if($system['member_login'] == 1): ?>
-    <input type="text" name="account" class="pes-login-input" placeholder="登陆账号" autofocus required="required">
+    <input type="text" name="account" class="pes-login-input" placeholder="登录账号" autofocus required="required">
 <?php elseif($system['member_login'] == 2): ?>
     <input type="text" name="phone" class="pes-login-input" placeholder="手机号码" autofocus required="required">
 <?php else: ?>
@@ -40,7 +40,7 @@
 <button type="submit" class="am-btn am-btn-primary am-radius am-btn-sm am-margin-top-sm am-btn-block">登录</button>
 
 <div class="am-input-group am-margin-bottom signBAT" style="display: none">
-    <span class="am-margin-right-xs">社交帐号登录</span>
+    <span class="am-margin-right-xs">社交账号登录</span>
     <span>
         <a href="<?= $label->url('Login-weixinAgree') ?>" class="login-weixin am-text-success"><i class="am-icon-weixin"></i> 微信</a>
         <!--        <a href="" class=""><i class="am-icon-qq"></i> QQ</a>-->

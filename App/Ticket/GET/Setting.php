@@ -132,12 +132,12 @@ class Setting extends \Core\Controller\Controller {
             (new \Expand\weixinWork())->debug_access_token();
         }
 
-        $account = $this->isG('account', '请填写接收消息的企业微信帐号');
+        $account = $this->isG('account', '请填写接收消息的企业微信账号');
 
         $result = (new \Expand\weixinWork())->notice($account, '这是测试的消息内容');
 
         echo '<pre>';
-        echo "您发送消息的帐号是: {$account} <br/>";
+        echo "您发送消息的账号是: {$account} <br/>";
         echo '<br/>';
         echo "------------下面格式化后的模板格式-------------<br/>";
         print_r(json_decode($result, true));
@@ -157,12 +157,12 @@ class Setting extends \Core\Controller\Controller {
             (new \Expand\dingtalk())->debug_access_token();
         }
 
-        $account = $this->isG('account', '请填写接收消息的钉钉企业帐号');
+        $account = $this->isG('account', '请填写接收消息的钉钉企业账号');
 
         $result = (new \Expand\dingtalk())->notice($account, '这是测试的消息内容'.date('Y-m-d H:i:s'));
 
         echo '<pre>';
-        echo "您发送消息的帐号是: {$account} <br/>";
+        echo "您发送消息的账号是: {$account} <br/>";
         echo '<br/>';
         echo "<strong>钉钉每天发送是有限额的：500条/天/人</strong> <br/>";
         echo '<br/>';

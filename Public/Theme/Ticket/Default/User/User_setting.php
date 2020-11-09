@@ -35,8 +35,8 @@
                 <div class="am-g am-g-collapse">
                     <div class="am-u-sm-12 am-u-sm-centered">
                         <div class="am-form-group">
-                            <label class="am-block">登录帐号<i class="am-text-danger">*</i></label>
-                            <input class="form-text-input input-leng3" name="account" placeholder="会员帐号" type="text" value="<?= $user_account ?>" required=""></div>
+                            <label class="am-block">登录账号<i class="am-text-danger">*</i></label>
+                            <input class="form-text-input input-leng3" name="account" placeholder="会员账号" type="text" value="<?= $user_account ?>" required=""></div>
                     </div>
                 </div>
                 <div class="am-g am-g-collapse">

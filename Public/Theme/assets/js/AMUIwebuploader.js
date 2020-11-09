@@ -21,8 +21,6 @@ $(function () {
                 duplicate: true,
                 // 文件接收服务端。
                 server: api.server,
-                // swf文件路径
-                swf: 'Uploader.swf',
                 //是否打开图库 默认为 关闭false | true开启
                 gallery: false,
 

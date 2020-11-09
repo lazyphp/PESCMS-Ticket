@@ -22,6 +22,7 @@ class Submit extends \Core\Controller\Controller{
      * 提交工单
      */
     public function ticket(){
+        $this->checkToken();
         $result = \Model\Ticket::insert();
         if(!empty($result) && is_array($result)){
             $this->success(

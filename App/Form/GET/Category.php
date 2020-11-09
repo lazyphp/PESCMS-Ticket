@@ -35,7 +35,7 @@ class Category extends \Core\Controller\Controller{
 
     /**
      * 显示提交工单列表
-     * @description 当GET参数new_index存在时且是后台已登陆，则对工单列表进行一次模板HTML缓存记录。
+     * @description 当GET参数new_index存在时且是后台已登录，则对工单列表进行一次模板HTML缓存记录。
      */
 	private function displayTicket(){
         //首页工单模板缓存文件生成

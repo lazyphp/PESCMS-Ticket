@@ -75,13 +75,64 @@ class ModelManage extends \Core\Model\Model {
         $model = strtolower($model);
         $table = self::$modelPrefix . $model;
 
-        $initResult = self::db()->alter("CREATE TABLE IF NOT EXISTS `{$table}` (`{$model}_id` int(11) NOT NULL AUTO_INCREMENT, `{$model}_listsort` int(11) NOT NULL DEFAULT '0',`{$model}_status` tinyint(4) NOT NULL DEFAULT '0', `{$model}_url` VARCHAR( 255 ) NOT NULL DEFAULT '', `{$model}_createtime` int(11) NOT NULL DEFAULT '0', PRIMARY KEY (`{$model}_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;");
+        //前台模型才会创建url字段
+        $url = $_POST['attr'] == 1 ? "`{$model}_url` VARCHAR( 255 ) NOT NULL DEFAULT ''," : '';
+
+        $initResult = self::db()->alter("CREATE TABLE IF NOT EXISTS `{$table}` (`{$model}_id` int(11) NOT NULL AUTO_INCREMENT, `{$model}_listsort` int(11) NOT NULL DEFAULT '0',`{$model}_status` tinyint(4) NOT NULL DEFAULT '0', {$url} `{$model}_createtime` int(11) NOT NULL DEFAULT '0', PRIMARY KEY (`{$model}_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;");
         if ($initResult == false) {
             $log = new \Expand\Log();
             $failLog = "Create Model Table : {$table}" . date("Y-m-d H:i:s");
             $log->creatLog('modelError', $failLog);
             self::error("创建{$table}表失败");
         }
+    }
+
+    /**
+     * 创建模型的基础权限节点
+     * @param $modelId
+     */
+    public static function createNode($modelId, $model){
+        //后台模型才创建权限节点
+        if($_POST['attr'] != 2){
+            return true;
+        }
+
+        $title = self::p('title');
+
+        $nodeID = self::db('node')->insert([
+            'node_name' => $title,
+            'node_parent' => '0',
+            'node_msg' => '',
+            'node_method_type' => 'GET',
+            'node_value' => ucfirst($model),
+            'node_listsort' => $modelId * 100,
+        ]);
+
+        //列表页节点
+        self::db('node')->insert([
+            'node_name' => $title.'列表',
+            'node_parent' => $nodeID,
+            'node_msg' => '',
+            'node_method_type' => 'GET',
+            'node_value' => 'index',
+            'node_check_value' => GROUP.'GET'.ucfirst($model).'action',
+            'node_controller' => $nodeID,
+        ]);
+
+        //CURD节点
+        $i = 1;
+        foreach (['GET' => '新增/编辑', 'POST' =>'请求新增', 'PUT' => '请求更新', 'DELETE' => '请求删除'] as $method => $name){
+            self::db('node')->insert([
+                'node_name' => $name.$title,
+                'node_parent' => $nodeID,
+                'node_method_type' => $method,
+                'node_value' => 'action',
+                'node_check_value' => GROUP.$method.ucfirst($model).'action',
+                'node_controller' => $nodeID,
+                'node_listsort' => $i++,
+            ]);
+        }
+
     }
 
     /**

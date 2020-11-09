@@ -179,6 +179,11 @@ class MailTemplate extends \Core\Model\Model {
             $ticket['member_name'] = '匿名用户';
         }
 
+        if($ticket['old_user_id'] > 0){
+            $ticket['old_user_id'] = \Model\Content::findContent('user', $ticket['old_user_id'], 'user_id', 'user_name')['user_name'];
+        }
+
+
         //前台跳转链接
         $ticket['ticket_link'] = self::getViewLink($number , self::$ticket['ticket_contact']);
 

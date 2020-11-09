@@ -39,6 +39,8 @@ class Model extends Content {
          */
         \Model\ModelManage::setInitField($modelId);
 
+        \Model\ModelManage::createNode($modelId, $modelName);
+
         $this->db()->commit();
 
         $initResult = \Model\ModelManage::initModelTable(strtolower($modelName));

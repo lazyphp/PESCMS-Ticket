@@ -158,8 +158,8 @@
 
     </block>
 
-    <view class="pes-text-center" style="width: 100px;margin:10px auto">
-      <van-button icon="completed" square type="primary" size="small" block disabled="{{submitLoading}}"
+    <view class="pes-text-center" style="width: 200px;margin:10px auto">
+      <van-button icon="completed" square type="primary" size="small" disabled="{{submitLoading}}"
         loading="{{submitLoading}}" loading-text="正在提交..." formType="submit">提交</van-button>
     </view>
 

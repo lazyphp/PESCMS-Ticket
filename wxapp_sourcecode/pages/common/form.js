@@ -259,15 +259,6 @@ Component({
 
       var data = e.detail.value;
 
-      //选择小程序留言方式，则检查订阅生效
-      if (data.contact == '6') {
-        wx.requestSubscribeMessage({
-          tmplIds: [this.data.templateList[1], this.data.templateList[3], this.data.templateList[6]],
-          success(res) {
-          }
-        })
-      }
-
       var gt = this;
 
       //处理空表单内容
@@ -301,9 +292,29 @@ Component({
             })
           } else if (res.data.status == 200) {
             Toast.success('工单提交成功!');
-            wx.redirectTo({
-              url: '../../pages/ticket/detail?number=' + res.data.data
-            })
+            var number = res.data.data;
+
+            //选择小程序留言方式，则检查订阅生效
+            if (data.contact == '6') {
+              wx.requestSubscribeMessage({
+                tmplIds: [gt.data.templateList[1], gt.data.templateList[3], gt.data.templateList[6]],
+                success(res) {
+                  wx.redirectTo({
+                    url: '../../pages/ticket/detail?number=' + number
+                  })
+                },
+                fail(res){
+                  wx.redirectTo({
+                    url: '../../pages/ticket/detail?number=' + number
+                  })
+                }
+              })
+            }else{
+              wx.redirectTo({
+                url: '../../pages/ticket/detail?number=' + res.data.data
+              })
+            }
+
           }
         },
         fail(res) {

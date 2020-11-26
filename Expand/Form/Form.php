@@ -16,11 +16,24 @@ namespace Expand\Form;
  */
 class Form {
 
+    private static $accept = [];
+
+    public function __construct() {
+        foreach (['upload_img', 'upload_file'] as $value){
+            if (empty(self::$accept[$value])){
+                self::$accept[$value] = implode(',', json_decode(\Model\Content::findContent('option', $value, 'option_name')['value'], true));
+            }
+        }
+
+
+    }
+
     /**
      * 生成对应的HTML表单内容
      * @param type $field 提交过来的字段
      */
     public function formList($field) {
+
         switch ($field['field_type']) {
             case 'encrypt':
                 require 'theme/textarea.php';

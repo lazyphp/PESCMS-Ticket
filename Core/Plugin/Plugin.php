@@ -38,9 +38,10 @@ class Plugin{
             if(!$this->checkPluginFile(explode("\\", $key)) || empty($item[$type]) ){
                 continue;
             }
+
             foreach ($item[$type] as $action => $auth){
                 if(strcmp($this->placeholder($auth), GROUP.'-'.MODULE.'-'.ACTION) !== 0){
-                    return false;
+                    continue;
                 }
 
                 if(empty(self::$pluginObj[$key])){

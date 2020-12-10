@@ -4,18 +4,21 @@ namespace App\Form\GET;
 class Login extends \Core\Controller\Controller {
 
     /**
-     * 登录帐号
+     * 登录账号
      */
     public function index(){
-        $this->assign('title', '登录帐号');
+        $this->assign('title', '登录账号');
         $this->layout('', 'Login_layout');
     }
 
     /**
-     * 注册帐号
+     * 注册账号
      */
     public function signup(){
-        $this->assign('title', '注册帐号');
+        $registerForm = json_decode(\Core\Func\CoreFunc::$param['system']['register_form'], true);
+
+        $this->assign('registerForm', $registerForm);
+        $this->assign('title', '注册账号');
         $this->layout('', 'Login_layout');
     }
 
@@ -136,7 +139,7 @@ class Login extends \Core\Controller\Controller {
 
         $this->assign('user', $user);
 
-        $this->assign('title', '注册帐号');
+        $this->assign('title', '注册账号');
         $this->layout('', 'Login_layout');
     }
 

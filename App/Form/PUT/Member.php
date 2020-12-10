@@ -50,7 +50,7 @@ class Member extends \Core\Controller\Controller {
     }
 
     /**
-     * 更新当前登录帐号的邮箱地址
+     * 更新当前登录账号的邮箱地址
      */
     public function changeEmail(){
         $email = $this->isP('email', '请填写新邮箱地址！');

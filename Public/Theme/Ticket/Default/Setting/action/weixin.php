@@ -80,7 +80,7 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">企业微信调试</label>
-                    <input type="text" class="test_account am-inline" placeholder="接收消息的企业微信帐号" style="width: 20%">
+                    <input type="text" class="test_account am-inline" placeholder="接收消息的企业微信账号" style="width: 20%">
                     <a href="javascript:;" data="<?= $label->url(GROUP.'-Setting-weixinWorkTest') ?>" type="submit" class="am-inline am-btn am-btn-warning send-test" >企业消息测试</a>
                     <a href="<?= $label->url(GROUP.'-Setting-weixinWorkTest', ['debug_access_token' => true]) ?>" target="_blank">[access_token调试]</a>
 

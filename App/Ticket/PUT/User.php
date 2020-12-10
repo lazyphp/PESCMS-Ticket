@@ -18,7 +18,7 @@ class User extends Content {
      */
     public function setting() {
         $userID = $this->session()->get('ticket')['user_id'];
-        foreach (['帐号' => 'account', '邮箱' => 'mail', '企业微信' => 'weixinWork'] as $key => $item) {
+        foreach (['账号' => 'account', '邮箱' => 'mail', '企业微信' => 'weixinWork'] as $key => $item) {
             if ($item == 'weixinWork') {
                 $data["user_{$item}"] = $this->p($item);
                 if (!empty($data["user_{$item}"])) {
@@ -33,7 +33,7 @@ class User extends Content {
         }
 
         if(strcmp($data['user_account'], $this->session()->get('ticket')['user_account']) != 0 && ( empty($_POST['password']) || empty($_POST['repassword']) ) ){
-            $this->error('修改登录帐号需要填写新密码');
+            $this->error('修改登录账号需要填写新密码');
         }
 
         if (!empty($_POST['password']) && !empty($_POST['repassword'])) {

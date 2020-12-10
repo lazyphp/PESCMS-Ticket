@@ -553,7 +553,7 @@ class Ticket extends \Core\Model\Model {
                     $url = self::url('Login-index', ['back_url' => $back_url]);
             }
 
-            self::success('需要登录帐号', $url, -1);
+            self::success('需要登录账号', $url, -1);
         }
 
         /**

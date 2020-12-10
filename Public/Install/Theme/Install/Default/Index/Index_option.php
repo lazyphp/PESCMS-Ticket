@@ -9,9 +9,9 @@
 </div>
 
 <div class="am-form-group">
-    <label class="am-u-sm-2 am-form-label">管理员帐号:</label>
+    <label class="am-u-sm-2 am-form-label">管理员账号:</label>
     <div class="am-u-sm-10">
-        <input type="text" name="account" placeholder="管理员帐号" required>
+        <input type="text" name="account" placeholder="管理员账号" required>
     </div>
 </div>
 

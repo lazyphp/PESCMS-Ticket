@@ -92,7 +92,7 @@ class weixin {
 
     /**
      * 删除模板
-     * @param $id 公众帐号下模板消息ID
+     * @param $id 公众账号下模板消息ID
      * @return mixed
      */
     public function deleteTemplate($id){

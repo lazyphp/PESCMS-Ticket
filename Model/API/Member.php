@@ -33,9 +33,9 @@ class Member extends \Core\Model\Model {
             ]);
 
         if(empty($result)){
-            self::error('登陆信息不存在或者已经超时，请重新登陆');
+            self::error('登录信息不存在或者已经超时，请重新登录');
         }elseif(!empty($result) && strcmp($result['certificate_systeminfo'], md5($systeminfo)) != 0 ){
-            self::error('设备信息发生变化，登陆信息已更改，请重新登陆');
+            self::error('设备信息发生变化，登录信息已更改，请重新登录');
         }
 
         header("HTTP/1.1 200 Status OK");

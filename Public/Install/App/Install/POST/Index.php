@@ -50,7 +50,7 @@ class Index extends \App\Install\Common {
         $data['DB_TYPE'] = 'mysql';
         $data['DB_HOST'] = $this->isP('db_host', '请填写数据库地址!');
         $data['DB_NAME'] = $this->isP('db_name', '请填写数据库名称!');
-        $data['DB_USER'] = $this->isP('db_account', '请填写数据库帐号!');
+        $data['DB_USER'] = $this->isP('db_account', '请填写数据库账号!');
         $data['DB_PWD'] = empty($_POST['db_passwd']) ? '' : $this->p('db_passwd');
         $data['DB_PORT'] = $this->isP('db_port', '请填写数据库端口!');
         $data['DB_PREFIX'] = 'pes_';
@@ -157,7 +157,7 @@ header('Location: {$document}?g=Ticket&m=Login&a=index');";
     private function setSiteInfo(){
         $option['domain'] = $this->isP('domain', '请填写域名');
 
-        $data['user_account'] = $this->isP('account', '请填写管理员帐号');
+        $data['user_account'] = $this->isP('account', '请填写管理员账号');
         $data['user_password'] = \Core\Func\CoreFunc::generatePwd($data['user_account'].$this->isP('passwd', '请填写管理员密码'));
         $data['user_name'] = $this->isP('name', '请填写管理员名称');
         $data['user_mail'] = $this->isP('mail', '请填写管理员邮箱');
@@ -184,7 +184,7 @@ header('Location: {$document}?g=Ticket&m=Login&a=index');";
 
         $data['user_status'] = '1';
 
-        //写入管理员帐号
+        //写入管理员账号
         $this->db('user')->insert($data);
     }
 

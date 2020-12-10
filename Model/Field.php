@@ -97,7 +97,8 @@ class Field extends \Core\Model\Model {
      */
     public static function addTableField($model, $fieldName, $fieldType) {
         $model = strtolower($model);
-        return self::db()->alter("ALTER TABLE `" . self::$modelPrefix . "{$model}` ADD `{$model}_{$fieldName}`  {$fieldType['TYPE']} NOT NULL {$fieldType['DEFAULT']};");
+        $isNull = $_POST['is_null'] == 0 ? 'NOT NULL' : 'NULL';
+        return self::db()->alter("ALTER TABLE `" . self::$modelPrefix . "{$model}` ADD `{$model}_{$fieldName}`  {$fieldType['TYPE']} {$isNull} {$fieldType['DEFAULT']};");
     }
 
     /**

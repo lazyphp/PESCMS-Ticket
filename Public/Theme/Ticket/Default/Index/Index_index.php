@@ -69,6 +69,31 @@
         <div class="am-u-sm-12 am-u-lg-4">
 
             <div class="am-panel am-panel-default">
+                <div class="am-panel-bd am-margin-bottom">
+                    <span class="am-fl"><strong>公告栏</strong></span>
+                    <a href="<?= $label->url('Ticket-Bulletin-listing') ?>" class="am-fr">更多>></a>
+                </div>
+                <table class="am-table am-table-hover am-text-sm">
+                    <?php if (empty($bulletin)): ?>
+                    <tr>
+                        <td>暂无公告</td>
+                    </tr>
+                    <?php else: ?>
+                        <?php foreach ($bulletin as $key => $value): ?>
+                            <tr>
+                                <td>
+                                    <a href="<?= $label->url('Ticket-Bulletin-view', ['id' => $value['bulletin_id'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>"><?= $value['bulletin_title'] ?></a>
+                                </td>
+                                <td>
+                                    <?= date('Y-m-d', $value['bulletin_createtime']) ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </table>
+            </div>
+
+            <div class="am-panel am-panel-default">
                 <div class="am-panel-hd">
                     <strong>我的信息</strong>
                 </div>

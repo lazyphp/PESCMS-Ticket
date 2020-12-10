@@ -30,6 +30,8 @@ class Index extends \Core\Controller\Controller {
 
         $this->threeTypeTicket();
 
+        $this->bulletin();
+
         $this->layout();
     }
 
@@ -166,6 +168,18 @@ class Index extends \Core\Controller\Controller {
 
 
         $this->assign('list', $list);
+    }
+
+    /**
+     * 获取公告栏信息
+     */
+    private function bulletin(){
+        $bulletin = $this->db('bulletin')->field('bulletin_id, bulletin_title, bulletin_createtime')->where('bulletin_status = 1 AND bulletin_group_id LIKE :bulletin_group_id')->order('bulletin_listsort ASC, bulletin_id DESC')->select([
+            'bulletin_group_id' => '%,'.$this->session()->get('ticket')['user_group_id'].',%'
+        ]);
+
+        $this->assign('bulletin', $bulletin);
+        
     }
 
     /**

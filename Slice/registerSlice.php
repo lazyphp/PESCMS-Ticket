@@ -168,6 +168,13 @@ $SLICE_ARRYR = [
         ['\Ticket\HandleForm\HandleSetting']
     ],
 
+    //注册公告栏 添加/编辑 提交的表单内容
+    'TICKET-BULLETIN-ACTION' => [
+        'any',
+        ['Ticket-Bulletin-action'],
+        ['\Ticket\HandleForm\HandleBulletin']
+    ],
+
     //注册全局插件访问入口
     'GLOBAL-APPLICATION-PLUGIN' => [
         'any',

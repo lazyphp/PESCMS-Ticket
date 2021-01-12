@@ -62,14 +62,17 @@
                 <div class="am-form-group">
                     <label class="am-block">注册填写选项<i class="am-text-danger">*</i></label>
                     <label class="am-checkbox-inline">
-                        <input type="checkbox" value="account" name="register_form[account]"  <?= $register_form['account'] == 'account' ? 'checked="checked"' : '' ?> > 邮箱地址
+                        <input type="checkbox" value="email" name="register_form[email]"  <?= $register_form['email'] == 'email' ? 'checked="checked"' : '' ?> > 邮箱地址
                     </label>
                     <label class="am-checkbox-inline">
-                        <input type="checkbox" value="email" name="register_form[email]"  <?= $register_form['email'] == 'email' ? 'checked="checked"' : '' ?>> 账号
+                        <input type="checkbox" value="account" name="register_form[account]"  <?= $register_form['account'] == 'account' ? 'checked="checked"' : '' ?>> 账号
                     </label>
                     <label class="am-checkbox-inline">
                         <input type="checkbox" value="phone" name="register_form[phone]"  <?= $register_form['phone'] == 'phone' ? 'checked="checked"' : '' ?>> 手机号码
                     </label>
+                </div>
+                <div class="pes-alert pes-alert-info am-text-xs " >
+                    <i class="am-icon-lightbulb-o"></i> 更改此选项时，请确认网站当前客户账号审核规则。否则将会导致客户无法完成正常注册流程！
                 </div>
             </div>
         </div>

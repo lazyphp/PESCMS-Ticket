@@ -78,10 +78,19 @@ class Login extends \Core\Controller\Controller {
             'member_createtime' => time(),
         ];
 
-        $param['member_account'] = $this->isP('account', '请填写登录账号');
+        $param['member_email'] = empty($registerForm['email']) ? \Model\Extra::getOnlyNumber().time().'@default.com' : $this->isP('email', '请填写邮箱地址');
+
+
+        $param['member_account'] = empty($registerForm['account']) ? \Model\Extra::getOnlyNumber().time() : $this->isP('account', '请填写登录账号');
+
+        if(!empty($registerForm['phone'])){
+            $param['member_phone'] = $this->isP('phone', '请填写手机号码');
+            if (\Model\Extra::checkInputValueType($param['member_phone'], 2) == false) {
+                $this->error('请输入正确的手机号码');
+            }
+        }
+
         $param['member_name'] = $this->isP('name', '请填写名字');
-        $param['member_email'] = $this->isP('email', '请填写邮箱地址');
-        $param['member_phone'] = $this->isP('phone', '请填写手机号码');
         $param['member_organize_id'] = 1;
 
         if(!empty($_POST['weixin'])){
@@ -93,9 +102,7 @@ class Login extends \Core\Controller\Controller {
         if (\Model\Extra::checkInputValueType($param['member_email'], 1) == false) {
             $this->error('请输入正确的邮箱地址');
         }
-        if (\Model\Extra::checkInputValueType($param['member_phone'], 2) == false) {
-            $this->error('请输入正确的手机号码');
-        }
+
 
         foreach ([
             'email' => '该邮箱地址已存在',
@@ -121,6 +128,9 @@ class Login extends \Core\Controller\Controller {
      * @param $msg 提示信息
      */
     private function checkRepeatInfo($type, $param, $msg){
+        if(empty($param["member_{$type}"])){
+            return true;
+        }
         $checkRepeat = $this->db('member')->where("member_{$type} = :member_{$type}")->find([
             "member_{$type}" => $param["member_{$type}"]
         ]);

@@ -475,10 +475,17 @@ class Ticket extends \Core\Model\Model {
      * @param $id 工单ID
      * @param $userID 用户的ID
      * @param $userName 用户名称
+     * @param $oldID 记录转派前负责人的ID
      * @description 此处需要手动填写用户的ID和名称是由于，除了当前的客户外，还会有一个转指派的。这时候他就需要手动声明用户信息了。
      */
-    public static function setUser($id, $userID, $userName) {
-        return self::inTicketIdWithUpdate(['user_id' => $userID, 'user_name' => $userName, 'noset' => ['ticket_id' => $id]]);
+    public static function setUser($id, $userID, $userName, $oldID = NULL) {
+        $param = ['user_id' => $userID, 'user_name' => $userName, 'noset' => ['ticket_id' => $id]];
+
+        if(!empty($oldID)){
+            $param['old_user_id'] = $oldID;
+        }
+
+        return self::inTicketIdWithUpdate($param);
     }
 
     /**

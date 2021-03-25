@@ -55,7 +55,7 @@ class Ticket extends \Core\Controller\Controller {
                     if (empty($checkUser)) {
                         $this->error('转派的用户不存在');
                     }
-                    \Model\Ticket::setUser($ticket['ticket_id'], $checkUser['user_id'], $checkUser['user_name']);
+                    \Model\Ticket::setUser($ticket['ticket_id'], $checkUser['user_id'], $checkUser['user_name'], $this->session()->get('ticket')['user_id']);
                     $templateType = 4;
                     $content = $csText['assign']['content'];
                     \Model\Notice::addCSNotice($ticket['ticket_number'], $checkUser, -$templateType);

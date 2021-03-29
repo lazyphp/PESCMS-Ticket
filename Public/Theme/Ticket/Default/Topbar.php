@@ -50,7 +50,7 @@
                         <i class="am-icon-envelope-o am-icon-sm"></i>
                         <span class="msg-tips" style="display: none"></span>
                     </a>
-                    <ul class="am-dropdown-content">
+                    <ul class="am-dropdown-content new-ticket">
                         <li><a href="javascript:;" class="close-tips">暂无新工单</a></li>
                     </ul>
                 </li>

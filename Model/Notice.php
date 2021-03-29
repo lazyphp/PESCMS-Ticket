@@ -45,6 +45,7 @@ class Notice extends \Core\Model\Model {
      */
     public static function addCSNotice($number, array $user, $templateType){
         $cs_notice_type = json_decode(\Core\Func\CoreFunc::$param['system']['cs_notice_type'], true);
+
         foreach ($cs_notice_type as $type){
             switch ($type){
                 case 1:
@@ -61,6 +62,10 @@ class Notice extends \Core\Model\Model {
             if(empty($account)){
                 continue;
             }
+
+
+            //生成站内消息
+            \Model\CSnotice::addCSNotice($number, $user['user_id'], $templateType);
 
             self::addTicketNoticeAction($number, $account, $type, $templateType);
         }

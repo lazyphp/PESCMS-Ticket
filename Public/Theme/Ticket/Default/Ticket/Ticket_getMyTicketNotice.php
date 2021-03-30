@@ -3,6 +3,6 @@
 <?php else: ?>
 
     <?php foreach($list as $key => $value): ?>
-        <li><a href="javascript:;" class="close-tips"><?= sprintf('有%s条%s', $value['num'], $label->getFieldOptionToMatch(255, abs($value['csnotice_type']))) ?></a></li>
+        <li><a href="<?= $label->url('Ticket-User-notice', ['type' => $value['csnotice_type']]) ?>" class="close-tips"><?= sprintf('有%s条%s', $value['num'], $label->getFieldOptionToMatch(255, $value['csnotice_type'])) ?></a></li>
     <?php endforeach; ?>
 <?php endif; ?>

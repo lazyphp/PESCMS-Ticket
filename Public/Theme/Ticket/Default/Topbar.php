@@ -46,7 +46,7 @@
                     </ul>
                 </li>
                 <li class="am-dropdown am-dropdown-flip" data-am-dropdown>
-                    <a href="javascript:;">
+                    <a href="<?= $label->url('Ticket-User-notice') ?>">
                         <i class="am-icon-envelope-o am-icon-sm"></i>
                         <span class="msg-tips" style="display: none"></span>
                     </a>

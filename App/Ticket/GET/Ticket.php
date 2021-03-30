@@ -164,9 +164,17 @@ class Ticket extends \Core\Controller\Controller {
      * 依据用户组ID查询最新工单
      */
     public function getMyTicketNotice(){
-        $list = $this->db('csnotice')->field('COUNT(csnotice_type) AS num, csnotice_type')->where('user_id = :user_id AND csnotice_read = 0 ')->group('csnotice_type')->select([
+        $list = $this->db('csnotice')->field('COUNT(csnotice_type) AS num, ABS(csnotice_type) AS csnotice_type')->where('user_id = :user_id AND csnotice_read = 0 ')->group('csnotice_type')->select([
             'user_id' => $this->session()->get('ticket')['user_id']
         ]);
+
+        //排序
+        uasort($list, function ($a, $b){
+            if ($a['csnotice_type'] == $b['csnotice_type']) {
+                return 0;
+            }
+            return ($a['csnotice_type'] < $b['csnotice_type']) ? -1 : 1;
+        });
 
         $this->assign('list', $list);
 

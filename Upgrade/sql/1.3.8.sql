@@ -15,3 +15,5 @@ ALTER TABLE `pes_csnotice`
   ADD PRIMARY KEY (`csnotice_id`);
 ALTER TABLE `pes_csnotice`
   MODIFY `csnotice_id` int(11) NOT NULL AUTO_INCREMENT;
+
+UPDATE `pes_field` SET `field_option` = '{\"\\u65b0\\u7684\\u5de5\\u5355\":\"1\",\"\\u5de5\\u5355\\u56de\\u590d\":\"3\",\"\\u5de5\\u5355\\u8f6c\\u4ea4\":\"4\",\"\\u5de5\\u5355\\u8d85\\u65f6\":\"504\"}' WHERE `field_id` = 255;

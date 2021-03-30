@@ -22,4 +22,38 @@ class User extends Content {
         $this->assign('title', '个人信息');
         $this->layout();
     }
+
+    /**
+     * 个人的站内消息
+     */
+    public function notice(){
+
+        $condition = 'cn.user_id = :user_id';
+
+        $param = [
+            'user_id' => $this->session()->get('ticket')['user_id'],
+        ];
+
+        if(!empty($_GET['type'])){
+            $condition .= " AND cn.csnotice_type = :csnotice_type ";
+            $param['csnotice_type'] = (int) $this->g('type') * -1;
+        }
+
+        //未读更新已读
+        $this->db('csnotice cn')->where($condition.' AND cn.csnotice_read = 0  ')->update(array_merge(['csnotice_read' => 1], [
+            'noset' => $param,
+        ]));
+
+        //默认100条记录
+        $list = $this->db('csnotice AS cn')->field('cn.*, ABS(cn.csnotice_type) AS csnotice_type, t.ticket_title')->join("{$this->prefix}ticket AS t ON t.ticket_number = cn.ticket_number")->where($condition)->order('csnotice_id DESC')->limit(100)->select($param);
+
+        $option = json_decode(htmlspecialchars_decode(\Model\Content::findContent('field', '255', 'field_id')['field_option']), true);
+
+
+        $this->assign('type', $option);
+        $this->assign('typeName', array_flip($option));
+        $this->assign('list', $list);
+
+        $this->layout();
+    }
 }

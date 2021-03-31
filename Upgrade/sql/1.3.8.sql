@@ -8,7 +8,8 @@ CREATE TABLE `pes_csnotice` (
   `user_id` int(11) NOT NULL,
   `csnotice_type` int(11) NOT NULL,
   `csnotice_time` int(11) NOT NULL,
-  `csnotice_read` tinyint(1) NOT NULL COMMENT '是否标记已读'
+  `csnotice_read` tinyint(1) NOT NULL COMMENT '是否标记已读',
+  `csnotice_read_time` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='客服站内消息';
 
 ALTER TABLE `pes_csnotice`

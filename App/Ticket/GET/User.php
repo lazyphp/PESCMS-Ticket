@@ -28,6 +28,11 @@ class User extends Content {
      */
     public function notice(){
 
+        //删除7天已读消息
+        self::db('csnotice')->where('csnotice_read = 1 AND csnotice_read_time < :time')->delete([
+            'time' => time() - 86400 * 7
+        ]);
+
         $condition = 'cn.user_id = :user_id';
 
         $param = [
@@ -40,7 +45,7 @@ class User extends Content {
         }
 
         //未读更新已读
-        $this->db('csnotice cn')->where($condition.' AND cn.csnotice_read = 0  ')->update(array_merge(['csnotice_read' => 1], [
+        $this->db('csnotice cn')->where($condition.' AND cn.csnotice_read = 0  ')->update(array_merge(['csnotice_read' => 1, 'csnotice_read_time' => time()], [
             'noset' => $param,
         ]));
 

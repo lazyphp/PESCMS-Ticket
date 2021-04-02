@@ -28,7 +28,7 @@ class Ticket extends \Core\Controller\Controller {
         if (empty($ticket)) {
             $this->error('该工单不存在');
         }
-        
+
         $csText = \Model\Option::csText();
 
         switch ($ticket['ticket_status']) {
@@ -87,7 +87,14 @@ class Ticket extends \Core\Controller\Controller {
 
         //只有勾选告知客户才生成通知(完成工单不受影响)，尽量减少对客户的滋扰。
         if($_POST['notice'] == 1 || $_POST['assign'] == '4' ){
-            \Model\Notice::addTicketNoticeAction($ticket['ticket_number'], $ticket['ticket_contact_account'], $ticket['ticket_contact'], $templateType);
+
+            //没有选择通知方式或者匿名工单，则按照工单基础表中记录的联系方式生成通知。
+            if(empty($_POST['contact_type']) || $ticket['member_id'] == '-1' ){
+                \Model\Notice::addTicketNoticeAction($ticket['ticket_number'], $ticket['ticket_contact_account'], $ticket['ticket_contact'], $templateType);
+            }else{
+                $this->manyTicketNotice($ticket, $templateType);
+            }
+
         }
 
 
@@ -103,6 +110,35 @@ class Ticket extends \Core\Controller\Controller {
             -1
         );
 
+    }
+
+    /**
+     * 多个留言方式触发
+     * @param $ticket
+     * @param $templateType
+     */
+    private function manyTicketNotice($ticket, $templateType){
+        $member = \Model\Member::getMemberWithID($ticket['member_id']);
+        foreach ($_POST['contact_type'] as $contact){
+            switch ($contact){
+                case '1':
+                    $account = $member['member_email'];
+                    break;
+                case '2':
+                    $account = $member['member_phone'];
+                    break;
+                case '3':
+                    $account = $member['member_weixin'];
+                    break;
+                case '6':
+                    $account = $member['member_wxapp'];
+                    break;
+            }
+            if(empty($account)){
+                continue;
+            }
+            \Model\Notice::addTicketNoticeAction($ticket['ticket_number'], $account, (int) $contact, $templateType);
+        }
     }
 
     /**

@@ -416,7 +416,13 @@ class Ticket extends \Core\Model\Model {
 
         $member = $ticket['member_id'] == '-1' ? '' : \Model\Content::findContent('member', $ticket['member_id'], 'member_id');
 
-        return ['ticket' => $ticket, 'form' => $form, 'chat' => $chat, 'member' => $member];
+        return [
+            'ticket' => $ticket,
+            'form' => $form,
+            'chat' => $chat,
+            'member' => $member,
+            'global_contact' => array_flip(\Model\Field::findField('240', true)->deFieldOptionToArray()),
+        ];
 
     }
 

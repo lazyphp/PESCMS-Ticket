@@ -18,6 +18,8 @@ class Field extends \Core\Model\Model {
 
     public static $model;
 
+    private static $findFieldResult;
+
     /**
      * 列出对应的模型的字段
      * @param type $modelId 模型ID
@@ -36,11 +38,16 @@ class Field extends \Core\Model\Model {
         return self::db('field')->where($where)->order('field_listsort ASC, field_id DESC')->select($data);
     }
 
+
     /**
-     * 查找字段
+     * 快速查找字段
+     * @param $fieldId 字段ID
+     * @param bool $link 是否连贯操作. 有 deFieldOptionToArray
+     * @return static
      */
-    public static function findField($fieldId) {
-        return self::db('field')->where('field_id = :field_id')->find(array('field_id' => $fieldId));
+    public static function findField($fieldId, $link = false) {
+        self::$findFieldResult =  self::db('field')->where('field_id = :field_id')->find(array('field_id' => $fieldId));
+        return $link == true ? new static() : self::$findFieldResult ;
     }
 
     /**
@@ -195,6 +202,10 @@ class Field extends \Core\Model\Model {
         }
 
         return json_encode($option);
+    }
+
+    public static function deFieldOptionToArray(){
+        return json_decode(htmlspecialchars_decode(self::$findFieldResult['field_option']), true);
     }
 
     /**

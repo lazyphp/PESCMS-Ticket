@@ -52,8 +52,7 @@ class User extends Content {
         //默认100条记录
         $list = $this->db('csnotice AS cn')->field('cn.*, ABS(cn.csnotice_type) AS csnotice_type, t.ticket_title')->join("{$this->prefix}ticket AS t ON t.ticket_number = cn.ticket_number")->where($condition)->order('csnotice_id DESC')->limit(100)->select($param);
 
-        $option = json_decode(htmlspecialchars_decode(\Model\Content::findContent('field', '255', 'field_id')['field_option']), true);
-
+        $option = \Model\Field::findField('255', true)->deFieldOptionToArray();
 
         $this->assign('type', $option);
         $this->assign('typeName', array_flip($option));

@@ -99,7 +99,6 @@
                                     </div>
                                 <?php endif; ?>
 
-
                                 <div class="am-form-group">
                                     <label class="am-form-label am-margin-bottom-0">是否通知 : </label>
                                     <label class="form-checkbox-label am-checkbox-inline">
@@ -110,6 +109,21 @@
                                         <i class="am-icon-lightbulb-o"></i> 若回复内容非常重要，请勾选告知客户，以便客户知道业务解决情况。
                                     </div>
                                 </div>
+
+                                <?php if($ticket_member > 0): ?>
+                                    <div class="am-form-group">
+                                        <label class="am-form-label am-margin-bottom-0">通知方式 : </label>
+                                        <?php foreach(explode(',', $ticket_model_contact) as $key => $value): ?>
+                                            <label class="form-checkbox-label am-checkbox-inline">
+                                                <input type="checkbox" name="contact_type[]" value="<?= $value ?>">
+                                                <?= $global_contact[$value] ?>
+                                            </label>
+                                        <?php endforeach; ?>
+                                        <div class="pes-alert pes-alert-warning am-text-xs " data-am-alert>
+                                            <i class="am-icon-lightbulb-o"></i> 不勾选则默认只发送工单填写时的联系方式
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
 
                                 <button type="submit" id="btn-submit" class="am-btn am-btn-primary am-btn-xs" data-am-loading="{spinner: 'circle-o-notch', loadingText: '提交中...', resetText: '再次提交'}">提交
                                 </button>

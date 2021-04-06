@@ -110,7 +110,7 @@
                                     </div>
                                 </div>
 
-                                <?php if($ticket_member > 0): ?>
+                                <?php if($member_id > 0): ?>
                                     <div class="am-form-group">
                                         <label class="am-form-label am-margin-bottom-0">通知方式 : </label>
                                         <?php foreach(explode(',', $ticket_model_contact) as $key => $value): ?>
@@ -120,7 +120,7 @@
                                             </label>
                                         <?php endforeach; ?>
                                         <div class="pes-alert pes-alert-warning am-text-xs " data-am-alert>
-                                            <i class="am-icon-lightbulb-o"></i> 不勾选则默认只发送工单填写时的联系方式
+                                            <i class="am-icon-lightbulb-o"></i> 不勾选则默认只发送工单填写时的联系方式。反之只发送勾选的。
                                         </div>
                                     </div>
                                 <?php endif; ?>

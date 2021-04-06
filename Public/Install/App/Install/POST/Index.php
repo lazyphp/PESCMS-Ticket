@@ -39,6 +39,8 @@ class Index extends \App\Install\Common {
         fclose(fopen(APP_PATH . 'install.txt', 'w+'));
         fclose(fopen(APP_PATH . 'index.html', 'w+'));
 
+        \Model\Extra::clearDirAllFile(PES_CORE.'/Upgrade/sql', PES_CORE.'/Upgrade/sql');
+
         $this->success(['msg' => '安装完成!', 'data' => $this->manageUrl]);
     }
 

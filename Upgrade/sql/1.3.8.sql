@@ -45,7 +45,7 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (NULL, LAST_INSERT_ID(), 'createtime', '创建时间', 'date', '', '', '', 0, 99, 1, 1, 1, 0),
 (NULL, LAST_INSERT_ID(), 'title', '标题', 'text', '', '', '', 1, 1, 1, 1, 1, 0),
 (NULL, LAST_INSERT_ID(), 'group_id', '可见客服分组', 'multiple', '', '', '', 0, 2, 1, 1, 1, 0),
-(NULL, LAST_INSERT_ID(), 'description', '内容', 'editor', '', '', '', 1, 3, 1, 1, 1, 0);
+(NULL, LAST_INSERT_ID(), 'description', '内容', 'editor', '', '', '', 1, 3, 0, 1, 1, 0);
 
 INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES
 (NULL, '公告栏', 0, 0, NULL, 'GET', 'Bulletin', '', 0, 2700);

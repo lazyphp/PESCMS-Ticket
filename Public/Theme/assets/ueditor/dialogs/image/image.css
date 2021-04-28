@@ -2,8 +2,8 @@
 /* dialog样式 */
 .wrapper {
     zoom: 1;
-    width: 630px;
-    *width: 626px;
+    width: 96.5vw;
+    *width: 96.5vw;
     height: 380px;
     margin: 0 auto;
     padding: 10px;
@@ -190,6 +190,25 @@
     margin-top: 10px;
     background-color: #eee;
     overflow: hidden;
+}
+
+@media only screen and (max-width: 640px){
+    #remote .top{
+        margin-top: 5px;
+    }
+    #remote #url{
+        width: 90% !important;
+    }
+    #remote .left {
+        height: 160px;
+    }
+    #remote .left>.row:first-child{
+        margin-top: 20px;
+    }
+    #remote #preview{
+        width: 100px;
+        height: 100px;
+    }
 }
 
 /* 上传图片 */
@@ -664,6 +683,11 @@
     overflow: hidden;
     cursor: pointer;
     position: relative;
+}
+@media only screen and (max-width: 640px){
+    #online li {
+        width: 104px;
+    }
 }
 #online li.clearFloat {
     float: none;

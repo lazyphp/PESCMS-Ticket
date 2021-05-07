@@ -17,6 +17,7 @@ class User extends Content {
      * 个人设置
      */
     public function setting() {
+        $this->checkToken();
         $userID = $this->session()->get('ticket')['user_id'];
         foreach (['账号' => 'account', '邮箱' => 'mail', '企业微信' => 'weixinWork'] as $key => $item) {
             if ($item == 'weixinWork') {

@@ -8,6 +8,7 @@
             </div>
             <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed am-no-layout">
             <form class="am-form am-form-horizontal ajax-submit" action="" method="post" data-am-validator>
+                <?= $label->token(); ?>
                 <input type="hidden" name="method" value="PUT">
 
                 <div class="am-g am-g-collapse">

@@ -31,7 +31,7 @@
                             </div>
                         </div>
 
-                        <div>
+                        <div class="am-margin-bottom-xs">
                             <select name="model_id" class="am-form-field am-input-sm am-radius" data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}">
                                 <option value="-1">所有类型</option>
                                 <?php foreach ($ticketModel as $value): ?>
@@ -65,11 +65,23 @@
                                 <select name="member" class="am-form-field" placeholder=""
                                         data-am-selected="{btnSize: 'sm', dropUp: 0}">
                                     <option value="-1" >不筛选用户</option>
-                                    <option value="<?= $_GET['member'] ?>" selected="selected" ><?= $member[$_GET['member']]['member_name'] ?></option>
+                                    <option value="<?= $label->xss($_GET['member']) ?>" selected="selected" ><?= $member[$_GET['member']]['member_name'] ?></option>
                                 </select>
                             <?php endif; ?>
+
                             <div class="am-form-group">
-                                <input type="text" name="keyword" value="<?= urldecode($_GET['keyword']) ?>" class="am-block am-input-sm pes_input_radius fix-input-width am-radius">
+                                <input type="text" name="keyword" value="<?= $label->xss(urldecode($_GET['keyword'])) ?>" placeholder="工单单号或标题搜索" class="am-block am-input-sm pes_input_radius fix-input-width am-radius">
+                            </div>
+
+                        </div>
+                        <div>
+                            <label class="am-checkbox am-secondary pes-ucheck">
+                                <input class="am-block" type="checkbox" <?= !empty($_GET['allSearch']) && !empty($_GET['form_content'])  ? 'checked="checked"' : '' ?> name="allSearch" value="1" data-am-ucheck>
+                                工单内容搜索
+                            </label>
+
+                            <div class="am-form-group">
+                                <input type="text" name="form_content" value="<?= $label->xss(urldecode($_GET['form_content'])) ?>" placeholder="工单内容搜索" class="am-block am-input-sm pes_input_radius fix-input-width am-radius pes-ticket-search-input">
                             </div>
 
                             <button type="submit" class="am-btn am-btn-default am-btn-sm am-radius">搜索</button>

@@ -19,7 +19,7 @@ namespace App\Ticket\GET;
  */
 class Ticket extends \Core\Controller\Controller {
 
-    public $condition = 'WHERE 1 = 1', $param = [], $category = [];
+    public $join = [],  $condition = 'WHERE 1 = 1', $group = '', $param = [], $category = [];
 
     /**
      * 工单列表(默认按管辖组)
@@ -58,14 +58,25 @@ class Ticket extends \Core\Controller\Controller {
             $this->param['end'] = strtotime($this->g('end'). ' 23:59:59');
         }
 
+        if(!empty($_GET['allSearch']) && !empty($_GET['form_content']) ){
+            $this->join[] = " LEFT JOIN {$this->prefix}ticket_content AS tc ON tc.ticket_id = t.ticket_id ";
+            $this->condition .= " AND tc.ticket_form_content LIKE :ticket_form_content ";
+            $this->param['ticket_form_content'] = '%' . urldecode($this->g('form_content')) . '%';
+            $this->group = ' GROUP BY t.ticket_id';
+
+        }
+
         $sql = "SELECT %s
                 FROM {$this->prefix}ticket AS t
                 LEFT JOIN {$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id
-                {$this->condition}
+                ".implode(' ', $this->join)."
+                {$this->condition} 
+                {$this->group}
                 ORDER BY t.ticket_close ASC, t.ticket_status ASC, t.ticket_id DESC ";
 
+
         $result = \Model\Content::quickListContent([
-            'count' => sprintf($sql, 'count(*)'),
+            'count' => empty($this->group) ? sprintf($sql, 'count(*)') : 'SELECT COUNT(*) FROM ('.sprintf($sql, 't.ticket_id').') AS t ',
             'normal' => sprintf($sql, 't.*, tm.ticket_model_name, tm.ticket_model_cid, tm.ticket_model_time_out'),
             'param' => $this->param,
             'page' => !empty($_GET['csv']) ? '9919999' : '20'

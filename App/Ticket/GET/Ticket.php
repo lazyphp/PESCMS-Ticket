@@ -60,8 +60,8 @@ class Ticket extends \Core\Controller\Controller {
 
         if(!empty($_GET['allSearch']) && !empty($_GET['form_content']) ){
             $this->join[] = " LEFT JOIN {$this->prefix}ticket_content AS tc ON tc.ticket_id = t.ticket_id ";
-            $this->condition .= " AND tc.ticket_form_content LIKE :ticket_form_content ";
-            $this->param['ticket_form_content'] = '%' . urldecode($this->g('form_content')) . '%';
+            $this->condition .= " AND (tc.ticket_form_content LIKE :ticket_form_content OR tc.ticket_form_option_name LIKE :ticket_form_option_name ) ";
+            $this->param['ticket_form_option_name'] = $this->param['ticket_form_content'] = '%' . urldecode($this->g('form_content')) . '%';
             $this->group = ' GROUP BY t.ticket_id';
 
         }

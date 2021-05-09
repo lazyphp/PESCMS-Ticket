@@ -74,7 +74,7 @@
 
                                 <div class="pt-text-border">
                                     <div class="pt-text-explode"><?= $value['ticket_form_description']; ?>:</div>
-                                    <div><?= $value['ticket_value']; ?></div>
+                                    <div><?= strlen($value['ticket_value']) == 0 ? '<del class="am-text-gray am-text-xs">(此选项值为空)</del>' : $value['ticket_value']; ?></div>
                                 </div>
 
                             <?php else: ?>

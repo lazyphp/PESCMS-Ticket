@@ -169,12 +169,20 @@ class Ticket extends \Core\Model\Model {
                 }
             }
 
+            //特定字段需要校验提交的内容和设置是否一致。
+            if(isset($form) && in_array($value['ticket_form_type'], ['radio', 'checkbox', 'select', 'multiple']) ){
+                $optionName = \Model\Field::getFieldOptionToMatch($form, $value['ticket_form_option']);
+                if($optionName === NULL){
+                    self::error("您提交的'<b>{$value['ticket_form_description']}</b>'选项值存在异常，请提交正确的值，或者刷新页面再提交。");
+                }
 
+            }
 
             $result = self::db('ticket_content')->insert([
                 'ticket_id'           => $ticketID,
                 'ticket_form_id'      => $value['ticket_form_id'],
                 'ticket_form_content' => $form,
+                'ticket_form_option_name' => $optionName,
             ]);
             if ($result === false) {
                 self::db()->rollback();

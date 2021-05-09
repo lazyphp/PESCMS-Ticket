@@ -23,17 +23,17 @@
                 
                 <?php foreach($contact as $contactID => $contactValue): ?>
                     <?php
-                        if($contactID == 3 && empty($member['member_weixin']) ){
+                        if(($contactValue['key'] == 3 && empty($member['member_weixin'])) || $contactValue['key'] == 6 ){
                             continue;
                         }
 
-                        if(!in_array($contactID, explode(',', $ticketInfo['contact']))){
+                        if(!in_array($contactValue['key'], explode(',', $ticketInfo['contact']))){
                             continue;
                         }
 
                     ?>
                     <label class="form-radio-label am-radio-inline">
-                        <input class="form-radio" type="radio" name="contact" value="<?= $contactID ?>" required="required" <?= $ticketInfo['contact_default'] == $contactID ? 'checked="checked"' : '' ?> data="<?= !empty($member) ? $member[$contactValue['key']] : '' ?>" />
+                        <input class="form-radio" type="radio" name="contact" value="<?= $contactValue['key'] ?>" required="required" <?= $ticketInfo['contact_default'] == $contactValue['key'] ? 'checked="checked"' : '' ?> data="<?= !empty($member) ? $member[$contactValue['field']] : '' ?>" />
                         <span><?= $contactValue['title'] ?></span>
                     </label>
                 <?php endforeach; ?>

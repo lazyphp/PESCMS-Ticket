@@ -419,6 +419,14 @@ class Ticket extends \Core\Model\Model {
         if (empty($ticket)) {
             return false;
         }
+
+        foreach (json_decode(\Model\Content::findContent('option', 'ticket_contact', 'option_name')['value'], true) as $item){
+            if($item['key'] == $ticket['ticket_contact']){
+                $ticket['ticket_contact_name'] = $item['title'];
+                break;
+            }
+        }
+
         $form = self::getTicketContent($ticket['ticket_id']);
         $chat = self::getTicketChat($ticket['ticket_id'], $chatPage);
 

@@ -35,7 +35,7 @@ class Field extends Content {
 
         $this->assign('addUrl', $this->url(GROUP . '-' . MODULE . '-action', array('model_id' => $model_id ,'back_url' => base64_encode($_SERVER['REQUEST_URI']))));
         $this->assign('list', $list);
-        $this->assign('title', $this->model['model_title']);
+        $this->assign('title', \Model\Content::findContent('model', $model_id, 'model_id', 'model_title')['model_title']. ' - '.$this->model['model_title']);
         $this->assign('field', $this->field);
         $this->assign('operate', is_file("{$this->modelThemePrefixPath}_index_operate.php") ? '/'.MODULE.'/'.MODULE."_index_operate.php" : '');
         $this->assign('listsort', true);

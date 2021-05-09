@@ -68,10 +68,45 @@ class Setting extends \Core\Controller\Controller {
 
         }
 
+        $this->updateTicketContact();
 
         $this->specialOperate();
 
         $this->success('保存设置成功!', $this->url('Ticket-Setting-action'));
+    }
+
+    /**
+     * 更新全局工单联系方式
+     */
+    private function updateTicketContact(){
+        $ticketContact = [];
+        $ticketContactInModelField = [];
+        foreach ($_POST['ticket_contact_title'] as $key => $value){
+            if(empty($value)){
+                continue;
+            }
+            $ticketContact = array_merge($ticketContact, [
+                $key => ['title' => $value,
+                    'key' => $_POST['ticket_contact_key'][$key],
+                    'field' => $_POST['ticket_contact_field'][$key]]
+            ]);
+            $ticketContactInModelField[$value] = $_POST['ticket_contact_key'][$key];
+        }
+
+        $this->db('field')->where('field_id IN (:a_240, :a_241)')->update([
+            'noset' => [
+                'a_240' => 240,
+                'a_241' => 241,
+            ],
+            'field_option' => json_encode($ticketContactInModelField)
+        ]);
+
+        $this->db('option')->where('option_name = :option_name')->update([
+            'noset' => [
+                'option_name' => 'ticket_contact'
+            ],
+            'value' => json_encode($ticketContact)
+        ]);
     }
 
     /**

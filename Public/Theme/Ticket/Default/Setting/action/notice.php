@@ -68,5 +68,30 @@
             </div>
         </div>
 
+        <hr class="am-margin-top-0 am-divider-default"/>
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <label class="am-block">全局工单联系方式<i class="am-text-danger">*</i></label>
+                <?php foreach(array_merge($ticket_contact, ['']) as $key => $value): ?>
+                <div class="input-example">
+                    <div class="am-form-inline am-margin-bottom-xs">
+                        <div class="am-form-group">
+                            <input type="text" name="ticket_contact_title[]" class="am-form-field" placeholder="工单联系方式名称" value="<?= $value['title'] ?>" <?= isset($value['key']) && $value['key'] <=6 ? 'readonly="readonly"' : '' ?>>
+                        </div>
+                        <div class="am-form-group">
+                            <input type="text" name="ticket_contact_key[]" class="am-form-field" placeholder="工单联系方式值" value="<?= $value['key'] ?>" <?= isset($value['key']) && $value['key'] <=6 ? 'readonly="readonly"' : '' ?>>
+                        </div>
+                        <div class="am-form-group">
+                            <input type="text" name="ticket_contact_field[]" class="am-form-field" placeholder="Member表对应字段名称" value="<?= $value['field'] ?>" <?= isset($value['key']) && $value['key'] <=6 ? 'readonly="readonly"' : '' ?>>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+                <div class="pes-alert pes-alert-error am-text-xs ">
+                    <i class="am-icon-lightbulb-o"></i> 若需要新增一个工单联系方式，请根据系统已有联系方式格式进行填写，非专业人士不建议更改此值！！
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

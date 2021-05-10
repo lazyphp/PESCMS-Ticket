@@ -72,7 +72,7 @@
         <div class="am-g am-g-collapse">
             <div class="am-u-sm-12 am-u-sm-centered">
                 <label class="am-block">全局工单联系方式<i class="am-text-danger">*</i></label>
-                <?php foreach(array_merge($ticket_contact, ['']) as $key => $value): ?>
+                <?php foreach(array_merge($ticket_contact, [[]]) as $key => $value): ?>
                 <div class="input-example">
                     <div class="am-form-inline am-margin-bottom-xs">
                         <div class="am-form-group">

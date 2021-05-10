@@ -63,12 +63,12 @@ class Notice extends \Core\Model\Model {
                 continue;
             }
 
-
-            //生成站内消息
-            \Model\CSnotice::addCSNotice($number, $user['user_id'], $templateType);
-
             self::addTicketNoticeAction($number, $account, $type, $templateType);
         }
+
+        //生成站内消息
+        \Model\CSnotice::addCSNotice($number, $user['user_id'], $templateType);
+
     }
 
     /**
@@ -76,9 +76,16 @@ class Notice extends \Core\Model\Model {
      * @param array $param 动作参数
      */
     public static function insertMemberNoticeSendTemplate(array $param){
-        $title = \Model\MailTemplate::matchTitle($param['ticket_number'], $param['template_type']);
 
-        $content = \Model\MailTemplate::matchContent($param['ticket_number'], $param['template_type']);
+        if($param['send_type'] >= 1 && $param['send_type'] <= 6){
+            $title = \Model\MailTemplate::matchTitle($param['ticket_number'], $param['template_type']);
+
+            $content = \Model\MailTemplate::matchContent($param['ticket_number'], $param['template_type']);
+        }else{
+            $otherNotice = new \Expand\OtherNotice();
+            $title = $otherNotice->matchTitle($param);
+            $content = $otherNotice->matchTitle($param);
+        }
 
         if(\Model\Extra::insertSend($param['send_account'], $title[$param['send_type']], $content[$param['send_type']], $param['send_type'])){
             self::db('ticket_notice_action')->where('action_id = :action_id')->delete([

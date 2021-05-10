@@ -58,12 +58,18 @@ class Ticket extends \Core\Controller\Controller {
             $this->param['end'] = strtotime($this->g('end'). ' 23:59:59');
         }
 
-        if(!empty($_GET['allSearch']) && !empty($_GET['form_content']) ){
+        if(!empty($_GET['form_content']) ){
             $this->join[] = " LEFT JOIN {$this->prefix}ticket_content AS tc ON tc.ticket_id = t.ticket_id ";
             $this->condition .= " AND (tc.ticket_form_content LIKE :ticket_form_content OR tc.ticket_form_option_name LIKE :ticket_form_option_name ) ";
             $this->param['ticket_form_option_name'] = $this->param['ticket_form_content'] = '%' . urldecode($this->g('form_content')) . '%';
             $this->group = ' GROUP BY t.ticket_id';
 
+        }
+
+        if(!empty($_GET['member_name']) ){
+            $this->join[] = " LEFT JOIN {$this->prefix}member AS m ON m.member_id = t.member_id ";
+            $this->condition .= " AND m.member_name LIKE :member_name ";
+            $this->param['member_name'] = '%' . urldecode($this->g('member_name')) . '%';
         }
 
         $sql = "SELECT %s

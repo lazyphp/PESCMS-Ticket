@@ -9,8 +9,23 @@
     top: 13px;
     position: absolute;
 }
+@media only screen and (max-width: 640px){
+    .msg-tips {
+        width: 5pt;
+        height: 5pt;
+        top: 7px;
+    }
+}
+
+
+@media only screen and (min-width: 641px) {
+    #mobile-new-tips{
+        display: none !important;
+    }
+}
 
 @media only screen and (min-width: 1025px) {
+
     .ticket-index-table tr td:last-child{
         width: 10rem;
     }

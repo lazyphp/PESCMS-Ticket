@@ -14,10 +14,14 @@
                         </li>
                     </ol>
                 </div>
+                <div class="am-fr">
+                    <a href="javascript:;" class="am-btn am-btn-secondary am-btn-xs pes-login">登录</a>
+                </div>
             </div>
             <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed" />
-            <div id="app-list">
-                <table class="am-table am-table-striped am-table-hover am-table-centered">
+            <div>
+                <div class="pes-alert pes-alert-dark"><i class="am-icon-lightbulb-o"></i> 收费应用插件需要登录PESCMS账号才可以检查更新。</div>
+                <table class="am-margin-top am-table am-table-striped am-table-hover am-table-centered">
 
                     <?php if(empty($list)): ?>
                     <tr>
@@ -68,6 +72,8 @@
         </div>
     </div>
 </div>
+<div class="pes-installed am-hide"><?= empty($installed) ? json_encode([]) : $installed ?></div>
+<script src="<?= PESCMS_URL ?>/Theme/Api/App/1.0/pescms_app.min.js?mt=<?= time() ?>"></script>
 <script>
     $(function(){
         $('.check-update').each(function(){

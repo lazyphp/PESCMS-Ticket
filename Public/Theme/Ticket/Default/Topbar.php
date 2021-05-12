@@ -3,11 +3,23 @@
         <a href="<?= $label->url('Ticket-Index-index') ?>"><?= $authorize_type == 0 ? 'PESCMS Ticket' : $system['siteTitle'] ?></a>
     </h1>
 
-    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+    <button id="mobile-menu-button" class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
             data-am-collapse="{target: '#ticket-topbar-collapse'}">
         <span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
 
+    <button id="mobile-new-tips-button" class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-white am-show-sm-only"
+            data-am-collapse="{target: '#mobile-new-tips'}">
+        <span class="am-icon-envelope-o"></span>
+        <span class="msg-tips" style="display: none"></span>
+    </button>
+
     <?php if(!empty(self::session()->get('ticket'))): ?>
+    <div class="am-collapse am-topbar-collapse" id="mobile-new-tips">
+        <ul class="am-nav am-nav-pills am-topbar-nav new-ticket">
+            <li><a href="javascript:;" class="close-tips">暂无新工单</a></li>
+        </ul>
+    </div>
+
     <div class="am-collapse am-topbar-collapse" id="ticket-topbar-collapse">
         <?php if(!empty($menu)): ?>
         <ul class="am-nav am-nav-pills am-topbar-nav">
@@ -33,10 +45,10 @@
         <div class="am-topbar-right">
             <ul class="am-nav am-nav-pills am-topbar-nav admin-header-list">
                 <?php if($label->checkAuth(GROUP . 'GETMemberissue') === true): ?>
-                    <li><a href="<?= $label->url('Ticket-Member-issue') ?>"><i class="am-icon-plus"></i> 新工单</a></li>
+                    <li class="am-hide-sm-only"><a href="<?= $label->url('Ticket-Member-issue') ?>"><i class="am-icon-plus"></i> 新工单</a></li>
                 <?php endif; ?>
-                <li><a href="javascript:;">您好,<?= self::session()->get('ticket')['user_name']; ?></a></li>
-                <li class="am-dropdown am-dropdown-flip" data-am-dropdown>
+                <li class="am-hide-sm-only"><a href="javascript:;">您好,<?= self::session()->get('ticket')['user_name']; ?></a></li>
+                <li class="am-dropdown am-dropdown-flip am-hide-sm-only" data-am-dropdown>
                     <a href="<?= $label->url('Ticket-User-notice') ?>">
                         <i class="am-icon-envelope-o am-icon-sm"></i>
                         <span class="msg-tips" style="display: none"></span>

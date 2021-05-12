@@ -431,6 +431,9 @@ class Ticket extends \Core\Model\Model {
         $chat = self::getTicketChat($ticket['ticket_id'], $chatPage);
 
         $member = $ticket['member_id'] == '-1' ? '' : \Model\Content::findContent('member', $ticket['member_id'], 'member_id');
+        if(!empty($member)){
+            unset($member['member_password']);
+        }
 
         return [
             'ticket' => $ticket,

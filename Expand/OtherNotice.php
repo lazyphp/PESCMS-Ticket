@@ -17,6 +17,17 @@ namespace Expand;
 class OtherNotice {
 
     /**
+     * 是否删除工单消息通知发送动作
+     * @var bool 默认是删除
+     */
+    public $removeTicketNoticeAction = true;
+
+    public function __construct() {
+        //如果你编写自己的通知方式，请务必将此值设置为false，否则你的消息通知行为将无法写入send表。
+       //$this->removeTicketNoticeAction = false;
+    }
+
+    /**
      * 如果您需要增加其他联系方式，请在此处进行扩展
      */
     public function send($param){

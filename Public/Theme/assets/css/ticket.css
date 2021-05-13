@@ -78,3 +78,6 @@
         width: 250px !important;
     }
 }
+.assign-user select option:disabled{
+    color: #ccc;
+}

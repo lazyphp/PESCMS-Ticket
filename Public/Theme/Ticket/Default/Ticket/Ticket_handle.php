@@ -1,7 +1,7 @@
 <div class="am-padding-xs am-padding-top-0">
     <?php require THEME . '/Ticket/Common/Ticket_view_package.php'; ?>
 
-    <?php if ($ticket_status < 3 && $ticket_close == '0' && ($user_id == $this->session()->get('ticket')['user_id'] || empty($user_id))): ?>
+    <?php if ($ticket_status < 3 && $ticket_close == '0' && ($user_id == $this->session()->get('ticket')['user_id'] || empty($user_id) || $label->checkAuth('TicketPUTTicketintervene') === true )): ?>
         <form action="<?= $label->url('Ticket-Ticket-reply'); ?>" class="am-form ajax-submit" method="POST" data-am-validator>
             <input type="hidden" name="number" value="<?= $ticket_number; ?>"/>
             <input type="hidden" name="back_url" value="<?= $_GET['back_url']; ?>"/>
@@ -220,9 +220,15 @@
             $.post('<?= $label->url('Ticket-Ticket-getAssignUser', ['method' => 'GET']) ?>', {group: group}, function (result) {
                 if (result.status == 200) {
                     var option = '';
-                    for (var key in result.data) {
-                        option += '<option value="' + result.data[key]['user_id'] + '" ' + result.data[key]['disabled'] + ' >' + result.data[key]['user_name'] + '</option>'
+                    if(result.data.length > 0){
+                        for (var key in result.data) {
+                            var user_vacation = result.data[key]['user_vacation'] == 0 ? '' : '(休假)';
+                            option += '<option value="' + result.data[key]['user_id'] + '" ' + result.data[key]['disabled'] + ' >' + result.data[key]['user_name'] + user_vacation + '</option>'
+                        }
+                    }else{
+                        option = '<option disabled="disabled">本组暂无客服</option>';
                     }
+
                     $('select[name=uid]').html(option);
                 } else {
                     var d = dialog({

@@ -48,8 +48,11 @@ class Ticket extends \Core\Controller\Controller {
                     $status = '0';//转派用户，工单状态应该为待解决
                     $userID = $this->isP('uid', '请选择您要指派的用户');
                     $checkUser = \Model\Content::findContent('user', $userID, 'user_id');
-                    if (empty($checkUser)) {
+                    if (empty($checkUser) || $checkUser['user_status'] == 0 ) {
                         $this->error('转派的用户不存在');
+                    }
+                    if($checkUser['user_vacation'] == 1){
+                        $this->error('转派的用户正在休假');
                     }
                     \Model\Ticket::setUser($ticket['ticket_id'], $checkUser['user_id'], $checkUser['user_name'], $this->session()->get('ticket')['user_id']);
                     $templateType = 4;

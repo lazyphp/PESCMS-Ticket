@@ -299,16 +299,12 @@ class Ticket extends \Core\Controller\Controller {
 
         $groupID = $this->isP('group', '请提交用户组ID');
 
-        $field = 'IF(user_id = '.$this->session()->get('ticket')['user_id'].', "disabled", "") AS disabled';
+        $field = 'IF(user_id = '.$this->session()->get('ticket')['user_id'].' OR user_vacation = 1 , "disabled", "") AS disabled';
 
-        $user = $this->db('user')->field("user_id, user_name, {$field}")->where('user_group_id = :groupID')->select([
+        $user = $this->db('user')->field("user_id, user_name, user_vacation, {$field}")->where('user_group_id = :groupID AND user_status = 1  ')->select([
             'groupID' => $groupID
         ]);
-        if(empty($user)){
-            $this->error('获取客服信息失败');
-        }else{
-            $this->success(['msg' => '获取客服信息完成', 'data' => $user]);
-        }
+        $this->success(['msg' => '获取客服信息完成', 'data' => $user]);
     }
 
 

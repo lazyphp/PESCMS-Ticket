@@ -1,9 +1,7 @@
 <?php
 
 /**
- * PESCMS for PHP 5.6+
- *
- * Copyright (c) 2019 PESCMS (http://www.pescms.com)
+ * Copyright (c) 2021 PESCMS (http://www.pescms.com)
  *
  * For the full copyright and license information, please view
  * the file LICENSE.md that was distributed with this source code.
@@ -85,9 +83,13 @@ class Notice extends \Core\Model\Model {
             $otherNotice = new \Expand\OtherNotice();
             $title = $otherNotice->matchTitle($param);
             $content = $otherNotice->matchTitle($param);
+            if($otherNotice->removeTicketNoticeAction == true){
+                goto removeAction;
+            }
         }
 
         if(\Model\Extra::insertSend($param['send_account'], $title[$param['send_type']], $content[$param['send_type']], $param['send_type'])){
+            removeAction:
             self::db('ticket_notice_action')->where('action_id = :action_id')->delete([
                 'action_id' => $param['action_id']
             ]);

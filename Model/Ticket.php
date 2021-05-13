@@ -236,7 +236,7 @@ class Ticket extends \Core\Model\Model {
 
         switch ($ticket['ticket_model_auto_logic']) {
             case '1':
-                $userList = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']})")->select();
+                $userList = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']}) AND user_status = 1 AND user_vacation = 0 ")->select();
                 if (empty($userList)) {
                     return false;
                 }
@@ -277,7 +277,7 @@ class Ticket extends \Core\Model\Model {
                 break;
             case '0':
             default:
-                $user = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']})")->order('RAND()')->find();
+                $user = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']}) AND user_status = 1 AND user_vacation = 0 ")->order('RAND()')->find();
                 if (!empty($user)) {
                     return $user;
                 }

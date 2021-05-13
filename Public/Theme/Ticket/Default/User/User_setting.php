@@ -57,6 +57,22 @@
                     </div>
                 </div>
 
+                <hr data-am-widget="divider" style="" class="am-divider am-divider-default am-margin-top-xs" />
+                <div class="am-g am-g-collapse">
+                    <div class="am-u-sm-12 am-u-sm-centered">
+                        <div class="am-form-group">
+                            <label class="am-block">我的状态<i class="am-text-danger">*</i></label>
+                            <label class="form-radio-label am-radio-inline">
+                                <input class="form-radio" type="radio" name="vacation" value="0" required="" <?= $user_vacation == 0 ? 'checked="checked"' : '' ?>>
+                                <span>工作</span>
+                            </label>
+                            <label class="form-radio-label am-radio-inline">
+                                <input class="form-radio" type="radio" name="vacation" value="1" required="" <?= $user_vacation == 1 ? 'checked="checked"' : '' ?>><span>休假</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="am-g am-g-collapse am-margin-bottom">
                     <div class="am-u-sm-12 am-u-sm-centered">
                         <button type="submit" class="am-btn am-btn-primary am-btn-xs">提交保存</button>

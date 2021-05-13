@@ -46,6 +46,7 @@ class User extends Content {
         }
 
         $data['user_name'] = $this->isP('name', '请提交名称');
+        $data['user_vacation'] = $this->isP('vacation', '请提交您的状态');
         $data['noset']['user_id'] = $userID;
         $this->db('user')->where('user_id = :user_id')->update($data);
 

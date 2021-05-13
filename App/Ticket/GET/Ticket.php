@@ -1,13 +1,9 @@
 <?php
 /**
- * PESCMS for PHP 5.4+
- *
- * Copyright (c) 2015 PESCMS (http://www.pescms.com)
+ * Copyright (c) 2021 PESCMS (http://www.pescms.com)
  *
  * For the full copyright and license information, please view
  * the file LICENSE.md that was distributed with this source code.
- * @core version 2.6
- * @version 1.0
  */
 
 namespace App\Ticket\GET;
@@ -20,6 +16,12 @@ namespace App\Ticket\GET;
 class Ticket extends \Core\Controller\Controller {
 
     public $join = [],  $condition = 'WHERE 1 = 1', $group = '', $param = [], $category = [];
+
+    public function __init() {
+        parent::__init();
+        $this->category = \Model\Category::getAllCategoryCidPrimaryKey();
+        $this->assign('category', $this->category);
+    }
 
     /**
      * 工单列表(默认按管辖组)
@@ -92,8 +94,6 @@ class Ticket extends \Core\Controller\Controller {
         $this->assign('list', $result['list']);
         $this->assign('page', $result['page']);
 
-        $this->category = \Model\Category::getAllCategoryCidPrimaryKey();
-        $this->assign('category', $this->category);
         $this->assign('member', \Model\Member::getMemberWithID());
         $this->assign('title', \Model\Menu::getTitleWithMenu()['menu_name']);
         
@@ -244,7 +244,7 @@ class Ticket extends \Core\Controller\Controller {
             ]));
 
 
-
+            $this->assign('ticketModel', \Model\Content::listContent(['table' => 'ticket_model', 'field' => 'ticket_model_id, ticket_model_number, ticket_model_cid, ticket_model_name']));
             $this->assign('form', $content['form']);
             $this->assign('member', $content['member']);
             $this->assign('prefix', 'member_');

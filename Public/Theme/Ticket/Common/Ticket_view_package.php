@@ -3,10 +3,10 @@
         <?php if (!empty($_GET['back_url'])): ?>
             <div class="">
                 <a href="<?= base64_decode($_GET['back_url']) ?>" class="am-margin-right-xs am-text-danger"><i
-                        class="am-icon-reply"></i>返回上一页</a>
+                            class="am-icon-reply"></i>返回上一页</a>
                 <a class="am-link-muted print-ticket"
                    href="<?= $label->url('View-printer', ['number' => $ticket_number]); ?>"><span
-                        class="am-icon-print"></span></a>
+                            class="am-icon-print"></span></a>
             </div>
             <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
         <?php endif; ?>
@@ -14,8 +14,7 @@
         <div class="console-step row am-margin-bottom-sm">
             <?php foreach ($ticketStatus as $key => $value): ?>
 
-                <div
-                    class="step am-u-sm-3 <?= $key == 0 ? 'step-first' : ($key == '3' ? 'step-end ' : '') ?>  <?= $ticket_status == $key ? 'step-active' : 'step-pass' ?>">
+                <div class="step am-u-sm-3 <?= $key == 0 ? 'step-first' : ($key == '3' ? 'step-end ' : '') ?>  <?= $ticket_status == $key ? 'step-active' : 'step-pass' ?>">
                     <span class="ng-binding  "><?= $value['name']; ?></span>
                 </div>
             <?php endforeach; ?>
@@ -23,20 +22,22 @@
 
         <div class="am-padding pt-info-panel">
             <div class="am-u-sm-12 am-u-sm-centered">
-                <div><span class="pt-text-explode">问题标题 : </span> <?= $ticket_title; ?></div>
-                <div class="am-g am-g-collapse">
+                <div class="pt-view-desc-question"><span class="pt-text-explode">问题标题 : </span> <?= $ticket_title; ?>
+                </div>
+                <div class="am-g am-g-collapse pt-view-desc">
                     <div class="am-u-sm-12 am-u-lg-3"><span class="pt-text-explode">工单编号 : </span><?= $ticket_number; ?>
                     </div>
-                    <div class="am-u-sm-12 am-u-lg-3"><span
-                            class="pt-text-explode">工单类型 : </span><?= $ticket_model_name; ?></div>
+                    <div class="am-u-sm-12 am-u-lg-3"><span class="pt-text-explode">工单类型 : </span>
+                            <?= $ticket_model_name; ?>
+                    </div>
                     <div class="am-u-sm-12 am-u-lg-3">
                         <span class="pt-text-explode">提交时间 : </span><?= date('Y-m-d H:i:s', $ticket_submit_time); ?>
                     </div>
                     <div class="am-u-sm-12 am-u-lg-3"><span
-                            class="pt-text-explode">工单状态 : </span><?= $ticket_close == '0' ? $ticketStatus[$ticket_status]['name'] : '工单关闭'; ?>
+                                class="pt-text-explode">工单状态 : </span><?= $ticket_close == '0' ? $ticketStatus[$ticket_status]['name'] : '工单关闭'; ?>
                     </div>
                     <div class="am-u-sm-12 am-u-lg-3"><span
-                            class="pt-text-explode">联系方式 : </span><?= $ticket_contact_name ?? '未知联系方式'; ?></div>
+                                class="pt-text-explode">联系方式 : </span><?= $ticket_contact_name ?? '未知联系方式'; ?></div>
                     <div class="am-u-sm-12 am-u-lg-3"><span class="pt-text-explode">联系信息 : </span>
                         <?php if (!empty($this->session()->get('ticket')['user_id'])): ?>
                             <?= $ticket_contact_account ?>
@@ -47,17 +48,13 @@
 
                     <div class="am-u-sm-12 am-u-lg-3">
                         <?php if (!empty($this->session()->get('ticket')['user_id']) && !empty($member)): ?>
-                        <span
-                            class="pt-text-explode">客户信息 :
+                        <span class="pt-text-explode">客户信息 :
                             <div class="am-dropdown" data-am-dropdown>
-                                <a href="javascript:;" class=" am-dropdown-toggle"
-                                   data-am-dropdown-toggle><?= $member['member_name'] ?> <span
-                                        class="am-icon-caret-down"></span></a>
+                                <a href="javascript:;" class=" am-dropdown-toggle" data-am-dropdown-toggle><?= $member['member_name'] ?> <span class="am-icon-caret-down"></span></a>
                                 <ul class="am-dropdown-content">
                                     <li class="am-dropdown-header">客户详细信息</li>
-                                    <li>
-                                        <table
-                                            class="am-table am-table-bordered am-table-striped am-table-hover am-text-xs ticket-member-table">
+                                    <li class="am-scrollable-horizontal ticket-member-table">
+                                        <table class="am-table am-table-bordered am-table-striped am-table-hover am-text-xs am-text-nowrap">
                                             <tr>
                                                 <?php foreach ($memberField as $value) : ?>
                                                     <?php if ($value['field_name'] == 'status'): ?>
@@ -68,13 +65,13 @@
                                                     <th class="<?= $class ?>"><?= $value['field_display_name']; ?></th>
                                                 <?php endforeach; ?>
                                             </tr>
-                                                <tr>
-                                                    <?php foreach ($memberField as $fv) : ?>
-                                                        <td class="am-text-middle">
-                                                            <?= $label->valueTheme($fv, 'member_', $member); ?>
-                                                        </td>
-                                                    <?php endforeach; ?>
-                                                </tr>
+                                            <tr>
+                                                <?php foreach ($memberField as $fv) : ?>
+                                                    <td class="am-text-middle">
+                                                        <?= $label->valueTheme($fv, 'member_', $member); ?>
+                                                    </td>
+                                                <?php endforeach; ?>
+                                            </tr>
                                         </table>
                                     </li>
                                 </ul>
@@ -92,12 +89,8 @@
             </div>
             <?php if (!empty(self::session()->get('ticket')) && GROUP == 'Ticket'): ?>
                 <hr/>
-                <div class="am-padding-left"><span class="pt-text-explode">备注说明 : </span> <input type="text"
-                                                                                                 class="ticket-remark-input"
-                                                                                                 maxlength="22"
-                                                                                                 old="<?= $label->xss($ticket_remark) ?>"
-                                                                                                 value="<?= $label->xss($ticket_remark) ?>"
-                                                                                                 placeholder="若需要在列表标记说明，请在此处填写一句话，限22个字">
+                <div class="am-padding-left"><span class="pt-text-explode">备注说明 : </span>
+                    <input type="text" class="ticket-remark-input" maxlength="22" old="<?= $label->xss($ticket_remark) ?>" value="<?= $label->xss($ticket_remark) ?>" placeholder="若需要在列表标记说明，请在此处填写一句话，限22个字">
                 </div>
             <?php endif; ?>
 

@@ -233,9 +233,12 @@ class CoreFunc {
         $status['url'] = $jumpUrl;
         $status['waitSecond'] = $waitSecond;
 
-        $token = md5(\Model\Extra::getOnlyNumber());
-        self::session()->set('token', $token);
-        $status['token'] = $token;
+        if(empty($_REQUEST['keepToken'])){
+            $token = md5(\Model\Extra::getOnlyNumber());
+            self::session()->set('token', $token);
+            $status['token'] = $token;
+        }
+
         switch ($type[0]) {
             case 'application/json':
                 exit(json_encode($status));

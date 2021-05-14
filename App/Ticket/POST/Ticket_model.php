@@ -1,4 +1,10 @@
 <?php
+/**
+ * Copyright (c) 2021 PESCMS (http://www.pescms.com)
+ *
+ * For the full copyright and license information, please view
+ * the file LICENSE.md that was distributed with this source code.
+ */
 namespace App\Ticket\POST;
 
 /**
@@ -12,6 +18,7 @@ class Ticket_model extends Content {
      * @param bool $commit
      */
     public function action($jump = false, $commit = false) {
+        $this->checkToken();
         parent::action($jump, $commit);
         if($_POST['copy'] == 1){
             $this->copy();

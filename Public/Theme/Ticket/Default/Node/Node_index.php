@@ -9,7 +9,8 @@
     </div>
 
     <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
-    <form class="am-form ajax-submit"" action="<?= $label->url(GROUP . '-' . MODULE . '-listsort'); ?>" method="POST">
+    <form class="am-form ajax-submit" action="<?= $label->url(GROUP . '-' . MODULE . '-listsort'); ?>" method="POST">
+        <?= $label->token(); ?>
         <input type="hidden" name="method" value="PUT"/>
         <table class="am-table am-table-striped am-table-hover table-main">
             <tr>

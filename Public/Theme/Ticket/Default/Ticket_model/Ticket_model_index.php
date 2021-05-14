@@ -8,6 +8,7 @@
     </div>
 <?php else: ?>
     <form class="am-form ajax-submit" action="<?= $label->url(GROUP . '-' . MODULE . '-listsort'); ?>" method="POST">
+        <?= $label->token() ?>
         <input type="hidden" name="method" value="PUT"/>
         <table class="am-table am-table-bordered am-table-striped am-table-hover am-text-sm">
             <tr>

@@ -37,6 +37,7 @@
 
 <form class="am-form ajax-submit" action="<?= $label->url( GROUP . '-' . MODULE . '-listsort' ); ?>" method="POST">
 	<input type="hidden" name="method" value="PUT"/>
+    <?= $label->token() ?>
 	<table class="am-table am-table-bordered am-table-striped am-table-hover">
         <?php if(empty($list)): ?>
         <tr>

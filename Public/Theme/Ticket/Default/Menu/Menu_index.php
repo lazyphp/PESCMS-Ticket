@@ -11,6 +11,7 @@
 
     <form class="am-form ajax-submit" action="<?= $label->url(GROUP . '-' . MODULE . '-listsort'); ?>" method="POST">
         <input type="hidden" name="method" value="PUT"/>
+        <?= $label->token(); ?>
         <table class="am-table am-table-striped am-table-hover table-main">
             <tr>
                 <th class="table-sort">排序</th>

@@ -9,6 +9,7 @@
             <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
         </div>
         <form class="am-form am-form-horizontal ajax-submit" action="<?= $url; ?>" method="post" data-am-validator>
+            <?= $label->token() ?>
             <input type="hidden" name="method" value="PUT"/>
 
             <div class="am-tabs pes-tabs" data-am-tabs="{noSwipe: 1}">

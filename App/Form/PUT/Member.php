@@ -7,6 +7,7 @@ class Member extends \Core\Controller\Controller {
      * 更新个人信息
      */
     public function index(){
+        $this->checkToken();
         $param['noset']['member_id'] = $this->session()->get('member')['member_id'];
         $param['member_phone'] = $this->isP('phone', '请提交手机号码');
         $param['member_name'] = $this->isP('name', '请提交用户昵称');
@@ -53,6 +54,7 @@ class Member extends \Core\Controller\Controller {
      * 更新当前登录账号的邮箱地址
      */
     public function changeEmail(){
+        $this->checkToken();
         $email = $this->isP('email', '请填写新邮箱地址！');
 
         $member = $this->session()->get('member');

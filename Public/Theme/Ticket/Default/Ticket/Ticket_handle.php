@@ -5,6 +5,7 @@
         <form action="<?= $label->url('Ticket-Ticket-reply'); ?>" class="am-form ajax-submit" method="POST" data-am-validator>
             <input type="hidden" name="number" value="<?= $ticket_number; ?>"/>
             <input type="hidden" name="back_url" value="<?= $_GET['back_url']; ?>"/>
+            <?= $label->token() ?>
             <div class="am-panel am-panel-default">
                 <div class="am-panel-bd">
                     <h3 class="am-margin-0">处理工单</h3>

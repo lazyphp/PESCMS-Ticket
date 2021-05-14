@@ -59,8 +59,11 @@ $(function () {
             return false;
         }
 
+        var token = $('input[name="token"]').val();
+
         $.ajaxsubmit({
-            url: url
+            url: url,
+            data:{token:token}
         }, function () {
         });
         return false;
@@ -222,8 +225,8 @@ $(function () {
         }
 
         if(confirm('确认进行批量删除所勾选数据吗？')){
-
-            $.ajaxsubmit({url:url, data:children}, function () {
+            var token = $('input[name="token"]').val();
+            $.ajaxsubmit({url:url, data:children+'&token='+token}, function () {
 
             })
 

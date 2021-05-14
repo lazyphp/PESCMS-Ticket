@@ -3,13 +3,13 @@
     <input type="hidden" name="copy" value="<?= $label->xss($_GET['copy']) ?>">
     <input type="hidden" name="id" value="<?= $ticket_model_number ?>"/>
     <input type="hidden" name="back_url" value="<?= $_GET['back_url'] ?>"/>
+    <?= $label->token(); ?>
 <?php include THEME_PATH . '/Content/Content_action_form.php' ?>
 
 
 <script>
     $(function () {
         var closeTicket = function(val){
-            console.dir(val)
             var showCloseType = $('input[name="close_type[]"]').parent().parent()
             var showCloseSetting = $('input[name="close_time"]').parent()
 

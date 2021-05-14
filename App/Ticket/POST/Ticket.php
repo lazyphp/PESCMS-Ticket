@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2015 PESCMS (http://www.pescms.com)
+ * Copyright (c) 2021 PESCMS (http://www.pescms.com)
  *
  * For the full copyright and license information, please view
  * the file LICENSE.md that was distributed with this source code.
@@ -19,6 +19,7 @@ class Ticket extends \Core\Controller\Controller {
      * 回复工单
      */
     public function reply() {
+        $this->checkToken();
         $number = $this->isP('number', '请选择您要查看的工单');
         $ticket = \Model\Content::findContent('ticket', $number, 'ticket_number');
         if (empty($ticket)) {

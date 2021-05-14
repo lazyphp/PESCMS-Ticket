@@ -19,6 +19,7 @@
                     <p class="am-margin-0">本页面没有数据 :-(</p>
                 </div>
             <?php else: ?>
+                <?= $label->token() ?>
                 <?php require_once __DIR__.'/Ticket_index_table.php'?>
                 <ul class="am-pagination am-pagination-right am-text-sm">
                     <?= $page; ?>

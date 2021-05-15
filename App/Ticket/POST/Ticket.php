@@ -61,6 +61,10 @@ class Ticket extends \Core\Controller\Controller {
                     \Model\Notice::addCSNotice($ticket['ticket_number'], $checkUser, -$templateType);
 
                 } elseif ($_POST['assign'] == '4') {
+                    $auth = \Model\Auth::check('TicketPUTTicketcomplete');
+                    if($auth !== true){
+                        $this->error($auth);
+                    }
                     $status = '3';
                     $templateType = 5;
                     $content = $csText['complete']['content'];

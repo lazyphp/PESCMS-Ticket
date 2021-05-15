@@ -60,7 +60,7 @@
         <?php endif; ?>
 
         <div class="am-form-group">
-            <input type="text" name="keyword" value="<?= $label->xss(urldecode($_GET['keyword'])) ?>" placeholder="工单单号或标题搜索" class="am-block am-input-sm pes_input_radius fix-input-width am-radius">
+            <input type="text" name="keyword" value="<?= $label->xss(urldecode($_GET['keyword'])) ?>" placeholder="工单单号、标题或备注搜索" class="am-block am-input-sm pes_input_radius fix-input-width am-radius pes-ticket-search-input">
         </div>
 
     </div>

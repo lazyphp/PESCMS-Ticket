@@ -64,7 +64,7 @@
                                         </label>
                                     </div>
 
-                                    <?php if ($label->checkAuth('TicketPOSTTicketclose') === true): ?>
+                                    <?php if ($label->checkAuth('TicketPUTTicketcomplete') === true): ?>
                                         <div class="am-form-group">
                                             <label class="am-form-label am-margin-bottom-0">工单状态 : </label>
                                             <label class="form-radio-label am-radio-inline">

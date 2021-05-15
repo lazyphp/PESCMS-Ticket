@@ -46,7 +46,7 @@
         <?php endif; ?>
 
         <div class="am-form-group">
-            <input type="text" name="keyword" value="<?= $label->xss($_GET['keyword']) ?>" class="am-input-sm pes_input_radius fix-input-width am-radius" placeholder="工单单号或标题搜索">
+            <input type="text" name="keyword" value="<?= $label->xss($_GET['keyword']) ?>" class="am-input-sm pes_input_radius fix-input-width am-radius pes-ticket-search-input" placeholder="工单单号、标题或备注搜索">
         </div>
     </div>
 

@@ -8,4 +8,13 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 
 ALTER TABLE `pes_user` ADD `user_vacation` TINYINT(1) NOT NULL COMMENT '是否休假中';
 
-INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES (NULL, '工单介入处理', '2', '1', '您没有工单介入处理权限', 'PUT', 'intervene', 'TicketPUTTicketintervene', '2', '7');
+INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES (NULL, '工单标记完成', '2', '1', '您没有工单完成的权限 ', 'PUT', 'complete', 'TicketPUTTicketcomplete', '2', '7');
+
+INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES (NULL, '工单介入处理', '2', '1', '您没有工单介入处理权限', 'PUT', 'intervene', 'TicketPUTTicketintervene', '2', '8');
+
+ALTER TABLE `pes_ticket` ADD `ticket_top` TINYINT(1) NOT NULL COMMENT '个人置顶工单' AFTER `ticket_exclusive`;
+
+ALTER TABLE `pes_ticket` ADD `ticket_top_list` TINYINT(1) NOT NULL COMMENT '列表置顶工单' AFTER `ticket_top`;
+
+INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES (NULL, '列表置顶工单', '2', '1', '您没有权限置顶列表工单', 'PUT', 'setListTop', 'TicketPUTTicketsetListTop', '2', '9');
+

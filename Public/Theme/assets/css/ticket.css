@@ -15,6 +15,9 @@
         height: 5pt;
         top: 7px;
     }
+    .ticket-search-form .am-selected{
+        margin-bottom: 10px;
+    }
 }
 
 
@@ -39,12 +42,15 @@
 .admin-task-meta{
     color: #888888;
 }
-.admin-task-bd{
+.admin-task-bd, .ticket-operation-bd{
     /*font-size: 1.6rem;*/
     margin-top: 0.5rem;
 }
 .admin-task-bd a{
     color: #333;
+}
+.ticket-operation-bd a{
+    color: #06c;
 }
 .admin-task-bd a:hover{
     color: #a9a9a9;

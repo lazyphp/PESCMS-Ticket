@@ -19,14 +19,39 @@ class Content extends \Core\Model\Model {
     private static $table, $fieldPrefix, $model;
 
     /**
+     * @var 保持内容结果
+     */
+    private static $contentResult = null;
+
+    /**
      * 查找指定内容（动态条件）
-     * @param type $table 内容表名
+     * @param type $param 设置参数，字符串形式则为表名 | array 数组情况下，key 0 的为表名, key 1的为连贯操作
      * @param type $value 内容值
      * @param type $field 查找的字段
      * @return type
      */
-    public static function findContent($table, $value, $field, $showField = '*') {
-        return self::db($table)->field($showField)->where("{$field} = :$field")->find(array($field => $value));
+    public static function findContent($param, $value, $field, $showField = '*') {
+        if (is_array($param)) {
+            $table = $param['0'];
+        } else {
+            $table = $param;
+        }
+
+        $result = self::db($table)->field($showField)->where("{$field} = :$field")->find(array ($field => $value));
+        self::$contentResult = empty($result) ? null :  $result;
+
+        return $param['1'] === true ? new static() : self::$contentResult;
+    }
+
+    /**
+     * 空白内容提示信息
+     * @param $message
+     * @param string $jumpUrl
+     * @param string $waitSecond
+     * @return 保持内容结果|void
+     */
+    public static function emptyTips($message, $jumpUrl = 'javascript:history.go(-1)', $waitSecond = '3') {
+        return self::$contentResult ?? self::error($message, $jumpUrl, $waitSecond);
     }
 
     /**
@@ -39,10 +64,10 @@ class Content extends \Core\Model\Model {
      * @return type
      */
     public static function listContent($param) {
-        if(empty($param['table'])){
+        if (empty($param['table'])) {
             self::error('Unkonw Table!');
         }
-        $value = array_merge(['field' => '*', 'db' => '', 'prefix' => '', 'join' => '', 'condition' => '', 'order' => '', 'group' => '', 'limit' => '', 'lock' => '', 'param' => array()], $param);
+        $value = array_merge(['field' => '*', 'db' => '', 'prefix' => '', 'join' => '', 'condition' => '', 'order' => '', 'group' => '', 'limit' => '', 'lock' => '', 'param' => array ()], $param);
         return self::db($value['table'], $value['db'], $value['prefix'])->field($value['field'])->join($value['join'])->where($value['condition'])->order($value['order'])->group($value['group'])->limit($value['limit'])->lock($value['lock'])->select($value['param']);
     }
 
@@ -85,7 +110,7 @@ class Content extends \Core\Model\Model {
         self::$table = strtolower(MODULE);
         self::$fieldPrefix = self::$table . "_";
         self::$model = \Model\ModelManage::findModel(self::$table, 'model_name');
-        $field = \Model\Field::fieldList(self::$model['model_id'], array('field_status' => '1'));
+        $field = \Model\Field::fieldList(self::$model['model_id'], array ('field_status' => '1'));
 
         if (self::p('method') == 'PUT') {
             $data['noset'][self::$fieldPrefix . 'id'] = self::isP('id', '丢失模型ID');
@@ -117,13 +142,13 @@ class Content extends \Core\Model\Model {
                 }
             } else {
                 $field_name = self::p($value['field_name']);
-                if(!empty($field_name)){
+                if (!empty($field_name)) {
                     $data[self::$fieldPrefix . $value['field_name']] = $field_name;
-                }elseif( empty($field_name) && !is_numeric($field_name) && !empty($value['field_default']) ){
+                } elseif (empty($field_name) && !is_numeric($field_name) && !empty($value['field_default'])) {
                     $data[self::$fieldPrefix . $value['field_name']] = $value['field_default'];
-                }elseif(empty($field_name) && $value['field_is_null'] == 1 ){
+                } elseif (empty($field_name) && $value['field_is_null'] == 1) {
                     $data[self::$fieldPrefix . $value['field_name']] = NULL;
-                }else{
+                } else {
                     $data[self::$fieldPrefix . $value['field_name']] = $field_name;
                 }
             }
@@ -138,7 +163,7 @@ class Content extends \Core\Model\Model {
      * @param type $cid 分类ID
      */
     public static function listCategoryContent($table, $cid) {
-        return self::db($table)->where("{$table}_catid = :cid")->select(array('cid' => $cid));
+        return self::db($table)->where("{$table}_catid = :cid")->select(array ('cid' => $cid));
     }
 
     /**
@@ -146,10 +171,10 @@ class Content extends \Core\Model\Model {
      * @param type $id 需要更新的ID
      */
     private static function setUrl($id) {
-        $existUrl = self::db()->fetch('SHOW columns FROM ' . self::$modelPrefix . self::$table . ' WHERE Field = :field;', array('field' => self::$fieldPrefix . 'url'));
+        $existUrl = self::db()->fetch('SHOW columns FROM ' . self::$modelPrefix . self::$table . ' WHERE Field = :field;', array ('field' => self::$fieldPrefix . 'url'));
         if (!empty($existUrl)) {
-            $url = self::url(MODULE . '-view', array('id' => $id));
-            return self::db(self::$table)->where(self::$fieldPrefix . 'id = :id')->update(array(self::$fieldPrefix . 'url' => $url, 'noset' => array('id' => $id)));
+            $url = self::url(MODULE . '-view', array ('id' => $id));
+            return self::db(self::$table)->where(self::$fieldPrefix . 'id = :id')->update(array (self::$fieldPrefix . 'url' => $url, 'noset' => array ('id' => $id)));
         }
     }
 
@@ -171,8 +196,8 @@ class Content extends \Core\Model\Model {
      *
      * @return array 结果返回：处理好的 列表二维数组和 一个分类超链接 还有分页的对象
      */
-    public static function quickListContent(array $sql = array('count' => '', 'normal' => '', 'param' => array())) {
-        $sql = array_merge(['param' => array(), 'page' => '10', 'style' => [], 'LANG' => []], $sql);
+    public static function quickListContent(array $sql = array ('count' => '', 'normal' => '', 'param' => array ())) {
+        $sql = array_merge(['param' => array (), 'page' => '10', 'style' => [], 'LANG' => []], $sql);
         $page = new \Expand\Page();
         $page->style = $sql['style'];
         $page->LANG = $sql['LANG'];
@@ -182,7 +207,7 @@ class Content extends \Core\Model\Model {
         $page->total($total);
         $page->handle();
         $list = self::db()->getAll("{$sql['normal']} LIMIT {$page->firstRow}, {$page->listRows}", $sql['param']);
-        return array('list' => $list, 'page' => $page->show(), 'pageObj' => $page);
+        return array ('list' => $list, 'page' => $page->show(), 'pageObj' => $page);
     }
 
     /**
@@ -190,7 +215,7 @@ class Content extends \Core\Model\Model {
      * @param $table 表名
      * @param $data 数据
      */
-    public static function insert($table, $data){
+    public static function insert($table, $data) {
         return self::db($table)->insert($data);
     }
 

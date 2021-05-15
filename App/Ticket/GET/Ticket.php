@@ -30,8 +30,8 @@ class Ticket extends \Core\Controller\Controller {
 
         //搜索
         if (!empty($_GET['keyword'])) {
-            $this->param['ticket_number'] = $this->param['ticket_title'] = '%' . urldecode($this->g('keyword')) . '%';
-            $this->condition .= ' AND (t.ticket_title LIKE :ticket_title OR t.ticket_number LIKE :ticket_number )';
+            $this->param['ticket_remark'] = $this->param['ticket_number'] = $this->param['ticket_title'] = '%' . urldecode($this->g('keyword')) . '%';
+            $this->condition .= ' AND (t.ticket_title LIKE :ticket_title OR t.ticket_number LIKE :ticket_number OR t.ticket_remark LIKE :ticket_remark )';
         }
 
         //状态筛选
@@ -74,13 +74,19 @@ class Ticket extends \Core\Controller\Controller {
             $this->param['member_name'] = '%' . urldecode($this->g('member_name')) . '%';
         }
 
+        if(ACTION == 'myTicket'){
+            $sort = 't.ticket_top DESC,';
+        }else{
+            $sort = 't.ticket_top_list DESC,';
+        }
+
         $sql = "SELECT %s
                 FROM {$this->prefix}ticket AS t
                 LEFT JOIN {$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id
                 ".implode(' ', $this->join)."
                 {$this->condition} 
                 {$this->group}
-                ORDER BY t.ticket_close ASC, t.ticket_status ASC, t.ticket_id DESC ";
+                ORDER BY {$sort}  t.ticket_close ASC, t.ticket_status ASC, t.ticket_id DESC ";
 
 
         $result = \Model\Content::quickListContent([

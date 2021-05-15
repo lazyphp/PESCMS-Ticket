@@ -57,13 +57,13 @@ class Setting extends \Core\Controller\Controller {
                 'register_form',
             ]
         ];
-        foreach ($operate as $type => $item){
-            foreach ($item as $value){
+        foreach ($operate as $type => $item) {
+            foreach ($item as $value) {
                 $this->db('option')->where('option_name = :option_name')->update([
                     'noset' => [
                         'option_name' => $value
                     ],
-                    'value' => $type == 'array' ? json_encode($this->p($value, false)) :  $this->p($value, false)
+                    'value' => $type == 'array' ? json_encode($this->p($value, false)) : $this->p($value, false)
                 ]);
             }
 
@@ -79,17 +79,19 @@ class Setting extends \Core\Controller\Controller {
     /**
      * 更新全局工单联系方式
      */
-    private function updateTicketContact(){
+    private function updateTicketContact() {
         $ticketContact = [];
         $ticketContactInModelField = [];
-        foreach ($_POST['ticket_contact_title'] as $key => $value){
-            if(empty($value)){
+        foreach ($_POST['ticket_contact_title'] as $key => $value) {
+            if (empty($value)) {
                 continue;
             }
             $ticketContact = array_merge($ticketContact, [
-                $key => ['title' => $value,
+                $key => [
+                    'title' => $value,
                     'key' => $_POST['ticket_contact_key'][$key],
-                    'field' => $_POST['ticket_contact_field'][$key]]
+                    'field' => $_POST['ticket_contact_field'][$key]
+                ]
             ]);
             $ticketContactInModelField[$value] = $_POST['ticket_contact_key'][$key];
         }
@@ -113,34 +115,34 @@ class Setting extends \Core\Controller\Controller {
     /**
      * 特殊格式更新设置
      */
-    private function specialOperate(){
+    private function specialOperate() {
         foreach (['upload_img', 'upload_file'] as $value) {
             $data[$value] = json_encode(explode(',', str_replace(["\r\n", "\r", "\n", " "], '', $_POST[$value])));
         }
 
         $data['crossdomain'] = !empty($_POST['crossdomain']) ? json_encode(explode("\n", str_replace("\r", "", $this->p('crossdomain')))) : '';
 
-        if(count($_POST['customstatus']) != '4' && count($_POST['customcolor']) != '4'){
+        if (count($_POST['customstatus']) != '4' && count($_POST['customcolor']) != '4') {
             $this->error('请提交工单状态');
         }
         $customstatus = [];
-        foreach($_POST['customstatus'] as $key => $value){
+        foreach ($_POST['customstatus'] as $key => $value) {
             $customstatus[$key]['color'] = $_POST['customcolor'][$key];
             $customstatus[$key]['name'] = $value;
         }
 
         $data['customstatus'] = json_encode($customstatus);
 
-        foreach($data as $key => $value){
+        foreach ($data as $key => $value) {
             $this->db('option')->where('option_name = :option_name')->update([
                 'value' => $value,
-                'noset' => ['option_name'  => $key]
+                'noset' => ['option_name' => $key]
             ]);
         }
     }
 
-    public function recordTips(){
-        switch ($this->p('name')){
+    public function recordTips() {
+        switch ($this->p('name')) {
             case 'tipsManual':
             case 'ticketModel':
                 $name = $this->p('name');
@@ -161,7 +163,11 @@ class Setting extends \Core\Controller\Controller {
      * 自动更新
      */
     public function atUpgrade() {
-        $getPatch = json_decode((new \Expand\cURL())->init('https://www.pescms.com/patch/5/'.\Core\Func\CoreFunc::$param['system']['version'], [], [
+        if (empty($this->session()->get('oldVersion'))) {
+            $this->session()->set('oldVersion', \Core\Func\CoreFunc::$param['system']['version']);
+        }
+
+        $getPatch = json_decode((new \Expand\cURL())->init(PESCMS_URL . '/patch/5/' . \Core\Func\CoreFunc::$param['system']['version'], [], [
             CURLOPT_HTTPHEADER => [
                 'X-Requested-With: XMLHttpRequest',
                 'Content-Type: application/json; charset=utf-8',
@@ -169,24 +175,25 @@ class Setting extends \Core\Controller\Controller {
             ]
         ]), true);
 
-        if(empty($getPatch)){
+        if (empty($getPatch)) {
             $this->error('连接PESCMS服务器失败!');
         }
 
-        if($getPatch['status'] == 200){
-            $patchSave = APP_PATH.'Upgrade/'.pathinfo($getPatch['data']['update_patch_file'])['basename'];
 
-            $getFile = (new \Expand\cURL())->init("https://www.pescms.com{$getPatch['data']['update_patch_file']}");
+        if ($getPatch['status'] == 200) {
+            $patchSave = APP_PATH . 'Upgrade/' . pathinfo($getPatch['data']['update_patch_file'])['basename'];
+
+            $getFile = (new \Expand\cURL())->init(PESCMS_URL . "{$getPatch['data']['update_patch_file']}");
 
             $download = fopen($patchSave, 'w');
             fwrite($download, $getFile);
             fclose($download);
 
-            if(hash_file('sha256', $patchSave) !== $getPatch['data']['patch_sha256'] ){
+            if (hash_file('sha256', $patchSave) !== $getPatch['data']['patch_sha256']) {
                 exit('哈希值不一致');
             }
 
-            (new \Expand\zip()) ->unzip($patchSave);
+            (new \Expand\zip())->unzip($patchSave);
 
             $this->actionini();
 
@@ -196,14 +203,26 @@ class Setting extends \Core\Controller\Controller {
             //继续跳转至自动更新方法
             $this->success("{$getPatch['data']['new_version']}升级完毕,自动更新程序正在运行,请勿关闭浏览器", $this->url(GROUP . '-Setting-atUpgrade', ['method' => 'PUT', 'complete' => 1]), '1');
 
-        }elseif($getPatch['status'] == 0){
+        } elseif ($getPatch['status'] == 0) {
             //不是从自动更新跳转的，则提示接口信息
-            if(empty($_GET['complete'])){
+            if (empty($_GET['complete'])) {
                 $this->assign('info', [$getPatch['msg']]);
             }
             $this->upgradeStatistics(\Core\Func\CoreFunc::$param['system']['version']);
+
+            //获取从旧版到最新版的升级说明
+            $detail = json_decode((new \Expand\cURL())->init(PESCMS_URL . '/patch/detail', ['method' => 'GET','version' => $this->session()->get('oldVersion'),'project' => 5,],
+                [
+                    CURLOPT_HTTPHEADER => [
+                        'X-Requested-With: XMLHttpRequest',
+                        'Accept: application/json',
+                    ]
+                ]), true);
+
+            $this->assign('detail', $detail['data']);
+
             $this->layout('Setting_upgrade_info');
-        }else{
+        } else {
             $this->error('解析接口出错');
         }
 
@@ -219,26 +238,26 @@ class Setting extends \Core\Controller\Controller {
         }
 
         //获取文件hash值
-        $getPatch = json_decode((new \Expand\cURL())->init('https://www.pescms.com/patch/5/'.\Core\Func\CoreFunc::$param['system']['version'], [], [
+        $getPatch = json_decode((new \Expand\cURL())->init(PESCMS_URL . '/patch/5/' . \Core\Func\CoreFunc::$param['system']['version'], [], [
             CURLOPT_HTTPHEADER => [
                 'X-Requested-With: XMLHttpRequest',
                 'Content-Type: application/json; charset=utf-8',
                 'Accept: application/json',
             ]
         ]), true);
-        if(empty($getPatch)){
+        if (empty($getPatch)) {
             $this->error('连接PESCMS服务器失败!');
         }
 
-        if($getPatch['status'] != 200){
+        if ($getPatch['status'] != 200) {
             $this->error($getPatch['msg']);
         }
 
-        if(hash_file('sha256', $file['tmp_name']) !== $getPatch['data']['patch_sha256']){
+        if (hash_file('sha256', $file['tmp_name']) !== $getPatch['data']['patch_sha256']) {
             $this->error('非官方更新补丁!请访问<a href="https://www.pescms.com" target="_blank">PESCMS</a>获取最新的补丁', 'javascript:history.go(-1)', '10');
         }
 
-        (new \Expand\zip()) ->unzip($file['tmp_name']);
+        (new \Expand\zip())->unzip($file['tmp_name']);
 
         $this->actionini();
 
@@ -250,7 +269,7 @@ class Setting extends \Core\Controller\Controller {
      * 执行数据库更新
      * @return bool|string
      */
-    private function actionini(){
+    private function actionini() {
         $version = \Core\Func\CoreFunc::$param['system']['version'];
 
         $ini = APP_PATH . 'Upgrade/action.ini';
@@ -267,21 +286,21 @@ class Setting extends \Core\Controller\Controller {
                 //更新SQL信息
                 if (!empty($value['sql'])) {
                     foreach ($value['sql'] as $file) {
-                        $sql = file_get_contents(APP_PATH.'/Upgrade/sql/'.$file);
-                        if(!empty($sql)){
+                        $sql = file_get_contents(APP_PATH . '/Upgrade/sql/' . $file);
+                        if (!empty($sql)) {
                             $this->db()->exec($sql);
-                        }else{
+                        } else {
                             //更新SQL文件失败，则记录起来
-                            $this->info[] = "更新SQL文件出错: ".APP_PATH.'/Upgrade/sql/'.$file;
+                            $this->info[] = "更新SQL文件出错: " . APP_PATH . '/Upgrade/sql/' . $file;
                         }
                     }
                 }
 
                 //移除废弃的文件(更名)
-                if(!empty($value['delete'])){
+                if (!empty($value['delete'])) {
                     foreach ($value['delete'] as $file) {
-                        if(rename(APP_PATH.$file, APP_PATH.$file.'_remove') != true){
-                            $this->info[] = "移除文件出错: ".APP_PATH.$file;
+                        if (rename(APP_PATH . $file, APP_PATH . $file . '_remove') != true) {
+                            $this->info[] = "移除文件出错: " . APP_PATH . $file;
                         }
                     }
                 }
@@ -304,8 +323,8 @@ class Setting extends \Core\Controller\Controller {
      * @description 本功能仅用于官方统计程序版本的使用情况
      * @param $version
      */
-    private function upgradeStatistics($version){
-        (new \Expand\cURL())->init('https://www.pescms.com/?g=Api&m=Statistics&a=action', [
+    private function upgradeStatistics($version) {
+        (new \Expand\cURL())->init(PESCMS_URL . '/?g=Api&m=Statistics&a=action', [
             'id' => 3,
             'type' => 2,
             'version' => $version

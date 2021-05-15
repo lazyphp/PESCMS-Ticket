@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/ui-dialog.min.css?v=<?= $resources ?>">
     <link rel="stylesheet" href="<?= DOCUMENT_ROOT; ?>/Theme/assets/css/amazeui.datetimepicker.css?v=<?= $resources ?>">
     <script>
-        var PESCMS_URL = 'https://www.pescms.com';
+        var PESCMS_URL = '<?= PESCMS_URL ?>';
         var PESCMS_PATH = '<?= DOCUMENT_ROOT; ?>';
     </script>
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/jquery.min.js?v=<?= $resources ?>"></script>

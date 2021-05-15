@@ -19,6 +19,9 @@ class Index extends \Core\Controller\Controller {
     private $rowlock = '';
 
     public function index() {
+        if(!empty($_GET)){
+            $this->jump('/');
+        }
         $system = \Core\Func\CoreFunc::$param['system'];
         if ($system['openindex'] == '0') {
             $this->_404();

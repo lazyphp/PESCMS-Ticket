@@ -28,8 +28,7 @@ class Index extends \App\Install\Common {
      */
     private function checkRunning() {
         $phpVersion = explode('.', phpversion());
-        $version = "{$phpVersion['0']}.{$phpVersion['1']}";
-        $check['php_version'] =  $version >= 5.6 ? true : false;
+        $check['php_version'] =  $phpVersion[0] >= 7 ? true : false;
 
         $check['pdo'] = in_array('pdo_mysql', get_loaded_extensions()) ? true : false;
 

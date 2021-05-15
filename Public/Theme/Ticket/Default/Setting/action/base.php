@@ -71,6 +71,23 @@
             </div>
         </div>
 
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">是否启用API接口<i class="am-text-danger">*</i></label>
+                    <label class="am-radio-inline">
+                        <input type="radio" value="1" name="openapi" required="" <?= $openapi['value'] == '1' ? 'checked="checked"' : '' ?>> 开启
+                    </label>
+                    <label class="am-radio-inline">
+                        <input type="radio" value="0" name="openapi" required="" <?= $openapi['value'] == '0' ? 'checked="checked"' : '' ?>> 关闭
+                    </label>
+                    <div class="pes-alert pes-alert-info am-text-xs " >
+                        <i class="am-icon-lightbulb-o"></i> 如果你不需要使用小程序，请不要开启API接口。
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <hr class="am-margin-top-0 am-divider-default"/>
         <div class="am-g am-g-collapse">
             <div class="am-u-sm-12 am-u-sm-centered">

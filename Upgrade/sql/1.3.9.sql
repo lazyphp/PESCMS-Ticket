@@ -18,3 +18,4 @@ ALTER TABLE `pes_ticket` ADD `ticket_top_list` TINYINT(1) NOT NULL COMMENT '列�
 
 INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES (NULL, '列表置顶工单', '2', '1', '您没有权限置顶列表工单', 'PUT', 'setListTop', 'TicketPUTTicketsetListTop', '2', '9');
 
+INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) VALUES (NULL, 'openapi', '是否开启api接口', '0', 'system');

@@ -41,6 +41,7 @@ class Setting extends \Core\Controller\Controller {
                 'member_login',
                 'weixinRegister',
                 'max_upload_size',
+                'openapi',
             ],
             //基于数组的json更新设置
             'array' => [

@@ -78,7 +78,7 @@
             if(field == ''){
                 return false;
             }
-            $.getJSON(PESCMS_PATH + '/?g=Ticket&m=Ticket_form&a=checkFieldName&number=<?= $label->xss($_GET['number']) ?>&field='+field, function(data){
+            $.getJSON(PESCMS_PATH + '/?g=Ticket&m=Ticket_form&a=checkFieldName&number=<?= $label->xss($_GET['number']) ?>&field='+field+'&keepToken='+Math.random(), function(data){
                 if(data.status == 200){
                     dom.removeClass('am-field-error');
                 }else{

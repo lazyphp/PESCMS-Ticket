@@ -54,6 +54,7 @@ class Member extends Content {
      * 执行登录客户账号
      */
     public function issueLogin(){
+        $this->checkToken();
         $id = $this->isG('id', '请选择您要登录的客户账号');
         $member = \Model\Content::findContent('member', $id, 'member_id');
         $this->session()->set('member', $member);

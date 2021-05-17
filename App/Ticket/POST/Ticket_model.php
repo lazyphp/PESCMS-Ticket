@@ -18,7 +18,6 @@ class Ticket_model extends Content {
      * @param bool $commit
      */
     public function action($jump = false, $commit = false) {
-        $this->checkToken();
         parent::action($jump, $commit);
         if($_POST['copy'] == 1){
             $this->copy();

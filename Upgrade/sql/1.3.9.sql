@@ -4,7 +4,7 @@ INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) 
 INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES (NULL, '变更工单模型', '2', '1', '您没有权限变更工单模型', 'PUT', 'changeTicketModel', 'TicketPUTTicketchangeTicketModel', '2', '6');
 
 INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_display_name`, `field_type`, `field_option`, `field_explain`, `field_default`, `field_required`, `field_listsort`, `field_list`, `field_form`, `field_status`, `field_is_null`) VALUES
-(NULL, 7, 'vacation', '休假', 'radio', '{&quot;\\u5de5\\u4f5c&quot;:&quot;0&quot;,&quot;\\u4f11\\u5047&quot;:&quot;1&quot;}', '', '1', 1, 98, 1, 1, 1, 0);
+(NULL, 7, 'vacation', '休假', 'radio', '{&quot;\\u5de5\\u4f5c&quot;:&quot;0&quot;,&quot;\\u4f11\\u5047&quot;:&quot;1&quot;}', '', '0', 1, 98, 1, 1, 1, 0);
 
 ALTER TABLE `pes_user` ADD `user_vacation` TINYINT(1) NOT NULL COMMENT '是否休假中';
 

@@ -176,7 +176,9 @@ class Ticket extends \Core\Model\Model {
                     self::error("您提交的'<b>{$value['ticket_form_description']}</b>'选项值存在异常，请提交正确的值，或者刷新页面再提交。");
                 }
 
-            }
+            }else{
+				$optionName  = '';
+			}
 
             $result = self::db('ticket_content')->insert([
                 'ticket_id'           => $ticketID,

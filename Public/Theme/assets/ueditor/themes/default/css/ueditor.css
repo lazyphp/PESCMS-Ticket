@@ -1347,6 +1347,14 @@ div.edui-box {
     height: 400px;
     overflow: hidden;
 }
+@media only screen and (max-width: 640px){
+    .edui-default .edui-for-insertimage .edui-dialog-content {
+        width: 95vw;
+        overflow: hidden;
+    }
+}
+
+
 /*webapp-dialog*/
 .edui-default .edui-for-webapp .edui-dialog-content {
     width: 560px;

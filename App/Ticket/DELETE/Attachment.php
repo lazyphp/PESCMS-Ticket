@@ -1,13 +1,9 @@
 <?php
 /**
- * PESCMS for PHP 5.4+
- *
- * Copyright (c) 2014 PESCMS (http://www.pescms.com)
+ * Copyright (c) 2021 PESCMS (http://www.pescms.com)
  *
  * For the full copyright and license information, please view
  * the file LICENSE.md that was distributed with this source code.
- * @core version 2.8
- * @version 1.0
  */
 
 namespace App\Ticket\DELETE;
@@ -18,6 +14,7 @@ namespace App\Ticket\DELETE;
 class Attachment extends Content {
 
     public function delete() {
+        $this->checkToken();
         $file = \Model\Content::findContent('attachment', $_GET['id'], 'attachment_id');
         if (is_file(APP_PATH . $file['attachment_path'])) {
             if($file['attachment_type'] == '1'){

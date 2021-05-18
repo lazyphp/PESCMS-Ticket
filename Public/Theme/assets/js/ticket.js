@@ -14,4 +14,12 @@ $(function () {
         $(this).parents('.pes-option-line').remove();
     })
 
+    $('#mobile-new-tips-button').on('click', function() {
+        $('#ticket-topbar-collapse').removeClass('am-in')
+    })
+    //
+    $('#mobile-menu-button').on('click', function() {
+        $('#mobile-new-tips').removeClass('am-in')
+    })
+
 })

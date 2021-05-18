@@ -8,6 +8,7 @@
             </div>
             <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed am-no-layout">
             <form class="am-form am-form-horizontal ajax-submit" action="" method="post" data-am-validator>
+                <?= $label->token(); ?>
                 <input type="hidden" name="method" value="PUT">
 
                 <div class="am-g am-g-collapse">
@@ -52,6 +53,22 @@
                         <div class="am-form-group">
                             <label class="am-block">确认新密码</label>
                             <input class="form-text-input input-leng3" name="repassword" placeholder="" type="text" value="">
+                        </div>
+                    </div>
+                </div>
+
+                <hr data-am-widget="divider" style="" class="am-divider am-divider-default am-margin-top-xs" />
+                <div class="am-g am-g-collapse">
+                    <div class="am-u-sm-12 am-u-sm-centered">
+                        <div class="am-form-group">
+                            <label class="am-block">我的状态<i class="am-text-danger">*</i></label>
+                            <label class="form-radio-label am-radio-inline">
+                                <input class="form-radio" type="radio" name="vacation" value="0" required="" <?= $user_vacation == 0 ? 'checked="checked"' : '' ?>>
+                                <span>工作</span>
+                            </label>
+                            <label class="form-radio-label am-radio-inline">
+                                <input class="form-radio" type="radio" name="vacation" value="1" required="" <?= $user_vacation == 1 ? 'checked="checked"' : '' ?>><span>休假</span>
+                            </label>
                         </div>
                     </div>
                 </div>

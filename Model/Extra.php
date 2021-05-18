@@ -125,7 +125,6 @@ class Extra extends \Core\Model\Model {
         ]);
 
         foreach ($list as $value) {
-            //@todo 此处代码可优化。基本上整个发送模式大部分代码都是相似的。唔……有时间再优化了。毕竟不影响运行效率，暂时以开发进度为主。
             switch ($value['send_type']) {
                 case '1':
                     $result = (new \Expand\Notice\Mail())->send($value);
@@ -145,6 +144,9 @@ class Extra extends \Core\Model\Model {
                 case '6':
                     $result = (new \Expand\wxapp())->send($value);
                     break;
+                default:
+                    //给予一个其他通知的扩展入口
+                    $result = (new \Expand\OtherNotice())->send($value);
             }
 
             if(DEBUG == true){

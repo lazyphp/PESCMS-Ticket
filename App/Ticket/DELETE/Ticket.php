@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Copyright (c) 2021 PESCMS (http://www.pescms.com)
+ *
+ * For the full copyright and license information, please view
+ * the file LICENSE.md that was distributed with this source code.
+ */
 namespace App\Ticket\DELETE;
 
 /**
@@ -15,6 +20,7 @@ class Ticket extends \Core\Controller\Controller {
      * 当然了，Mysql8 已经可以解决此问题。但用户普遍使用5.X版本。
      */
     public function action(){
+        $this->checkToken();
         $id = $this->isG('id', '请提交您要删除的工单ID');
 
         $this->db()->transaction();

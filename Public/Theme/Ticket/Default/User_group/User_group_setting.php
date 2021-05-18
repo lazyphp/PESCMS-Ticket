@@ -2,6 +2,7 @@
     <form class="am-form setting-form ajax-submit" action="<?= $label->url(GROUP.'-'.MODULE.'-'.ACTION) ?>" method="POST">
         <input type="hidden" name="method" value="PUT"/>
         <input type="hidden" name="id" value="<?= $_GET['id'] ?>"/>
+        <?= $label->token(); ?>
         <table class="am-table am-table-striped am-table-hover table-main">
             <tr>
                 <th>名称</th>

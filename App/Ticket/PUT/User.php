@@ -17,6 +17,7 @@ class User extends Content {
      * 个人设置
      */
     public function setting() {
+        $this->checkToken();
         $userID = $this->session()->get('ticket')['user_id'];
         foreach (['账号' => 'account', '邮箱' => 'mail', '企业微信' => 'weixinWork'] as $key => $item) {
             if ($item == 'weixinWork') {
@@ -45,6 +46,7 @@ class User extends Content {
         }
 
         $data['user_name'] = $this->isP('name', '请提交名称');
+        $data['user_vacation'] = $this->isP('vacation', '请提交您的状态');
         $data['noset']['user_id'] = $userID;
         $this->db('user')->where('user_id = :user_id')->update($data);
 

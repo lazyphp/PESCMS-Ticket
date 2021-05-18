@@ -1,13 +1,9 @@
 <?php
 /**
- * PESCMS for PHP 5.4+
- *
- * Copyright (c) 2015 PESCMS (http://www.pescms.com)
+ * Copyright (c) 2021 PESCMS (http://www.pescms.com)
  *
  * For the full copyright and license information, please view
  * the file LICENSE.md that was distributed with this source code.
- * @core version 2.6
- * @version 1.0
  */
 
 namespace App\Ticket\POST;
@@ -23,6 +19,7 @@ class Ticket extends \Core\Controller\Controller {
      * 回复工单
      */
     public function reply() {
+        $this->checkToken();
         $number = $this->isP('number', '请选择您要查看的工单');
         $ticket = \Model\Content::findContent('ticket', $number, 'ticket_number');
         if (empty($ticket)) {
@@ -52,8 +49,11 @@ class Ticket extends \Core\Controller\Controller {
                     $status = '0';//转派用户，工单状态应该为待解决
                     $userID = $this->isP('uid', '请选择您要指派的用户');
                     $checkUser = \Model\Content::findContent('user', $userID, 'user_id');
-                    if (empty($checkUser)) {
+                    if (empty($checkUser) || $checkUser['user_status'] == 0 ) {
                         $this->error('转派的用户不存在');
+                    }
+                    if($checkUser['user_vacation'] == 1){
+                        $this->error('转派的用户正在休假');
                     }
                     \Model\Ticket::setUser($ticket['ticket_id'], $checkUser['user_id'], $checkUser['user_name'], $this->session()->get('ticket')['user_id']);
                     $templateType = 4;
@@ -61,6 +61,10 @@ class Ticket extends \Core\Controller\Controller {
                     \Model\Notice::addCSNotice($ticket['ticket_number'], $checkUser, -$templateType);
 
                 } elseif ($_POST['assign'] == '4') {
+                    $auth = \Model\Auth::check('TicketPUTTicketcomplete');
+                    if($auth !== true){
+                        $this->error($auth);
+                    }
                     $status = '3';
                     $templateType = 5;
                     $content = $csText['complete']['content'];

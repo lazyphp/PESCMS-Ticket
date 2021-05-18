@@ -63,6 +63,10 @@ html,body{
     .am-topbar .am-dropdown .am-dropdown-content:before, .am-topbar .am-dropdown .am-dropdown-content:after{
         border: none;
     }
+    .pt-view-desc-question, .pt-view-desc .am-u-lg-3{
+        height: 25px;
+        line-height: 35px;
+    }
 }
 /*小屏幕菜单展示样式*/
 @media only screen and (max-width: 640px){

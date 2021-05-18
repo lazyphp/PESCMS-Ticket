@@ -55,6 +55,7 @@
                             <div class="am-tabs-bd">
                                 <div class="am-tab-panel am-fade am-in am-active" id="tab1">
                                     <form class="am-form ajax-submit" action="<?= $label->url('Member-changeEmail') ?>" method="post" data-am-validator>
+                                    <?= $label->token(); ?>
                                     <input type="hidden" name="method" value="PUT">
                                     <table class="am-table am-remove-border member-info">
                                         <tr>

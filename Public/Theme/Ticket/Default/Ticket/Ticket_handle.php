@@ -1,23 +1,41 @@
 <div class="am-padding-xs am-padding-top-0">
     <?php require THEME . '/Ticket/Common/Ticket_view_package.php'; ?>
 
-    <?php if ($ticket_status < 3 && $ticket_close == '0' && ($user_id == $this->session()->get('ticket')['user_id'] || empty($user_id))): ?>
-    <form action="<?= $label->url('Ticket-Ticket-reply'); ?>" class="am-form ajax-submit" method="POST" data-am-validator>
-        <input type="hidden" name="number" value="<?= $ticket_number; ?>"/>
-        <input type="hidden" name="back_url" value="<?= $_GET['back_url']; ?>"/>
-        <div class="am-panel am-panel-default">
-            <div class="am-panel-bd">
-                <h3 class="am-margin-0">处理工单</h3>
-            </div>
+    <?php if ($ticket_status < 3 && $ticket_close == '0' && ($user_id == $this->session()->get('ticket')['user_id'] || empty($user_id) || $label->checkAuth('TicketPUTTicketintervene') === true )): ?>
+        <form action="<?= $label->url('Ticket-Ticket-reply'); ?>" class="am-form ajax-submit" method="POST" data-am-validator>
+            <input type="hidden" name="number" value="<?= $ticket_number; ?>"/>
+            <input type="hidden" name="back_url" value="<?= $_GET['back_url']; ?>"/>
+            <?= $label->token() ?>
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-bd">
+                    <h3 class="am-margin-0">处理工单</h3>
+                </div>
                 <ul class="am-list am-list-static am-text-sm">
                     <li>
                         <div class="am-g am-g-collapse">
                             <div class="am-u-lg-12">
 
-                                <?php if($label->checkAuth('TicketPOSTTicketclose') === true): ?>
+                                <?php if ($label->checkAuth('TicketPUTTicketchangeTicketModel') === true): ?>
+                                <div class="am-form-group am-margin-top-xs">
+                                    <label class="am-form-label am-margin-bottom-0 am-text-middle">变更工单类型 : </label>
+                                    <select name="model_id" class="am-form-field am-input-sm am-radius am-text-middle" data-am-selected="{maxHeight: 200, btnSize: 'sm', dropUp: 0}" data="<?= $ticket_model_id ?>">
+                                        <option value="-1">所有类型</option>
+                                        <?php foreach ($ticketModel as $value): ?>
+                                            <option value="<?= $value['ticket_model_id']; ?>" <?= $value['ticket_model_id'] == $ticket_model_id ? 'selected="selected"' : '' ?> >
+                                                <?= $category[$value['ticket_model_cid']]['category_name']; ?>
+                                                - <?= $value['ticket_model_name']; ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <hr/>
+                                </div>
+                                <?php endif; ?>
+
+                                <?php if ($label->checkAuth('TicketPOSTTicketclose') === true): ?>
                                     <div class="am-form-group">
                                         <label class="am-form-label am-margin-bottom-0">关闭工单 : </label>
-                                        <a href="<?= $label->url('Ticket-Ticket-close', ['number' => $ticket_number, 'method' => 'POST', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>" class="am-text-danger ajax-click ajax-dialog" msg="确定要关闭本工单吗？"> 点击关闭</a>
+                                        <a href="<?= $label->url('Ticket-Ticket-close', ['number' => $ticket_number, 'method' => 'POST', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>" class="am-text-danger ajax-click ajax-dialog" msg="确定要关闭本工单吗？">
+                                            点击关闭</a>
                                     </div>
                                 <?php endif; ?>
 
@@ -46,14 +64,14 @@
                                         </label>
                                     </div>
 
-                                    <?php if($label->checkAuth('TicketPOSTTicketclose') === true): ?>
-                                    <div class="am-form-group">
-                                        <label class="am-form-label am-margin-bottom-0">工单状态 : </label>
-                                        <label class="form-radio-label am-radio-inline">
-                                            <input type="radio" name="assign" value="4">
-                                            标记完成
-                                        </label>
-                                    </div>
+                                    <?php if ($label->checkAuth('TicketPUTTicketcomplete') === true): ?>
+                                        <div class="am-form-group">
+                                            <label class="am-form-label am-margin-bottom-0">工单状态 : </label>
+                                            <label class="form-radio-label am-radio-inline">
+                                                <input type="radio" name="assign" value="4">
+                                                标记完成
+                                            </label>
+                                        </div>
                                     <?php endif; ?>
 
                                     <div class="am-form-inline am-margin-bottom">
@@ -69,14 +87,14 @@
                                             </select>
                                         </div>
                                         <div class="am-form-group am-hide assign-user">
-                                        <select name="uid" size="5">
-                                            <option value="" disabled>等待获取用户信息</option>
-                                        </select>
+                                            <select name="uid" size="5">
+                                                <option value="" disabled>等待获取用户信息</option>
+                                            </select>
                                         </div>
                                     </div>
 
 
-                                    <?php if(!empty($phrase)): ?>
+                                    <?php if (!empty($phrase)): ?>
                                         <div class="am-form-group phrase_list">
                                             <label for="">我的回复短语</label>
                                             <select id="phrase">
@@ -92,9 +110,9 @@
                                         <label for="">回复内容</label>
                                         <script type="text/plain" id="content" style="height:250px;"></script>
                                         <script>
-                                        var ue = UE.getEditor('content', {
-                                            textarea: 'content'
-                                        });
+                                            var ue = UE.getEditor('content', {
+                                                textarea: 'content'
+                                            });
                                         </script>
                                     </div>
                                 <?php endif; ?>
@@ -110,10 +128,10 @@
                                     </div>
                                 </div>
 
-                                <?php if($member_id > 0): ?>
+                                <?php if ($member_id > 0): ?>
                                     <div class="am-form-group">
                                         <label class="am-form-label am-margin-bottom-0">通知方式 : </label>
-                                        <?php foreach(explode(',', $ticket_model_contact) as $key => $value): ?>
+                                        <?php foreach (explode(',', $ticket_model_contact) as $key => $value): ?>
                                             <label class="form-checkbox-label am-checkbox-inline">
                                                 <input type="checkbox" name="contact_type[]" value="<?= $value ?>">
                                                 <?= $global_contact[$value] ?>
@@ -125,27 +143,28 @@
                                     </div>
                                 <?php endif; ?>
 
-                                <button type="submit" id="btn-submit" class="am-btn am-btn-primary am-btn-xs" data-am-loading="{spinner: 'circle-o-notch', loadingText: '提交中...', resetText: '再次提交'}">提交
+                                <button type="submit" id="btn-submit" class="am-btn am-btn-primary am-btn-xs" data-am-loading="{spinner: 'circle-o-notch', loadingText: '提交中...', resetText: '再次提交'}">
+                                    提交
                                 </button>
 
                             </div>
                         </div>
                     </li>
                 </ul>
-        </div>
-    </form>
+            </div>
+        </form>
     <?php endif; ?>
-    
-    <?php if(ACTION == 'complainDetail' && $ticket_score_time > 0 ): ?>
+
+    <?php if (ACTION == 'complainDetail' && $ticket_score_time > 0): ?>
         <?php require THEME . '/Ticket/Common/Ticket_score.php'; ?>
     <?php endif; ?>
 
 </div>
 
 <div class="am-hide">
-    <?php if(!empty($phrase)): ?>
+    <?php if (!empty($phrase)): ?>
         <?php foreach ($phrase as $value): ?>
-            <div id="phrase_<?=$value['phrase_id']?>">
+            <div id="phrase_<?= $value['phrase_id'] ?>">
                 <?= htmlspecialchars_decode($value['phrase_content']) ?>
             </div>
         <?php endforeach; ?>
@@ -179,12 +198,12 @@
         /**
          * 回复短语
          */
-        $('#phrase').change(function(){
+        $('#phrase').change(function () {
             var id = $(this).val()
-            if(id == ''){
+            if (id == '') {
                 return false;
             }
-            var content = $('#phrase_'+id).html().trim();
+            var content = $('#phrase_' + id).html().trim();
             ue.setContent(content);
 
         })
@@ -192,28 +211,34 @@
         /**
          * 选择对应的组，进行获取对应的用户列表
          */
-        $('.ticket-group').on('change', function(){
+        $('.ticket-group').on('change', function () {
             var group = $(this).val();
-            if(group == ''){
+            if (group == '') {
                 return false;
             }
             $('select[name=uid]').html('<option disabled>正在获取客服信息中...</option>');
 
-            $.post('<?= $label->url('Ticket-Ticket-getAssignUser', ['method' => 'GET']) ?>', {group:group}, function(result){
-                if(result.status == 200){
+            $.post('<?= $label->url('Ticket-Ticket-getAssignUser', ['method' => 'GET']) ?>', {group: group}, function (result) {
+                if (result.status == 200) {
                     var option = '';
-                    for(var key in result.data){
-                        option += '<option value="'+result.data[key]['user_id']+'" '+result.data[key]['disabled']+' >'+result.data[key]['user_name']+'</option>'
+                    if(result.data.length > 0){
+                        for (var key in result.data) {
+                            var user_vacation = result.data[key]['user_vacation'] == 0 ? '' : '(休假)';
+                            option += '<option value="' + result.data[key]['user_id'] + '" ' + result.data[key]['disabled'] + ' >' + result.data[key]['user_name'] + user_vacation + '</option>'
+                        }
+                    }else{
+                        option = '<option disabled="disabled">本组暂无客服</option>';
                     }
+
                     $('select[name=uid]').html(option);
-                }else{
+                } else {
                     var d = dialog({
-                        id:'tisp',
-                        skin:'submit-warning',
+                        id: 'tisp',
+                        skin: 'submit-warning',
                         content: result.msg
                     })
                     d.showModal();
-                    setTimeout(function(){
+                    setTimeout(function () {
                         d.close();
                     }, 1800)
                 }
@@ -224,14 +249,34 @@
         /**
          * 工单备注登记
          */
-        $('.ticket-remark-input').on('blur', function(){
+        $('.ticket-remark-input').on('blur', function () {
             var remark = $(this).val();
-            if(remark == '' || remark == $(this).attr('old')){
+            if (remark == '' || remark == $(this).attr('old')) {
                 return false;
             }
             var number = '<?= $ticket_number ?>';
-            $.ajaxsubmit({url : '<?= $label->url('Ticket-Ticket-remark') ?>', data : {number:number, remark:remark}}, function(){
+            $.ajaxsubmit({
+                url: '<?= $label->url('Ticket-Ticket-remark') ?>',
+                data: {number: number, remark: remark}
+            }, function () {
 
+            })
+        })
+
+        /**
+         * 修改工单模型
+         */
+        $('select[name="model_id"]').on('change', function () {
+            if(!confirm('您确定要变更本工单模型吗?')){
+                window.location.reload();
+                return false;
+            }
+            var id = $(this).val();
+            var number = '<?= $ticket_number ?>';
+            $.ajaxsubmit({
+                url: '<?= $label->url('Ticket-Ticket-changeTicketModel') ?>',
+                data: {id: id, number: number, method: 'PUT'}
+            }, function (res) {
             })
         })
 

@@ -3,7 +3,7 @@
 <input type="hidden" name="id" value="<?= $id ?>"/>
 <input type="hidden" name="number" value="<?= $_GET['number'] ?>"/>
 <input type="hidden" name="back_url" value="<?= $_GET['back_url'] ?>"/>
-
+<?= $label->token(); ?>
 <?php foreach ($field as $key => $value) : ?>
     <?php if ($value['field_form']): ?>
 		<div class="am-g am-g-collapse">
@@ -78,7 +78,7 @@
             if(field == ''){
                 return false;
             }
-            $.getJSON(PESCMS_PATH + '/?g=Ticket&m=Ticket_form&a=checkFieldName&number=<?= $label->xss($_GET['number']) ?>&field='+field, function(data){
+            $.getJSON(PESCMS_PATH + '/?g=Ticket&m=Ticket_form&a=checkFieldName&number=<?= $label->xss($_GET['number']) ?>&field='+field+'&keepToken='+Math.random(), function(data){
                 if(data.status == 200){
                     dom.removeClass('am-field-error');
                 }else{

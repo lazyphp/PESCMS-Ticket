@@ -207,27 +207,8 @@ class Label {
             $this->fieldOption[$fieldId] = \Model\Content::findContent('field', $fieldId, 'field_id');
         }
 
-        $option = json_decode(htmlspecialchars_decode($this->fieldOption[$fieldId]['field_option']), true);
-
-        $splitValue = explode(',', trim($value, ','));
-
-        $search = [];
-        $isNull = true;
-        foreach ($splitValue as $item){
-            if(empty($item) && !is_numeric($item) ){
-                continue;
-            }
-            $isNull = false;
-            $search[] = array_search($item, $option);
-        }
-
-        if($isNull){
-            return '-';
-        }else{
-            return implode(', ', $search);
-        }
-
-
+        $optionName = \Model\Field::getFieldOptionToMatch($value, $this->fieldOption[$fieldId]['field_option']);
+        return $optionName ?? '-';
     }
 
     /**

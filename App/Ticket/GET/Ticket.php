@@ -1,13 +1,9 @@
 <?php
 /**
- * PESCMS for PHP 5.4+
- *
- * Copyright (c) 2015 PESCMS (http://www.pescms.com)
+ * Copyright (c) 2021 PESCMS (http://www.pescms.com)
  *
  * For the full copyright and license information, please view
  * the file LICENSE.md that was distributed with this source code.
- * @core version 2.6
- * @version 1.0
  */
 
 namespace App\Ticket\GET;
@@ -19,7 +15,13 @@ namespace App\Ticket\GET;
  */
 class Ticket extends \Core\Controller\Controller {
 
-    public $condition = 'WHERE 1 = 1', $param = [], $category = [];
+    public $join = [],  $condition = 'WHERE 1 = 1', $group = '', $param = [], $category = [];
+
+    public function __init() {
+        parent::__init();
+        $this->category = \Model\Category::getAllCategoryCidPrimaryKey();
+        $this->assign('category', $this->category);
+    }
 
     /**
      * 工单列表(默认按管辖组)
@@ -28,8 +30,8 @@ class Ticket extends \Core\Controller\Controller {
 
         //搜索
         if (!empty($_GET['keyword'])) {
-            $this->param['ticket_number'] = $this->param['ticket_title'] = '%' . urldecode($this->g('keyword')) . '%';
-            $this->condition .= ' AND (t.ticket_title LIKE :ticket_title OR t.ticket_number LIKE :ticket_number )';
+            $this->param['ticket_remark'] = $this->param['ticket_number'] = $this->param['ticket_title'] = '%' . urldecode($this->g('keyword')) . '%';
+            $this->condition .= ' AND (t.ticket_title LIKE :ticket_title OR t.ticket_number LIKE :ticket_number OR t.ticket_remark LIKE :ticket_remark )';
         }
 
         //状态筛选
@@ -58,14 +60,37 @@ class Ticket extends \Core\Controller\Controller {
             $this->param['end'] = strtotime($this->g('end'). ' 23:59:59');
         }
 
+        if(!empty($_GET['form_content']) ){
+            $this->join[] = " LEFT JOIN {$this->prefix}ticket_content AS tc ON tc.ticket_id = t.ticket_id ";
+            $this->condition .= " AND (tc.ticket_form_content LIKE :ticket_form_content OR tc.ticket_form_option_name LIKE :ticket_form_option_name ) ";
+            $this->param['ticket_form_option_name'] = $this->param['ticket_form_content'] = '%' . urldecode($this->g('form_content')) . '%';
+            $this->group = ' GROUP BY t.ticket_id';
+
+        }
+
+        if(!empty($_GET['member_name']) ){
+            $this->join[] = " LEFT JOIN {$this->prefix}member AS m ON m.member_id = t.member_id ";
+            $this->condition .= " AND m.member_name LIKE :member_name ";
+            $this->param['member_name'] = '%' . urldecode($this->g('member_name')) . '%';
+        }
+
+        if(ACTION == 'myTicket'){
+            $sort = 't.ticket_top DESC,';
+        }else{
+            $sort = 't.ticket_top_list DESC,';
+        }
+
         $sql = "SELECT %s
                 FROM {$this->prefix}ticket AS t
                 LEFT JOIN {$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id
-                {$this->condition}
-                ORDER BY t.ticket_close ASC, t.ticket_status ASC, t.ticket_id DESC ";
+                ".implode(' ', $this->join)."
+                {$this->condition} 
+                {$this->group}
+                ORDER BY {$sort}  t.ticket_close ASC, t.ticket_status ASC, t.ticket_id DESC ";
+
 
         $result = \Model\Content::quickListContent([
-            'count' => sprintf($sql, 'count(*)'),
+            'count' => empty($this->group) ? sprintf($sql, 'count(*)') : 'SELECT COUNT(*) FROM ('.sprintf($sql, 't.ticket_id').') AS t ',
             'normal' => sprintf($sql, 't.*, tm.ticket_model_name, tm.ticket_model_cid, tm.ticket_model_time_out'),
             'param' => $this->param,
             'page' => !empty($_GET['csv']) ? '9919999' : '20'
@@ -75,8 +100,6 @@ class Ticket extends \Core\Controller\Controller {
         $this->assign('list', $result['list']);
         $this->assign('page', $result['page']);
 
-        $this->category = \Model\Category::getAllCategoryCidPrimaryKey();
-        $this->assign('category', $this->category);
         $this->assign('member', \Model\Member::getMemberWithID());
         $this->assign('title', \Model\Menu::getTitleWithMenu()['menu_name']);
         
@@ -226,8 +249,12 @@ class Ticket extends \Core\Controller\Controller {
                 ]
             ]));
 
+
+            $this->assign('ticketModel', \Model\Content::listContent(['table' => 'ticket_model', 'field' => 'ticket_model_id, ticket_model_number, ticket_model_cid, ticket_model_name']));
             $this->assign('form', $content['form']);
             $this->assign('member', $content['member']);
+            $this->assign('prefix', 'member_');
+            $this->assign('memberField', \Model\Field::fieldList('20', ['field_status' => 1, 'field_list' => '1']));
             $this->assign('global_contact', $content['global_contact']);
             $this->assign('chat', $content['chat']['list']);
             $this->assign('page', $content['chat']['page']);
@@ -278,16 +305,12 @@ class Ticket extends \Core\Controller\Controller {
 
         $groupID = $this->isP('group', '请提交用户组ID');
 
-        $field = 'IF(user_id = '.$this->session()->get('ticket')['user_id'].', "disabled", "") AS disabled';
+        $field = 'IF(user_id = '.$this->session()->get('ticket')['user_id'].' OR user_vacation = 1 , "disabled", "") AS disabled';
 
-        $user = $this->db('user')->field("user_id, user_name, {$field}")->where('user_group_id = :groupID')->select([
+        $user = $this->db('user')->field("user_id, user_name, user_vacation, {$field}")->where('user_group_id = :groupID AND user_status = 1  ')->select([
             'groupID' => $groupID
         ]);
-        if(empty($user)){
-            $this->error('获取客服信息失败');
-        }else{
-            $this->success(['msg' => '获取客服信息完成', 'data' => $user]);
-        }
+        $this->success(['msg' => '获取客服信息完成', 'data' => $user]);
     }
 
 

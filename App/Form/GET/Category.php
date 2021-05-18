@@ -113,21 +113,8 @@ class Category extends \Core\Controller\Controller{
         $this->assign('ticketInfo', $ticketInfo);
         $this->assign('field', $field);
 
-        //@todo 现阶段只有三种联系方式，因此暂时用代码写死的形式展示
-        $this->assign('contact', [
-            '1' => [
-                'title' => '电子邮件',
-                'key' => 'member_email'
-            ],
-            '2' => [
-                'title' => '手机号码',
-                'key' => 'member_phone'
-            ],
-            '3' => [
-                'title' => '微信',
-                'key' => 'member_weixin'
-            ],
-        ]);
+        //全局工单联系方式
+        $this->assign('contact', json_decode(\Model\Content::findContent('option', 'ticket_contact', 'option_name')['value'], true));
 
         $this->assign('member', $this->session()->get('member'));
 

@@ -169,12 +169,22 @@ class Ticket extends \Core\Model\Model {
                 }
             }
 
+            //特定字段需要校验提交的内容和设置是否一致。
+            if(isset($form) && in_array($value['ticket_form_type'], ['radio', 'checkbox', 'select', 'multiple']) ){
+                $optionName = \Model\Field::getFieldOptionToMatch($form, $value['ticket_form_option']);
+                if($optionName === NULL){
+                    self::error("您提交的'<b>{$value['ticket_form_description']}</b>'选项值存在异常，请提交正确的值，或者刷新页面再提交。");
+                }
 
+            }else{
+				$optionName  = '';
+			}
 
             $result = self::db('ticket_content')->insert([
                 'ticket_id'           => $ticketID,
                 'ticket_form_id'      => $value['ticket_form_id'],
                 'ticket_form_content' => $form,
+                'ticket_form_option_name' => $optionName,
             ]);
             if ($result === false) {
                 self::db()->rollback();
@@ -228,7 +238,7 @@ class Ticket extends \Core\Model\Model {
 
         switch ($ticket['ticket_model_auto_logic']) {
             case '1':
-                $userList = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']})")->select();
+                $userList = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']}) AND user_status = 1 AND user_vacation = 0 ")->select();
                 if (empty($userList)) {
                     return false;
                 }
@@ -269,7 +279,7 @@ class Ticket extends \Core\Model\Model {
                 break;
             case '0':
             default:
-                $user = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']})")->order('RAND()')->find();
+                $user = self::db('user')->where("user_group_id IN ({$ticket['ticket_model_group_id']}) AND user_status = 1 AND user_vacation = 0 ")->order('RAND()')->find();
                 if (!empty($user)) {
                     return $user;
                 }
@@ -411,10 +421,21 @@ class Ticket extends \Core\Model\Model {
         if (empty($ticket)) {
             return false;
         }
+
+        foreach (json_decode(\Model\Content::findContent('option', 'ticket_contact', 'option_name')['value'], true) as $item){
+            if($item['key'] == $ticket['ticket_contact']){
+                $ticket['ticket_contact_name'] = $item['title'];
+                break;
+            }
+        }
+
         $form = self::getTicketContent($ticket['ticket_id']);
         $chat = self::getTicketChat($ticket['ticket_id'], $chatPage);
 
         $member = $ticket['member_id'] == '-1' ? '' : \Model\Content::findContent('member', $ticket['member_id'], 'member_id');
+        if(!empty($member)){
+            unset($member['member_password']);
+        }
 
         return [
             'ticket' => $ticket,

@@ -14,6 +14,7 @@
                         <input type="hidden" name="g" value="<?= GROUP ?>">
                         <input type="hidden" name="m" value="<?= MODULE ?>">
                         <input type="hidden" name="a" value="issueLogin">
+                        <?= $label->token(); ?>
                         <select class="organize" data-am-selected="{searchBox: 1, maxHeight: 200}" placeholder="请选择客户分组" required>
                             <option value="">请选择客户分组</option>
                             <?php foreach ($member_organize as $key => $value): ?>
@@ -36,7 +37,7 @@
     $(function () {
         $('.organize').on('change', function () {
             var id = $(this).val()
-            $.getJSON('/?g=Ticket&m=Member&a=issue&id='+id, function (data) {
+            $.getJSON(PESCMS_PATH+'/?g=Ticket&m=Member&a=issue&id='+id+'&keepToken='+Math.random(), function (data) {
                 if(data.status == 200){
                     $('select[name="id"]').html(data.data)
                 }else{

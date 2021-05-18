@@ -216,4 +216,30 @@ class Field extends \Core\Model\Model {
         return self::db('field')->where('field_model_id = :model_id')->delete(array('model_id' => $modelId));
     }
 
+    /**
+     * 基于选项内容返回对应选项的名称
+     * @param $optionValue 选项值
+     * @param $optionJSON 选项的JSON设置
+     * @return bool|string
+     */
+    public static function getFieldOptionToMatch($optionValue, $optionJSON){
+        $option = json_decode(htmlspecialchars_decode($optionJSON), true);
+
+        $splitValue = explode(',', trim($optionValue, ','));
+
+        $search = [];
+        foreach ($splitValue as $item){
+            if(empty($item) && !is_numeric($item) ){
+                continue;
+            }
+            $tmp = array_search($item, $option);
+            $search[] = $tmp;
+            if(empty($tmp)){
+                return NULL;
+            }
+        }
+
+        return implode(', ', $search);
+    }
+
 }

@@ -64,7 +64,7 @@ class Ticket extends \Core\Model\Model {
         $param['ticket_contact_account'] = self::isP('contact_account', '请填写您的联系信息');
 
         //微信和小程序选项不验证格式
-        if (\Model\Extra::checkInputValueType($param['ticket_contact_account'], $param['ticket_contact']) === false && !in_array($param['ticket_contact'], ['3', '6'])) {
+        if (\Model\Extra::checkInputValueType($param['ticket_contact_account'], $param['ticket_contact']) === false && in_array($param['ticket_contact'], ['1', '2'])) {
             self::error('您填写联系方式的信息格式不正确。');
         }
 

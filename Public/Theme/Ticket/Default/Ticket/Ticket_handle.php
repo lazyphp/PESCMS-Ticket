@@ -1,5 +1,5 @@
 <div class="am-padding-xs am-padding-top-0">
-    <?php require THEME . '/Ticket/Common/Ticket_view_package.php'; ?>
+    <?php require_once THEME . '/Ticket/Common/Ticket_view_package.php'; ?>
 
     <?php if ($ticket_status < 3 && $ticket_close == '0' && ($user_id == $this->session()->get('ticket')['user_id'] || empty($user_id) || $label->checkAuth('TicketPUTTicketintervene') === true )): ?>
         <form action="<?= $label->url('Ticket-Ticket-reply'); ?>" class="am-form ajax-submit" method="POST" data-am-validator>

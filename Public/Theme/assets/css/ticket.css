@@ -18,6 +18,14 @@
     .ticket-search-form .am-selected{
         margin-bottom: 10px;
     }
+    .ticket-member-table-dropdown .am-dropdown-content{
+        left: 0 !important;
+        right: auto !important;
+
+    }
+    .ticket-member-table{
+        width: 31vh;
+    }
 }
 
 

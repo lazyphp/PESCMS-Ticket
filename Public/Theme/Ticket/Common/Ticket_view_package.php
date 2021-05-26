@@ -49,7 +49,7 @@
                     <div class="am-u-sm-12 am-u-lg-3">
                         <?php if (!empty($this->session()->get('ticket')['user_id']) && !empty($member)): ?>
                         <span class="pt-text-explode">客户信息 :
-                            <div class="am-dropdown" data-am-dropdown>
+                            <div class="am-dropdown ticket-member-table-dropdown" data-am-dropdown>
                                 <a href="javascript:;" class=" am-dropdown-toggle" data-am-dropdown-toggle><?= $member['member_name'] ?> <span class="am-icon-caret-down"></span></a>
                                 <ul class="am-dropdown-content">
                                     <li class="am-dropdown-header">客户详细信息</li>

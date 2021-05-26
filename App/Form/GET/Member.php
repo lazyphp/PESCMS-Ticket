@@ -80,12 +80,15 @@ class Member extends \Core\Controller\Controller {
      */
     private function ticketList($page = 15){
         $condition = '';
+        $join = [];
         $param = ['member_id' => $this->session()->get('member')['member_id']];
+
         //关键词搜索
         if(!empty($_GET['keyword'])){
+            $join[] = " LEFT JOIN {$this->prefix}ticket_content AS tc ON tc.ticket_id = t.ticket_id ";
             $keyword = $this->g('keyword');
-            $condition .= ' AND (ticket_number LIKE :ticket_number OR ticket_title LIKE :ticket_title)  ';
-            $param['ticket_number'] = $param['ticket_title'] = "%{$keyword}%";
+            $condition .= ' AND (ticket_number LIKE :ticket_number OR ticket_title LIKE :ticket_title OR tc.ticket_form_content LIKE :ticket_form_content OR tc.ticket_form_option_name LIKE :ticket_form_option_name )  ';
+            $param['ticket_form_option_name'] = $param['ticket_form_content'] = $param['ticket_number'] = $param['ticket_title'] = "%{$keyword}%";
         }
         //快速日期搜索
         if(!empty($_GET['dataType'])){
@@ -118,7 +121,8 @@ class Member extends \Core\Controller\Controller {
         }
 
         $sql = "SELECT %s FROM {$this->prefix}ticket AS t
-                LEFT JOIN {$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id
+                LEFT JOIN {$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id 
+                ".implode(' ', $join)."
                 WHERE t.member_id = :member_id {$condition}
                 ORDER BY t.ticket_submit_time DESC
                 ";

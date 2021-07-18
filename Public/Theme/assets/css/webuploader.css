@@ -8,8 +8,13 @@
     clip: rect(1px, 1px, 1px, 1px);
 }
 
+.webuploader-container{
+    display: block;
+}
+
 .webuploader-pick {
     position: relative;
+    display: inline-block;
     cursor: pointer;
     color: #fff;
     text-align: center;

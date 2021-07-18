@@ -22,7 +22,7 @@
 
         <div class="am-padding pt-info-panel">
             <div class="am-u-sm-12 am-u-sm-centered">
-                <div class="pt-view-desc-question"><span class="pt-text-explode">问题标题 : </span> <?= $ticket_title; ?>
+                <div class="pt-view-desc-question"><span class="pt-text-explode">问题标题 : </span> <?= $ticket_title; ?> <?= $member_id == '-1' && GROUP == 'Ticket' ? '<b class="am-text-gray">[匿名工单]</b>' : '' ?>
                 </div>
                 <div class="am-g am-g-collapse pt-view-desc">
                     <div class="am-u-sm-12 am-u-lg-3"><span class="pt-text-explode">工单编号 : </span><?= $ticket_number; ?>
@@ -47,13 +47,14 @@
                     </div>
 
                     <div class="am-u-sm-12 am-u-lg-3">
-                        <?php if (!empty($this->session()->get('ticket')['user_id']) && !empty($member)): ?>
+                        <?php if (!empty($this->session()->get('ticket')['user_id']) && !empty($member) && GROUP == 'Ticket' ): ?>
                         <span class="pt-text-explode">客户信息 :
                             <div class="am-dropdown ticket-member-table-dropdown" data-am-dropdown>
                                 <a href="javascript:;" class=" am-dropdown-toggle" data-am-dropdown-toggle><?= $member['member_name'] ?> <span class="am-icon-caret-down"></span></a>
                                 <ul class="am-dropdown-content">
                                     <li class="am-dropdown-header">客户详细信息</li>
                                     <li class="am-scrollable-horizontal ticket-member-table">
+                                        <?php if(!empty($memberField)): ?>
                                         <table class="am-table am-table-bordered am-table-striped am-table-hover am-text-xs am-text-nowrap">
                                             <tr>
                                                 <?php foreach ($memberField as $value) : ?>
@@ -73,6 +74,7 @@
                                                 <?php endforeach; ?>
                                             </tr>
                                         </table>
+                                        <?php endif; ?>
                                     </li>
                                 </ul>
                             </div>
@@ -91,7 +93,6 @@
                 <hr/>
                 <div class="am-padding-left"><span class="pt-text-explode">备注说明 : </span>
                     <input type="text" class="ticket-remark-input" maxlength="22" old="<?= $label->xss($ticket_remark) ?>" value="<?= $label->xss($ticket_remark) ?>" placeholder="若需要在列表标记说明，请在此处填写一句话，限22个字">
-                </div>
             <?php endif; ?>
 
         </div>
@@ -103,7 +104,7 @@
     <div class="am-panel-bd">
         <h3 class="am-margin-0">沟通记录</h3>
     </div>
-    <ul class="am-list am-list-static am-text-sm am-list-hover">
+    <ul class="am-list am-list-static am-text-sm am-list-hover pes-chat">
         <li class="am-text-gray-background">
             <div class="am-g">
                 <div class="am-u-sm-2 am-u-lg-1">
@@ -183,6 +184,17 @@
                 }
             })
         }, 60000)
+
+        $('.pes-chat img').each(function () {
+            var dom = $(this)
+            var parent = $(this).parent();
+            if(parent[0].tagName != 'a'){
+                var imgStr = '<a href="'+dom.attr('src')+'" data-fancybox="gallery" class="am-inline-block"><img src="'+dom.attr('src')+'" class="am-img-responsive" style="max-height: 300px"/></a>';
+                parent.append(imgStr)
+                dom.remove();
+            }
+        })
+
     })
 
 </script>

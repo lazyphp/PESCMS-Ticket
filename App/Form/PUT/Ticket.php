@@ -39,6 +39,9 @@ class Ticket extends \Core\Controller\Controller{
         //记录执行时间
         \Model\Ticket::runTime($ticket['ticket_id'], $ticket['ticket_refer_time'], $ticket['ticket_run_time']);
 
+
+        \Model\Ticket::addReply($ticket['ticket_id'], '本工单我已点击标记完成，且认可问题解决方案。', 'custom');
+
         $this->success('工单已结束,请对本次工单评价.', $back_url);
 
     }

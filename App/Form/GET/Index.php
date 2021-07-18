@@ -193,6 +193,13 @@ class Index extends \Core\Controller\Controller {
     }
 
     /**
+     * 输出token
+     */
+    public function token(){
+        $this->success('完成');
+    }
+
+    /**
      * 获取session id
      */
     public function getSession() {

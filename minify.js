@@ -5,13 +5,17 @@ var program = require('commander');
 
 program
     .version('0.0.1')
-    .option('-h, --recourse', '')
     .option('-c, --cheese [type]', 'Add the specified type of cheese [marble]', '')
-    .parse(process.argv);
+	.option('-h, --recourse', '');
+	
+	
+program.parse();
+
+const cli = program.opts();
 
 
 // console.log('you ordered a pizza with:');
-if (program.recourse){
+if (cli.recourse){
     console.log("    [使用说明] 不输入命令则压缩所有设定文件\n\n" +
         "    -h                                查看帮助说明\n" +
         "    -c 压缩的文件名称                 压缩指定的文件。 如 node minify -c app\n")
@@ -45,7 +49,7 @@ console.log('开始时间: '+ myDate.getHours() + ':'+myDate.getMinutes()+':'+my
 //开始压缩JS资源
 var js = ['spectrum', 'webuploader', 'AMUIwebuploader', 'app', 'ticket', 'pt-base'];
 for(var i in js){
-    if(program.cheese != '' && js[i] != program.cheese){
+    if(cli.cheese != '' && js[i] != cli.cheese){
         continue;
     }
     jsMinify('./Public/Theme/assets/js/'+js[i]+'.js', './Public/Theme/assets/js/'+js[i]+'.min.js');
@@ -55,7 +59,7 @@ for(var i in js){
 //百度编辑器
 var ueditor = ['ueditor.config', 'ueditor_ticket.config', 'ueditor.all', 'lang/zh-cn/zh-cn'];
 for(var i in ueditor){
-    if(program.cheese !='' && ueditor[i] != program.cheese){
+    if(cli.cheese !='' && ueditor[i] != cli.cheese){
         continue;
     }
     jsMinify('./Public/Theme/assets/ueditor/'+ueditor[i]+'.js', './Public/Theme/assets/ueditor/'+ueditor[i]+'.min.js');
@@ -66,7 +70,7 @@ for(var i in ueditor){
 //开始压缩CSS资源
 var css = ['app', 'index', 'ui-dialog', 'webuploader', 'ticket', 'spectrum'];
 for(var i in css){
-    if(program.cheese !='' && css[i] != program.cheese){
+    if(cli.cheese !='' && css[i] != cli.cheese){
         continue;
     }
     cssMinify(['./Public/Theme/assets/css/'+css[i]+'.css'], './Public/Theme/assets/css/'+css[i]+'.min.css');

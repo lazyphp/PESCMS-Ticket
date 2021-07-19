@@ -104,7 +104,7 @@
     <div class="am-panel-bd">
         <h3 class="am-margin-0">沟通记录</h3>
     </div>
-    <ul class="am-list am-list-static am-text-sm am-list-hover">
+    <ul class="am-list am-list-static am-text-sm am-list-hover pes-chat">
         <li class="am-text-gray-background">
             <div class="am-g">
                 <div class="am-u-sm-2 am-u-lg-1">
@@ -184,6 +184,16 @@
                 }
             })
         }, 60000)
+
+        $('.pes-chat img').each(function () {
+            var dom = $(this)
+            var parent = $(this).parent();
+            if(parent[0].tagName != 'a'){
+                dom.remove();
+                parent.after(`<a href="${dom[0].currentSrc}" data-fancybox="gallery" class="am-inline-block"><img src="${dom[0].currentSrc}" class="am-img-responsive" style="height: 300px"/></a>`)
+            }
+        })
+
     })
 
 </script>

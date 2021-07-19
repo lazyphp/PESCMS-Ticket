@@ -23,6 +23,11 @@ class Ticket extends \Core\Controller\Controller {
         $this->checkToken();
         $id = $this->isG('id', '请提交您要删除的工单ID');
 
+        $ticket = \Model\Content::findContent('ticket', $id, 'ticket_id');
+        if(empty($ticket)){
+            $this->error('删除的工单不存在');
+        }
+
         $this->db()->transaction();
 
         $this->db('ticket')->where('ticket_id = :ticket_id')->delete([
@@ -35,6 +40,10 @@ class Ticket extends \Core\Controller\Controller {
 
         $this->db('ticket_chat')->where('ticket_id = :ticket_id')->delete([
             'ticket_id' => $id
+        ]);
+
+        $this->db('csnotice')->where('ticket_number = :ticket_number')->delete([
+            'ticket_number' => $ticket['ticket_number']
         ]);
 
         $this->db()->commit();

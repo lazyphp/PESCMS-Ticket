@@ -52,6 +52,9 @@ class Model extends Content {
      * 导入模型
      */
     public function import(){
+        $this->error('本功能存在安全漏洞，暂时下架处理');
+        /*
+
         $model = json_decode($this->isP('model', '请提交您要导入的模型代码', false), true);
         if(empty($model)){
             $this->error('解析提交的模型代码失败，请检查JSON格式是否异常');
@@ -85,6 +88,7 @@ class Model extends Content {
 
         $this->success('导入模型成功!', $this->url(GROUP . '-Model-index'));
 
+        */
 
     }
 

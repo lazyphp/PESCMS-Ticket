@@ -4,11 +4,10 @@ PESMCS Ticket(下称PT)是一款基于GPLv2协议发布的开源客服工单系�
   
 ## 反馈和建议  
 邮箱：sale#pescms.com  
-演示地址：[https://ticket.pescms.com](http://ticket.pescms.com)  
-反馈问题：[https://www.pescms.com/page/11.html](https://www.pescms.com/page/11.html)  
-开发文档：[https://www.pescms.com/d/index](https://www.pescms.com/d/index)  
-说明文档：[https://www.pescms.com/d/index/22.html](https://www.pescms.com/d/index/22.html)  
-PESCMS官方QQ 1群：451828934(已满) <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=70b9d382c5751b7b64117191a71d083fbab885f1fb7c009f0dc427851300be3a"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="PESCMS官方1群" title="PESCMS官方1群"></a>  
+演示地址：[https://ticket.pescms.com](https://ticket.pescms.com)  
+官方问答中心：[https://forum.pescms.com/](https://forum.pescms.com/)  
+软件文档：[https://document.pescms.com/article/3.html](https://document.pescms.com/article/3.html)  
+PESCMS官方QQ 1群：451828934 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=70b9d382c5751b7b64117191a71d083fbab885f1fb7c009f0dc427851300be3a"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="PESCMS官方1群" title="PESCMS官方1群"></a>  
 PESCMS官方QQ 2群：496804032 <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=5HqmNLN"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="PESCMS官方2群" title="PESCMS官方2群"></a>  
   
 ## 运行环境  

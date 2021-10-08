@@ -1,13 +1,11 @@
 <?php
 
 /**
- * PESCMS for PHP 5.4+
- *
- * Copyright (c) 2015 PESCMS (http://www.pescms.com)
+ * 版权所有 2021 PESCMS (https://www.pescms.com)
+ * 完整版权和软件许可协议请阅读源码根目录下的LICENSE文件。
  *
  * For the full copyright and license information, please view
- * the file LICENSE.md that was distributed with this source code.
- * @version 2.5
+ * the file LICENSE that was distributed with this source code.
  */
 
 namespace Core\Controller;
@@ -310,9 +308,16 @@ class Controller {
 
     /**
      * 以302方式跳转页面
+     * @param $url 跳转的地址
+     * @param string $msg 提示信息 | 默认 系统将为您重定向新页面...
      */
-    protected static function jump($url) {
-        header("Location:{$url}");
+    protected static function jump($url, $msg = '系统将为您重定向新页面...') {
+        if(\Core\Func\CoreFunc::X_REQUESTED_WITH() === false){
+            header("Location:{$url}");
+        }else{
+            header("HTTP/1.1 302 Page redirect");
+            \Core\Func\CoreFunc::isAjax(['msg' => $msg], '302', $url);
+        }
         exit;
     }
 
@@ -342,15 +347,21 @@ class Controller {
      * 验证令牌
      */
     protected static function checkToken() {
-        if (empty($_REQUEST['token'])) {
-            self::error('令牌不存在，无法校验数据一致性。');
+        $token = self::handleData($_REQUEST['token']);
+        if (empty($token)) {
+            self::error('令牌丢失，请再次提交或刷新当前页面');
         }
 
-        if ($_REQUEST['token'] != self::session()->get('token')) {
-            self::error('提交数据超时，请再次提交。');
-        }
+        $tokenArray = \Core\Func\CoreFunc::session()->get('token');
 
-        self::session()->delete('token');
+
+        if (!in_array($token, $tokenArray)) {
+            self::error('您提交了一个过时或者不存在的令牌，请再次提交或刷新当前页面。');
+        }elseif(\Core\Func\CoreFunc::checkTokenExpired($tokenArray[$token]) == true){
+            self::error('您提交的令牌已过时，请再次提交数据。');
+        }
+        unset($tokenArray[$token]);
+        \Core\Func\CoreFunc::session()->set('token', $tokenArray);
     }
 
     /**

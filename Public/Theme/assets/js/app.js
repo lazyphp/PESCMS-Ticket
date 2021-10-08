@@ -87,14 +87,11 @@ $(function () {
 
         $.post(obj.url, obj.data, function (data) {
 
-            var token = data?.token || false
-
             if (obj.dialog == true) {
                 if (data.status == 200) {
                     dialogOption.content = '<i class="am-icon-check-circle"></i>  ';
                     dialogOption.skin = 'submit-success';
                     if(data.waitSecond == -1){
-                        $.refreshToken(token);
                         window.location.href = data.url
                         return false;
                     }
@@ -108,20 +105,35 @@ $(function () {
                 dialogOption.content += data.msg;
 
             }
-            $.refreshToken(token);
+            $.refreshToken(data.token);
             callback(data);
 
-        }, 'JSON').fail(function (jqXHR, textStatus, error) {
+        }, 'JSON').fail(function (res, textStatus, error) {
             var msg = '系统请求出错！请再次提交!';
             try{
-                $.refreshToken(jqXHR.responseJSON.token);
-                switch (jqXHR.responseJSON.status){
+                $.refreshToken(res.responseJSON.token);
+                switch (res.status){
                     case 500:
-                        msg = jqXHR.responseJSON.msg;
+                        msg = res.responseJSON.msg;
                         break;
                     case 404:
-                        msg = jqXHR.responseJSON.msg;
+                        msg = res.responseJSON.msg;
                         break;
+                    case 302:
+                        obj.dialog = false;
+                        var redirectDialog = dialog({
+                            title: '重定向提示',
+                            content: '<i class="am-icon-refresh am-icon-spin"></i> '+res.responseJSON.msg,
+                            skin:'submit-success',
+                            id:'redirectDialog',
+                            fixed: true,
+                            okValue: '新窗口打开',
+                            ok: function () {
+                                window.open(res.responseJSON.url)
+                                return false;
+                            },
+                        });
+                        redirectDialog.showModal();
                 }
 
             }catch (e){
@@ -148,56 +160,10 @@ $(function () {
      * @param token
      */
     $.refreshToken = function (token) {
-        if(token == false){
-            return;
-        }
-        localStorage.setItem('token', token);
         $('input[name=token]').each(function () {
             $(this).val(token);
         })
     }
-
-    /**
-     * 生成token校验的本地存储记录
-     */
-    var localStorageToken = function(){
-        var token = '';
-        $('input[name=token]').each(function () {
-            token = $(this).val();
-        })
-
-        if(token == ''){
-            return;
-        }
-        localStorage.setItem('token', token);
-    }()
-
-    /**
-     * 定时校验token 是否一致
-     */
-    setInterval(function () {
-        var token = '';
-        $('input[name=token]').each(function () {
-            token = $(this).val();
-        })
-        if(token == ''){
-            return;
-        }
-
-        var getToken = localStorage.getItem('token');
-
-        if(token != getToken){
-            $.getJSON(PESCMS_PATH + '/?g=Form&m=Index&a=token', function (res) {
-                var token = res?.token || false
-                if(token == false){
-                    console.log('警告: 当前页面令牌数据已过时，您可能与服务器断开了链接。')
-                }else{
-                    $.refreshToken(token)
-                }
-            })
-        }
-
-    }, 20000)
 
     /**
      * 预览输入的图标

@@ -1,13 +1,11 @@
 <?php
 
 /**
- * PESCMS for PHP 5.4+
- *
- * Copyright (c) 2015 PESCMS (http://www.pescms.com)
+ * 版权所有 2021 PESCMS (https://www.pescms.com)
+ * 完整版权和软件许可协议请阅读源码根目录下的LICENSE文件。
  *
  * For the full copyright and license information, please view
- * the file LICENSE.md that was distributed with this source code.
- * @version 2.5
+ * the file LICENSE that was distributed with this source code.
  */
 
 namespace Core\Db;
@@ -43,7 +41,7 @@ class Mysql {
             $this->dbh->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
             $this->dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             $this->dbh->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
-            $this->dbh->exec('SET NAMES UTF8');
+            $this->dbh->exec('SET NAMES utf8mb4');
         } catch (\PDOException $e) {
             if (DEBUG == true) {
                 die("Error!: {$e->getMessage()} <br/>");

@@ -1,13 +1,11 @@
 <?php
 
 /**
- * PESCMS for PHP 5.4+
- *
- * Copyright (c) 2015 PESCMS (http://www.pescms.com)
+ * 版权所有 2021 PESCMS (https://www.pescms.com)
+ * 完整版权和软件许可协议请阅读源码根目录下的LICENSE文件。
  *
  * For the full copyright and license information, please view
- * the file LICENSE.md that was distributed with this source code.
- * @version 2.5
+ * the file LICENSE that was distributed with this source code.
  */
 
 namespace Core\Func;
@@ -111,14 +109,15 @@ class CoreFunc {
             if (!empty($routeUrl[$hash])) {
                 //是否显示index.php
                 $url = $urlModel['INDEX'] == '0' ? '/index.php/' : '/';
-
+                $replaceUrl = $routeUrl[$hash];
                 //代入参数值
                 if (!empty($param)) {
+
                     foreach ($param as $key => $value) {
-                        $replaceurl = str_replace('{'.$key.'}', $value, $routeUrl[$hash]);
+                        $replaceUrl = str_replace('{'.$key.'}', $value, $replaceUrl);
                     }
                 }
-                $url .= $replaceurl . $suffix;
+                $url .= $replaceUrl . $suffix;
                 self::$useRoute = true;
                 return DOCUMENT_ROOT . $url;
 
@@ -212,7 +211,7 @@ class CoreFunc {
      * @return boolean|json|xml|str 返回对应的数据类型
      */
     public static function isAjax($data, $code, $jumpUrl = '', $waitSecond = 3){
-        if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strcasecmp($_SERVER['HTTP_X_REQUESTED_WITH'], 'XMLHttpRequest') != 0 ) {
+        if(self::X_REQUESTED_WITH() === false){
             return FALSE;
         }
 
@@ -234,8 +233,7 @@ class CoreFunc {
         $status['waitSecond'] = $waitSecond;
 
         if(empty($_REQUEST['keepToken'])){
-            $token = md5(\Model\Extra::getOnlyNumber());
-            self::session()->set('token', $token);
+            $token = self::token();
             $status['token'] = $token;
         }
 
@@ -257,6 +255,14 @@ class CoreFunc {
         }
     }
 
+    public static function X_REQUESTED_WITH(){
+        if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strcasecmp($_SERVER['HTTP_X_REQUESTED_WITH'], 'XMLHttpRequest') != 0 ) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     /**
      * 调用session类库
      * @return \duncan3dc\Sessions\SessionInstance
@@ -274,13 +280,56 @@ class CoreFunc {
      * @return string
      */
     public static function token(){
-        self::$token = \Core\Func\CoreFunc::session()->get('token');
+        $tokenArray = \Core\Func\CoreFunc::session()->get('token');
+        if(empty($tokenArray)){
+            $tokenArray = [];
+        }
+
+        //系统默认只保存30个token
+        if(count($tokenArray) > 30){
+            array_shift($tokenArray);
+            //当最后一个token都已过时，则全部清空。
+            if(self::checkTokenExpired(end($tokenArray)) == true){
+                \Core\Func\CoreFunc::session()->delete('token');
+                self::$token = NULL;
+                $tokenArray = [];
+            }
+        }
+
         if(empty(self::$token)){
             list($usec, $sec) = explode(" ", microtime());
-            self::$token = md5(substr($usec, 2) * rand(1, 100));
-            \Core\Func\CoreFunc::session()->set('token', self::$token);
+            $shelfLife = time() * self::tokenTimeSalt();
+            self::$token = md5(substr($usec, 2) * rand(1, 100))."_{$shelfLife}";
+            \Core\Func\CoreFunc::session()->set('token', array_merge($tokenArray, [self::$token => self::$token]));
         }
+
+
+
         return self::$token;
+    }
+
+    /**
+     * 令牌的时效加盐值
+     * @return float|int
+     */
+    public static function tokenTimeSalt(){
+        $publicKey = self::loadConfig('USER_KEY');
+        $salt = ord($publicKey[0]) + ord($publicKey[1]) * ord($publicKey[2]);
+        return $salt;
+    }
+
+    /**
+     * 验证令牌是否过期
+     * @param $token
+     * @return bool
+     */
+    public static function checkTokenExpired($token){
+        $checkExpired = explode('_', $token)[1] / self::tokenTimeSalt();
+        if($checkExpired + 600 < time()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

@@ -108,17 +108,32 @@ $(function () {
             $.refreshToken(data.token);
             callback(data);
 
-        }, 'JSON').fail(function (jqXHR, textStatus, error) {
+        }, 'JSON').fail(function (res, textStatus, error) {
             var msg = '系统请求出错！请再次提交!';
             try{
-                $.refreshToken(jqXHR.responseJSON.token);
-                switch (jqXHR.responseJSON.status){
+                $.refreshToken(res.responseJSON.token);
+                switch (res.status){
                     case 500:
-                        msg = jqXHR.responseJSON.msg;
+                        msg = res.responseJSON.msg;
                         break;
                     case 404:
-                        msg = jqXHR.responseJSON.msg;
+                        msg = res.responseJSON.msg;
                         break;
+                    case 302:
+                        obj.dialog = false;
+                        var redirectDialog = dialog({
+                            title: '重定向提示',
+                            content: '<i class="am-icon-refresh am-icon-spin"></i> '+res.responseJSON.msg,
+                            skin:'submit-success',
+                            id:'redirectDialog',
+                            fixed: true,
+                            okValue: '新窗口打开',
+                            ok: function () {
+                                window.open(res.responseJSON.url)
+                                return false;
+                            },
+                        });
+                        redirectDialog.showModal();
                 }
 
             }catch (e){

@@ -1,406 +1,5 @@
 [
     {
-        "name": "symfony/intl",
-        "version": "v4.0.9",
-        "version_normalized": "4.0.9.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/intl.git",
-            "reference": "d58df88e3cfdb2702f5fd8cd67c33961c2539e0c"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/intl/zipball/d58df88e3cfdb2702f5fd8cd67c33961c2539e0c",
-            "reference": "d58df88e3cfdb2702f5fd8cd67c33961c2539e0c",
-            "shasum": ""
-        },
-        "require": {
-            "php": "^7.1.3",
-            "symfony/polyfill-intl-icu": "~1.0"
-        },
-        "require-dev": {
-            "symfony/filesystem": "~3.4|~4.0"
-        },
-        "suggest": {
-            "ext-intl": "to use the component with locales other than \"en\""
-        },
-        "time": "2018-04-02T09:52:41+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "4.0-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Component\\Intl\\": ""
-            },
-            "classmap": [
-                "Resources/stubs"
-            ],
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Bernhard Schussek",
-                "email": "bschussek@gmail.com"
-            },
-            {
-                "name": "Eriksen Costa",
-                "email": "eriksen.costa@infranology.com.br"
-            },
-            {
-                "name": "Igor Wiedler",
-                "email": "igor@wiedler.ch"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "A PHP replacement layer for the C intl extension that includes additional data from the ICU library.",
-        "homepage": "https://symfony.com",
-        "keywords": [
-            "i18n",
-            "icu",
-            "internationalization",
-            "intl",
-            "l10n",
-            "localization"
-        ]
-    },
-    {
-        "name": "symfony/polyfill",
-        "version": "v1.8.0",
-        "version_normalized": "1.8.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/polyfill.git",
-            "reference": "6f13be2ff1681db53292eee1719dcee57e983207"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill/zipball/6f13be2ff1681db53292eee1719dcee57e983207",
-            "reference": "6f13be2ff1681db53292eee1719dcee57e983207",
-            "shasum": ""
-        },
-        "require": {
-            "ircmaxell/password-compat": "~1.0",
-            "paragonie/random_compat": "~1.0|~2.0",
-            "php": ">=5.3.3",
-            "symfony/intl": "~2.3|~3.0|~4.0"
-        },
-        "replace": {
-            "symfony/polyfill-apcu": "self.version",
-            "symfony/polyfill-ctype": "self.version",
-            "symfony/polyfill-iconv": "self.version",
-            "symfony/polyfill-intl-grapheme": "self.version",
-            "symfony/polyfill-intl-icu": "self.version",
-            "symfony/polyfill-intl-normalizer": "self.version",
-            "symfony/polyfill-mbstring": "self.version",
-            "symfony/polyfill-php54": "self.version",
-            "symfony/polyfill-php55": "self.version",
-            "symfony/polyfill-php56": "self.version",
-            "symfony/polyfill-php70": "self.version",
-            "symfony/polyfill-php71": "self.version",
-            "symfony/polyfill-php72": "self.version",
-            "symfony/polyfill-php73": "self.version",
-            "symfony/polyfill-util": "self.version",
-            "symfony/polyfill-xml": "self.version"
-        },
-        "require-dev": {
-            "symfony/phpunit-bridge": "~3.2"
-        },
-        "time": "2018-05-01T05:47:21+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.8-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Polyfill\\": "src/"
-            },
-            "files": [
-                "src/Apcu/bootstrap.php",
-                "src/Ctype/bootstrap.php",
-                "src/Php54/bootstrap.php",
-                "src/Php55/bootstrap.php",
-                "src/Php56/bootstrap.php",
-                "src/Php70/bootstrap.php",
-                "src/Php71/bootstrap.php",
-                "src/Php72/bootstrap.php",
-                "src/Php73/bootstrap.php",
-                "src/Iconv/bootstrap.php",
-                "src/Intl/Grapheme/bootstrap.php",
-                "src/Intl/Icu/bootstrap.php",
-                "src/Intl/Normalizer/bootstrap.php",
-                "src/Mbstring/bootstrap.php"
-            ],
-            "classmap": [
-                "src/Intl/Normalizer/Resources/stubs",
-                "src/Php70/Resources/stubs",
-                "src/Php54/Resources/stubs"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Nicolas Grekas",
-                "email": "p@tchwork.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony polyfills backporting features to lower PHP versions",
-        "homepage": "https://symfony.com",
-        "keywords": [
-            "compat",
-            "compatibility",
-            "polyfill",
-            "shim"
-        ]
-    },
-    {
-        "name": "ircmaxell/password-compat",
-        "version": "v1.0.4",
-        "version_normalized": "1.0.4.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/ircmaxell/password_compat.git",
-            "reference": "5c5cde8822a69545767f7c7f3058cb15ff84614c"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/ircmaxell/password_compat/zipball/5c5cde8822a69545767f7c7f3058cb15ff84614c",
-            "reference": "5c5cde8822a69545767f7c7f3058cb15ff84614c",
-            "shasum": ""
-        },
-        "require-dev": {
-            "phpunit/phpunit": "4.*"
-        },
-        "time": "2014-11-20T16:49:30+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "lib/password.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Anthony Ferrara",
-                "email": "ircmaxell@php.net",
-                "homepage": "http://blog.ircmaxell.com"
-            }
-        ],
-        "description": "A compatibility library for the proposed simplified password hashing algorithm: https://wiki.php.net/rfc/password_hash",
-        "homepage": "https://github.com/ircmaxell/password_compat",
-        "keywords": [
-            "hashing",
-            "password"
-        ]
-    },
-    {
-        "name": "paragonie/random_compat",
-        "version": "v2.0.12",
-        "version_normalized": "2.0.12.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/paragonie/random_compat.git",
-            "reference": "258c89a6b97de7dfaf5b8c7607d0478e236b04fb"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/paragonie/random_compat/zipball/258c89a6b97de7dfaf5b8c7607d0478e236b04fb",
-            "reference": "258c89a6b97de7dfaf5b8c7607d0478e236b04fb",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.2.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "4.*|5.*"
-        },
-        "suggest": {
-            "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
-        },
-        "time": "2018-04-04T21:24:14+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "lib/random.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Paragon Initiative Enterprises",
-                "email": "security@paragonie.com",
-                "homepage": "https://paragonie.com"
-            }
-        ],
-        "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
-        "keywords": [
-            "csprng",
-            "pseudorandom",
-            "random"
-        ]
-    },
-    {
-        "name": "voku/portable-utf8",
-        "version": "3.1.30",
-        "version_normalized": "3.1.30.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/voku/portable-utf8.git",
-            "reference": "162de9c40d8a7dff84697296f375b424aef53df8"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/voku/portable-utf8/zipball/162de9c40d8a7dff84697296f375b424aef53df8",
-            "reference": "162de9c40d8a7dff84697296f375b424aef53df8",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0",
-            "symfony/polyfill": "~1.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.0|~5.0"
-        },
-        "suggest": {
-            "ext-iconv": "Use iconv for best performance",
-            "ext-intl": "Use Intl for best performance",
-            "ext-mbstring": "Use Mbstring for best performance"
-        },
-        "time": "2017-10-08T23:25:51+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.1.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "voku\\": "src/voku/"
-            },
-            "files": [
-                "bootstrap.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "(Apache-2.0 or GPL-2.0)"
-        ],
-        "authors": [
-            {
-                "name": "Hamid Sarfraz",
-                "homepage": "http://pageconfig.com/"
-            },
-            {
-                "name": "Lars Moelleken",
-                "homepage": "http://www.moelleken.org/"
-            },
-            {
-                "name": "Nicolas Grekas",
-                "email": "p@tchwork.com"
-            }
-        ],
-        "description": "Portable UTF-8 library with polyfill / shim for Iconv, Intl, Mbstring, Normalizrer etc.",
-        "homepage": "https://github.com/voku/portable-utf8",
-        "keywords": [
-            "UTF",
-            "clean",
-            "php",
-            "unicode",
-            "utf-8",
-            "utf8"
-        ]
-    },
-    {
-        "name": "voku/anti-xss",
-        "version": "2.3.1",
-        "version_normalized": "2.3.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/voku/anti-xss.git",
-            "reference": "3f74c3c60931ebce07d6372abeeadf3f02b1ee7f"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/voku/anti-xss/zipball/3f74c3c60931ebce07d6372abeeadf3f02b1ee7f",
-            "reference": "3f74c3c60931ebce07d6372abeeadf3f02b1ee7f",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0",
-            "voku/portable-utf8": "~3.1"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.0|~5.0"
-        },
-        "time": "2018-04-26T18:43:51+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "voku\\helper\\": "src/voku/helper/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "EllisLab Dev Team",
-                "homepage": "http://ellislab.com/"
-            },
-            {
-                "name": "Lars Moelleken",
-                "email": "lars@moelleken.org",
-                "homepage": "http://www.moelleken.org/"
-            }
-        ],
-        "description": "anti xss-library",
-        "homepage": "https://github.com/voku/anti-xss",
-        "keywords": [
-            "anti-xss",
-            "clean",
-            "security",
-            "xss"
-        ]
-    },
-    {
         "name": "duncan3dc/sessions",
         "version": "1.4.0",
         "version_normalized": "1.4.0.0",
@@ -413,7 +12,13 @@
             "type": "zip",
             "url": "https://api.github.com/repos/duncan3dc/sessions/zipball/161d4bfd6ad8d1e397a45d25a609114395e28008",
             "reference": "161d4bfd6ad8d1e397a45d25a609114395e28008",
-            "shasum": ""
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
         },
         "require": {
             "ext-session": "*",
@@ -451,6 +56,813 @@
         "keywords": [
             "non-blocking",
             "session"
+        ]
+    },
+    {
+        "name": "godruoyi/php-snowflake",
+        "version": "1.1.1",
+        "version_normalized": "1.1.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/godruoyi/php-snowflake.git",
+            "reference": "d8cbe72ed375b45033b7042e3d03340ce4fa479f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/godruoyi/php-snowflake/zipball/d8cbe72ed375b45033b7042e3d03340ce4fa479f",
+            "reference": "d8cbe72ed375b45033b7042e3d03340ce4fa479f",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~7"
+        },
+        "time": "2021-05-25T05:56:30+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Godruoyi\\Snowflake\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Godruoyi",
+                "email": "g@godruoyi.com"
+            }
+        ],
+        "description": "An ID Generator for PHP based on Snowflake Algorithm (Twitter announced).",
+        "homepage": "https://github.com/godruoyi/php-snowflake",
+        "keywords": [
+            "Unique ID",
+            "laravel snowflake",
+            "order id",
+            "php snowflake",
+            "php unique id",
+            "snowflake algorithm",
+            "unique order id"
+        ],
+        "funding": [
+            {
+                "url": "https://images.godruoyi.com/wechat.png",
+                "type": "custom"
+            },
+            {
+                "url": "https://github.com/godruoyi",
+                "type": "github"
+            }
+        ]
+    },
+    {
+        "name": "kosinix/grafika",
+        "version": "2.0.8",
+        "version_normalized": "2.0.8.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/kosinix/grafika.git",
+            "reference": "211f61fc334b8b36616b23e8af7c5727971d96ee"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/kosinix/grafika/zipball/211f61fc334b8b36616b23e8af7c5727971d96ee",
+            "reference": "211f61fc334b8b36616b23e8af7c5727971d96ee",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">=5.3"
+        },
+        "time": "2017-06-20T03:13:49+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Grafika\\": "src/Grafika"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT",
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Nico Amarilla",
+                "homepage": "https://www.kosinix.com"
+            }
+        ],
+        "description": "An image manipulation library for PHP.",
+        "homepage": "http://kosinix.github.io/grafika",
+        "keywords": [
+            "grafika"
+        ]
+    },
+    {
+        "name": "symfony/polyfill-iconv",
+        "version": "v1.19.0",
+        "version_normalized": "1.19.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/polyfill-iconv.git",
+            "reference": "085241787d52fa6f7a774fd034135fef0cfd5496"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/polyfill-iconv/zipball/085241787d52fa6f7a774fd034135fef0cfd5496",
+            "reference": "085241787d52fa6f7a774fd034135fef0cfd5496",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "suggest": {
+            "ext-iconv": "For best performance"
+        },
+        "time": "2020-10-23T09:01:57+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-main": "1.19-dev"
+            },
+            "thanks": {
+                "name": "symfony/polyfill",
+                "url": "https://github.com/symfony/polyfill"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Polyfill\\Iconv\\": ""
+            },
+            "files": [
+                "bootstrap.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony polyfill for the Iconv extension",
+        "homepage": "https://symfony.com",
+        "keywords": [
+            "compatibility",
+            "iconv",
+            "polyfill",
+            "portable",
+            "shim"
+        ],
+        "funding": [
+            {
+                "url": "https://symfony.com/sponsor",
+                "type": "custom"
+            },
+            {
+                "url": "https://github.com/fabpot",
+                "type": "github"
+            },
+            {
+                "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                "type": "tidelift"
+            }
+        ]
+    },
+    {
+        "name": "symfony/polyfill-intl-grapheme",
+        "version": "v1.19.0",
+        "version_normalized": "1.19.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/polyfill-intl-grapheme.git",
+            "reference": "64fbe93b02024763359aea2bc81af05086c6af82"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/polyfill-intl-grapheme/zipball/64fbe93b02024763359aea2bc81af05086c6af82",
+            "reference": "64fbe93b02024763359aea2bc81af05086c6af82",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "suggest": {
+            "ext-intl": "For best performance"
+        },
+        "time": "2020-10-23T09:01:57+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-main": "1.19-dev"
+            },
+            "thanks": {
+                "name": "symfony/polyfill",
+                "url": "https://github.com/symfony/polyfill"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Polyfill\\Intl\\Grapheme\\": ""
+            },
+            "files": [
+                "bootstrap.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony polyfill for intl's grapheme_* functions",
+        "homepage": "https://symfony.com",
+        "keywords": [
+            "compatibility",
+            "grapheme",
+            "intl",
+            "polyfill",
+            "portable",
+            "shim"
+        ],
+        "funding": [
+            {
+                "url": "https://symfony.com/sponsor",
+                "type": "custom"
+            },
+            {
+                "url": "https://github.com/fabpot",
+                "type": "github"
+            },
+            {
+                "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                "type": "tidelift"
+            }
+        ]
+    },
+    {
+        "name": "symfony/polyfill-intl-normalizer",
+        "version": "v1.19.0",
+        "version_normalized": "1.19.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/polyfill-intl-normalizer.git",
+            "reference": "8db0ae7936b42feb370840cf24de1a144fb0ef27"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/polyfill-intl-normalizer/zipball/8db0ae7936b42feb370840cf24de1a144fb0ef27",
+            "reference": "8db0ae7936b42feb370840cf24de1a144fb0ef27",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "suggest": {
+            "ext-intl": "For best performance"
+        },
+        "time": "2020-10-23T09:01:57+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-main": "1.19-dev"
+            },
+            "thanks": {
+                "name": "symfony/polyfill",
+                "url": "https://github.com/symfony/polyfill"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Polyfill\\Intl\\Normalizer\\": ""
+            },
+            "files": [
+                "bootstrap.php"
+            ],
+            "classmap": [
+                "Resources/stubs"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony polyfill for intl's Normalizer class and related functions",
+        "homepage": "https://symfony.com",
+        "keywords": [
+            "compatibility",
+            "intl",
+            "normalizer",
+            "polyfill",
+            "portable",
+            "shim"
+        ],
+        "funding": [
+            {
+                "url": "https://symfony.com/sponsor",
+                "type": "custom"
+            },
+            {
+                "url": "https://github.com/fabpot",
+                "type": "github"
+            },
+            {
+                "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                "type": "tidelift"
+            }
+        ]
+    },
+    {
+        "name": "symfony/polyfill-mbstring",
+        "version": "v1.19.0",
+        "version_normalized": "1.19.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/polyfill-mbstring.git",
+            "reference": "b5f7b932ee6fa802fc792eabd77c4c88084517ce"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/b5f7b932ee6fa802fc792eabd77c4c88084517ce",
+            "reference": "b5f7b932ee6fa802fc792eabd77c4c88084517ce",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "suggest": {
+            "ext-mbstring": "For best performance"
+        },
+        "time": "2020-10-23T09:01:57+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-main": "1.19-dev"
+            },
+            "thanks": {
+                "name": "symfony/polyfill",
+                "url": "https://github.com/symfony/polyfill"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Polyfill\\Mbstring\\": ""
+            },
+            "files": [
+                "bootstrap.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony polyfill for the Mbstring extension",
+        "homepage": "https://symfony.com",
+        "keywords": [
+            "compatibility",
+            "mbstring",
+            "polyfill",
+            "portable",
+            "shim"
+        ],
+        "funding": [
+            {
+                "url": "https://symfony.com/sponsor",
+                "type": "custom"
+            },
+            {
+                "url": "https://github.com/fabpot",
+                "type": "github"
+            },
+            {
+                "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                "type": "tidelift"
+            }
+        ]
+    },
+    {
+        "name": "symfony/polyfill-php72",
+        "version": "v1.19.0",
+        "version_normalized": "1.19.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/polyfill-php72.git",
+            "reference": "beecef6b463b06954638f02378f52496cb84bacc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/polyfill-php72/zipball/beecef6b463b06954638f02378f52496cb84bacc",
+            "reference": "beecef6b463b06954638f02378f52496cb84bacc",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "time": "2020-10-23T09:01:57+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-main": "1.19-dev"
+            },
+            "thanks": {
+                "name": "symfony/polyfill",
+                "url": "https://github.com/symfony/polyfill"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Polyfill\\Php72\\": ""
+            },
+            "files": [
+                "bootstrap.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony polyfill backporting some PHP 7.2+ features to lower PHP versions",
+        "homepage": "https://symfony.com",
+        "keywords": [
+            "compatibility",
+            "polyfill",
+            "portable",
+            "shim"
+        ],
+        "funding": [
+            {
+                "url": "https://symfony.com/sponsor",
+                "type": "custom"
+            },
+            {
+                "url": "https://github.com/fabpot",
+                "type": "github"
+            },
+            {
+                "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                "type": "tidelift"
+            }
+        ]
+    },
+    {
+        "name": "voku/anti-xss",
+        "version": "4.1.33",
+        "version_normalized": "4.1.33.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/voku/anti-xss.git",
+            "reference": "dcd44ad3726e97e3ea924e4c7257cb33976b71a5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/voku/anti-xss/zipball/dcd44ad3726e97e3ea924e4c7257cb33976b71a5",
+            "reference": "dcd44ad3726e97e3ea924e4c7257cb33976b71a5",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">=7.0.0",
+            "voku/portable-utf8": "~5.4.51"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~6.0 || ~7.0 || ~9.0"
+        },
+        "time": "2021-10-03T21:37:05+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "4.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "voku\\helper\\": "src/voku/helper/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "EllisLab Dev Team",
+                "homepage": "http://ellislab.com/"
+            },
+            {
+                "name": "Lars Moelleken",
+                "email": "lars@moelleken.org",
+                "homepage": "https://www.moelleken.org/"
+            }
+        ],
+        "description": "anti xss-library",
+        "homepage": "https://github.com/voku/anti-xss",
+        "keywords": [
+            "anti-xss",
+            "clean",
+            "security",
+            "xss"
+        ],
+        "funding": [
+            {
+                "url": "https://www.paypal.me/moelleken",
+                "type": "custom"
+            },
+            {
+                "url": "https://github.com/voku",
+                "type": "github"
+            },
+            {
+                "url": "https://opencollective.com/anti-xss",
+                "type": "open_collective"
+            },
+            {
+                "url": "https://www.patreon.com/voku",
+                "type": "patreon"
+            },
+            {
+                "url": "https://tidelift.com/funding/github/packagist/voku/anti-xss",
+                "type": "tidelift"
+            }
+        ]
+    },
+    {
+        "name": "voku/portable-ascii",
+        "version": "1.5.6",
+        "version_normalized": "1.5.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/voku/portable-ascii.git",
+            "reference": "80953678b19901e5165c56752d087fc11526017c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/voku/portable-ascii/zipball/80953678b19901e5165c56752d087fc11526017c",
+            "reference": "80953678b19901e5165c56752d087fc11526017c",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">=7.0.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~6.0 || ~7.0 || ~9.0"
+        },
+        "suggest": {
+            "ext-intl": "Use Intl for transliterator_transliterate() support"
+        },
+        "time": "2020-11-12T00:07:28+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "voku\\": "src/voku/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Lars Moelleken",
+                "homepage": "http://www.moelleken.org/"
+            }
+        ],
+        "description": "Portable ASCII library - performance optimized (ascii) string functions for php.",
+        "homepage": "https://github.com/voku/portable-ascii",
+        "keywords": [
+            "ascii",
+            "clean",
+            "php"
+        ],
+        "funding": [
+            {
+                "url": "https://www.paypal.me/moelleken",
+                "type": "custom"
+            },
+            {
+                "url": "https://github.com/voku",
+                "type": "github"
+            },
+            {
+                "url": "https://opencollective.com/portable-ascii",
+                "type": "open_collective"
+            },
+            {
+                "url": "https://www.patreon.com/voku",
+                "type": "patreon"
+            },
+            {
+                "url": "https://tidelift.com/funding/github/packagist/voku/portable-ascii",
+                "type": "tidelift"
+            }
+        ]
+    },
+    {
+        "name": "voku/portable-utf8",
+        "version": "5.4.51",
+        "version_normalized": "5.4.51.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/voku/portable-utf8.git",
+            "reference": "578f5266725dc9880483d24ad0cfb39f8ce170f7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/voku/portable-utf8/zipball/578f5266725dc9880483d24ad0cfb39f8ce170f7",
+            "reference": "578f5266725dc9880483d24ad0cfb39f8ce170f7",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">=7.0.0",
+            "symfony/polyfill-iconv": "~1.0",
+            "symfony/polyfill-intl-grapheme": "~1.0",
+            "symfony/polyfill-intl-normalizer": "~1.0",
+            "symfony/polyfill-mbstring": "~1.0",
+            "symfony/polyfill-php72": "~1.0",
+            "voku/portable-ascii": "~1.5.6"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~6.0 || ~7.0 || ~9.0"
+        },
+        "suggest": {
+            "ext-ctype": "Use Ctype for e.g. hexadecimal digit detection",
+            "ext-fileinfo": "Use Fileinfo for better binary file detection",
+            "ext-iconv": "Use iconv for best performance",
+            "ext-intl": "Use Intl for best performance",
+            "ext-json": "Use JSON for string detection",
+            "ext-mbstring": "Use Mbstring for best performance"
+        },
+        "time": "2020-12-02T01:58:49+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "voku\\": "src/voku/"
+            },
+            "files": [
+                "bootstrap.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "(Apache-2.0 or GPL-2.0)"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com"
+            },
+            {
+                "name": "Hamid Sarfraz",
+                "homepage": "http://pageconfig.com/"
+            },
+            {
+                "name": "Lars Moelleken",
+                "homepage": "http://www.moelleken.org/"
+            }
+        ],
+        "description": "Portable UTF-8 library - performance optimized (unicode) string functions for php.",
+        "homepage": "https://github.com/voku/portable-utf8",
+        "keywords": [
+            "UTF",
+            "clean",
+            "php",
+            "unicode",
+            "utf-8",
+            "utf8"
+        ],
+        "funding": [
+            {
+                "url": "https://www.paypal.me/moelleken",
+                "type": "custom"
+            },
+            {
+                "url": "https://github.com/voku",
+                "type": "github"
+            },
+            {
+                "url": "https://opencollective.com/portable-utf8",
+                "type": "open_collective"
+            },
+            {
+                "url": "https://www.patreon.com/voku",
+                "type": "patreon"
+            },
+            {
+                "url": "https://tidelift.com/funding/github/packagist/voku/portable-utf8",
+                "type": "tidelift"
+            }
         ]
     }
 ]

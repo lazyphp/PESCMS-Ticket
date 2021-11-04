@@ -75,7 +75,7 @@
     })
 </script>
 <div class="tips-manual" style="display: none">
-    <a href="https://www.pescms.com/d/index/22.html" class="am-btn am-btn-warning am-btn-xs am-radius" target="_blank"><i class="am-icon-book"></i> 查看PESCMS Ticket 使用教程</a>
+    <a href="https://document.pescms.com/article/3.html" class="am-btn am-btn-warning am-btn-xs am-radius" target="_blank"><i class="am-icon-book"></i> 查看PESCMS Ticket 使用教程</a>
     <p>
         常见问题
     </p>
@@ -84,10 +84,10 @@
             <strong class="am-text-danger">大部分问题官方文档有解决方案！！！</strong>
         </li>
         <li>
-            <a href="https://www.pescms.com/d/v/1.3.x/22/154.html" target="_blank">创建工单教程</a>
+            <a href="https://document.pescms.com/article/3/296096861045915648.html" target="_blank">创建工单教程</a>
         </li>
         <li>
-            <a href="https://www.pescms.com/d/v/1.3.x/22/163.html" target="_blank">访问工单404或工单不显示</a>
+            <a href="https://document.pescms.com/article/3/296557456849371136.html" target="_blank">访问工单404或工单不显示</a>
         </li>
         <li>
             <a href="https://www.pescms.com/different/5.html" target="_blank">开源版和授权版差异</a>

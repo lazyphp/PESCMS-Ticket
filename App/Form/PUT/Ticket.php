@@ -31,15 +31,18 @@ class Ticket extends \Core\Controller\Controller{
         \Model\Ticket::loginCheck($ticket, base64_encode($back_url));
 
         //标记完成
+        \Model\Ticket::changeStatus($ticket, '3');
+
+        //标记完成时间
         \Model\Ticket::inTicketIdWithUpdate([
-            'ticket_status' => 3,
             'ticket_complete_time' => time(),
             'noset' => ['ticket_id' => $ticket['ticket_id']]
         ]);
+
         //记录执行时间
         \Model\Ticket::runTime($ticket['ticket_id'], $ticket['ticket_refer_time'], $ticket['ticket_run_time']);
 
-
+        //添加区分记录
         \Model\Ticket::addReply($ticket['ticket_id'], '本工单我已点击标记完成，且认可问题解决方案。', 'custom');
 
         $this->success('工单已结束,请对本次工单评价.', $back_url);

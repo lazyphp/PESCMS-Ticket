@@ -517,11 +517,45 @@ class Ticket extends \Core\Model\Model {
 
     /**
      * 更改任务状态
-     * @param $id 工单ID
+     * @param $ticket 工单数组
      * @param $status 要更改的状态
      */
-    public static function changeStatus($id, $status) {
-        return self::inTicketIdWithUpdate(['ticket_status' => $status, 'noset' => ['ticket_id' => $id]]);
+    public static function changeStatus($ticket, $status) {
+        self::recordStatusLine($ticket, $status);
+        return self::inTicketIdWithUpdate(['ticket_status' => $status, 'noset' => ['ticket_id' => $ticket['ticket_id']]]);
+    }
+
+    /**
+     * 记录工单的状态线
+     * @param $ticket
+     * @param $status
+     * @return bool
+     */
+    private static function recordStatusLine($ticket, $status){
+        if($ticket['ticket_status'] == $status){
+            return true;
+        }
+
+        $userID = 0;
+        $memberID = 0;
+
+        //@todo API接口因为session没无法使用，所以记录前台提交的信息会异常。待解决
+        if(GROUP == 'Ticket'){
+            $userID = self::session()->get('ticket')['user_id'];
+            $name = self::session()->get('ticket')['user_name'];
+        }else{
+            $memberID = self::session()->get('member')['member_id'];
+            $name = self::session()->get('member')['member_name'];
+        }
+
+        self::db('ticket_status_line')->insert([
+            'ticket_id' => $ticket['ticket_id'],
+            'ticket_status' => $status,
+            'member_id' => $memberID,
+            'user_id' => $userID,
+            'display_name' => $name,
+            'status_line_time' => time()
+        ]);
     }
 
     /**

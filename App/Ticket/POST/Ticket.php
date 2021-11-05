@@ -86,7 +86,7 @@ class Ticket extends \Core\Controller\Controller {
         }
         \Model\Ticket::updateReferTime($ticket['ticket_id']);
         \Model\Ticket::runTime($ticket['ticket_id'], $referTime, $ticket['ticket_run_time']);
-        \Model\Ticket::changeStatus($ticket['ticket_id'], $status);
+        \Model\Ticket::changeStatus($ticket, $status);
         \Model\Ticket::addReply($ticket['ticket_id'], $content);
 
         //只有勾选告知客户才生成通知(完成工单不受影响)，尽量减少对客户的滋扰。

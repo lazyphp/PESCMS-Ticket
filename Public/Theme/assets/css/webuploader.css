@@ -33,6 +33,12 @@
 .webuploader-item img, .file-preview-other, .file-preview-other-text, .webuploader-item h3, .webuploader-pick{
     width: 10rem !important;
 }
+.webuploader-item .am-gallery-title{
+    font-size: 1.2rem;
+    text-indent: 0px;
+    left: 0px;
+    width: 10.4rem !important;
+}
 .webuploader-item img, .webuploader-pick {
     height: 10rem !important;
 }

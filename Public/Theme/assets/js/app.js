@@ -166,6 +166,25 @@ $(function () {
     }
 
     /**
+     * 关闭工单
+     */
+    $(document).on('click', '.pes-close-ticket',function () {
+        var url = $(this).attr("href");
+        var token = $('input[name="token"]').val()
+        var reason = prompt('请填写您要关闭工单的理由').trim();
+        if(reason.length <= 0){
+            alert('请填写您要关闭工单的理由.');
+            return false;
+        }
+        $.ajaxsubmit({
+            url: url,
+            data: {token:token,reason:reason}
+        }, function () {
+        });
+        return false;
+    })
+
+    /**
      * 预览输入的图标
      */
     $("body").on("blur", ".icon-input", function(){

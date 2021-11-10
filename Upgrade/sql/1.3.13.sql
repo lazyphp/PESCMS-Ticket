@@ -9,3 +9,5 @@ CREATE TABLE IF NOT EXISTS `pes_ticket_status_line` (
   PRIMARY KEY (`status_line_id`),
   KEY `ticket_id` (`ticket_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='工单状态线';
+
+ALTER TABLE `pes_ticket` ADD `ticket_close_reason` VARCHAR(255) NOT NULL COMMENT '工单关闭理由' AFTER `ticket_close`;

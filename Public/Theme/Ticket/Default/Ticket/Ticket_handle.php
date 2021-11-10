@@ -34,7 +34,7 @@
                                 <?php if ($label->checkAuth('TicketPOSTTicketclose') === true): ?>
                                     <div class="am-form-group">
                                         <label class="am-form-label am-margin-bottom-0">关闭工单 : </label>
-                                        <a href="<?= $label->url('Ticket-Ticket-close', ['number' => $ticket_number, 'method' => 'POST', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>" class="am-text-danger ajax-click ajax-dialog" msg="确定要关闭本工单吗？">
+                                        <a href="<?= $label->url('Ticket-Ticket-close', ['number' => $ticket_number, 'method' => 'POST', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>" class="am-text-danger pes-close-ticket">
                                             点击关闭</a>
                                     </div>
                                 <?php endif; ?>

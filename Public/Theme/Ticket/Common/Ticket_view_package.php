@@ -84,7 +84,10 @@
                     <div class="am-u-sm-12 am-u-lg-3">
                         <?php if (GROUP == 'Form' && $ticket_status < 3 && $ticket_close == 0): ?>
                             <a href="<?= $label->url('Ticket-status', ['number' => $ticket_number, 'back_url' => base64_encode($_SERVER['REQUEST_URI']), 'method' => 'PUT']) ?>"
-                               class="am-text-warning ajax-click ajax-dialog" msg="您确定要结束本工单吗?">结束工单</a>
+                               class="am-text-warning ajax-click ajax-dialog" msg="您确定要结束本工单吗?">[<i class="am-icon-check"></i> 结束工单]</a>
+                        <?php elseif(GROUP == 'Form' && $ticket_status == 3 && $ticket_close == 0 && $ticket_complete_time >= time() - 86400 * 7 ): ?>
+                            <a href="<?= $label->url('Ticket-status', ['number' => $ticket_number, 'back_url' => base64_encode($_SERVER['REQUEST_URI']), 'method' => 'PUT']) ?>"
+                               class="am-text-success ajax-click ajax-dialog" msg="您可以恢复7天内由您主动结束的工单。">[<i class="am-icon-refresh"></i> 恢复工单]</a>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -93,6 +96,15 @@
                 <hr/>
                 <div class="am-padding-left"><span class="pt-text-explode">备注说明 : </span>
                     <input type="text" class="ticket-remark-input" maxlength="22" old="<?= $label->xss($ticket_remark) ?>" value="<?= $label->xss($ticket_remark) ?>" placeholder="若需要在列表标记说明，请在此处填写一句话，限22个字">
+                </div>
+                
+                <?php if($ticket_close == 1): ?>
+                <div class="am-padding-left am-margin-top">
+                    <span class="pt-text-explode">工单关闭理由：</span>
+                    <?= $ticket_close_reason ?>
+                </div>
+                <?php endif; ?>
+
             <?php endif; ?>
 
         </div>

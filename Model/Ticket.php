@@ -528,10 +528,10 @@ class Ticket extends \Core\Model\Model {
     /**
      * 记录工单的状态线
      * @param $ticket
-     * @param $status
+     * @param $status | -1 状态为关闭工单
      * @return bool
      */
-    private static function recordStatusLine($ticket, $status){
+    public static function recordStatusLine($ticket, $status){
         if($ticket['ticket_status'] == $status){
             return true;
         }

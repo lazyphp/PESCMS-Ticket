@@ -11,3 +11,7 @@ CREATE TABLE IF NOT EXISTS `pes_ticket_status_line` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='工单状态线';
 
 ALTER TABLE `pes_ticket` ADD `ticket_close_reason` VARCHAR(255) NOT NULL COMMENT '工单关闭理由' AFTER `ticket_close`;
+
+INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) VALUES (NULL, 'ticket_read', '是否开启工单已读标识', '0', 'system');
+
+ALTER TABLE `pes_ticket_chat` ADD `ticket_chat_read` TINYINT(1) NOT NULL COMMENT '工单沟通内容是否已读';

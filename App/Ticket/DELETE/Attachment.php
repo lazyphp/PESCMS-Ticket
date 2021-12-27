@@ -14,7 +14,6 @@ namespace App\Ticket\DELETE;
 class Attachment extends Content {
 
     public function delete() {
-        $this->checkToken();
         $file = \Model\Content::findContent('attachment', $_GET['id'], 'attachment_id');
         if (is_file(APP_PATH . $file['attachment_path'])) {
             if($file['attachment_type'] == '1'){

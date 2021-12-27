@@ -639,4 +639,20 @@ class Ticket extends \Core\Model\Model {
         }
     }
 
+    /**
+     * 更新工单已读状态
+     * @param $ticketID 工单ID
+     * @param $type 更新的已读类型 | 0：将客服的消息标记已读 非0 任意数值则将客户的消息标记已读
+     */
+    public static function readStatus($ticketID, $type){
+        $condition = $type == 0 ? ' AND user_id != -1' : ' AND user_id = -1';
+
+        self::db('ticket_chat')->where("ticket_id = :ticket_id {$condition} AND ticket_chat_read = 0")->update([
+            'noset' => [
+                'ticket_id' => $ticketID,
+            ],
+            'ticket_chat_read' => 1
+        ]);
+    }
+
 }

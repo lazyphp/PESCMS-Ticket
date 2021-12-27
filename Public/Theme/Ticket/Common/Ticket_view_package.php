@@ -149,7 +149,7 @@
         </li>
         <?php if (!empty($chat)): ?>
             <?php foreach ($chat as $value): ?>
-                <li class="<?= $value['user_id'] == '-1' ? 'am-text-gray am-text-gray-background' : '' ?> ">
+                <li class="<?= $value['user_id'] == '-1' ? ' am-text-gray-background' : '' ?> ">
                     <div class="am-g">
                         <div class="am-u-sm-2 am-u-lg-1">
                             <?php if ($value['user_id'] == '-1'): ?>
@@ -162,7 +162,11 @@
                             <div class="am-block am-nbfc">
                                 <?= $value['user_id'] == '-1' ? (empty($member) ? '匿名用户 : ' : "{$member['member_name']} : ") : "{$value['user_name']} : " ?><?= $label->xss(htmlspecialchars_decode($value['ticket_chat_content'])) ?>
                             </div>
-                            <div class="am-block"><?= date('Y-m-d H:i:s', $value['ticket_chat_time']); ?></div>
+                            <div class="am-block"><?= date('Y-m-d H:i:s', $value['ticket_chat_time']); ?>
+                            <?php if($system['ticket_read'] == 1 || ( !empty(self::session()->get('ticket')) && GROUP == 'Ticket' ) ): ?>
+                                <span class="am-text-gray">[<?= $value['ticket_chat_read'] == 1 ? '已读' : '未读' ?>]</span>
+                            <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                 </li>

@@ -18,9 +18,7 @@ class Attachment extends Content {
         if (is_file(APP_PATH . $file['attachment_path'])) {
             if($file['attachment_type'] == '1'){
                 $extension = pathinfo(APP_PATH . $file['attachment_path'])['extension'];
-                unlink(APP_PATH . $file['attachment_path']."_50x50.{$extension}");
                 unlink(APP_PATH . $file['attachment_path']."_150x150.{$extension}");
-                unlink(APP_PATH . $file['attachment_path']."_300x300.{$extension}");
             }
             unlink(APP_PATH . $file['attachment_path']);
         }

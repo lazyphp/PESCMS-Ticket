@@ -425,7 +425,7 @@ class Uploader {
 
         $editor->resizeFit( $image, $resizeWidth, $resizeHeight );
 
-        $editor->save( $image, "{$outName}_150.".pathinfo($outName)['extension'] );
+        $editor->save( $image, "{$outName}_150x150.".pathinfo($outName)['extension'] );
 
     }
 

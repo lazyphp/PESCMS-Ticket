@@ -353,7 +353,7 @@ class Ticket extends \Core\Model\Model {
                     break;
                 case 'thumb':
                     $suffix = pathinfo($value['ticket_form_content']);
-                    $small = "{$value['ticket_form_content']}_50x50.{$suffix['extension']}";
+                    $small = "{$value['ticket_form_content']}_150x150.{$suffix['extension']}";
 
                     $form[$value['ticket_form_id']]['ticket_value'] = empty($value['ticket_form_content']) ? '' : '<a href="' . $value['ticket_form_content'] . '" data-fancybox="gallery"><img src="' . $small . '" alt="' . $value['ticket_form_content'] . '" class="am-img-thumbnail" width="50" height="50" /></a>';
                     break;
@@ -363,7 +363,7 @@ class Ticket extends \Core\Model\Model {
                     if (!empty($value['ticket_form_content'])) {
                         foreach ($splitImg as $item) {
                             $suffix = pathinfo($item);
-                            $small = "{$item}_50x50.{$suffix['extension']}";
+                            $small = "{$item}_150x150.{$suffix['extension']}";
                             $imgStr .= '<li>
 <a href="' . $item . '" data-fancybox="gallery" ><img src="' . $small . '" alt="' . imgs . '" class="am-img-thumbnail" width="50" height="50" /></a>
 </li>';

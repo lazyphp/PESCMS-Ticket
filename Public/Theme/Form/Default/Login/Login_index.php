@@ -27,9 +27,11 @@
 <?php endif; ?>
 
 <div class="am-cf login-options am-text-sm">
+    <?php if($system['open_register'] == 1): ?>
     <div class="am-fl">
         还没<?= $system['siteTitle'] ?>账号？<a href="<?= $label->url('Login-signup') ?>" class="login-signup-link" >立即注册!</a>
     </div>
+    <?php endif; ?>
     <div class="am-fr">
         <a href="<?= $label->url('Login-findpw') ?>">忘记密码？</a>
     </div>

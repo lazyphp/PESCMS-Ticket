@@ -12,7 +12,7 @@
                         <input type="radio" value="0" name="open_register" required="" <?= $open_register['value'] == '0' ? 'checked="checked"' : '' ?>> 关闭
                     </label>
                     <div class="pes-alert pes-alert-info am-text-xs " >
-                        <i class="am-icon-lightbulb-o"></i> 关闭注册需要手动添加客户。(微信公众号登录注册不受影响)
+                        <i class="am-icon-lightbulb-o"></i> 关闭注册需要手动添加客户。(微信公众号登录注册不受影响，仅限快速注册)
                     </div>
                 </div>
             </div>

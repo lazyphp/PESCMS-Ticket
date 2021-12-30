@@ -3,6 +3,7 @@
         <?php require THEME . '/Ticket/Common/Ticket_view_package.php'; ?>
         <?php if ($ticket_status < 3 && $ticket_close == '0'): ?>
         <div class="am-panel am-panel-default">
+            <a name="handleTicket"></a>
             <div class="am-panel-bd">
                 <h3 class="am-margin-0">补充内容</h3>
             </div>

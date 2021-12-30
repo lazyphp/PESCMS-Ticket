@@ -269,4 +269,20 @@ $(function () {
         return false;
     })
 
+    /**
+     * 快速跳转到工单处理
+     */
+    $('.pes-handleTicket').on('click', function () {
+        var height = $('a[name="handleTicket"]').offset().top - 250;
+        var $w = $(window);
+        $w.smoothScroll({position: $(document).height() - height});
+    })
+
+    /**
+     * 关闭浮窗
+     */
+    $('.pes-close-amz-toolbar').on('click', function () {
+        $(this).parent().hide()
+    })
+
 })

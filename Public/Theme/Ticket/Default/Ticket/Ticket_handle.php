@@ -3,6 +3,7 @@
 
     <?php if ($ticket_status < 3 && $ticket_close == '0' && ($user_id == $this->session()->get('ticket')['user_id'] || empty($user_id) || $label->checkAuth('TicketPUTTicketintervene') === true )): ?>
         <form action="<?= $label->url('Ticket-Ticket-reply'); ?>" class="am-form ajax-submit" method="POST" data-am-validator>
+            <a name="handleTicket"></a>
             <input type="hidden" name="number" value="<?= $ticket_number; ?>"/>
             <input type="hidden" name="back_url" value="<?= $_GET['back_url']; ?>"/>
             <?= $label->token() ?>

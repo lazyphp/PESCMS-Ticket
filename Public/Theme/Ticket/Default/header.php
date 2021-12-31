@@ -27,6 +27,8 @@
     <script>
         var PESCMS_URL = '<?= PESCMS_URL ?>';
         var PESCMS_PATH = '<?= DOCUMENT_ROOT; ?>';
+        var SITE_URL = '<?= $system['domain']; ?>';
+        var SITE_LOGO = '<?= $system['siteLogo']; ?>';
     </script>
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/jquery.min.js?v=<?= $resources ?>"></script>
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/amazeui.min.js?v=<?= $resources ?>"></script>

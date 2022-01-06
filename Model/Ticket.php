@@ -353,7 +353,7 @@ class Ticket extends \Core\Model\Model {
                     break;
                 case 'thumb':
                     $suffix = pathinfo($value['ticket_form_content']);
-                    $small = "{$value['ticket_form_content']}_50x50.{$suffix['extension']}";
+                    $small = "{$value['ticket_form_content']}_150x150.{$suffix['extension']}";
 
                     $form[$value['ticket_form_id']]['ticket_value'] = empty($value['ticket_form_content']) ? '' : '<a href="' . $value['ticket_form_content'] . '" data-fancybox="gallery"><img src="' . $small . '" alt="' . $value['ticket_form_content'] . '" class="am-img-thumbnail" width="50" height="50" /></a>';
                     break;
@@ -363,7 +363,7 @@ class Ticket extends \Core\Model\Model {
                     if (!empty($value['ticket_form_content'])) {
                         foreach ($splitImg as $item) {
                             $suffix = pathinfo($item);
-                            $small = "{$item}_50x50.{$suffix['extension']}";
+                            $small = "{$item}_150x150.{$suffix['extension']}";
                             $imgStr .= '<li>
 <a href="' . $item . '" data-fancybox="gallery" ><img src="' . $small . '" alt="' . imgs . '" class="am-img-thumbnail" width="50" height="50" /></a>
 </li>';
@@ -517,11 +517,45 @@ class Ticket extends \Core\Model\Model {
 
     /**
      * 更改任务状态
-     * @param $id 工单ID
+     * @param $ticket 工单数组
      * @param $status 要更改的状态
      */
-    public static function changeStatus($id, $status) {
-        return self::inTicketIdWithUpdate(['ticket_status' => $status, 'noset' => ['ticket_id' => $id]]);
+    public static function changeStatus($ticket, $status) {
+        self::recordStatusLine($ticket, $status);
+        return self::inTicketIdWithUpdate(['ticket_status' => $status, 'noset' => ['ticket_id' => $ticket['ticket_id']]]);
+    }
+
+    /**
+     * 记录工单的状态线
+     * @param $ticket
+     * @param $status | -1 状态为关闭工单
+     * @return bool
+     */
+    public static function recordStatusLine($ticket, $status){
+        if($ticket['ticket_status'] == $status){
+            return true;
+        }
+
+        $userID = 0;
+        $memberID = 0;
+
+        //@todo API接口因为session没无法使用，所以记录前台提交的信息会异常。待解决
+        if(GROUP == 'Ticket'){
+            $userID = self::session()->get('ticket')['user_id'];
+            $name = self::session()->get('ticket')['user_name'];
+        }else{
+            $memberID = self::session()->get('member')['member_id'];
+            $name = self::session()->get('member')['member_name'];
+        }
+
+        self::db('ticket_status_line')->insert([
+            'ticket_id' => $ticket['ticket_id'],
+            'ticket_status' => $status,
+            'member_id' => $memberID,
+            'user_id' => $userID,
+            'display_name' => $name,
+            'status_line_time' => time()
+        ]);
     }
 
     /**
@@ -603,6 +637,22 @@ class Ticket extends \Core\Model\Model {
         if ($ticket['member_id'] != '-1' && $ticket['member_id'] != self::session()->get('member')['member_id']) {
             self::success('获取工单成功，系统将指引您返回工单列表', self::url('Member-index'), -1);
         }
+    }
+
+    /**
+     * 更新工单已读状态
+     * @param $ticketID 工单ID
+     * @param $type 更新的已读类型 | 0：将客服的消息标记已读 非0 任意数值则将客户的消息标记已读
+     */
+    public static function readStatus($ticketID, $type){
+        $condition = $type == 0 ? ' AND user_id != -1' : ' AND user_id = -1';
+
+        self::db('ticket_chat')->where("ticket_id = :ticket_id {$condition} AND ticket_chat_read = 0")->update([
+            'noset' => [
+                'ticket_id' => $ticketID,
+            ],
+            'ticket_chat_read' => 1
+        ]);
     }
 
 }

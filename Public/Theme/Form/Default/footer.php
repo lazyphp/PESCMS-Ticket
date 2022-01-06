@@ -23,5 +23,13 @@
     <?= $system['siteTongji'] ?>
 </div>
 <?php $label->footerEvent() ?>
+
+<div class="amz-toolbar" id="amz-toolbar" style="">
+    <a href="#top" title="回到顶部" class="am-icon-btn am-icon-arrow-up " id="amz-go-top" data-am-smooth-scroll=""></a>
+    <?php if(GROUP == 'Form' && MODULE == 'View' && ACTION == 'ticket' ): ?>
+        <a href="javascript:;" title="处理工单" class="pes-handleTicket am-icon-btn am-icon-edit"></a>
+    <?php endif; ?>
+    <a href="javascript:;" title="关闭浮窗" class="pes-close-amz-toolbar am-icon-btn am-icon-chain-broken"></a>
+</div>
 </body>
 </html>

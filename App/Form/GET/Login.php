@@ -122,6 +122,7 @@ class Login extends \Core\Controller\Controller {
 
         $user = $weixin->getUser($openid);
 
+
         //检查是否已绑定账号，已存在则直接执行登录
         $member = \Model\Content::findContent('member', $user['openid'], 'member_weixin');
         if(!empty($member)){
@@ -141,6 +142,50 @@ class Login extends \Core\Controller\Controller {
 
         $this->assign('title', '注册账号');
         $this->layout('', 'Login_layout');
+    }
+
+    /**
+     * 微信获取用户信息测试
+     * 本入口只有在获取OpenID失败下才触发。
+     * 用户直接访问也只是看到反馈结果。
+     * 仅限调试模式开启
+     */
+    public function wexinGetUSerTest(){
+        if(DEBUG !== true){
+            exit;
+        }
+        $weixin = new \Expand\weixin();
+        if(!empty($weixin->error)){
+            $this->error($weixin->error);
+        }
+
+        if(empty($_GET['code'])){
+            $url = $weixin->agree(\Core\Func\CoreFunc::$param['system']['domain'].$this->url('Login-wexinGetUSerTest'));
+
+            $this->jump($url);
+
+        }else{
+            $openid = $weixin->user_access_token($_GET['code']);
+
+            $user = $weixin->getUser($openid);
+
+            $log = new \Expand\Log();
+            $fileName = 'wx_log' . md5(\Core\Func\CoreFunc::loadConfig('PRIVATE_KEY').date("Ymd") );
+
+            $info = date('H:i:s')."\n";
+            $info .= "OPENID: {$openid} \n";
+            $info .= "USER INFO: ".json_encode($user)." \n";
+            $info .= "-------\n\n";
+
+            $log->creatLog($fileName, $info);
+
+            echo '获取ID:'.(empty($openid) ? '失败' : '正常'). '<br/>';
+            echo '用户信息:'.(empty($user) ? '失败' : '正常'). '<br/>';
+            echo '校验信息已完成记录，请联系站点管理员获取解决办法。';
+        }
+
+
+
     }
 
 }

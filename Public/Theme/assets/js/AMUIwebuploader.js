@@ -86,6 +86,9 @@ $(function () {
             //进度条直接使用妹子UI的
             uploader.on('uploadProgress', function (file, percentage) {
                 $.AMUI.progress.start(percentage);
+
+                $('#' + file.id + ' h3.am-gallery-title').html('<i class="am-icon-spinner am-icon-spin"></i> 上传中...').removeClass('am-hide');
+
             });
 
             // 文件上传成功
@@ -105,7 +108,7 @@ $(function () {
 
                     $('#' + file.id).append('<input type="hidden" name="' + obj.name + '" value="' + inputValue + '" autocomplete="off" >');
                 }
-                $('#' + file.id + ' h3.am-gallery-title').html(response.state).removeClass('am-hide');
+                $('#' + file.id + ' h3.am-gallery-title').html(response.state == 'SUCCESS' ? '上传完成' : response.state).removeClass('am-hide');
             });
 
             // 文件上传失败

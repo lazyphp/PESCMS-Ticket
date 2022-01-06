@@ -88,6 +88,23 @@
             </div>
         </div>
 
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">是否开启工单[已读]状态标识<i class="am-text-danger">*</i></label>
+                    <label class="am-radio-inline">
+                        <input type="radio" value="1" name="ticket_read" required="" <?= $ticket_read['value'] == '1' ? 'checked="checked"' : '' ?>> 开启
+                    </label>
+                    <label class="am-radio-inline">
+                        <input type="radio" value="0" name="ticket_read" required="" <?= $ticket_read['value'] == '0' ? 'checked="checked"' : '' ?>> 关闭
+                    </label>
+                    <div class="pes-alert pes-alert-info am-text-xs " >
+                        <i class="am-icon-lightbulb-o"></i> 本功能作用于工单详细页，客户是否可以知道本工单客服已查阅。[客服端默认即开启已读状态查询]
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <hr class="am-margin-top-0 am-divider-default"/>
         <div class="am-g am-g-collapse">
             <div class="am-u-sm-12 am-u-sm-centered">

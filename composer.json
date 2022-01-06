@@ -1,6 +1,8 @@
 {
     "require": {
-        "voku/anti-xss": "^2.3.1",
-        "duncan3dc/sessions": "^1.4"
+        "voku/anti-xss": "^4.1.32",
+        "duncan3dc/sessions": "^1.4",
+        "godruoyi/php-snowflake": "^1.1.1",
+        "kosinix/grafika": "^2.0"
     }
 }

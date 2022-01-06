@@ -21,7 +21,7 @@
     <?php if ($value['ticket_close'] == '0' && $value['ticket_status'] < 3 && $label->checkAuth('TicketPOSTTicketclose') === true ): ?>
 
         <i class="am-margin-left-xs am-margin-right-xs">|</i>
-        <a href="<?= $label->url('Ticket-Ticket-close', ['number' => $value['ticket_number'], 'method' => 'POST', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>" class="am-text-danger ajax-click ajax-dialog" msg="确定要关闭本工单吗？"><i class="am-icon-unlock-alt"></i> 关闭工单</a>
+        <a href="<?= $label->url('Ticket-Ticket-close', ['number' => $value['ticket_number'], 'method' => 'POST', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>" class="am-text-danger pes-close-ticket"><i class="am-icon-unlock-alt"></i> 关闭工单</a>
     <?php endif; ?>
 
     <?php if ($label->checkAuth(GROUP . 'DELETETicketaction') === true): ?>

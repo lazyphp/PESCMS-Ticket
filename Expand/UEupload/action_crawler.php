@@ -19,22 +19,21 @@ $fieldName = $CONFIG['catcherFieldName'];
 
 /* 抓取远程图片 */
 $list = array();
-if (isset($_POST[$fieldName])) {
-    $source = $_POST[$fieldName];
-} else {
-    $source = $_GET[$fieldName];
-}
-foreach ($source as $imgUrl) {
-    $item = new Uploader($imgUrl, $config, "remote");
-    $info = $item->getFileInfo();
-    array_push($list, array(
-        "state" => $info["state"],
-        "url" => $info["url"],
-        "size" => $info["size"],
-        "title" => htmlspecialchars($info["title"]),
-        "original" => htmlspecialchars($info["original"]),
-        "source" => htmlspecialchars($imgUrl)
-    ));
+$source = isset($_POST[$fieldName]) ? $_POST[$fieldName] : (isset($_GET[$fieldName]) ? $_GET[$fieldName] : []);
+if(!empty($source)) {
+    $action = htmlspecialchars(trim($_GET['action']));
+    foreach ($source as $imgUrl) {
+        $item = new \Expand\Uploader($action, $imgUrl, $config, "remote");
+        $info = $item->getFileInfo();
+        array_push($list, array(
+            "state" => $info["state"],
+            "url" => $info["url"],
+            "size" => $info["size"],
+            "title" => htmlspecialchars($info["title"]),
+            "original" => htmlspecialchars($info["original"]),
+            "source" => htmlspecialchars($imgUrl)
+        ));
+    }
 }
 
 /* 返回抓取数据 */

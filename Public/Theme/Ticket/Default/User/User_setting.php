@@ -72,6 +72,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="am-g am-g-collapse">
+                    <div class="am-u-sm-12 am-u-sm-centered">
+                        <div class="am-form-group">
+                            <label class="am-block">点击浏览器通知测试</label>
+                            <a href="javascript:;" class="am-btn am-btn-warning am-btn-xs pes-notice-test"><i class="am-icon-bell"></i></a>
+                            <div class="pes-alert pes-alert-info am-text-xs ">
+                                <i class="am-icon-lightbulb-o"></i> 点击上面图标可以测试浏览器通知功能是否正常工作。需要注意的是，当前域名需要带有https://才可工作。
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
 
                 <div class="am-g am-g-collapse am-margin-bottom">
                     <div class="am-u-sm-12 am-u-sm-centered">
@@ -82,3 +94,35 @@
         </div>
     </div>
 </div>
+
+<script>
+$(function () {
+
+    $('.pes-notice-test').on('click', function () {
+        try{
+            Notification.requestPermission( function(status) {
+
+                if(status == 'granted'){
+                    var n = new Notification("工单系统浏览器通知测试", {
+                        body: "本条消息为测试内容。",
+                        icon: SITE_URL + SITE_LOGO
+                    }); // 显示通知
+
+                    n.onclick = function () {
+                        alert('您点击了本次消息，点确认后本页面将被刷新');
+                        window.location.reload();
+                    }
+                }else{
+                    alert('当前您还没有允许浏览器授权本域名通知消息，请允许后再测试。')
+                }
+
+
+            });
+        }catch (e) {
+            alert('当前浏览器不支持通知消息')
+        }
+    })
+
+
+})
+</script>

@@ -49,10 +49,10 @@ class Ticket extends \Core\Controller\Controller {
                     $status = '0';//转派用户，工单状态应该为待解决
                     $userID = $this->isP('uid', '请选择您要指派的用户');
                     $checkUser = \Model\Content::findContent('user', $userID, 'user_id');
-                    if (empty($checkUser) || $checkUser['user_status'] == 0 ) {
+                    if (empty($checkUser) || $checkUser['user_status'] == 0) {
                         $this->error('转派的用户不存在');
                     }
-                    if($checkUser['user_vacation'] == 1){
+                    if ($checkUser['user_vacation'] == 1) {
                         $this->error('转派的用户正在休假');
                     }
                     \Model\Ticket::setUser($ticket['ticket_id'], $checkUser['user_id'], $checkUser['user_name'], $this->session()->get('ticket')['user_id']);
@@ -62,7 +62,7 @@ class Ticket extends \Core\Controller\Controller {
 
                 } elseif ($_POST['assign'] == '4') {
                     $auth = \Model\Auth::check('TicketPUTTicketcomplete');
-                    if($auth !== true){
+                    if ($auth !== true) {
                         $this->error($auth);
                     }
                     $status = '3';
@@ -71,7 +71,7 @@ class Ticket extends \Core\Controller\Controller {
 
                     \Model\Ticket::inTicketIdWithUpdate([
                         'ticket_complete_time' => time(),
-                        'noset' => ['ticket_id' => $ticket['ticket_id']]
+                        'noset'                => ['ticket_id' => $ticket['ticket_id']],
                     ]);
 
                 } else {
@@ -86,16 +86,16 @@ class Ticket extends \Core\Controller\Controller {
         }
         \Model\Ticket::updateReferTime($ticket['ticket_id']);
         \Model\Ticket::runTime($ticket['ticket_id'], $referTime, $ticket['ticket_run_time']);
-        \Model\Ticket::changeStatus($ticket['ticket_id'], $status);
+        \Model\Ticket::changeStatus($ticket, $status);
         \Model\Ticket::addReply($ticket['ticket_id'], $content);
 
         //只有勾选告知客户才生成通知(完成工单不受影响)，尽量减少对客户的滋扰。
-        if($_POST['notice'] == 1 || $_POST['assign'] == '4' ){
+        if ($_POST['notice'] == 1 || $_POST['assign'] == '4') {
 
             //没有选择通知方式或者匿名工单，则按照工单基础表中记录的联系方式生成通知。
-            if(empty($_POST['contact_type']) || $ticket['member_id'] == '-1' ){
+            if (empty($_POST['contact_type']) || $ticket['member_id'] == '-1') {
                 \Model\Notice::addTicketNoticeAction($ticket['ticket_number'], $ticket['ticket_contact_account'], $ticket['ticket_contact'], $templateType);
-            }else{
+            } else {
                 $this->manyTicketNotice($ticket, $templateType);
             }
 
@@ -121,10 +121,10 @@ class Ticket extends \Core\Controller\Controller {
      * @param $ticket
      * @param $templateType
      */
-    private function manyTicketNotice($ticket, $templateType){
+    private function manyTicketNotice($ticket, $templateType) {
         $member = \Model\Member::getMemberWithID($ticket['member_id']);
-        foreach ($_POST['contact_type'] as $contact){
-            switch ($contact){
+        foreach ($_POST['contact_type'] as $contact) {
+            switch ($contact) {
                 case '1':
                     $account = $member['member_email'];
                     break;
@@ -138,10 +138,10 @@ class Ticket extends \Core\Controller\Controller {
                     $account = $member['member_wxapp'];
                     break;
             }
-            if(empty($account)){
+            if (empty($account)) {
                 continue;
             }
-            \Model\Notice::addTicketNoticeAction($ticket['ticket_number'], $account, (int) $contact, $templateType);
+            \Model\Notice::addTicketNoticeAction($ticket['ticket_number'], $account, (int)$contact, $templateType);
         }
     }
 
@@ -149,14 +149,27 @@ class Ticket extends \Core\Controller\Controller {
      * 关闭工单
      */
     public function close() {
+        $this->checkToken();
         $number = $this->isG('number', '请选择您要查看的工单');
+        $reason = $this->isP('reason', '请填写关闭工单的理由');
+
         $ticket = \Model\Content::findContent('ticket', $number, 'ticket_number');
+
         if (empty($ticket)) {
             $this->error('该工单不存在');
         }
 
         \Model\Ticket::addReply($ticket['ticket_id'], \Model\Option::csText()['close']['content']);
-        \Model\Ticket::inTicketIdWithUpdate(['ticket_close' => '1', 'noset' => ['ticket_id' => $ticket['ticket_id']]]);
+
+        \Model\Ticket::inTicketIdWithUpdate([
+            'noset' => [
+                'ticket_id' => $ticket['ticket_id'],
+            ],
+            'ticket_close'        => '1',
+            'ticket_close_reason' => $reason,
+        ]);
+
+        \Model\Ticket::recordStatusLine($ticket, '-1');
 
         \Model\Notice::addTicketNoticeAction($number, $ticket['ticket_contact_account'], $ticket['ticket_contact'], 6);
 
@@ -173,14 +186,14 @@ class Ticket extends \Core\Controller\Controller {
     /**
      * 登记工单备注
      */
-    public function remark(){
+    public function remark() {
         $number = $this->isP('number', '请提交要记录备注的工单号码');
         $remark = $this->isP('remark', '请提交您要记录的备注信息');
         $this->db('ticket')->where('ticket_number = :ticket_number')->update([
-            'noset' => [
-                'ticket_number' => $number
+            'noset'         => [
+                'ticket_number' => $number,
             ],
-            'ticket_remark' => $remark
+            'ticket_remark' => $remark,
         ]);
 
         $this->success('备注已更新');

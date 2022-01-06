@@ -11,6 +11,8 @@
  */
 namespace App\Form\POST;
 
+use Model\Ticket;
+
 /**
  * @todo 这个方法命名得不好，实际应该是Ticket。当时考虑到跨域工单，所以用此命名，未来再结合实际情况进行更改吧。
  * Class Submit
@@ -69,8 +71,10 @@ class Submit extends \Core\Controller\Controller{
         $status = $ticket['ticket_status'] == 0 ? 0 : 1;
 
         \Model\Ticket::updateReferTime($ticket['ticket_id']);
+
+        \Model\Ticket::changeStatus($ticket, $status);
+
         \Model\Ticket::inTicketIdWithUpdate([
-            'ticket_status' => $status,
             'ticket_read' => '0',
             'noset' => ['ticket_id' => $ticket['ticket_id']]
         ]);

@@ -567,3 +567,16 @@ a.am-btn-white:visited{
 .my-footer small{
     line-height: 4rem;
 }
+
+/*导航浮窗*/
+.amz-toolbar {
+    position: fixed;
+    right: 30px;
+    bottom: 88px;
+    z-index: 999;
+}
+.amz-toolbar a {
+    display: block;
+    opacity: 1;
+    margin-bottom: 10px;
+}

@@ -60,7 +60,7 @@
                                 <a href="<?= $label->url(GROUP.'-Application-Init', ['n' => $value['index'], 'f' => 'option']) ?>" class="am-badge am-badge-warning am-radius">配置</a>
                                 <?php endif; ?>
 
-                                <a href="<?= $label->url(GROUP.'-Application-upgrade', ['name' => $value['info']['name'], 'version' => $value['info']['version'], 'enname' => $value['info']['enname'], 'method' => 'GET']) ?>" class="am-badge am-badge-warning am-radius ajax-click ajax-dialog check-update am-hide" msg="请确保已备份本插件，更新过程存在出错的可能" name="<?= $value['info']['name'] ?>" version="<?= $value['info']['version'] ?>">有可用更新</a>
+                                <a href="<?= $label->url(GROUP.'-Application-upgrade', ['name' => $value['info']['name'], 'version' => $value['info']['version'], 'enname' => $value['info']['enname'], 'method' => 'GET']) ?>" class="am-badge am-badge-warning am-radius check-update am-hide" name="<?= $value['info']['name'] ?>" version="<?= $value['info']['version'] ?>">有可用更新</a>
 
                                 <a href="<?= $label->url(GROUP.'-Application-Init', ['n' => $value['index'], 'f' => 'remove']) ?>" class="am-badge am-badge-danger am-radius ajax-click ajax-dialog" msg="您确定要此删除插件吗?">删除</a>
                             </td>
@@ -99,7 +99,6 @@
                 },
                 success: function (data) {
                     if(data.status == 200){
-                        dom.attr('href', href+'&appkey='+data.appkey);
                         dom.removeClass('am-hide');
                     }
                 },
@@ -109,5 +108,26 @@
             })
 
         })
+
+        $('.check-update').on('click', function () {
+            if(confirm('请确保已备份本插件，更新过程存在出错的可能') == false){
+                return false;
+            }
+            var url = $(this).attr('href');
+            var appkey = $('input[name="appkey"]').val();
+            if(appkey == ''){
+                alert('获取API数据失败，请刷新页面再试.')
+            }
+
+            $.ajaxsubmit({
+                url: url,
+                data: {appkey:appkey}
+            }, function () {
+            });
+
+            return false;
+
+        })
+
     })
 </script>

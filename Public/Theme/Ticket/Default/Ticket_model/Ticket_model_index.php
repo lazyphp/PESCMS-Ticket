@@ -2,6 +2,10 @@
 
 <?php include $tool_column; ?>
 
+<div class="am-margin-bottom">
+    <i class="am-icon-question-circle"></i> 常见问题：<a href="https://document.pescms.com/article/3/296557456849371136.html" target="_blank" class="am-text-warning">1.工单404或者工单没有显示</a>
+</div>
+
 <?php if (empty($list)): ?>
     <div class="pes-alert pes-alert-info am-margin-top am-margin-bottom am-text-center" >
         <p class="am-margin-0">本页面没有数据 :-(</p>

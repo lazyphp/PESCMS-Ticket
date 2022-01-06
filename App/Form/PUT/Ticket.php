@@ -19,7 +19,7 @@ class Ticket extends \Core\Controller\Controller{
 
         $ticket = \Model\Ticket::getTicketBaseInfo($number);
 
-        if(empty($ticket) || $ticket['ticket_status']  == 3 || $ticket['ticket_close'] == 1 ){
+        if(empty($ticket) ||  $ticket['ticket_close'] == 1 ){
             $this->error('当前工单不存在或已完成.');
         }
 
@@ -30,19 +30,38 @@ class Ticket extends \Core\Controller\Controller{
         }
         \Model\Ticket::loginCheck($ticket, base64_encode($back_url));
 
-        //标记完成
+
+        if($ticket['ticket_status']  == 3 ){
+
+            if(time() - 86400 * 7 > $ticket['ticket_complete_time']){
+                $this->error('无法恢复工单：要恢复工单的完成时间已超过7天有效期，请重新提交工单。');
+            }
+
+            $status = 1;
+            $msg = '由于工单反馈问题还需要继续完善，我申请了恢复本工单。';
+            $ticket_complete_time = 0;
+        }else{
+            $status = 3;
+            $msg = '本工单我已点击标记完成，且认可问题解决方案。';
+            $ticket_complete_time = time();
+            //记录执行时间
+            \Model\Ticket::runTime($ticket['ticket_id'], $ticket['ticket_refer_time'], $ticket['ticket_run_time']);
+        }
+
+        //标记完成时间
         \Model\Ticket::inTicketIdWithUpdate([
-            'ticket_status' => 3,
-            'ticket_complete_time' => time(),
+            'ticket_complete_time' => $ticket_complete_time,
             'noset' => ['ticket_id' => $ticket['ticket_id']]
         ]);
-        //记录执行时间
-        \Model\Ticket::runTime($ticket['ticket_id'], $ticket['ticket_refer_time'], $ticket['ticket_run_time']);
+
+        //更改工单状态
+        \Model\Ticket::changeStatus($ticket, $status);
+
+        //添加由用户主动操作更改工单状态的内容
+        \Model\Ticket::addReply($ticket['ticket_id'], $msg, 'custom');
 
 
-        \Model\Ticket::addReply($ticket['ticket_id'], '本工单我已点击标记完成，且认可问题解决方案。', 'custom');
-
-        $this->success('工单已结束,请对本次工单评价.', $back_url);
+        $this->success($status == 3 ? '工单已结束,请对本次工单评价.' : '工单已恢复,可继续后续事项操作。', $back_url);
 
     }
 

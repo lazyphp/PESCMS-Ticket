@@ -24,7 +24,7 @@ class weixinWork {
         $this->Secret = $weixinWork_api['Secret'];
 
         $FileCache = new FileCache();
-        $FileCache->setTime = 7200;
+        $FileCache->setTime = 6500;
         $result = $FileCache->loadCache('weixinWork_access_token');
         if(empty($result)){
             $result = (new cURL())->init("https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={$this->corpid}&corpsecret=$this->Secret");

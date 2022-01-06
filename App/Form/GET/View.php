@@ -28,6 +28,9 @@ class View extends \Core\Controller\Controller{
             echo $content['chat']['pageObj']->totalRow;
             exit;
         }else{
+
+            \Model\Ticket::readStatus($content['ticket']['ticket_id'], 0);
+
             $this->assign($content['ticket']);
             $this->assign('form', $content['form']);
             $this->assign('member', $content['member']);

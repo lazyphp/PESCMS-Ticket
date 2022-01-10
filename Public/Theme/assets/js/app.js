@@ -171,8 +171,9 @@ $(function () {
     $(document).on('click', '.pes-close-ticket',function () {
         var url = $(this).attr("href");
         var token = $('input[name="token"]').val()
-        var reason = prompt('请填写您要关闭工单的理由').trim();
-        if(reason.length <= 0){
+        var reason = prompt('请填写您要关闭工单的理由');
+
+        if(reason == null){
             alert('请填写您要关闭工单的理由.');
             return false;
         }

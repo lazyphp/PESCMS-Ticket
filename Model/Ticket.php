@@ -544,8 +544,8 @@ class Ticket extends \Core\Model\Model {
             $userID = self::session()->get('ticket')['user_id'];
             $name = self::session()->get('ticket')['user_name'];
         }else{
-            $memberID = self::session()->get('member')['member_id'];
-            $name = self::session()->get('member')['member_name'];
+            $memberID = self::session()->get('member')['member_id'] ?? '-1';
+            $name = self::session()->get('member')['member_name'] ?? '匿名用户';
         }
 
         self::db('ticket_status_line')->insert([

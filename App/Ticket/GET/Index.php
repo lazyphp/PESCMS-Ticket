@@ -122,6 +122,16 @@ class Index extends \Core\Controller\Controller {
      */
     private function threeTypeTicket() {
         $type = [
+            'am-panel-danger' => [
+                'title' => '最近反馈',
+                'condition' => 't.ticket_read = 0 AND  (t.user_id = 0 OR t.user_id = :user_id ) AND t.ticket_close = 0 AND t.ticket_refer_time <= :ticket_refer_time AND tm.ticket_model_group_id LIKE :group_id ',
+                'param' => [
+                    'ticket_refer_time' => time(),
+                    'user_id' => $this->session()->get('ticket')['user_id'],
+                    'group_id' => "%,{$this->session()->get('ticket')['user_group_id']},%"
+                ],
+                'url' => $this->url('Ticket-Ticket-index', ['read' => '0']),
+            ],
             'am-panel-primary' => [
                 'title' => '新提交工单',
                 'condition' => 't.ticket_status = 0 AND (t.user_id = 0 OR t.user_id = :user_id ) AND t.ticket_close = 0 AND tm.ticket_model_group_id LIKE :group_id ',

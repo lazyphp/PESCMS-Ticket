@@ -127,3 +127,12 @@
 .ticket_model_table .ticket_model_operate div {
   margin: 2px 0;
 }
+.ticket-list-table > tbody > tr:nth-child(odd) > td {
+  background: rgba(217, 226, 239, 0.3) !important;
+}
+.ticket-list-table tr {
+  transition: all 0.2s ease-in-out;
+}
+.ticket-list-table tr:hover {
+  box-shadow: 0 2px 30px rgba(0, 0, 0, 0.22), 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+}

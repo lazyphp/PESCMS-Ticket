@@ -1,4 +1,4 @@
-<table class="am-table  am-table-striped am-table-hover am-text-sm">
+<table class="am-table  am-table-striped am-table-hover am-text-sm ticket-list-table">
     <?php foreach ($list as $key => $value): ?>
         <tr>
             <td class="">

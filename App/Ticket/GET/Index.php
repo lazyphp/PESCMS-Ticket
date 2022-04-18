@@ -130,7 +130,7 @@ class Index extends \Core\Controller\Controller {
                     'user_id' => $this->session()->get('ticket')['user_id'],
                     'group_id' => "%,{$this->session()->get('ticket')['user_group_id']},%"
                 ],
-                'url' => $this->url('Ticket-Ticket-index', ['read' => '0']),
+                'url' => $this->url('Ticket-Ticket-index', ['q' => '0']),
             ],
             'am-panel-primary' => [
                 'title' => '新提交工单',
@@ -139,25 +139,13 @@ class Index extends \Core\Controller\Controller {
                     'user_id' => $this->session()->get('ticket')['user_id'],
                     'group_id' => "%,{$this->session()->get('ticket')['user_group_id']},%"
                 ],
-                'url' => $this->url('Ticket-Ticket-index', ['status' => 0, 'close' => '0']),
-            ],
-            'am-panel-default' => [
-                'title' => '待处理',
-                'condition' => 't.user_id = :user_id AND  t.ticket_status = 1 AND t.ticket_close = 0',
-                'param' => ['user_id' => $this->session()->get('ticket')['user_id']],
-                'url' => $this->url('Ticket-Ticket-myTicket', ['status' => 1, 'close' => '0']),
-            ],
-            'am-panel-warning' => [
-                'title' => '待回复工单',
-                'condition' => 't.user_id = :user_id AND  t.ticket_status = 2 AND t.ticket_close = 0',
-                'param' => ['user_id' => $this->session()->get('ticket')['user_id']],
-                'url' => $this->url('Ticket-Ticket-myTicket', ['status' => 2, 'close' => '0']),
+                'url' => $this->url('Ticket-Ticket-index', ['q' => 1]),
             ],
             'am-panel-success' => [
                 'title' => '已完成/关闭工单',
                 'condition' => 't.user_id = :user_id AND (t.ticket_status = 3 OR t.ticket_close = 1)',
                 'param' => ['user_id' => $this->session()->get('ticket')['user_id']],
-                'url' => $this->url('Ticket-Ticket-myTicket', ['status' => 3]),
+                'url' => $this->url('Ticket-Ticket-myTicket', ['q' => 4]),
             ]
         ];
         $list = [];

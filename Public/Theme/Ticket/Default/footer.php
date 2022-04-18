@@ -95,7 +95,7 @@
     </ol>
 
     <hr>
-    <!--今年开发者经济收益不好，只能在程序投发广告。截至2020年4月16日，今年0收入。-->
+    <!--为了让项目可持续发展，加入广告投放-->
     <article class="am-article">
         <div class="am-article-hd">
             <h3 class="am-text-success">PESCMS推荐您使用阿里云服务器</h3>
@@ -106,7 +106,7 @@
             <p ><a href="https://www.pescms.com/goAd/12.html" target="_blank" style="color: #f56c6c"><i class="am-icon-external-link"></i> &nbsp;更多优惠云产品，点击查看详情</a></p>
         </div>
     </article>
-    <!--今年开发者经济收益不好，只能在程序投发广告。截至2020年4月16日，今年0收入。-->
+    <!--为了让项目可持续发展，加入广告投放-->
 
     <div class=" am-text-right ">
         <button type="button" class="am-btn am-btn-primary am-btn-sm am-radius btn-loading-example">朕已阅</button>

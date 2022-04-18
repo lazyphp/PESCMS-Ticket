@@ -79,7 +79,7 @@
             <input type="text" name="member_name" value="<?= $label->xss(urldecode($_GET['member_name'])) ?>" placeholder="客户名称" class="am-block am-input-sm pes_input_radius fix-input-width am-radius pes-ticket-search-input">
         </div>
 
-        <button type="submit" class="am-btn am-btn-default am-btn-sm am-radius">搜索</button>
+        <button type="submit" name="search" value="1" class="am-btn am-btn-default am-btn-sm am-radius"><i class="am-icon-search"></i> 搜索</button>
         <button type="submit" name="csv" value="1" class="am-btn am-btn-success am-btn-sm am-radius"><i class="am-icon-file-excel-o"></i> 导出CSV</button>
     </div>
 

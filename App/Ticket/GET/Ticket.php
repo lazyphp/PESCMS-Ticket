@@ -80,6 +80,31 @@ class Ticket extends \Core\Controller\Controller {
             $sort = 't.ticket_top_list DESC,';
         }
 
+        //工单前置状态筛选
+        if(empty($_GET['search'])){
+            switch ($this->g('q')){
+                case '1':
+                    $this->condition .= " AND t.ticket_status = 0 AND t.ticket_close = 0 ";
+                    break;
+                case '2':
+                    $this->condition .= " AND t.ticket_status = 1 AND t.ticket_close = 0 ";
+                    break;
+                case '3':
+                    $this->condition .= " AND t.ticket_status = 2 AND t.ticket_close = 0 ";
+                    break;
+                case '4':
+                    $this->condition .= " AND t.ticket_status = 3 AND t.ticket_close = 0 ";
+                    break;
+                case '5':
+                    break;
+                default:
+                    $this->condition .= " AND  t.ticket_read = 0";
+                    break;
+            }
+        }
+
+
+
         $sql = "SELECT %s
                 FROM {$this->prefix}ticket AS t
                 LEFT JOIN {$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id

@@ -81,7 +81,7 @@ class Ticket extends \Core\Controller\Controller {
         }
 
         //工单前置状态筛选
-        if(empty($_GET['search'])){
+        if(empty($_GET['search']) && ACTION != 'complain' ){
             switch ($this->g('q')){
                 case '1':
                     $this->condition .= " AND t.ticket_status = 0 AND t.ticket_close = 0 ";

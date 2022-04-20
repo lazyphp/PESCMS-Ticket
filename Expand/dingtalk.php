@@ -52,7 +52,7 @@ class dingtalk {
             \Model\Extra::stopSend($param['send_id'], $this->error);
             return $this->error;
         }
-        $result = json_decode($this->notice($param['send_account'], $param['send_content']), true);
+        $result = json_decode($this->notice($param['send_account'], htmlspecialchars_decode($param['send_content'])), true);
 
 
 

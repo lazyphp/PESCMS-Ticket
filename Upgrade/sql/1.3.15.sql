@@ -11,6 +11,9 @@ UPDATE `pes_field` SET `field_action` = 'POST,PUT';
 INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_display_name`, `field_type`, `field_option`, `field_explain`, `field_default`, `field_required`, `field_listsort`, `field_list`, `field_form`, `field_status`, `field_is_null`, `field_only`, `field_action`) VALUES
     (NULL, 20, 'requisition', '允许客服登录', 'radio', '{&quot;\\u7981\\u6b62&quot;:&quot;0&quot;,&quot;\\u5141\\u8bb8&quot;:&quot;1&quot;}', '', '', 1, 90, 1, 1, 1, 0, 0, 'POST,PUT');
 
+ALTER TABLE `pes_member` ADD `member_wxWork` VARCHAR(255) NULL DEFAULT NULL, ADD UNIQUE (`member_wxWork`);
+ALTER TABLE `pes_member` ADD `member_dingtalk` VARCHAR(255) NULL DEFAULT NULL, ADD UNIQUE (`member_dingtalk`);
+
 ALTER TABLE `pes_member` ADD `member_requisition` INT NOT NULL;
 
 -- 更新唯一属性
@@ -24,4 +27,6 @@ UPDATE `pes_field` SET `field_only` = '1' WHERE `pes_field`.`field_id` = 239;
 UPDATE `pes_field` SET `field_only` = '1' WHERE `pes_field`.`field_id` = 207;
 UPDATE `pes_field` SET `field_only` = '1' WHERE `pes_field`.`field_id` = 210;
 UPDATE `pes_field` SET `field_only` = '1' WHERE `pes_field`.`field_id` = 235;
+
+UPDATE `pes_option` SET `value` = '[{\"title\":\"\\u7535\\u5b50\\u90ae\\u4ef6\",\"key\":\"1\",\"field\":\"member_email\"},{\"title\":\"\\u624b\\u673a\\u53f7\\u7801\",\"key\":\"2\",\"field\":\"member_phone\"},{\"title\":\"\\u5fae\\u4fe1\",\"key\":\"3\",\"field\":\"member_weixin\"},{\"title\":\"\\u4f01\\u4e1a\\u5fae\\u4fe1\",\"key\":\"4\",\"field\":\"member_wxWork\"},{\"title\":\"\\u9489\\u9489\",\"key\":\"5\",\"field\":\"member_dingtalk\"},{\"title\":\"\\u5fae\\u4fe1\\u5c0f\\u7a0b\\u5e8f\",\"key\":\"6\",\"field\":\"member_wxapp\"}]' WHERE `pes_option`.`id` = 41;
 

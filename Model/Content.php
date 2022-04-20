@@ -271,4 +271,24 @@ class Content extends \Core\Model\Model {
         }
     }
 
+    /**
+     * 检查重复
+     * @param $table 查询的表
+     * @param $field 查询的字段
+     * @param $value 匹配的内容
+     * @return bool 存在重复返回true 。反之false
+     */
+    public static function checkRepeat($table, $field, $value){
+        $checkRepeat = self::db($table)->where("$field = :$field")->find([
+            $field => $value
+        ]);
+
+        if(!empty($checkRepeat)){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
 }

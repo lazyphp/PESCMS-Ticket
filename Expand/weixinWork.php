@@ -51,7 +51,7 @@ class weixinWork {
             \Model\Extra::stopSend($param['send_id'], $this->error);
             return $this->error;
         }
-        $result = json_decode($this->notice($param['send_account'], $param['send_content']), true);
+        $result = json_decode($this->notice($param['send_account'], htmlspecialchars_decode($param['send_content'])), true);
 
         //发送成功，删除消息
         if($result['errmsg'] == 'ok' && empty($result['invaliduser']) ){

@@ -36,7 +36,7 @@
                             </div>
                             <div>
                                 <?= $field['main']['240']['field_display_name'] ?>
-                                : <?= $label->getFieldOptionToMatch(240, $value['ticket_model_group_id']); ?>
+                                : <?= $label->getFieldOptionToMatch(240, $value['ticket_model_contact']); ?>
                             </div>
                         </td>
                         <?php foreach ($field['other'] as $item) : ?>

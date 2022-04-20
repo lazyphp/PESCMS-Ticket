@@ -15,6 +15,19 @@ class Member extends \Core\Controller\Controller {
             $this->error('请填写正确的手机号码');
         }
 
+        $myInfo = \Model\Content::findContent('member', $param['noset']['member_id'],'member_id');
+
+
+        $param['member_wxWork'] = $this->p('wxWork');
+        $param['member_dingtalk'] = $this->p('dingtalk');
+        foreach (['member_wxWork' => '企业微信ID已存在请更换', 'member_dingtalk' => '钉钉ID已存在请更换'] as $field => $msg){
+            if(!empty($param[$field]) && \Model\Content::checkRepeat('member', $field, $param[$field]) === true && $myInfo[$field] != $param[$field] ){
+                $this->error($msg);
+            }
+        }
+
+
+
         $updatepasswd = false;
 
         if(!empty($_POST['password']) && !empty($_POST['repassword'])){

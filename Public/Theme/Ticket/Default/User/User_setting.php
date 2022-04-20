@@ -74,6 +74,24 @@
                 </div>
                 <div class="am-g am-g-collapse">
                     <div class="am-u-sm-12 am-u-sm-centered">
+
+                        <div class="am-form-group">
+                            <label class="am-block">开启浏览器通知<i class="am-text-danger">*</i></label>
+                            <label class="form-radio-label am-radio-inline">
+                                <input class="form-radio" type="radio" name="browser_msg" value="0" required="" <?= $user_browser_msg == 0 ? 'checked="checked"' : '' ?>>
+                                <span>关闭</span>
+                            </label>
+                            <label class="form-radio-label am-radio-inline">
+                                <input class="form-radio" type="radio" name="browser_msg" value="1" required="" <?= $user_browser_msg == 1 ? 'checked="checked"' : '' ?>><span>开启</span>
+                            </label>
+                        </div>
+
+                        <div class="am-u-sm-12 am-u-sm-centered">
+                            <div class="am-form-group">
+                                <label class="am-block">浏览器通知间隔(分钟)<i class="am-text-danger">*</i></label>
+                                <input class="form-text-input input-leng3" name="browser_msg_time" placeholder="浏览器通知间隔(分钟)" type="number" value="<?= $user_browser_msg_time ?>" required=""></div>
+                        </div>
+
                         <div class="am-form-group">
                             <label class="am-block">点击浏览器通知测试</label>
                             <a href="javascript:;" class="am-btn am-btn-warning am-btn-xs pes-notice-test"><i class="am-icon-bell"></i></a>

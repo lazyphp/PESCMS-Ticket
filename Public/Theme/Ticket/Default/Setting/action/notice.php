@@ -24,6 +24,27 @@
                 </div>
             </div>
         </div>
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">勿扰时段</label>
+                    <div class="am-form-inline">
+                        <div class="am-form-group am-form-icon">
+                            <i class="am-icon-clock-o"></i>
+                            <input type="text" class="am-form-field" name="disturb[begin]" placeholder="开始时间" value="<?= $disturb['begin'] ?>" pattern="\d*" maxlength="2">
+                        </div>
+
+                        <div class="am-form-group am-form-icon">
+                            <i class="am-icon-clock-o"></i>
+                            <input type="text" class="am-form-field" name="disturb[end]" placeholder="结束时间" value="<?= $disturb['end'] ?>" pattern="\d*" maxlength="2">
+                        </div>
+                    </div>
+                    <div class="pes-alert pes-alert-info am-text-xs " >
+                        <i class="am-icon-lightbulb-o"></i> 若您需要指定时间不接收消息，请在上述两个输入框填入时间。 <strong class="am-text-danger">注意：1. 24小时制 2. 本功能只对所有后台客服账户起效。</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="am-g am-g-collapse">
             <div class="am-u-sm-12 am-u-sm-centered">

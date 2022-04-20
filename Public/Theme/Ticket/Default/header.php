@@ -29,6 +29,10 @@
         var PESCMS_PATH = '<?= DOCUMENT_ROOT; ?>';
         var SITE_URL = '<?= $system['domain']; ?>';
         var SITE_LOGO = '<?= $system['siteLogo']; ?>';
+
+        let BROWSER_MSG = '<?= self::session()->get('ticket')['user_browser_msg'] == 1 ? 1 : 0; ?>';
+        let BROWSER_MSG_TIME = '<?= empty(self::session()->get('ticket')['user_browser_msg_time'] ) ? 6000 : self::session()->get('ticket')['user_browser_msg_time'] * 63000; ?>';
+
     </script>
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/jquery.min.js?v=<?= $resources ?>"></script>
     <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/amazeui.min.js?v=<?= $resources ?>"></script>

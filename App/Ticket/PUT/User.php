@@ -1,11 +1,10 @@
 <?php
 /**
- * PESCMS for PHP 5.4+
- *
- * Copyright (c) 2016 PESCMS (http://www.pescms.com)
+ * 版权所有 2021 PESCMS (https://www.pescms.com)
+ * 完整版权和软件许可协议请阅读源码根目录下的LICENSE文件。
  *
  * For the full copyright and license information, please view
- * the file LICENSE.md that was distributed with this source code.
+ * the file LICENSE that was distributed with this source code.
  */
 
 
@@ -38,15 +37,16 @@ class User extends Content {
         }
 
         if (!empty($_POST['password']) && !empty($_POST['repassword'])) {
-            if (strcmp(trim($_POST['password']), trim($_POST['repassword'])) != 0) {
-                $this->error('两次输入的密码不一致');
-            }
-            $data['user_password'] = \Core\Func\CoreFunc::generatePwd($data['user_account'] . $this->p('password'));
+
+            $password = \Model\Extra::verifyPassword();
+            $data['user_password'] = \Core\Func\CoreFunc::generatePwd($data['user_account'] . $password);
 
         }
 
         $data['user_name'] = $this->isP('name', '请提交名称');
         $data['user_vacation'] = $this->isP('vacation', '请提交您的状态');
+        $data['user_browser_msg'] = $this->p('browser_msg');
+        $data['user_browser_msg_time'] = $this->p('browser_msg_time');
         $data['noset']['user_id'] = $userID;
         $this->db('user')->where('user_id = :user_id')->update($data);
 

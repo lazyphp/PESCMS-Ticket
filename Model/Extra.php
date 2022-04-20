@@ -1,12 +1,11 @@
 <?php
 
 /**
- * PESCMS for PHP 5.4+
- *
- * Copyright (c) 2014 PESCMS (http://www.pescms.com)
+ * 版权所有 2021 PESCMS (https://www.pescms.com)
+ * 完整版权和软件许可协议请阅读源码根目录下的LICENSE文件。
  *
  * For the full copyright and license information, please view
- * the file LICENSE.md that was distributed with this source code.
+ * the file LICENSE that was distributed with this source code.
  */
 
 namespace Model;
@@ -285,6 +284,23 @@ class Extra extends \Core\Model\Model {
         }
 
         return $password;
+    }
+
+    /**
+     * 勿扰时间判断
+     * @param $begin
+     * @param $end
+     * @return bool
+     */
+    public static function notDisturb($begin, $end){
+        $hour = date('H');
+        if(($hour >= $begin || $hour < $end) && $begin > $end  ){
+            return true;
+        }elseif($hour >= $begin && $hour < $end){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

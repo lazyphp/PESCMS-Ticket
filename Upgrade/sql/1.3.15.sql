@@ -34,4 +34,8 @@ INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) 
 
 ALTER TABLE `pes_user` ADD `user_browser_msg` INT NOT NULL COMMENT '是否启用浏览器通知', ADD `user_browser_msg_time` INT NOT NULL DEFAULT '1' COMMENT '默认浏览器通知间隔 1分钟';
 
+INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_display_name`, `field_type`, `field_option`, `field_explain`, `field_default`, `field_required`, `field_listsort`, `field_list`, `field_form`, `field_status`, `field_is_null`, `field_only`, `field_action`) VALUES
+    (NULL, 15, 'custom_no', '自定义工单单号格式', 'text', '', '1. 默认留空单号规则随机生成。2. 只填写X则用雪花ID规则。3. 关键词Y是年，M是月，D是日，Z是当前工单模型提交的工单总数量，A是今天工单模型提交工单数量。', '', 0, 4, 0, 1, 1, 0, 0, 'POST,PUT');
+
+ALTER TABLE `pes_ticket_model` ADD `ticket_model_custom_no` VARCHAR(255) NOT NULL;
 

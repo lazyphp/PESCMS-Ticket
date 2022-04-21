@@ -45,6 +45,13 @@
             </select>
         <?php endif; ?>
 
+        <select name="user" class="am-form-field am-input-sm am-radius" data-am-selected="{btnSize: 'sm', dropUp: 0}">
+            <option value="-1" >根据客服筛选</option>
+            <?php foreach($userList as $key => $value): ?>
+                <option value="<?= $value['user_id'] ?>" <?= $_GET['user'] == $value['user_id'] ? 'selected="selected"' : '' ?> ><?= $value['user_name'] ?></option>
+            <?php endforeach; ?>
+        </select>
+
         <div class="am-form-group">
             <input type="text" name="keyword" value="<?= $label->xss($_GET['keyword']) ?>" class="am-input-sm pes_input_radius fix-input-width am-radius pes-ticket-search-input" placeholder="工单单号、标题或备注搜索">
         </div>

@@ -43,7 +43,7 @@ class Ticket extends \Core\Controller\Controller {
         }
 
         if(!empty($_GET['member']) && $_GET['member'] != '-1' ){
-            $this->condition .= ' AND member_id = :member_id ';
+            $this->condition .= ' AND t.member_id = :member_id ';
             $this->param['member_id'] = $this->g('member');
         }
 
@@ -124,6 +124,7 @@ class Ticket extends \Core\Controller\Controller {
         $this->assign('ticketModel', \Model\Content::listContent(['table' => 'ticket_model']));
         $this->assign('list', $result['list']);
         $this->assign('page', $result['page']);
+
 
         $this->assign('member', \Model\Member::getMemberWithID());
         $this->assign('title', \Model\Menu::getTitleWithMenu()['menu_name']);
@@ -314,6 +315,14 @@ class Ticket extends \Core\Controller\Controller {
      */
     public function complain(){
         $this->condition .= ' AND t.ticket_status = 3 AND t.ticket_score_time > 0';
+
+        $this->assign('userList', \Model\Content::listContent(['table' => 'user', 'field' => 'user_id, user_name']));
+
+        if(!empty($_GET['user']) && $_GET['user'] > 0){
+            $this->condition .= " AND t.user_id = :user_id ";
+            $this->param['user_id'] = (int) $this->g('user');
+        }
+
         $this->index('Ticket_complain');
     }
 

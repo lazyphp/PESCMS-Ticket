@@ -72,9 +72,9 @@
         </div>
     </div>
 </div>
-<div id="app-list" class="am-hide" project="5" version="<?= $system['version'] ?>">正在连接PESCMS应用商店...</div>
+<div id="app-list" class="am-hide" project="5" version="<?= $system['version'] ?>" entrance="Application">正在连接PESCMS应用商店...</div>
 <div class="pes-installed am-hide"><?= empty($installed) ? json_encode([]) : $installed ?></div>
-<script src="<?= PESCMS_URL ?>/Theme/Api/App/1.0/pescms_app.min.js?mt=<?= time() ?>"></script>
+<script src="<?= PESCMS_URL ?>/Theme/Api/App/1.1/pescms_app.min.js?mt=<?= time() ?>"></script>
 <script>
     $(function(){
         $('.check-update').each(function(){

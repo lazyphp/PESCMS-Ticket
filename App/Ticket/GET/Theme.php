@@ -52,4 +52,23 @@ class Theme extends \Core\Controller\Controller {
         return $themeList;
     }
 
+
+    public function shop(){
+        $this->assign('title', '主题商店');
+        $this->assign('installed', json_encode(array_column($this->getThemeList(), 'name')));
+        $this->layout();
+    }
+
+    public function install(){
+
+        $plugin = $this->isP('name', '请提交您要安装的主题');
+        $enName = $this->isP('enname', '请提交主题的名称');
+
+        (new \Expand\Install('2', THEME.'/Form/'))->downloadPlugin($plugin);
+
+        $this->success('主题安装完毕', $this->url('Ticket-Theme-index'));
+
+    }
+
+
 }

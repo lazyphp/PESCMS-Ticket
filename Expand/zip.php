@@ -35,13 +35,13 @@ class zip {
      * @param $zipfile
      * @return array|bool
      */
-    public function unzip($zipfile) {
+    public function unzip($zipfile, $patch = PES_CORE) {
         $zip = zip_open($zipfile);
         if (!is_resource($zip)) {
             return false;
         }
 
-        $this->simulateInstall($zip);
+        $this->simulateInstall($zip, $patch);
 
         $this->install();
         if (empty($this->info)) {
@@ -55,7 +55,7 @@ class zip {
      * 模拟安装，主要为创建必要的目录
      * @param $zip
      */
-    private function simulateInstall($zip) {
+    private function simulateInstall($zip, $patch) {
         $i = -1;
         $files = [];
         $simulateSuccess = true;
@@ -64,7 +64,7 @@ class zip {
             $i++;
             $filename = zip_entry_name($file);
 
-            $foldername = PES_CORE . $filename;
+            $foldername = $patch . $filename;
 
             //目录或者文件不存在，则创建
             if (!file_exists($foldername)) {

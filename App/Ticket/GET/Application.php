@@ -83,8 +83,8 @@ class Application extends \Core\Controller\Controller {
      * 升级应用
      */
     public function upgrade(){
-        $plugin = $this->isG('name', '请提交您要安装的应用');
-        $version = $this->isG('version', '请提交应用版本');
+        $plugin = $this->isG('name', '请提交您要升级的应用');
+        $version = $this->isG('version', '请提交应用版本号');
         $enName = $this->isG('enname', '请提交应用的名称');
 
         $pluginPatch = PES_CORE."Plugin/{$enName}";
@@ -97,7 +97,8 @@ class Application extends \Core\Controller\Controller {
         }
 
         //开始下载新版本和安装新版文件。
-        (new \Expand\Install('1'))->downloadPlugin($plugin, $version);
+        $installObj = new \Expand\Install('1');
+        $installObj->downloadPlugin($plugin, $version);
 
         //获取插件初始化类命名空间。
         $pluginInitNameSpace = "\\Plugin\\{$enName}\\Init";
@@ -112,9 +113,9 @@ class Application extends \Core\Controller\Controller {
         $pluginInit->updateConfig($pluginInit, $newConfig);
 
         //@todo还差递归升级了~~！！
-        $existNewVersion = $this->fetchPlugin($plugin, $newConfig['plugin']['version'], true);
+        $existNewVersion = $installObj->fetchPlugin($plugin, $newConfig['plugin']['version'], true);
         if($existNewVersion['status'] == 200){
-            $this->success("{$plugin}插件执行自动升级中，请勿关闭本页面", $this->url(GROUP.'-Application-upgrade', ['name' => $plugin, 'version' => $newConfig['plugin']['version'], 'enname' => $enName, 'appkey' => $this->g('appkey'), 'method' => 'GET'  ]));
+            $this->success("{$plugin}插件执行自动升级中，请勿关闭本页面", $this->url(GROUP.'-Application-upgrade', ['name' => $plugin, 'version' => $newConfig['plugin']['version'], 'enname' => $enName, 'appkey' => trim(htmlspecialchars($_REQUEST['appkey'])), 'method' => 'GET'  ]));
         }else{
             $this->success("{$plugin}插件升级完成", $this->url(GROUP.'-Application-local'));
         }

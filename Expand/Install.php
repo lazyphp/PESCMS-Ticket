@@ -71,7 +71,7 @@ class Install{
      * @param bool $check 是否验证存在新版
      * @return bool|string
      */
-    private function fetchPlugin($plugin, $version = '', $check = false){
+    public function fetchPlugin($plugin, $version = '', $check = false){
         $system = \Core\Func\CoreFunc::$param['system'];
 
         $param = [

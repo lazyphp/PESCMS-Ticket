@@ -469,7 +469,11 @@ class Ticket extends \Core\Model\Model {
      * @return 返回查询得到的内容
      */
     public static function getTicketChat($id, $chatPage) {
-        $sql = "SELECT %s FROM " . self::$modelPrefix . "ticket_chat WHERE ticket_id = :ticket_id ORDER BY ticket_chat_id ASC";
+
+        //若是评价工单详情，已删除的工单回复内容会全部正常展示出来。
+        $condition = ACTION == 'complainDetail' ? '' : 'AND ticket_chat_delete = 0';
+
+        $sql = "SELECT %s FROM " . self::$modelPrefix . "ticket_chat WHERE ticket_id = :ticket_id {$condition} ORDER BY ticket_chat_id ASC";
 
         return \Model\Content::quickListContent([
             'count'  => sprintf($sql, 'count(*)'),

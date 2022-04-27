@@ -136,3 +136,7 @@
 .ticket-list-table tr:hover {
   box-shadow: 0 2px 30px rgba(0, 0, 0, 0.22), 0 2px 5px rgba(0, 0, 0, 0.1) !important;
 }
+.pes-chat-delete {
+  text-decoration: line-through;
+  color: #ff5757;
+}

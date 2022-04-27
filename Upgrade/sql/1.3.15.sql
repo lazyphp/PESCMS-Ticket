@@ -39,3 +39,5 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 
 ALTER TABLE `pes_ticket_model` ADD `ticket_model_custom_no` VARCHAR(255) NOT NULL;
 
+ALTER TABLE `pes_ticket_chat` ADD `ticket_chat_delete` INT NOT NULL COMMENT '是否被删除 0 正常 1被删除';
+

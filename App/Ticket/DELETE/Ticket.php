@@ -52,4 +52,29 @@ class Ticket extends \Core\Controller\Controller {
 
     }
 
+    /**
+     * 删除工单回复的内容
+     * @return void
+     */
+    public function chat(){
+        $id = $this->isG('id', '请提交您要删除的回复内容');
+
+        $param = [
+            'ticket_chat_id' => $id,
+            'user_id' => $this->session()->get('ticket')['user_id']
+        ];
+
+        $check = $this->db('ticket_chat')->where('ticket_chat_id = :ticket_chat_id AND user_id = :user_id')->find($param);
+
+        if(empty($check)){
+            $this->error('您要删除的回复内容不存在.');
+        }else{
+            $this->db('ticket_chat')->where('ticket_chat_id = :ticket_chat_id AND user_id = :user_id')->update([
+                'noset' => $param,
+                'ticket_chat_delete' => 1
+            ]);
+            $this->success('删除指定回复内容成功!');
+        }
+    }
+
 }

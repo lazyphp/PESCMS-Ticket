@@ -286,4 +286,16 @@ $(function () {
         $(this).parent().hide()
     })
 
+    $(document).fancybox({
+        buttons: [
+            "zoom",
+            "fullScreen",
+            "download",
+            "thumbs",
+            "rotate",
+            "close"
+        ],
+        selector: '[data-fancybox="gallery"]'
+    });
+
 })

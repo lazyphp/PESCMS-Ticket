@@ -111,10 +111,10 @@
                 <div class="am-form-group">
                     <label class="am-block">登录验证码</label>
                     <label class="am-checkbox-inline">
-                        <input type="checkbox" value="1" name="login_verify[]"  <?= $login_verify['0'] == '1' ? 'checked="checked"' : '' ?>> 前台开启
+                        <input type="checkbox" value="1" name="login_verify[]"  <?= isset($login_verify['0']) && $login_verify['0'] == '1' ? 'checked="checked"' : '' ?>> 前台开启
                     </label>
                     <label class="am-checkbox-inline">
-                        <input type="checkbox" value="2" name="login_verify[]"  <?= $login_verify['1'] == '2' ? 'checked="checked"' : '' ?>> 后台开启
+                        <input type="checkbox" value="2" name="login_verify[]"  <?= isset($login_verify['1']) && $login_verify['1'] == '2' ? 'checked="checked"' : '' ?>> 后台开启
                     </label>
                     <div class="pes-alert pes-alert-info am-text-xs " >
                         <i class="am-icon-lightbulb-o"></i> 前后台用户登录是否需要验证码

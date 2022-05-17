@@ -88,7 +88,7 @@ class Ticket extends \Core\Model\Model {
      */
     public static function csInfoParam($firstContent) {
 
-        $csUserInfo = self::autoAssign($firstContent['ticket_model_auto'], $firstContent);
+        $csUserInfo = self::autoAssign($firstContent, $firstContent['ticket_model_auto']);
 
         $exclusiveCS = self::exclusiveCSTicket($firstContent['ticket_model_exclusive']);
         if (!empty($exclusiveCS)) {
@@ -225,11 +225,11 @@ class Ticket extends \Core\Model\Model {
 
     /**
      * 自动分单功能
-     * @param bool $isOpen
      * @param $ticket
+     * @param bool $isOpen
      * @return bool
      */
-    private static function autoAssign($isOpen = false, $ticket) {
+    private static function autoAssign($ticket, $isOpen = false) {
         if ($isOpen !== 1) {
             return false;
         }

@@ -14,7 +14,7 @@ namespace App\Ticket\GET;
 class Member extends Content {
 
     public function index($display = true) {
-        switch ($_GET['sortby']){
+        switch ($_GET['sortby'] ?? ''){
             case '1':
                 $this->sortBy = 'CONVERT( member_name USING gbk ) ASC';
                 break;

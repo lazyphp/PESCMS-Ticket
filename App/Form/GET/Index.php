@@ -181,11 +181,11 @@ class Index extends \Core\Controller\Controller {
                     }
                     break;
                 default:
-                    continue;
+                    $close = false;
                     break;
             }
 
-            if($close == true){
+            if($close === true){
                 \Model\Ticket::addReply($item['ticket_id'], '工单已关闭，若还有疑问，请重新发表工单咨询!');
                 \Model\Ticket::inTicketIdWithUpdate(['ticket_close' => '1', 'noset' => ['ticket_id' => $item['ticket_id']]]);
                 \Model\Notice::addTicketNoticeAction($item['ticket_number'], $item['ticket_contact_account'], $item['ticket_contact'], 6);

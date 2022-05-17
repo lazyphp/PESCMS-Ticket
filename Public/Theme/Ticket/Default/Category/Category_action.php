@@ -6,7 +6,7 @@
     <select>
         <option value="0">顶层分类</option>
         <?php foreach($select as $key => $value): ?>
-            <option value="<?= $value['category_id'] ?>" <?= $_GET['id'] == $value['category_id'] ? 'disabled="disabled"' : '' ?> <?= $category_parent == $value['category_id'] ? 'selected="selected"' :'' ?> ><?= $value['space'].$value['guide'].$value['category_name'] ?></option>
+            <option value="<?= $value['category_id'] ?>" <?= isset($_GET['id']) && $_GET['id'] == $value['category_id'] ? 'disabled="disabled"' : '' ?> <?= isset($category_parent) && $category_parent == $value['category_id'] ? 'selected="selected"' :'' ?> ><?= $value['space'].($value['guide'] ?? '').$value['category_name'] ?></option>
         <?php endforeach; ?>
     </select>
 </div>

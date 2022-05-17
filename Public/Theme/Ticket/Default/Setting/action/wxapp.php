@@ -5,7 +5,7 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">appID</label>
-                    <input name="wxapp_api[appID]" placeholder="请填写微信小程序的appID" type="text" value="<?= $wxapp_api['appID']; ?>" >
+                    <input name="wxapp_api[appID]" placeholder="请填写微信小程序的appID" type="text" value="<?= $wxapp_api['appID']  ?? ''; ?>" >
                 </div>
             </div>
         </div>
@@ -14,7 +14,7 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">appsecret</label>
-                    <input name="wxapp_api[appsecret]" placeholder="请填写微信小程序的appsecret" type="text" value="<?= $wxapp_api['appsecret']; ?>" >
+                    <input name="wxapp_api[appsecret]" placeholder="请填写微信小程序的appsecret" type="text" value="<?= $wxapp_api['appsecret']  ?? ''; ?>" >
                 </div>
             </div>
         </div>

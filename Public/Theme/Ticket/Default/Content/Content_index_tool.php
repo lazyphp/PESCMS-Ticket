@@ -10,7 +10,9 @@
             <div class="am-btn-group am-btn-group-xs">
                 <?php ?>
                 <?php $addUrl = empty($addUrl) ? $label->url(GROUP . '-' . MODULE . '-action', array('back_url' => base64_encode($_SERVER['REQUEST_URI']))) : $addUrl ?>
+                <?php if($label->checkAuth(GROUP.'GET'.MODULE.'action') === true): ?>
                 <a href="<?= $addUrl ?>" class="am-btn am-btn-default am-radius"><span class="am-icon-plus"></span> 新增</a>
+                <?php endif; ?>
                 <?php $label->toolEvent() ?>
             </div>
         </div>
@@ -23,7 +25,7 @@
                 <input type="hidden" name="g" value="<?= GROUP; ?>"/>
                 <input type="hidden" name="m" value="<?= MODULE ?>"/>
                 <input type="hidden" name="a" value="<?= ACTION ?>"/>
-                <input type="text" name="keyword" placeholder="查找内容" value="<?= $label->xss($_GET['keyword']) ?>" class="am-form-field am-radius">
+                <input type="text" name="keyword" placeholder="查找内容" value="<?= $label->xss($_GET['keyword'] ?? '') ?>" class="am-form-field am-radius">
                     <span class="am-input-group-btn">
                         <input class="am-btn am-btn-default am-radius" type="submit" value="搜索"/>
                     </span>

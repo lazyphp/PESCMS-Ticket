@@ -5,7 +5,7 @@
  */
 ?>
 <?php foreach ($field as $key => $value) : ?>
-    <?php if ($value['field_form']): ?>
+    <?php if ($value['field_form'] && in_array($method, explode(',', $value['field_action'])) ): ?>
         <div class="am-g am-g-collapse">
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">

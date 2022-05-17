@@ -8,7 +8,7 @@
                     <input type="hidden" name="m" value="<?= MODULE ?>">
                     <input type="hidden" name="a" value="<?= ACTION ?>">
                     <div class="am-input-group">
-                        <input type="text" class="am-form-field" name="keyword" value="<?= $label->xss($_GET['keyword']) ?>">
+                        <input type="text" class="am-form-field" name="keyword" value="<?= $label->xss($_GET['keyword'] ?? '') ?>">
                         <span class="am-input-group-btn">
                         <button class="am-btn am-btn-default" type="submit"><span class="am-icon-search"></span> </button>
                         </span>

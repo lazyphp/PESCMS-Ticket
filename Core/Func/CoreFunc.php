@@ -301,6 +301,8 @@ class CoreFunc {
             $shelfLife = time() * self::tokenTimeSalt();
             self::$token = md5(substr($usec, 2) * rand(1, 100))."_{$shelfLife}";
             \Core\Func\CoreFunc::session()->set('token', array_merge($tokenArray, [self::$token => self::$token]));
+        }elseif(in_array(self::$token, $tokenArray)){
+            \Core\Func\CoreFunc::session()->set('token', array_merge($tokenArray, [self::$token => self::$token]));
         }
 
 

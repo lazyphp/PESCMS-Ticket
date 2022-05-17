@@ -3,7 +3,7 @@
     <script>
         function load() {
 //            var url = document.getElementById('login').innerHTML.trim();
-            window.location.href = '<?= $login ?>'
+            window.location.href = '<?= $login ?? '' ?>'
         }
         window.onload = load;
     </script>

@@ -4,7 +4,7 @@
  * 定制开发中，若没有特殊的需求，请加载本模板。
  */
 ?>
-<input type="hidden" name="method" value="<?= $method ?>"/>
-<input type="hidden" name="id" value="<?= $id ?>"/>
-<input type="hidden" name="back_url" value="<?= $_GET['back_url'] ?>"/>
+<input type="hidden" name="method" value="<?= $method ?? null ?>"/>
+<input type="hidden" name="id" value="<?= $id ?? null ?>"/>
+<input type="hidden" name="back_url" value="<?= $_GET['back_url'] ?? null ?>"/>
 <?= $label->token() ?>

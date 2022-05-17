@@ -24,9 +24,9 @@
                     <div class="am-btn-group am-btn-group-sm">
                         <a href="<?= $label->url(MODULE.'-ticket') ?>" class="am-btn am-btn-white <?= empty($_GET['dataType']) && empty($_GET['close'])  ? 'am-disabled' : '' ?>">全部</a>
                         <?php foreach (['1' => '今天', '-1' => '昨天', '-7' => '本周'] as $key => $value): ?>
-                            <a href="<?= $label->url(MODULE.'-ticket', ['dataType' => $key, 'keyword' => $keyword]) ?>" class="am-btn am-btn-white <?= $_GET['dataType'] == $key ? 'am-disabled' : '' ?>"><?= $value ?></a>
+                            <a href="<?= $label->url(MODULE.'-ticket', ['dataType' => $key, 'keyword' => $keyword]) ?>" class="am-btn am-btn-white <?= isset($_GET['dataType']) && $_GET['dataType'] == $key ? 'am-disabled' : '' ?>"><?= $value ?></a>
                         <?php endforeach; ?>
-                        <a href="<?= $label->url(MODULE.'-ticket', ['close' => 1, 'keyword' => $keyword]) ?>" class="am-btn am-btn-white <?= $_GET['close'] == 1 ? 'am-disabled' : '' ?>">已关闭: <?=$close?></a>
+                        <a href="<?= $label->url(MODULE.'-ticket', ['close' => 1, 'keyword' => $keyword]) ?>" class="am-btn am-btn-white <?= isset($_GET['close']) && $_GET['close'] == 1 ? 'am-disabled' : '' ?>">已关闭: <?=$close?></a>
                     </div>
                 </div>
             </div>

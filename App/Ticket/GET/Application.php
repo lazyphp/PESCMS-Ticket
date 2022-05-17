@@ -33,7 +33,7 @@ class Application extends \Core\Controller\Controller {
      */
     private function getPluginList(){
         $pluginPath = PES_CORE.'Plugin/';
-
+        $plugin = [];
         $handler = opendir($pluginPath);
         while (($filename = readdir($handler)) !== false) {
             if ($filename != "." && $filename != ".." && is_dir($pluginPath.$filename) ) {

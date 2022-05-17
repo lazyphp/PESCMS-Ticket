@@ -23,13 +23,13 @@
             <input type="hidden" name="m" value="<?= MODULE ?>"/>
             <input type="hidden" name="a" value="<?= ACTION ?>"/>
             <select name="sortby" class="am-form-field am-input-sm am-radius" data-am-selected="{btnSize: 'sm', dropUp: 0}" >
-                <option value="0" <?= '0' == $_GET['read'] ? 'selected="selected"' : '' ?>>默认排序</option>
-                <option value="1" <?= '1' == $_GET['sortby'] ? 'selected="selected"' : '' ?>>按名称升序 ↑</option>
-                <option value="2" <?= '2' == $_GET['sortby'] ? 'selected="selected"' : '' ?>>按名称降序 ↓</option>
+                <option value="0" <?= isset($_GET['read']) && '0' == $_GET['read'] ? 'selected="selected"' : '' ?>>默认排序</option>
+                <option value="1" <?= isset($_GET['sortby']) && '1' == $_GET['sortby'] ? 'selected="selected"' : '' ?>>按名称升序 ↑</option>
+                <option value="2" <?= isset($_GET['sortby']) && '2' == $_GET['sortby'] ? 'selected="selected"' : '' ?>>按名称降序 ↓</option>
             </select>
 
             <div class="am-form-group">
-                <input type="text" name="keyword" placeholder="查找内容" value="<?= $label->xss($_GET['keyword']) ?>" class="am-block am-input-sm pes_input_radius fix-input-width am-radius">
+                <input type="text" name="keyword" placeholder="查找内容" value="<?= $label->xss($_GET['keyword'] ?? '') ?>" class="am-block am-input-sm pes_input_radius fix-input-width am-radius">
             </div>
 
             <button type="submit" class="am-btn am-btn-default am-btn-sm am-radius">搜索</button>

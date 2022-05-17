@@ -22,7 +22,7 @@
             <?php if( !empty($item['ticket_model_organize_id']) && !in_array(self::session()->get('member')['member_organize_id'], explode(',', $item['ticket_model_organize_id'])) ){ continue; } ?>
 
 			<li>
-				<a href="javascript:;" data="<?= $label->url('Category-ticket', ['id' => $item['ticket_model_cid'], 'number' => $item['ticket_model_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>" class="ticket-category ticket-list" number="<?= $label->url('Fqa-index', ['number' => $item['ticket_model_number']]) ?>">
+				<a href="javascript:;" data="<?= $label->url('Category-ticket', ['id' => $item['ticket_model_cid'] ?? '', 'number' => $item['ticket_model_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>" class="ticket-category ticket-list" number="<?= $label->url('Fqa-index', ['number' => $item['ticket_model_number']]) ?>">
 					<h4 class="am-margin-0"><?= $item['ticket_model_name'] ?></h4>
                     <p class="am-margin-top-0"><?= htmlspecialchars_decode($item['ticket_model_explain']) ?></p>
                     <i class="am-icon-spinner am-icon-pulse am-icon-xs" style="display: none"></i>

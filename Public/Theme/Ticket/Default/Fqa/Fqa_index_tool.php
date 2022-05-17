@@ -19,12 +19,12 @@
             <select name="ticket_model_id" class="am-form-field am-input-sm am-radius" data-am-selected="{btnSize: 'sm', dropUp: 0}">
                 <option value="-1">选择工单</option>
                 <?php foreach($ticketModel as $key => $value): ?>
-                    <option value="<?= $value['ticket_model_id'] ?>" <?= $value['ticket_model_id'] == $_GET['ticket_model_id'] ? 'selected="selected"' : '' ?>>
+                    <option value="<?= $value['ticket_model_id'] ?>" <?= isset($_GET['ticket_model_id']) && $value['ticket_model_id'] == $_GET['ticket_model_id'] ? 'selected="selected"' : '' ?>>
                         <?= "{$value['category_name']} - {$value['ticket_model_name']}" ?>
                     </option>
                 <?php endforeach; ?>
             </select>
-            <input type="text" name="keyword" value="<?= $_GET['keyword'] ?>" class="am-input-lg">
+            <input type="text" name="keyword" value="<?= $label->xss($_GET['keyword'] ?? '') ?>" class="am-input-lg">
             <button type="submit" class="am-btn am-btn-default am-btn-sm">搜索</button>
         </form>
     </div>

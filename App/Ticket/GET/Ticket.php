@@ -36,7 +36,7 @@ class Ticket extends \Core\Controller\Controller {
 
         //状态筛选
         foreach (['model_id', 'status', 'close', 'read', 'fix'] as $key => $value) {
-            if ((!empty($_GET[$value]) || is_numeric($_GET[$value])) && $_GET[$value] != '-1') {
+            if ((!empty($_GET[$value]) || is_numeric($_GET[$value] ?? '')) && $_GET[$value] != '-1') {
                 $this->param["ticket_{$value}"] = (int)$_GET[$value];
                 $this->condition .= " AND t.ticket_{$value} = :ticket_{$value}";
             }

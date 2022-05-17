@@ -19,7 +19,7 @@ class Setting extends \Core\Controller\Controller {
      */
     public function action(){
         //调试获取$_SERVER信息
-        if($_GET['dev']){
+        if(isset($_GET['dev'])){
             echo '<pre>';
             print_r($_SERVER);
             echo '</pre>';

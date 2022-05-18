@@ -41,3 +41,52 @@ ALTER TABLE `pes_ticket_model` ADD `ticket_model_custom_no` VARCHAR(255) NOT NUL
 
 ALTER TABLE `pes_ticket_chat` ADD `ticket_chat_delete` INT NOT NULL COMMENT '是否被删除 0 正常 1被删除';
 
+INSERT INTO `pes_model` (`model_id`, `model_name`, `model_title`, `model_status`, `model_search`, `model_attr`, `model_page`) VALUES
+    (28, 'form_menu', '前台菜单', 1, 0, 1, 999);
+
+INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_display_name`, `field_type`, `field_option`, `field_explain`, `field_default`, `field_required`, `field_listsort`, `field_list`, `field_form`, `field_status`, `field_is_null`, `field_only`, `field_action`) VALUES
+(NULL, 28, 'status', '状态', 'radio', '{\"\\u7981\\u7528\":\"0\",\"\\u542f\\u7528\":\"1\"}', '', '1', 1, 100, 1, 1, 1, 0, 0, 'POST,PUT'),
+(NULL, 28, 'listsort', '排序', 'text', '', '', '', 0, 98, 1, 1, 1, 0, 0, 'POST,PUT'),
+(NULL, 28, 'createtime', '创建时间', 'date', '', '', '', 0, 99, 1, 1, 1, 0, 0, 'POST,PUT'),
+(NULL, 28, 'name', '菜单名称', 'text', '', '', '', 1, 1, 1, 1, 1, 0, 0, 'POST,PUT'),
+(NULL, 28, 'type', '菜单类型', 'radio', '{&quot;\\u7ad9\\u5185\\u94fe\\u63a5&quot;:&quot;0&quot;,&quot;\\u7ad9\\u5916\\u94fe\\u63a5&quot;:&quot;1&quot;}', '', '', 1, 2, 1, 1, 1, 0, 0, 'POST,PUT'),
+(NULL, 28, 'link', '菜单地址', 'text', '', '', '', 1, 3, 1, 1, 1, 0, 0, 'POST,PUT'),
+(NULL, 28, 'icon', '菜单图标', 'text', '', '', '', 0, 4, 0, 1, 1, 0, 0, 'POST,PUT');
+
+
+CREATE TABLE IF NOT EXISTS `pes_form_menu` (
+  `form_menu_id` int(11) NOT NULL AUTO_INCREMENT,
+  `form_menu_listsort` int(11) NOT NULL DEFAULT '0',
+  `form_menu_status` tinyint(4) NOT NULL DEFAULT '0',
+  `form_menu_createtime` int(11) NOT NULL DEFAULT '0',
+  `form_menu_name` varchar(255) NOT NULL DEFAULT '',
+  `form_menu_type` int(11) NOT NULL DEFAULT '0',
+  `form_menu_link` varchar(255) NOT NULL DEFAULT '',
+  `form_menu_icon` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`form_menu_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `pes_form_menu`
+--
+
+INSERT INTO `pes_form_menu` (`form_menu_id`, `form_menu_listsort`, `form_menu_status`, `form_menu_createtime`, `form_menu_name`, `form_menu_type`, `form_menu_link`, `form_menu_icon`) VALUES
+(1, 1, 1, 1652840160, '网站首页', 1, '/', ''),
+(2, 2, 1, 1652840160, '提交工单', 0, 'Category-index', ''),
+(3, 3, 1, 1652840160, '常见问题', 0, 'Fqa-list', ''),
+(4, 4, 1, 1652840160, '我的工单', 0, 'Member-ticket', '');
+
+INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_link`, `menu_listsort`, `menu_type`) VALUES
+(NULL, '前台菜单', 9, 'am-icon-map-signs', 'Ticket-Form_menu-index', 12, 0);
+
+
+INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES
+(NULL, '前台菜单管理', 0, 0, '', 'GET', 'Form_menu', '', 0, 7);
+
+INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES
+(NULL, '前台菜单列表', LAST_INSERT_ID(), 1, '', 'GET', 'index', 'TicketGETForm_menuindex', LAST_INSERT_ID(), 10),
+(NULL, '新增/编辑前台菜单', LAST_INSERT_ID(), 1, '', 'GET', 'action', 'TicketGETForm_menuaction', LAST_INSERT_ID(), 20),
+(NULL, '提交新增前台菜单', LAST_INSERT_ID(), 1, '', 'POST', 'action', 'TicketPOSTForm_menuaction', LAST_INSERT_ID(), 30),
+(NULL, '提交更新前台菜单', LAST_INSERT_ID(), 1, '', 'PUT', 'action', 'TicketPUTForm_menuaction', LAST_INSERT_ID(), 40),
+(NULL, '提交删除前台菜单', LAST_INSERT_ID(), 1, '', 'DELETE', 'action', 'TicketDELETEForm_menuaction', LAST_INSERT_ID(), 50);
+(NULL, '排序前台菜单', LAST_INSERT_ID(), 1, '', 'PUT', 'action', 'TicketPUTForm_menulistsort', LAST_INSERT_ID(), 60),

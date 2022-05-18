@@ -85,6 +85,12 @@ $SLICE_ARRYR = [
         ['Form-Submit-ticket', 'Form-Index-getSession', 'Form-Index-verify', 'Form-Upload-ueditor'], ['\Form\CrossDomain']
     ],
 
+    'FORM-GET' => [
+        'get',
+        ['Form-:m-:a'],
+        ['\Form\Menu'],
+    ],
+
     /*----------------后台部分----------------*/
 
     //后台登录验证、权限管理、后台菜单输出

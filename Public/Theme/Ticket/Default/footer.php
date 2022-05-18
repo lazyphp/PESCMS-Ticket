@@ -1,4 +1,4 @@
-<?php if(\Core\Func\CoreFunc::session()->get('ticket')['user_id'] == 1 ): ?>
+<?php if(isset(\Core\Func\CoreFunc::session()->get('ticket')['user_id']) && \Core\Func\CoreFunc::session()->get('ticket')['user_id'] == 1 ): ?>
 <script>
     $(function(){
         var version  = '<?= $system['version'] ?>';

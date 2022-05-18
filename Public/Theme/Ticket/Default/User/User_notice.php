@@ -6,7 +6,7 @@
                 <li class="<?= empty($_GET['type']) ? 'am-active' : '' ?>"><a
                             href="<?= $label->url('Ticket-User-notice') ?>">所有消息</a></li>
                 <?php foreach ($type as $name => $value): ?>
-                    <li class="<?= $_GET['type'] == $value ? 'am-active' : '' ?>"><a
+                    <li class="<?= isset($_GET['type']) && $_GET['type'] == $value ? 'am-active' : '' ?>"><a
                                 href="<?= $label->url('Ticket-User-notice', ['type' => $label->xss($value)]) ?>"><?= $name ?></a>
                     </li>
                 <?php endforeach; ?>

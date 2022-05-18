@@ -5,7 +5,7 @@
             <div class="am-panel-bd">
                 <form action="" class="ajax-submit" method="POST" data-am-validator>
                     <?= $label->token() ?>
-                    <input type="hidden" name="back_url" value="<?= $_GET['back_url']; ?>"/>
+                    <input type="hidden" name="back_url" value="<?= $label->xss($_GET['back_url'] ?? ''); ?>"/>
                     <h1 class="am-text-center am-margin-top-0" ><?= $system['siteTitle'] ?></h1>
 
                     <div class="am-input-group am-margin-bottom">
@@ -17,7 +17,7 @@
                         <input name="passwd" class="am-form-field" type="password" placeholder="密码" required>
                     </div>
 
-                    <?php if(json_decode($system['login_verify'])[1] == '2'): ?>
+                    <?php if((json_decode($system['login_verify'], true)[1] ?? '') == '2'): ?>
                         <div class="am-input-group am-margin-bottom">
                             <span class="am-input-group-label"><i class="am-icon-shield am-icon-fw"></i></span>
                             <input type="text" class="am-form-field" name="verify" maxlength="<?= $system['verifyLength'] ?>">

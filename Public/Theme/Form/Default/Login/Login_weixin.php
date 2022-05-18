@@ -1,4 +1,4 @@
-<input type="hidden" name="openid" value="<?= $user['openid'] ?>">
+<input type="hidden" name="openid" value="<?= $user['openid'] ?? '' ?>">
 
 <?php if(empty($user['openid'])): ?>
 <div class="am-alert am-alert-secondary am-text-xs">
@@ -23,7 +23,7 @@
 
             <div class="loginFlow">
                 <input type="text" maxlength="10" name="name" class="pes-login-input"
-                       value="<?= $user['nickname'] ?>" placeholder="您还需要填写用户名称" required="required">
+                       value="<?= $user['nickname'] ?? '' ?>" placeholder="您还需要填写用户名称" required="required">
             </div>
         <?php endif; ?>
     <?php endif; ?>
@@ -55,8 +55,8 @@
                 $('#weixin-redirect').remove();
                 $('.am-form').after('<form id="weixin-redirect" action="'+url+'" method="POST">' +
                     '<input type="hidden" name="method" value="GET">' +
-                    '<input type="hidden" name="weixin" value="<?= $user['openid'] ?>">' +
-                    '<input type="hidden" name="name" value="<?= $user['nickname'] ?>">' +
+                    '<input type="hidden" name="weixin" value="<?= $user['openid'] ?? '' ?>">' +
+                    '<input type="hidden" name="name" value="<?= $user['nickname'] ?? '' ?>">' +
                     '</form>');
                 $('#weixin-redirect').submit();
                 return false;

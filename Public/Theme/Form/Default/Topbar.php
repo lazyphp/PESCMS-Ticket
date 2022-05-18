@@ -15,7 +15,7 @@
                     <li>
                         <a href="<?= $label->url('Login-index') ?>"><i class="am-icon-sign-in"></i> 登录</a>
                     </li>
-                    <?php if($system['open_register'] == 1): ?>
+                    <?php if ($system['open_register'] == 1): ?>
                         <li>
                             <a href="<?= $label->url('Login-signup') ?>"><i class="am-icon-user-plus"></i> 注册</a>
                         </li>
@@ -48,18 +48,17 @@
 
         <div class="am-collapse am-topbar-collapse am-topbar-right am-text-sm" id="tool-container-collapse">
             <ul class="am-nav am-nav-pills am-topbar-nav admin-header-list">
-                <li>
-                    <a href="/">网站首页</a>
-                </li>
-                <li>
-                    <a href="<?= $label->url('Category-index') ?>">提交工单</a>
-                </li>
-                <li>
-                    <a href="<?= $label->url('Fqa-list') ?>">常见问题</a>
-                </li>
-                <li>
-                    <a href="<?= $label->url('Member-ticket'); ?>">我的工单</a>
-                </li>
+                <?php if (!empty($menu)): ?>
+                    <?php foreach ($menu as $key => $value): ?>
+                        <li>
+                            <a href="<?= $value['form_menu_type'] == 1 ? $value['form_menu_link'] : $label->url($value['form_menu_link']) ?>"><?= $value['form_menu_name'] ?></a>
+                        </li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <li>
+                        <a href="/">网站首页</a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>

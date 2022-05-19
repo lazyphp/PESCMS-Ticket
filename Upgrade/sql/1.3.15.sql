@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `pes_help_document` (
 
 INSERT INTO `pes_help_document` (`help_document_id`, `help_document_controller`, `help_document_link`) VALUES
 (1, 'Ticket-Index-index', 'https://document.pescms.com/article/3/262978503023001600.html'),
-(2, 'Ticket-Ticke-:a', 'https://document.pescms.com/article/3/263572759471194112.html'),
+(2, 'Ticket-Ticket-:a', 'https://document.pescms.com/article/3/263572759471194112.html'),
 (3, 'Ticket-Ticket-handle', 'https://document.pescms.com/article/3/268557014429335552.html'),
 (4, 'Ticket-Ticket_model-index', 'https://document.pescms.com/article/3/268655938838200320.html'),
 (5, 'Ticket-Category-index', 'https://document.pescms.com/article/3/268651201115979776.html'),

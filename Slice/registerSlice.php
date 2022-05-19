@@ -89,6 +89,7 @@ $SLICE_ARRYR = [
         'get',
         ['Form-:m-:a'],
         ['\Form\Menu'],
+        ['Form-Index-notice', 'Form-Index-behavior']
     ],
 
     /*----------------后台部分----------------*/

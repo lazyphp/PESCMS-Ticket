@@ -143,7 +143,7 @@ class Setting extends \Core\Controller\Controller {
     public function recordTips() {
         switch ($this->p('name')) {
             case 'tipsManual':
-            case 'ticketModel':
+            case 'help_document':
                 $name = $this->p('name');
                 break;
             default:

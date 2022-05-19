@@ -15,6 +15,7 @@ class Category extends \Core\Model\Model {
      */
     public static function getAllCategoryCidPrimaryKey(){
         $categoryList = \Model\Content::listContent(['table' => 'category']);
+        $category = [];
         if(!empty($categoryList)){
             foreach ($categoryList as $item){
                 $category[$item['category_id']] = $item;

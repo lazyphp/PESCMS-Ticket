@@ -59,19 +59,39 @@
         })
         <?php endif; ?>
 
+        /**
+         * F1帮助文档
+         */
+        $(document).on('keydown', function (){
+            var e = window.event;
+            var code = e.charCode || e.keyCode;
+            if(code == 112){
+                $.getJSON('<?= $label->url('Ticket-HelpDocument-find', ['help_controller' => GROUP.'-'.MODULE.'-'.ACTION, 'match' => GROUP.'-'.MODULE.'-:a']) ?>', function (res){
+                    try {
+                        if(res.status == 200){
+                            window.open(res.data.help_document_link)
+                        }else{
+                            window.open('https://document.pescms.com/article/3.html')
+                        }
+                    }catch (e){
+                        window.open('https://document.pescms.com/article/3.html')
+                    }
+                })
+                return false;
+            }
 
-        <?php if($system['ticketModel'] == 0 && MODULE == 'Ticket_model' && ACTION == 'index'): ?>
-        if($('.more-operate').last()[0]){
-            dialog({
-                content: '当前工单模型还没完善，点击 更多 - 管理，添加您需要记录的工单表单。',
-                okValue: '我知道了',
-                ok: function () {
-                    $.post('<?= $label->url('Ticket-Setting-recordTips') ?>', {name:'ticketModel', method:'PUT'}, function(){}, 'JSON')
-                }
-            }).show($('.more-operate').last()[0])
-        }
+        })
 
+        <?php if($system['help_document'] == 0): ?>
+            $('header').before('<div class="am-alert am-alert-postscript am-text-sm am-margin-0" data-am-alert><button type="button" class="close-f1 am-close">&times;</button><i class="am-icon-leanpub"></i> 按F1可以打开PESCMS Ticket帮助文档</div>')
+            $('html, body').animate({scrollTop: 0}, '500');
+            $('.close-f1').on('click', function (){
+                confirm('请谨记在客服端按F1可随时打开PESCMS Ticket帮助文档。');
+                $.post('<?= $label->url('Ticket-Setting-recordTips') ?>', {name:'help_document', method:'PUT'}, function(){}, 'JSON')
+
+            })
         <?php endif; ?>
+
     })
 </script>
 <div class="tips-manual" style="display: none">

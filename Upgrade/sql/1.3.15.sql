@@ -88,5 +88,40 @@ INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `n
 (NULL, '新增/编辑前台菜单', LAST_INSERT_ID(), 1, '', 'GET', 'action', 'TicketGETForm_menuaction', LAST_INSERT_ID(), 20),
 (NULL, '提交新增前台菜单', LAST_INSERT_ID(), 1, '', 'POST', 'action', 'TicketPOSTForm_menuaction', LAST_INSERT_ID(), 30),
 (NULL, '提交更新前台菜单', LAST_INSERT_ID(), 1, '', 'PUT', 'action', 'TicketPUTForm_menuaction', LAST_INSERT_ID(), 40),
-(NULL, '提交删除前台菜单', LAST_INSERT_ID(), 1, '', 'DELETE', 'action', 'TicketDELETEForm_menuaction', LAST_INSERT_ID(), 50);
-(NULL, '排序前台菜单', LAST_INSERT_ID(), 1, '', 'PUT', 'action', 'TicketPUTForm_menulistsort', LAST_INSERT_ID(), 60),
+(NULL, '提交删除前台菜单', LAST_INSERT_ID(), 1, '', 'DELETE', 'action', 'TicketDELETEForm_menuaction', LAST_INSERT_ID(), 50),
+(NULL, '排序前台菜单', LAST_INSERT_ID(), 1, '', 'PUT', 'action', 'TicketPUTForm_menulistsort', LAST_INSERT_ID(), 60);
+
+--
+-- 表的结构 `pes_help_document`
+--
+
+CREATE TABLE IF NOT EXISTS `pes_help_document` (
+  `help_document_id` int(11) NOT NULL AUTO_INCREMENT,
+  `help_document_controller` varchar(64) NOT NULL COMMENT '控制器',
+  `help_document_link` varchar(255) NOT NULL COMMENT '文档链接地址',
+  PRIMARY KEY (`help_document_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='系统帮助文档';
+
+--
+-- 转存表中的数据 `pes_help_document`
+--
+
+INSERT INTO `pes_help_document` (`help_document_id`, `help_document_controller`, `help_document_link`) VALUES
+(1, 'Ticket-Index-index', 'https://document.pescms.com/article/3/262978503023001600.html'),
+(2, 'Ticket-Ticke-:a', 'https://document.pescms.com/article/3/263572759471194112.html'),
+(3, 'Ticket-Ticket-handle', 'https://document.pescms.com/article/3/268557014429335552.html'),
+(4, 'Ticket-Ticket_model-index', 'https://document.pescms.com/article/3/268655938838200320.html'),
+(5, 'Ticket-Category-index', 'https://document.pescms.com/article/3/268651201115979776.html'),
+(6, 'Ticket-Fqa-index', 'https://document.pescms.com/article/3/268657472783253504.html'),
+(7, 'Ticket-Ticket_form-index', 'https://document.pescms.com/article/3/269002122886905856.html'),
+(8, 'Ticket-Setting-action', 'https://document.pescms.com/article/3/276527731582173184.html'),
+(9, 'Ticket-Route-index', 'https://document.pescms.com/article/3/277977871924854784.html'),
+(10, 'Ticket-Mail_template-index', 'https://document.pescms.com/article/3/277980824031199232.html'),
+(11, 'Ticket-Member-issue', 'https://document.pescms.com/article/3/263321778955223040.html'),
+(12, 'Ticket-Phrase-index', 'https://document.pescms.com/article/3/263494640320118784.html'),
+(13, 'Ticket-User-setting', 'https://document.pescms.com/article/3/263493076029276160.html'),
+(14, 'Ticket-User-index', 'https://document.pescms.com/article/3/270750844222177280.html'),
+(15, 'Ticket-User_group-index', 'https://document.pescms.com/article/3/270754494185209856.html'),
+(16, 'Ticket-Ticket-complain', 'https://document.pescms.com/article/3/262978779675099136.html');
+
+INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) VALUES (NULL, 'help_document', '帮助文档提示', '0', 'system');

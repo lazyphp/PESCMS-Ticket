@@ -1,15 +1,10 @@
 <?php
 /**
- * PESCMS for PHP 5.4+
- *
- * Copyright (c) 2014 PESCMS (http://www.pescms.com)
+ * Copyright (c) 2022 PESCMS (http://www.pescms.com)
  *
  * For the full copyright and license information, please view
  * the file LICENSE.md that was distributed with this source code.
- * @core version 2.6
- * @version 1.0
  */
-
 
 namespace Slice\Ticket\HandleForm;
 
@@ -26,7 +21,7 @@ class HandleUser extends \Core\Slice\Slice {
         }
 
         if (empty($_POST['password'])) {
-            $_POST['password'] = \Model\Content::findContent('user', $_POST['id'], 'user_id')['user_password'];
+            $_POST['password'] = \Model\Content::findContent('user', $_POST['id'] ?? '', 'user_id')['user_password'] ?? '';
         } else {
             $account = $this->p('account');
             $_POST['password'] = (string)\Core\Func\CoreFunc::generatePwd($account.$this->p('password'));

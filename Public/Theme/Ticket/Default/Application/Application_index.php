@@ -19,6 +19,7 @@
                 </div>
             </div>
             <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed" />
+            <div class="am-alert am-alert-postscript"><i class="am-icon-lightbulb-o"></i> 应用插件安装完毕后，请点击上面的<strong class="am-text-danger">[本地应用]</strong>打开本地应用列表进行启用。</div>
             <div id="app-list" project="5" version="<?= $system['version'] ?>" entrance="Application">正在连接PESCMS应用商店...</div>
         </div>
     </div>

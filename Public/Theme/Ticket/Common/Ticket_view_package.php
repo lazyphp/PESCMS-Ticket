@@ -169,8 +169,8 @@
                                         <span class="am-text-gray">[<?= $value['ticket_chat_read'] == 1 ? '已读' : '未读' ?>]</span>
                                     <?php endif; ?>
                                 </div>
-                                
-                                <?php if(!empty(self::session()->get('ticket')) && self::session()->get('ticket')['user_id'] == $value['user_id'] && $value['ticket_chat_delete'] == 0 && $ticket_close = 0 && $ticket_status != 3 ): ?>
+
+                                <?php if(!empty(self::session()->get('ticket')) && self::session()->get('ticket')['user_id'] == $value['user_id'] && $value['ticket_chat_delete'] == 0 && $ticket_close == 0 && $ticket_status != 3 ): ?>
                                 <div class="am-fr">
                                     <span><a href="<?= $label->url('Ticket-Ticket-chat', ['id' => $value['ticket_chat_id'], 'method' => 'DELETE']) ?>" class="am-text-danger ajax-click ajax-dialog"  msg="确定删除此回复内容吗？已产生的通知是不会被删除的。" >[<i class="am-icon-remove"></i> 删除]</a></span>
                                 </div>

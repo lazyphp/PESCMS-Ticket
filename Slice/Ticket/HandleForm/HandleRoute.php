@@ -1,15 +1,10 @@
 <?php
 /**
- * PESCMS for PHP 5.4+
- *
- * Copyright (c) 2014 PESCMS (http://www.pescms.com)
+ * Copyright (c) 2022 PESCMS (http://www.pescms.com)
  *
  * For the full copyright and license information, please view
  * the file LICENSE.md that was distributed with this source code.
- * @core version 2.6
- * @version 1.0
  */
-
 
 namespace Slice\Ticket\HandleForm;
 
@@ -23,7 +18,7 @@ class HandleRoute extends \Core\Slice\Slice {
      * 更新哈希值
      */
     public function before() {
-        $_POST['hash'] = (string)md5($_POST['controller'] . $_POST['param']);
+        $_POST['hash'] = (string)md5(($_POST['controller'] ?? '') . ($_POST['param'] ?? ''));
     }
 
     /**

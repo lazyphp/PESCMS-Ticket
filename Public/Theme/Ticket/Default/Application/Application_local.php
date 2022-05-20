@@ -56,7 +56,7 @@
                                 <a href="<?= $label->url(GROUP.'-Application-Init', ['n' => $value['index'], 'f' => 'enabled']) ?>" class="am-badge am-badge-secondary am-radius ajax-click">启用</a>
                                 <?php endif; ?>
 
-                                <?php if($value['info']['option'] == 1): ?>
+                                <?php if(isset($value['info']['option']) && $value['info']['option'] == 1): ?>
                                 <a href="<?= $label->url(GROUP.'-Application-Init', ['n' => $value['index'], 'f' => 'option']) ?>" class="am-badge am-badge-warning am-radius">配置</a>
                                 <?php endif; ?>
 

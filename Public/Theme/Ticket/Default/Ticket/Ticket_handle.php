@@ -44,12 +44,8 @@
                                     <div class="am-form-group">
                                         <label class="am-form-label am-margin-bottom-0">受理工单 : </label>
                                         <label class="form-radio-label am-radio-inline">
-                                            <input type="radio" name="assign" value="0" checked>
-                                            假装没看见
-                                        </label>
-                                        <label class="form-radio-label am-radio-inline">
-                                            <input type="radio" name="assign" value="1">
-                                            开始受理
+                                            <input type="radio" name="assign" value="1" checked>
+                                            开始受理工单
                                         </label>
                                     </div>
                                 <?php elseif (in_array($ticket_status, ['1', '2'])): ?>

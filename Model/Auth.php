@@ -1,12 +1,11 @@
 <?php
 
 /**
- * PESCMS for PHP 5.6+
- *
- * Copyright (c) 2019 PESCMS (https://www.pescms.com)
+ * 版权所有 2022 PESCMS (https://www.pescms.com)
+ * 完整版权和软件许可协议请阅读源码根目录下的LICENSE文件。
  *
  * For the full copyright and license information, please view
- * the file LICENSE.md that was distributed with this source code.
+ * the file LICENSE that was distributed with this source code.
  */
 
 namespace Model;
@@ -23,7 +22,7 @@ class Auth extends \Core\Model\Model {
      */
     public static function check($auth = GROUP . METHOD . MODULE . ACTION){
 
-        if(self::session()->get('ticket')['user_id'] == '1'){
+        if(isset(self::session()->get('ticket')['user_id']) && self::session()->get('ticket')['user_id'] == '1'){
             return true;
         }
         $findNode = \Model\Content::findContent('node', $auth, 'node_check_value');

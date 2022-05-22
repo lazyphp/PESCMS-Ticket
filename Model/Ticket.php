@@ -68,8 +68,8 @@ class Ticket extends \Core\Model\Model {
             self::error('您填写联系方式的信息格式不正确。');
         }
 
-        //工单长度限定为15
-        $param['ticket_number'] = str_pad(substr(\Model\Extra::getOnlyNumber(), 0, 15), 15, 0, STR_PAD_RIGHT);
+
+        $param['ticket_number'] = self::customNO($firstContent);
 
         $param['ticket_model_id'] = $firstContent['ticket_model_id'];
         $param['ticket_submit_time'] = time();
@@ -88,7 +88,7 @@ class Ticket extends \Core\Model\Model {
      */
     public static function csInfoParam($firstContent) {
 
-        $csUserInfo = self::autoAssign($firstContent['ticket_model_auto'], $firstContent);
+        $csUserInfo = self::autoAssign($firstContent, $firstContent['ticket_model_auto']);
 
         $exclusiveCS = self::exclusiveCSTicket($firstContent['ticket_model_exclusive']);
         if (!empty($exclusiveCS)) {
@@ -225,11 +225,11 @@ class Ticket extends \Core\Model\Model {
 
     /**
      * 自动分单功能
-     * @param bool $isOpen
      * @param $ticket
+     * @param bool $isOpen
      * @return bool
      */
-    private static function autoAssign($isOpen = false, $ticket) {
+    private static function autoAssign($ticket, $isOpen = false) {
         if ($isOpen !== 1) {
             return false;
         }
@@ -469,7 +469,11 @@ class Ticket extends \Core\Model\Model {
      * @return 返回查询得到的内容
      */
     public static function getTicketChat($id, $chatPage) {
-        $sql = "SELECT %s FROM " . self::$modelPrefix . "ticket_chat WHERE ticket_id = :ticket_id ORDER BY ticket_chat_id ASC";
+
+        //若是评价工单详情，已删除的工单回复内容会全部正常展示出来。
+        $condition = ACTION == 'complainDetail' ? '' : 'AND ticket_chat_delete = 0';
+
+        $sql = "SELECT %s FROM " . self::$modelPrefix . "ticket_chat WHERE ticket_id = :ticket_id {$condition} ORDER BY ticket_chat_id ASC";
 
         return \Model\Content::quickListContent([
             'count'  => sprintf($sql, 'count(*)'),
@@ -653,6 +657,36 @@ class Ticket extends \Core\Model\Model {
             ],
             'ticket_chat_read' => 1
         ]);
+    }
+
+    /**
+     * 自定义工单单号格式
+     * @param $field
+     * @return array|string|string[]
+     */
+    private static function customNO($field){
+        $ticket_model_custom_no = strtoupper($field['ticket_model_custom_no']);
+        if(empty($ticket_model_custom_no)){
+            return str_pad(substr(\Model\Extra::getOnlyNumber(), 0, 15), 15, 0, STR_PAD_RIGHT);
+        }elseif($ticket_model_custom_no == 'X'){
+            return (new \Godruoyi\Snowflake\Snowflake)->id();
+        }else{
+            $zKeyWord = self::db('ticket')->field('count(*) AS total')->where('ticket_model_id = :ticket_model_id')->find([
+                'ticket_model_id' => $field['ticket_model_id']
+            ])['total'] + 1;
+            
+            $aKeyWord = self::db('ticket')->field('count(*) AS total')->where('ticket_model_id = :ticket_model_id AND ticket_submit_time >= :ticket_submit_time')->find([
+                'ticket_model_id' => $field['ticket_model_id'],
+                'ticket_submit_time' => strtotime(date('Y-m-d').' 00:00:00')
+            ])['total'] + 1;
+
+            $search = ['Y', 'M', 'D', 'Z', 'A'];
+            $replace = [date('Y'), date('m'), date('d'), sprintf('%04d', $zKeyWord), sprintf('%04d', $aKeyWord)];
+
+            return str_replace($search, $replace, $ticket_model_custom_no);
+
+        }
+
     }
 
 }

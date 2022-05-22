@@ -1,4 +1,4 @@
-<table class="am-table  am-table-striped am-table-hover am-text-sm">
+<table class="am-table  am-table-striped am-table-hover am-text-sm ticket-list-table">
     <?php foreach ($list as $key => $value): ?>
         <tr>
             <td class="">
@@ -18,7 +18,7 @@
                                     </span>
                 </div>
                 <div class="admin-task-bd">
-                    <a href="<?= $label->url(GROUP . '-Ticket-handle', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>">
+                    <a href="<?= $label->url(GROUP . '-Ticket-complainDetail', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>">
                         <?= $value['ticket_title'] ?>
                     </a>
                 </div>

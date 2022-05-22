@@ -18,4 +18,4 @@
                 </div>
             </div>
             <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
-            <form class="am-form am-form-horizontal ajax-submit"  action="<?= $url; ?>" method="post" data-am-validator>
+            <form class="am-form am-form-horizontal ajax-submit"  action="<?= $url ?? ''; ?>" method="post" data-am-validator>

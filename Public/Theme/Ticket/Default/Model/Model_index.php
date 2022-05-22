@@ -20,7 +20,7 @@
                 <input type="hidden" name="g" value="<?= GROUP; ?>"/>
                 <input type="hidden" name="m" value="<?= MODULE ?>"/>
                 <input type="hidden" name="a" value="<?= ACTION ?>"/>
-                <input type="text" name="keyword" value="<?= $_GET['keyword'] ?>" class="am-form-field">
+                <input type="text" name="keyword" value="<?= $label->xss($_GET['keyword'] ?? '') ?>" class="am-form-field">
                 <span class="am-input-group-btn">
                         <input class="am-btn am-btn-default" type="submit" value="搜索"/>
                     </span>

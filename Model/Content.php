@@ -1,12 +1,11 @@
 <?php
 
 /**
- * PESCMS for PHP 5.4+
- *
- * Copyright (c) 2014 PESCMS (http://www.pescms.com)
+ * 版权所有 2021 PESCMS (https://www.pescms.com)
+ * 完整版权和软件许可协议请阅读源码根目录下的LICENSE文件。
  *
  * For the full copyright and license information, please view
- * the file LICENSE.md that was distributed with this source code.
+ * the file LICENSE that was distributed with this source code.
  */
 
 namespace Model;
@@ -37,8 +36,8 @@ class Content extends \Core\Model\Model {
             $table = $param;
         }
 
-        $result = self::db($table)->field($showField)->where("{$field} = :$field")->find(array ($field => $value));
-        self::$contentResult = empty($result) ? null :  $result;
+        $result = self::db($table)->field($showField)->where("{$field} = :$field")->find([$field => $value]);
+        self::$contentResult = empty($result) ? null : $result;
 
         return $param['1'] === true ? new static() : self::$contentResult;
     }
@@ -67,15 +66,15 @@ class Content extends \Core\Model\Model {
         if (empty($param['table'])) {
             self::error('Unkonw Table!');
         }
-        $value = array_merge(['field' => '*', 'db' => '', 'prefix' => '', 'join' => '', 'condition' => '', 'order' => '', 'group' => '', 'limit' => '', 'lock' => '', 'param' => array ()], $param);
+        $value = array_merge(['field' => '*', 'db' => '', 'prefix' => '', 'join' => '', 'condition' => '', 'order' => '', 'group' => '', 'limit' => '', 'lock' => '', 'param' => []], $param);
         return self::db($value['table'], $value['db'], $value['prefix'])->field($value['field'])->join($value['join'])->where($value['condition'])->order($value['order'])->group($value['group'])->limit($value['limit'])->lock($value['lock'])->select($value['param']);
     }
 
     /**
      * 添加内容
      */
-    public static function addContent() {
-        $data = self::baseFrom();
+    public static function addContent($modelName = MODULE) {
+        $data = self::baseFrom($modelName);
         $addResult = self::db(self::$table)->insert($data);
         if (empty($addResult)) {
             self::error('添加内容失败');
@@ -88,9 +87,9 @@ class Content extends \Core\Model\Model {
     /**
      * 更新内容
      */
-    public static function updateContent() {
+    public static function updateContent($modelName = MODULE) {
 
-        $data = self::baseFrom();
+        $data = self::baseFrom($modelName);
 
         $condition = self::$fieldPrefix . 'id';
         $updateResult = self::db(self::$table)->where("{$condition} = :{$condition}")->update($data);
@@ -106,11 +105,11 @@ class Content extends \Core\Model\Model {
     /**
      * 基础表单
      */
-    public static function baseFrom() {
-        self::$table = strtolower(MODULE);
+    public static function baseFrom($modelName) {
+        self::$table = strtolower($modelName);
         self::$fieldPrefix = self::$table . "_";
         self::$model = \Model\ModelManage::findModel(self::$table, 'model_name');
-        $field = \Model\Field::fieldList(self::$model['model_id'], array ('field_status' => '1'));
+        $field = \Model\Field::fieldList(self::$model['model_id'], ['field_status' => '1']);
 
         if (self::p('method') == 'PUT') {
             $data['noset'][self::$fieldPrefix . 'id'] = self::isP('id', '丢失模型ID');
@@ -136,6 +135,10 @@ class Content extends \Core\Model\Model {
                 $_POST[$value['field_name']] = empty($_POST[$value['field_name']]) ? 0 : (string)strtotime($_POST[$value['field_name']]);
             }
 
+            if (!in_array(METHOD, explode(',', $value['field_action']))) {
+                continue;
+            }
+
             if ($value['field_required'] == '1') {
                 if (!($data[self::$fieldPrefix . $value['field_name']] = self::p($value['field_name'])) && !is_numeric($data[self::$fieldPrefix . $value['field_name']])) {
                     self::error($value['field_display_name'] . '为必填选项');
@@ -152,9 +155,39 @@ class Content extends \Core\Model\Model {
                     $data[self::$fieldPrefix . $value['field_name']] = $field_name;
                 }
             }
+
+            self::checkOnly($value, $data[self::$fieldPrefix . $value['field_name']]);
         }
 
         return $data;
+    }
+
+    /**
+     * 检查唯一属性
+     * @param $field 字段信息
+     * @param $value 处理过的数据
+     */
+    private static function checkOnly($field, $value) {
+        if ($field['field_only'] == 1 && !empty($value)) {
+            $checkField = self::$fieldPrefix . $field['field_name'];
+            $primaryKeyID = self::$fieldPrefix . 'id';
+
+            $checkCondition = '1 = 1';
+            $param = [
+                "{$checkField}" => $value,
+            ];
+
+            if (METHOD == 'PUT') {
+                $checkCondition .= " AND {$primaryKeyID} != :$primaryKeyID ";
+                $param[$primaryKeyID] = self::p('id');
+            }
+
+            $checkCondition .= " AND {$checkField} = :$checkField  ";
+            $checkOnly = self::db(self::$table)->where($checkCondition)->find($param);
+            if (!empty($checkOnly)) {
+                self::error("{$field['field_display_name']} 提交的 `{$value}` 已存在，请更改后再提交。");
+            }
+        }
     }
 
     /**
@@ -163,7 +196,7 @@ class Content extends \Core\Model\Model {
      * @param type $cid 分类ID
      */
     public static function listCategoryContent($table, $cid) {
-        return self::db($table)->where("{$table}_catid = :cid")->select(array ('cid' => $cid));
+        return self::db($table)->where("{$table}_catid = :cid")->select(['cid' => $cid]);
     }
 
     /**
@@ -171,10 +204,10 @@ class Content extends \Core\Model\Model {
      * @param type $id 需要更新的ID
      */
     private static function setUrl($id) {
-        $existUrl = self::db()->fetch('SHOW columns FROM ' . self::$modelPrefix . self::$table . ' WHERE Field = :field;', array ('field' => self::$fieldPrefix . 'url'));
+        $existUrl = self::db()->fetch('SHOW columns FROM ' . self::$modelPrefix . self::$table . ' WHERE Field = :field;', ['field' => self::$fieldPrefix . 'url']);
         if (!empty($existUrl)) {
-            $url = self::url(MODULE . '-view', array ('id' => $id));
-            return self::db(self::$table)->where(self::$fieldPrefix . 'id = :id')->update(array (self::$fieldPrefix . 'url' => $url, 'noset' => array ('id' => $id)));
+            $url = self::url(MODULE . '-view', ['id' => $id]);
+            return self::db(self::$table)->where(self::$fieldPrefix . 'id = :id')->update([self::$fieldPrefix . 'url' => $url, 'noset' => ['id' => $id]]);
         }
     }
 
@@ -196,8 +229,8 @@ class Content extends \Core\Model\Model {
      *
      * @return array 结果返回：处理好的 列表二维数组和 一个分类超链接 还有分页的对象
      */
-    public static function quickListContent(array $sql = array ('count' => '', 'normal' => '', 'param' => array ())) {
-        $sql = array_merge(['param' => array (), 'page' => '10', 'style' => [], 'LANG' => []], $sql);
+    public static function quickListContent(array $sql = ['count' => '', 'normal' => '', 'param' => []]) {
+        $sql = array_merge(['param' => [], 'page' => '10', 'style' => [], 'LANG' => []], $sql);
         $page = new \Expand\Page();
         $page->style = $sql['style'];
         $page->LANG = $sql['LANG'];
@@ -207,7 +240,7 @@ class Content extends \Core\Model\Model {
         $page->total($total);
         $page->handle();
         $list = self::db()->getAll("{$sql['normal']} LIMIT {$page->firstRow}, {$page->listRows}", $sql['param']);
-        return array ('list' => $list, 'page' => $page->show(), 'pageObj' => $page);
+        return ['list' => $list, 'page' => $page->show(), 'pageObj' => $page];
     }
 
     /**
@@ -217,6 +250,45 @@ class Content extends \Core\Model\Model {
      */
     public static function insert($table, $data) {
         return self::db($table)->insert($data);
+    }
+
+    /**
+     * 递归获取表内容
+     * @param $table 表名称
+     * @param $condition 筛选条件
+     * @param $param 筛选值
+     * @param $template 加载的模板
+     * @param $space 空字符
+     */
+    public static function recursion($table, $condition, $param, $template, $space, $order) {
+        static $label;
+        if (empty($label)) {
+            $label = new \Expand\Label();
+        }
+        $result = self::db($table)->where($condition)->order($order)->select($param);
+        if (!empty($result)) {
+            require $template;
+        }
+    }
+
+    /**
+     * 检查重复
+     * @param $table 查询的表
+     * @param $field 查询的字段
+     * @param $value 匹配的内容
+     * @return bool 存在重复返回true 。反之false
+     */
+    public static function checkRepeat($table, $field, $value){
+        $checkRepeat = self::db($table)->where("$field = :$field")->find([
+            $field => $value
+        ]);
+
+        if(!empty($checkRepeat)){
+            return true;
+        }else{
+            return false;
+        }
+
     }
 
 }

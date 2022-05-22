@@ -13,7 +13,7 @@
         <table class="am-table am-table-bordered am-table-striped am-table-hover am-text-sm">
             <tr>
                 <th><input type="checkbox" class="checkbox-all"></th>
-                <?php if ($listsort): ?>
+                <?php if (isset($listsort)): ?>
                     <th class="table-sort">排序</th>
                 <?php endif; ?>
                 <th class="table-set">ID</th>
@@ -32,7 +32,7 @@
                     <td class="am-text-middle">
                         <input type="checkbox" class="checkbox-all-children" name="id[<?= $value["{$fieldPrefix}id"]; ?>]" value="<?= $value["{$fieldPrefix}id"]; ?>" >
                     </td>
-                    <?php if ($listsort): ?>
+                    <?php if (isset($listsort)): ?>
                         <td class="am-text-middle">
                             <input type="text" class="am-input-sm" name="id[<?= $value["{$fieldPrefix}id"]; ?>]"
                                    value="<?= $value["{$fieldPrefix}listsort"]; ?>">
@@ -72,7 +72,7 @@
 
         <div class="am-g am-g-collapse">
             <div class="am-u-sm-12 am-u-lg-6">
-                <?php if ($listsort): ?>
+                <?php if (isset($listsort)): ?>
                     <button type="submit" class="am-btn am-btn-primary am-btn-sm am-radius">排序</button>
                 <?php endif; ?>
                 <button type="button" class="am-btn am-btn-danger am-btn-xs am-radius delete-batch" data="<?= $label->url(GROUP . '-' . MODULE . '-action', ['method' => 'DELETE']) ?>">删除</button>

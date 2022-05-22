@@ -15,7 +15,7 @@
         <option>请选择</option>
     </select>
 
-    <input class="form-text-input input-leng3 am-hide" name="<?= $field['field_name'] ?>"  type="text" value="<?= $field['value'] ?>" <?= $field['field_required'] == '1' ? 'required' : '' ?>  />
+    <input class="form-text-input input-leng3 am-hide" name="<?= $field['field_name'] ?>"  type="text" value="<?= $field['value'] ?? '' ?>" <?= $field['field_required'] == '1' ? 'required' : '' ?>  />
 
 </div>
 <script>

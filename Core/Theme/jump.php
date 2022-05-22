@@ -7,7 +7,7 @@
         <meta name="renderer" content="webkit">
         <meta http-equiv="Cache-Control" content="no-siteapp" />
         <title>提示信息</title>
-        <link rel="stylesheet" href="<?= str_replace('Install', '', DOCUMENT_ROOT); ?>Theme/assets/css/amazeui.min.css"/>
+        <link rel="stylesheet" href="<?= str_replace('Install', '', DOCUMENT_ROOT); ?>/Theme/assets/css/amazeui.min.css"/>
     </head>
     <body class="p-background-color-fbfbfb">
         <div class="am-vertical-align" style="height: 500px">
@@ -17,9 +17,9 @@
                         <div class="am-panel-hd">系统提示</div>
                         <div class="am-panel-bd am-text-xs">
                             <div class="am-padding-left-lg">
-                                <p><?= $message; ?></p>
-                                <p>页面自动 <a href="<?= $jumpUrl; ?>">跳转</a> 等待时间： <span id="wait"><?= $waitSecond; ?></span></p>
-                                <a href="<?= $jumpUrl; ?>" id="href" class="am-btn am-btn-default am-btn-xs">确认</a>
+                                <p><?= $message ?? ''; ?></p>
+                                <p>页面自动 <a href="<?= $jumpUrl ?? ''; ?>">跳转</a> 等待时间： <span id="wait"><?= $waitSecond ?? 3; ?></span></p>
+                                <a href="<?= $jumpUrl ?? ''; ?>" id="href" class="am-btn am-btn-default am-btn-xs">确认</a>
                             </div>
                         </div>
                     </div>

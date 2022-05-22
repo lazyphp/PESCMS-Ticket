@@ -36,14 +36,14 @@ class Ticket extends \Core\Controller\Controller {
 
         //状态筛选
         foreach (['model_id', 'status', 'close', 'read', 'fix'] as $key => $value) {
-            if ((!empty($_GET[$value]) || is_numeric($_GET[$value])) && $_GET[$value] != '-1') {
+            if ((!empty($_GET[$value]) || is_numeric($_GET[$value] ?? '')) && $_GET[$value] != '-1') {
                 $this->param["ticket_{$value}"] = (int)$_GET[$value];
                 $this->condition .= " AND t.ticket_{$value} = :ticket_{$value}";
             }
         }
 
         if(!empty($_GET['member']) && $_GET['member'] != '-1' ){
-            $this->condition .= ' AND member_id = :member_id ';
+            $this->condition .= ' AND t.member_id = :member_id ';
             $this->param['member_id'] = $this->g('member');
         }
 
@@ -80,6 +80,31 @@ class Ticket extends \Core\Controller\Controller {
             $sort = 't.ticket_top_list DESC,';
         }
 
+        //工单前置状态筛选
+        if(empty($_GET['search']) && ACTION != 'complain' ){
+            switch ($this->g('q')){
+                case '1':
+                    $this->condition .= " AND t.ticket_status = 0 AND t.ticket_close = 0 ";
+                    break;
+                case '2':
+                    $this->condition .= " AND t.ticket_status = 1 AND t.ticket_close = 0 ";
+                    break;
+                case '3':
+                    $this->condition .= " AND t.ticket_status = 2 AND t.ticket_close = 0 ";
+                    break;
+                case '4':
+                    $this->condition .= " AND t.ticket_status = 3 AND t.ticket_close = 0 ";
+                    break;
+                case '5':
+                    break;
+                default:
+                    $this->condition .= " AND  t.ticket_read = 0";
+                    break;
+            }
+        }
+
+
+
         $sql = "SELECT %s
                 FROM {$this->prefix}ticket AS t
                 LEFT JOIN {$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id
@@ -99,6 +124,7 @@ class Ticket extends \Core\Controller\Controller {
         $this->assign('ticketModel', \Model\Content::listContent(['table' => 'ticket_model']));
         $this->assign('list', $result['list']);
         $this->assign('page', $result['page']);
+
 
         $this->assign('member', \Model\Member::getMemberWithID());
         $this->assign('title', \Model\Menu::getTitleWithMenu()['menu_name']);
@@ -289,6 +315,14 @@ class Ticket extends \Core\Controller\Controller {
      */
     public function complain(){
         $this->condition .= ' AND t.ticket_status = 3 AND t.ticket_score_time > 0';
+
+        $this->assign('userList', \Model\Content::listContent(['table' => 'user', 'field' => 'user_id, user_name']));
+
+        if(!empty($_GET['user']) && $_GET['user'] > 0){
+            $this->condition .= " AND t.user_id = :user_id ";
+            $this->param['user_id'] = (int) $this->g('user');
+        }
+
         $this->index('Ticket_complain');
     }
 

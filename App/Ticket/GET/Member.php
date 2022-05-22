@@ -14,7 +14,7 @@ namespace App\Ticket\GET;
 class Member extends Content {
 
     public function index($display = true) {
-        switch ($_GET['sortby']){
+        switch ($_GET['sortby'] ?? ''){
             case '1':
                 $this->sortBy = 'CONVERT( member_name USING gbk ) ASC';
                 break;
@@ -31,7 +31,7 @@ class Member extends Content {
      */
     public function issue(){
         if(!empty($_GET['id'])){
-            $member = $this->db('member')->field('member_id, member_name')->where('member_organize_id = :member_organize_id')->select([
+            $member = $this->db('member')->field('member_id, member_name')->where('member_organize_id = :member_organize_id AND member_requisition = 1')->select([
                 'member_organize_id' => $this->g('id')
             ]);
             $option = '<option value="">请选择客户</option>';
@@ -44,7 +44,13 @@ class Member extends Content {
             $this->success(['msg' => '获取客户信息完成', 'data' => $option]);
 
         }else{
-            $this->assign('member_organize', $this->db('member_organize')->select());
+            $list = $this->db('member_organize AS mo')
+                ->field('mo.*')
+                ->join("{$this->prefix}member AS m ON m.member_organize_id = mo.member_organize_id")
+                ->where('m.member_requisition = 1')
+                ->group('mo.member_organize_name')
+                ->select();
+            $this->assign('member_organize', $list);
             $this->assign('title', '发起工单');
             $this->layout();
         }

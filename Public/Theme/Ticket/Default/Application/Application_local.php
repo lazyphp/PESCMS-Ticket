@@ -56,7 +56,7 @@
                                 <a href="<?= $label->url(GROUP.'-Application-Init', ['n' => $value['index'], 'f' => 'enabled']) ?>" class="am-badge am-badge-secondary am-radius ajax-click">启用</a>
                                 <?php endif; ?>
 
-                                <?php if($value['info']['option'] == 1): ?>
+                                <?php if(isset($value['info']['option']) && $value['info']['option'] == 1): ?>
                                 <a href="<?= $label->url(GROUP.'-Application-Init', ['n' => $value['index'], 'f' => 'option']) ?>" class="am-badge am-badge-warning am-radius">配置</a>
                                 <?php endif; ?>
 
@@ -72,9 +72,9 @@
         </div>
     </div>
 </div>
-<div id="app-list" class="am-hide" project="5" version="<?= $system['version'] ?>">正在连接PESCMS应用商店...</div>
+<div id="app-list" class="am-hide" project="5" version="<?= $system['version'] ?>" entrance="Application">正在连接PESCMS应用商店...</div>
 <div class="pes-installed am-hide"><?= empty($installed) ? json_encode([]) : $installed ?></div>
-<script src="<?= PESCMS_URL ?>/Theme/Api/App/1.0/pescms_app.min.js?mt=<?= time() ?>"></script>
+<script src="<?= PESCMS_URL ?>/Theme/Api/App/1.1/pescms_app.min.js?mt=<?= time() ?>"></script>
 <script>
     $(function(){
         $('.check-update').each(function(){

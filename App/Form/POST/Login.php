@@ -105,11 +105,13 @@ class Login extends \Core\Controller\Controller {
 
 
         foreach ([
-            'email' => '该邮箱地址已存在',
-            'account' => '该账号已存在',
-            'phone' => '该手机号码已存在'
+            'member_email' => '该邮箱地址已存在',
+            'member_account' => '该账号已存在',
+            'member_phone' => '该手机号码已存在'
                  ] as $field => $msg){
-            $this->checkRepeatInfo($field, $param, $msg);
+            if(\Model\Content::checkRepeat('member', $field, $param[$field]) === true){
+                $this->error($msg);
+            }
         }
 
         $param['member_password'] = \Core\Func\CoreFunc::generatePwd($password, 'USER_KEY');
@@ -119,25 +121,6 @@ class Login extends \Core\Controller\Controller {
         $this->sendSignUpEmail($memberID, $param, $review);
 
         $this->success('注册成功', $this->url('Login-index', ['signup_complete' => $review]));
-    }
-
-    /**
-     * 检查库中重复的账号、邮箱和手机号码
-     * @param $type 检查字段
-     * @param $param 提交的参数
-     * @param $msg 提示信息
-     */
-    private function checkRepeatInfo($type, $param, $msg){
-        if(empty($param["member_{$type}"])){
-            return true;
-        }
-        $checkRepeat = $this->db('member')->where("member_{$type} = :member_{$type}")->find([
-            "member_{$type}" => $param["member_{$type}"]
-        ]);
-
-        if(!empty($checkRepeat)){
-            $this->error($msg);
-        }
     }
 
     /**

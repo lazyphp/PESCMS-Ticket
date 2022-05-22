@@ -31,7 +31,7 @@
                         <span class="am-fl"><strong><?= $item['title'] ?></strong></span>
                         <a href="<?= $item['url'] ?>" class="am-fr">更多>></a>
                     </div>
-                    <table class="am-table am-table-striped am-table-hover ticket-index-table">
+                    <table class="am-table am-table-striped am-table-hover ticket-index-table ticket-list-table">
                         <?php if(empty($item['list'])): ?>
                             <tr class="am-text-center">
                                 <td>当前没有<?= $item['title'] ?>工单!</td>

@@ -94,6 +94,8 @@ class MailTemplate extends \Core\Model\Model {
             '1' => $title,
             '2' => $title,
             '3' => $template['mail_template_weixin_template_id'],
+            '4' => $title,
+            '5' => $title,
             '6' => $template['mail_template_wxapp_template_id'],
         ];
         return $data;
@@ -115,12 +117,17 @@ class MailTemplate extends \Core\Model\Model {
 
         $template = self::getTemplate($type);
 
+        //企业微信和钉钉沿用mail_template_content，所以复制一份
+        $template['mail_template_content_tmp'] = $template['mail_template_content'];
+
         $dictionary = self::ticketDictionary($number);
 
         foreach ([
                     '1' => 'mail_template_content',
                     '2' => 'mail_template_sms',
                     '3' => 'mail_template_weixin_template',
+                    '4' => 'mail_template_content_tmp',
+                    '5' => 'mail_template_content_tmp',
                     '6' => 'mail_template_wxapp_template',
                  ] as $key => $item){
 

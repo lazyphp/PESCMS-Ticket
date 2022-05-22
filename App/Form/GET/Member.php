@@ -115,7 +115,7 @@ class Member extends \Core\Controller\Controller {
         }
 
         //状态
-        if(!empty($_GET['status']) || is_numeric($_GET['status'])){
+        if(!empty($_GET['status']) || is_numeric($_GET['status'] ?? null)){
             $condition .= ' AND ticket_status = :ticket_status  ';
             $param['ticket_status'] = $this->g('status');
         }

@@ -8,8 +8,8 @@
                     <label class="am-block">业务提供商</label>
                     <select name="sms[COMPANY]">
                         <option value="">请选择短信业务提供商</option>
-                        <option value="1" <?= $sms['COMPANY'] == 1 ? 'selected="selected"' :'' ?>>阿里云</option>
-                        <option value="2" <?= $sms['COMPANY'] == 2 ? 'selected="selected"' :'' ?>>互亿无线</option>
+                        <option value="1" <?= isset($sms['COMPANY']) && $sms['COMPANY'] == 1 ? 'selected="selected"' :'' ?>>阿里云</option>
+                        <option value="2" <?= isset($sms['COMPANY']) && $sms['COMPANY'] == 2 ? 'selected="selected"' :'' ?>>互亿无线</option>
                     </select>
                 </div>
             </div>
@@ -23,7 +23,7 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">accessKeyId</label>
-                    <input name="sms[aliyun_accessKeyId]" placeholder="请填写短信平台的accessKeyId" type="text" value="<?= $sms['aliyun_accessKeyId']; ?>">
+                    <input name="sms[aliyun_accessKeyId]" placeholder="请填写短信平台的accessKeyId" type="text" value="<?= $sms['aliyun_accessKeyId'] ?? ''; ?>">
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">accessSecret</label>
-                    <input name="sms[aliyun_accessSecret]" placeholder="请填写短信平台的accessSecret" type="text" value="<?= $sms['aliyun_accessSecret']; ?>">
+                    <input name="sms[aliyun_accessSecret]" placeholder="请填写短信平台的accessSecret" type="text" value="<?= $sms['aliyun_accessSecret'] ?? ''; ?>">
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">SignName</label>
-                    <input name="sms[aliyun_SignName]" placeholder="请填写短信平台的SignName" type="text" value="<?= $sms['aliyun_SignName']; ?>">
+                    <input name="sms[aliyun_SignName]" placeholder="请填写短信平台的SignName" type="text" value="<?= $sms['aliyun_SignName'] ?? ''; ?>">
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
                 <div class="am-u-sm-12 am-u-sm-centered">
                     <div class="am-form-group">
                         <label class="am-block"><?= $label->getFieldOptionToMatch(183, $value['mail_template_type']); ?>的TemplateCode</label>
-                        <input name="sms[aliyun_TemplateCode][<?= $value['mail_template_id'] ?>]" placeholder="请填写短信对应模板的的TemplateCode" type="text" value="<?= $sms['aliyun_TemplateCode'][$value['mail_template_id']]; ?>">
+                        <input name="sms[aliyun_TemplateCode][<?= $value['mail_template_id'] ?>]" placeholder="请填写短信对应模板的的TemplateCode" type="text" value="<?= $sms['aliyun_TemplateCode'][$value['mail_template_id']] ?? ''; ?>">
                     </div>
                 </div>
             </div>
@@ -67,7 +67,7 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">APIID</label>
-                    <input name="sms[ihuyi_APIID]" placeholder="请填写短信平台的APIID" type="text" value="<?= $sms['ihuyi_APIID']; ?>">
+                    <input name="sms[ihuyi_APIID]" placeholder="请填写短信平台的APIID" type="text" value="<?= $sms['ihuyi_APIID'] ?? ''; ?>">
                 </div>
             </div>
         </div>
@@ -76,7 +76,7 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">APIKEY</label>
-                    <input name="sms[ihuyi_APIKEY]" placeholder="请填写短信平台的APIKEY" type="password" value="<?= $sms['ihuyi_APIKEY']; ?>">
+                    <input name="sms[ihuyi_APIKEY]" placeholder="请填写短信平台的APIKEY" type="password" value="<?= $sms['ihuyi_APIKEY'] ?? ''; ?>">
                 </div>
             </div>
         </div>
@@ -105,7 +105,7 @@
                 $("div[class*='sms-']").hide();
                 $('.sms-'+value).show();
             }
-            showSMS('<?= $sms['COMPANY'] ?>')
+            showSMS('<?= $sms['COMPANY'] ?? '' ?>')
 
             $('select[name="sms[COMPANY]"]').on('click', function () {
                 var value = $(this).val();

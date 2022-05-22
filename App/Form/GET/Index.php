@@ -1,13 +1,10 @@
 <?php
 /**
- * PESCMS for PHP 5.4+
- *
- * Copyright (c) 2015 PESCMS (http://www.pescms.com)
+ * 版权所有 2021 PESCMS (https://www.pescms.com)
+ * 完整版权和软件许可协议请阅读源码根目录下的LICENSE文件。
  *
  * For the full copyright and license information, please view
- * the file LICENSE.md that was distributed with this source code.
- * @core version 2.8
- * @version 1.0
+ * the file LICENSE that was distributed with this source code.
  */
 
 namespace App\Form\GET;
@@ -47,9 +44,8 @@ class Index extends \Core\Controller\Controller {
      * 发送通知
      */
     public function notice() {
-        $this->db()->transaction();
-
         $system = \Core\Func\CoreFunc::$param['system'];
+        $this->db()->transaction();
         if (in_array($system['notice_way'], ['1', '3'])) {
             \Model\Extra::actionNoticeSend();
         }
@@ -61,10 +57,13 @@ class Index extends \Core\Controller\Controller {
      * 工单系统行为事件
      */
     public function behavior(){
-
         $system = \Core\Func\CoreFunc::$param['system'];
         $this->rowlock = $system['rowlock'] == 1 ? 'FOR UPDATE' : '';
-
+        $openDisturb = false;
+        $disturb = json_decode($system['disturb'], true);
+        if(is_numeric($disturb['begin']) && is_numeric($disturb['end'])){
+            $openDisturb = \Model\Extra::notDisturb($disturb['begin'], $disturb['end']);
+        }
 
         $this->db()->transaction();
 
@@ -77,6 +76,9 @@ class Index extends \Core\Controller\Controller {
                     if ($item['template_type'] > 0) {
                         \Model\Notice::insertMemberNoticeSendTemplate($item);
                     } else {
+                        if($openDisturb == true){
+                            continue;
+                        }
                         \Model\Notice::insertCSNoticeSendTemplate($item);
                     }
                 }
@@ -179,11 +181,11 @@ class Index extends \Core\Controller\Controller {
                     }
                     break;
                 default:
-                    continue;
+                    $close = false;
                     break;
             }
 
-            if($close == true){
+            if($close === true){
                 \Model\Ticket::addReply($item['ticket_id'], '工单已关闭，若还有疑问，请重新发表工单咨询!');
                 \Model\Ticket::inTicketIdWithUpdate(['ticket_close' => '1', 'noset' => ['ticket_id' => $item['ticket_id']]]);
                 \Model\Notice::addTicketNoticeAction($item['ticket_number'], $item['ticket_contact_account'], $item['ticket_contact'], 6);

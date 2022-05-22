@@ -154,8 +154,10 @@ class weixin {
         echo '<br/>';
         echo 'PESCMS解析微信返回数据结构:<br/>';
         print_r(json_decode($result));
+        echo '<p>本次测试数据不会生产缓存，请在后台点击右上角[清理缓存]，再打开微信客户端进行真实环境测试</p>';
         echo '</pre>';
         echo '<br/>';
+
         exit;
 
     }

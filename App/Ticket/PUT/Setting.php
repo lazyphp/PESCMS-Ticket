@@ -1,13 +1,10 @@
 <?php
 /**
- * PESCMS for PHP 5.4+
- *
- * Copyright (c) 2015 PESCMS (http://www.pescms.com)
+ * 版权所有 2021 PESCMS (https://www.pescms.com)
+ * 完整版权和软件许可协议请阅读源码根目录下的LICENSE文件。
  *
  * For the full copyright and license information, please view
- * the file LICENSE.md that was distributed with this source code.
- * @core version 2.6
- * @version 1.0
+ * the file LICENSE that was distributed with this source code.
  */
 
 namespace App\Ticket\PUT;
@@ -18,6 +15,7 @@ class Setting extends \Core\Controller\Controller {
      * @todo 需要优化代码
      */
     public function action() {
+
         $operate = [
             //字符串形式的更新设置
             'str' => [
@@ -55,6 +53,7 @@ class Setting extends \Core\Controller\Controller {
                 'wxapp_api',
                 'dingtalk',
                 'register_form',
+                'disturb',
             ]
         ];
         foreach ($operate as $type => $item) {
@@ -144,7 +143,7 @@ class Setting extends \Core\Controller\Controller {
     public function recordTips() {
         switch ($this->p('name')) {
             case 'tipsManual':
-            case 'ticketModel':
+            case 'help_document':
                 $name = $this->p('name');
                 break;
             default:

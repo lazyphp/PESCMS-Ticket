@@ -5,7 +5,7 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">邮箱账号</label>
-                    <input name="mail[account]" placeholder="请填写发件的邮箱地址" type="text" value="<?= $mail['account']; ?>">
+                    <input name="mail[account]" placeholder="请填写发件的邮箱地址" type="text" value="<?= $mail['account'] ?? ''; ?>">
                 </div>
             </div>
         </div>
@@ -14,7 +14,7 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">邮箱密码</label>
-                    <input name="mail[passwd]" placeholder="请填写发件的邮箱密码" type="password" value="<?= $mail['passwd']; ?>">
+                    <input name="mail[passwd]" placeholder="请填写发件的邮箱密码" type="password" value="<?= $mail['passwd'] ?? ''; ?>">
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">SMTP地址</label>
-                    <input name="mail[address]" placeholder="请填写smtp的地址" type="text" value="<?= $mail['address']; ?>">
+                    <input name="mail[address]" placeholder="请填写smtp的地址" type="text" value="<?= $mail['address']?? ''; ?>">
                     <div class="pes-alert pes-alert-info am-text-xs " >
                         <i class="am-icon-lightbulb-o"></i> 不需要添加http://或者https://前缀。常见的邮件服务商smtp地址：<a href="https://www.pescms.com/d/v/1.0/10/56.html#%E5%B8%B8%E8%A7%81%E9%82%AE%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%95%86%E5%9C%B0%E5%9D%80" target="_blank" style="color: blue">查看</a>
                     </div>
@@ -35,7 +35,7 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">SMTP端口</label>
-                    <input name="mail[port]" placeholder="请填写发送端口" type="text" value="<?= $mail['port']; ?>">
+                    <input name="mail[port]" placeholder="请填写发送端口" type="text" value="<?= $mail['port']?? ''; ?>">
                     <div class="pes-alert pes-alert-info am-text-xs " >
                         <i class="am-icon-lightbulb-o"></i> 一般填写25端口，加密端口请填写587。具体发送端口，请参考您的邮件服务提供商文档。
                     </div>

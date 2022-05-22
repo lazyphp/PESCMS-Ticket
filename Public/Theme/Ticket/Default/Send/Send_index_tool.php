@@ -18,7 +18,7 @@
                 <input type="hidden" name="g" value="<?= GROUP; ?>"/>
                 <input type="hidden" name="m" value="<?= MODULE ?>"/>
                 <input type="hidden" name="a" value="<?= ACTION ?>"/>
-                <input type="text" name="keyword" placeholder="查找内容" value="<?= $label->xss($_GET['keyword']) ?>" class="am-form-field am-radius">
+                <input type="text" name="keyword" placeholder="查找内容" value="<?= $label->xss($_GET['keyword'] ?? '') ?>" class="am-form-field am-radius">
                 <span class="am-input-group-btn">
                         <input class="am-btn am-btn-default am-radius" type="submit" value="搜索"/>
                     </span>

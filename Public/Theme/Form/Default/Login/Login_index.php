@@ -37,7 +37,7 @@
     </div>
 </div>
 
-<input type="hidden" name="back_url" value="<?= $_GET['back_url'] ?>">
+<input type="hidden" name="back_url" value="<?= $label->xss($_GET['back_url'] ?? '') ?>">
 
 <button type="submit" class="am-btn am-btn-primary am-radius am-btn-sm am-margin-top-sm am-btn-block">登录</button>
 

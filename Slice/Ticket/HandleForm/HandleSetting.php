@@ -30,7 +30,7 @@ class HandleSetting extends \Core\Slice\Slice {
             $_POST['siteDescription'] = base64_decode('UEVTQ01TIFRpY2tldOaYr+S4gOasvuS7pUdQTHYy5Y2P6K6u5Y+R5biD55qE5byA5rqQ5bel5Y2V5a6i5pyN57O757uf');
         }
 
-        $check = strcmp(trim($_SERVER['HTTP_HOST']), trim($authorize['authorize_domain']));
+        $check = strcmp(trim($_SERVER['HTTP_HOST']), trim($authorize['authorize_domain'] ?? ''));
 
         if($check !== 0){
             is_file($license) ? unlink($license) : '';

@@ -66,7 +66,7 @@ class Controller {
      * @return string 返回处理完的数据
      */
     protected static function g($name, $htmlentities = TRUE) {
-        return self::handleData($_GET[$name], $htmlentities);
+        return self::handleData($_GET[$name] ?? null, $htmlentities);
     }
 
     /**
@@ -76,7 +76,7 @@ class Controller {
      * @return string 返回处理完的数据
      */
     protected static function p($name, $htmlentities = TRUE) {
-        return self::handleData($_POST[$name], $htmlentities);
+        return self::handleData($_POST[$name] ?? null, $htmlentities);
     }
 
     /**
@@ -268,7 +268,7 @@ class Controller {
      * @param int $waitSecond 跳转等待时间
      */
     protected static function success($message, $jumpUrl = 'javascript:history.go(-1)', $waitSecond = '3') {
-        self::tipsJump($message, $jumpUrl, $waitSecond, 200);
+        self::tipsJump($message, 200, $jumpUrl, $waitSecond);
     }
 
     /**
@@ -278,17 +278,17 @@ class Controller {
      * @param int $waitSecond 跳转等待时间
      */
     protected static function error($message, $jumpUrl = 'javascript:history.go(-1)', $waitSecond = '3') {
-        self::tipsJump($message, $jumpUrl, $waitSecond, 0);
+        self::tipsJump($message, 0, $jumpUrl, $waitSecond);
     }
 
     /**
      * 提示信息跳转
      * @param $message 信息
+     * @param $code 状态码
      * @param string $jumpUrl 跳转地址|默认为返回上一页
      * @param string $waitSecond 跳转等待时间
-     * @param $code 状态码
      */
-    private static function tipsJump($message, $jumpUrl = 'javascript:history.go(-1)', $waitSecond = '3', $code){
+    private static function tipsJump($message, $code, $jumpUrl = 'javascript:history.go(-1)', $waitSecond = '3'){
 
         self::beforeInitView();
         \Core\Func\CoreFunc::isAjax(is_array($message) ? $message : ['msg' => $message],$code, $jumpUrl, $waitSecond);

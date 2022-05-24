@@ -1,10 +1,12 @@
 <?php
-/*
-| PESCMS for PHP 5.4+
-| @version 2.6
+/**
+| 版权所有 2022 PESCMS (https://www.pescms.com)
+| 完整版权和软件许可协议请阅读源码根目录下的LICENSE文件。
+|
 | For the full copyright and license information, please view
-| the file LICENSE.md that was distributed with this source code.
+| the file LICENSE that was distributed with this source code.
 |--------------------------------------------------------------------------
+|
 | 切片注册
 | 程序提供五个方法声明切片绑定的请求类型: any, get, post, put, delete
 | 参数一：绑定控制器路由规则。

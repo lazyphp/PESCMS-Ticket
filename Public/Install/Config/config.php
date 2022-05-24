@@ -4,4 +4,6 @@ return array(
     'DEFAULT_GROUP' => 'Install', //默认分组
     'SESSION_ID' => 'PESTKSESSION',
     'LOG_PATH' => '/log',
+    'DB_PREFIX' => 'pes_',
+    'USER_KEY' => 'PTINSTALL'
 );

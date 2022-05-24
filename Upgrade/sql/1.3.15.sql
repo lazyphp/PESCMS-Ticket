@@ -125,3 +125,7 @@ INSERT INTO `pes_help_document` (`help_document_id`, `help_document_controller`,
 (16, 'Ticket-Ticket-complain', 'https://document.pescms.com/article/3/262978779675099136.html');
 
 INSERT INTO `pes_option` (`id`, `option_name`, `name`, `value`, `option_range`) VALUES (NULL, 'help_document', '帮助文档提示', '0', 'system');
+
+UPDATE `pes_field` SET `field_option` = '{\"\\u7535\\u5b50\\u90ae\\u4ef6\":\"1\",\"\\u624b\\u673a\\u53f7\\u7801\":\"2\",\"\\u5fae\\u4fe1\":\"3\",\"\\u4f01\\u4e1a\\u5fae\\u4fe1\":\"4\",\"\\u9489\\u9489\":\"5\",\"\\u5fae\\u4fe1\\u5c0f\\u7a0b\\u5e8f\":\"6\"}' WHERE `pes_field`.`field_id` = 240;
+
+UPDATE `pes_field` SET `field_option` = '{\"\\u7535\\u5b50\\u90ae\\u4ef6\":\"1\",\"\\u624b\\u673a\\u53f7\\u7801\":\"2\",\"\\u5fae\\u4fe1\":\"3\",\"\\u4f01\\u4e1a\\u5fae\\u4fe1\":\"4\",\"\\u9489\\u9489\":\"5\",\"\\u5fae\\u4fe1\\u5c0f\\u7a0b\\u5e8f\":\"6\"}' WHERE `pes_field`.`field_id` = 241;

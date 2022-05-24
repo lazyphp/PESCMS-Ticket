@@ -322,7 +322,8 @@ class Mysql {
             $sth = $this->dbh->prepare($sql);
             $sth->execute();
             $model = $sth->fetch();
-            if (strpos(strtoupper($model['model']), 'STRICT_TRANS_TABLES') !== false) {
+            //添加2个严格模式的判断
+            if (strpos(strtoupper($model['model']), 'STRICT_TRANS_TABLES') !== false || strpos(strtoupper($model['model']), 'STRICT_ALL_TABLES') !== false) {
                 $sqlModel = 'STRICT_TRANS_TABLES';
             }else{
                 $sqlModel = 'EASY_TRANS_TABLES';

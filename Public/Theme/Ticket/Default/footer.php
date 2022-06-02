@@ -59,29 +59,6 @@
         })
         <?php endif; ?>
 
-        /**
-         * F1帮助文档
-         */
-        $(document).on('keydown', function (){
-            var e = window.event;
-            var code = e.charCode || e.keyCode;
-            if(code == 112){
-                $.getJSON('<?= $label->url('Ticket-HelpDocument-find', ['help_controller' => GROUP.'-'.MODULE.'-'.ACTION, 'match' => GROUP.'-'.MODULE.'-:a']) ?>', function (res){
-                    try {
-                        if(res.status == 200){
-                            window.open(res.data.help_document_link)
-                        }else{
-                            window.open('https://document.pescms.com/article/3.html')
-                        }
-                    }catch (e){
-                        window.open('https://document.pescms.com/article/3.html')
-                    }
-                })
-                return false;
-            }
-
-        })
-
         <?php if($system['help_document'] == 0): ?>
             $('header').before('<div class="am-alert am-alert-postscript am-text-sm am-margin-0" data-am-alert><button type="button" class="close-f1 am-close">&times;</button><i class="am-icon-leanpub"></i> 按F1可以打开PESCMS Ticket帮助文档</div>')
             $('html, body').animate({scrollTop: 0}, '500');
@@ -134,10 +111,39 @@
 
 </div>
 <?php endif; ?>
+
+<script>
+    /**
+     * F1帮助文档
+     */
+    $(document).on('keydown', function (){
+        var e = window.event;
+        var code = e.charCode || e.keyCode;
+        if(code == 112){
+            $.getJSON('<?= $label->url('Ticket-HelpDocument-find', ['help_controller' => GROUP.'-'.MODULE.'-'.ACTION, 'match' => GROUP.'-'.MODULE.'-:a']) ?>', function (res){
+                try {
+                    if(res.status == 200){
+                        window.open(res.data.help_document_link)
+                    }else{
+                        window.open('https://document.pescms.com/article/3.html')
+                    }
+                }catch (e){
+                    window.open('https://document.pescms.com/article/3.html')
+                }
+            })
+            return false;
+        }
+
+    })
+</script>
+
 <?php $label->footerEvent() ?>
 
-<?php if(MODULE !== 'Login'): ?>
+<?php if(MODULE !== 'Login' && \Core\Func\CoreFunc::session()->get('ticket')['user_suspension_button'] == 0 ): ?>
 <div class="amz-toolbar" id="amz-toolbar" style="">
+
+    <?= (new \Core\Plugin\Plugin())->event('suspensionButton', NULL); ?>
+
     <a href="#top" title="回到顶部" class="am-icon-btn am-icon-arrow-up " id="amz-go-top" data-am-smooth-scroll=""></a>
     <?php if(MODULE == 'Ticket' && ACTION == 'handle' ): ?>
     <a href="javascript:;" title="处理工单" class="pes-handleTicket am-icon-btn am-icon-edit"></a>

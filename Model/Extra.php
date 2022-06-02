@@ -71,14 +71,14 @@ class Extra extends \Core\Model\Model {
                 }
                 break;
             case 4:
-                if(!preg_match("/^[a-z\d]$/i",$value)){
+                if(!preg_match("/^[a-z]*$/i",$value)){
                     return false;
                 }
                 break;
             case 5:
                 return filter_var($value, FILTER_VALIDATE_URL);
             case 6:
-                if(!preg_match("/^[a-z0-9\d]$/i",$value)){
+                if(!preg_match("/^[a-z\d]*$/i",$value)){
                     return false;
                 }
         }
@@ -92,7 +92,7 @@ class Extra extends \Core\Model\Model {
      * @param $type 通知类型
      * @return mixed
      */
-    public static function insertSend($account, $title = '', $content, $type){
+    public static function insertSend($account, $title, $content, $type){
         $param = [
             'send_account' => $account,
             'send_title' => $title,
@@ -149,7 +149,7 @@ class Extra extends \Core\Model\Model {
             }
 
             if(DEBUG == true){
-                echo "<p>{$value['send_type']}T: {$result['msg']}, 详细JSON格式: ".json_encode($result)."</p>";
+                echo "<p>{$value['send_type']}T: {$result['msg']}, 详细JSON格式: ".json_encode($result, JSON_UNESCAPED_UNICODE)."</p>";
             }
 
         }

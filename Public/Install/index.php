@@ -10,7 +10,7 @@
 
 $phpVersion = explode('.', phpversion());
 $version = "{$phpVersion['0']}.{$phpVersion['1']}";
-if($phpVersion < 7){
+if($phpVersion[0] < 7){
     echo '<h1>PESCMS系列程序需要PHP7.0 或以上版本支持!</h1>';
     exit;
 }

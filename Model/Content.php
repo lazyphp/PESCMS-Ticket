@@ -109,7 +109,7 @@ class Content extends \Core\Model\Model {
         self::$table = strtolower($modelName);
         self::$fieldPrefix = self::$table . "_";
         self::$model = \Model\ModelManage::findModel(self::$table, 'model_name');
-        $field = \Model\Field::fieldList(self::$model['model_id'], ['field_status' => '1']);
+        $field = \Model\Field::fieldList(self::$model['model_id'], 'AND field_status = 1');
 
         if (self::p('method') == 'PUT') {
             $data['noset'][self::$fieldPrefix . 'id'] = self::isP('id', '丢失模型ID');

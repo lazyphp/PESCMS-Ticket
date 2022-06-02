@@ -12,6 +12,13 @@ namespace App\Ticket\PUT;
 
 class User extends Content {
 
+    public function action($jump = TRUE, $commit = TRUE) {
+        if($_POST['id'] == 1 && $this->session()->get('ticket')['user_id'] != 1){
+            $this->error('天呐，您竟然敢修改超级管理账户！');
+        }
+        parent::action($jump, $commit);
+    }
+
     /**
      * 个人设置
      */
@@ -47,6 +54,7 @@ class User extends Content {
         $data['user_vacation'] = $this->isP('vacation', '请提交您的状态');
         $data['user_browser_msg'] = $this->p('browser_msg');
         $data['user_browser_msg_time'] = $this->p('browser_msg_time');
+        $data['user_suspension_button'] = $this->p('suspension_button');
         $data['noset']['user_id'] = $userID;
         $this->db('user')->where('user_id = :user_id')->update($data);
 

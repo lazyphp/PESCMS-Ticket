@@ -9,6 +9,7 @@
 
 namespace Expand\Notice;
 
+
 class Mail {
 
     /**
@@ -28,8 +29,7 @@ class Mail {
             return $this->error;
         }
 
-        require_once dirname(__FILE__) . '/PHPMailerAutoload.php';
-        $this->PHPMailer = new \PHPMailer;
+        $this->PHPMailer = new PHPMailer();
         $this->PHPMailer->CharSet = "utf-8";
         $this->PHPMailer->isSMTP();
         $this->PHPMailer->Debugoutput = 'html';
@@ -102,7 +102,7 @@ class Mail {
 	 * @throws \phpmailerException
 	 */
 	public function test($email){
-		$this->PHPMailer->addAddress($email);
+        $this->PHPMailer->addAddress($email);
 
 		$this->PHPMailer->WordWrap = 50;
 		$this->PHPMailer->isHTML(true);

@@ -22,6 +22,8 @@ class Member extends Content {
                 break;
         }
 
+
+        $this->assign('requisitionStatus', \Model\Member::getRequisitionStatus());
         parent::index($display);
     }
 

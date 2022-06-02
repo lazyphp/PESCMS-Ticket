@@ -657,6 +657,23 @@ class Ticket extends \Core\Model\Model {
     }
 
     /**
+     * 设置客服消息已读
+     * @param $ticketNumber
+     * @param $userID
+     * @return void
+     */
+    public static function csnoticeRead($ticketNumber, $userID){
+        self::db('csnotice')->where("ticket_number = :ticket_number AND user_id = :user_id AND csnotice_read = 0")->update([
+            'noset' => [
+                'ticket_number' => $ticketNumber,
+                'user_id' => $userID
+            ],
+            'csnotice_read' => 1,
+            'csnotice_read_time' => time(),
+        ]);
+    }
+
+    /**
      * 自定义工单单号格式
      * @param $field
      * @return array|string|string[]
@@ -665,7 +682,7 @@ class Ticket extends \Core\Model\Model {
         $ticket_model_custom_no = strtoupper($field['ticket_model_custom_no']);
         if(empty($ticket_model_custom_no)){
             return str_pad(substr(\Model\Extra::getOnlyNumber(), 0, 15), 15, 0, STR_PAD_RIGHT);
-        }elseif($ticket_model_custom_no == 'X'){
+        }elseif($ticket_model_custom_no == '{X}'){
             return (new \Godruoyi\Snowflake\Snowflake)->id();
         }else{
             $zKeyWord = self::db('ticket')->field('count(*) AS total')->where('ticket_model_id = :ticket_model_id')->find([
@@ -677,8 +694,8 @@ class Ticket extends \Core\Model\Model {
                 'ticket_submit_time' => strtotime(date('Y-m-d').' 00:00:00')
             ])['total'] + 1;
 
-            $search = ['Y', 'M', 'D', 'Z', 'A'];
-            $replace = [date('Y'), date('m'), date('d'), sprintf('%04d', $zKeyWord), sprintf('%04d', $aKeyWord)];
+            $search = ['{Y}', '{M}', '{D}', '{Z}', '{A}', '{S}'];
+            $replace = [date('Y'), date('m'), date('d'), sprintf('%04d', $zKeyWord), sprintf('%04d', $aKeyWord), sprintf('%05d', range(0, 99999))];
 
             return str_replace($search, $replace, $ticket_model_custom_no);
 

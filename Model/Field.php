@@ -21,19 +21,16 @@ class Field extends \Core\Model\Model {
 
     /**
      * 列出对应的模型的字段
-     * @param type $modelId 模型ID
-     * @param array $condition 筛选条件| 字段名称 => 匹配值
-     * @return type
+     * @param $modelId 模型ID
+     * @param $condition 筛选提交
+     * @param array $param 占位符数组
+     * @return mixed
      */
-    public static function fieldList($modelId, array $condition = array()) {
+    public static function fieldList($modelId, $condition, array $param = []) {
         $where = "field_model_id = :model_id ";
-        $data = array('model_id' => $modelId);
-        if (!empty($condition)) {
-            foreach ($condition as $key => $value) {
-                $where .= " AND {$key} = :{$key}";
-                $data[$key] = $value;
-            }
-        }
+        $data = array_merge(['model_id' => $modelId], $param);
+        $where.= $condition;
+
         return self::db('field')->where($where)->order('field_listsort ASC, field_id DESC')->select($data);
     }
 

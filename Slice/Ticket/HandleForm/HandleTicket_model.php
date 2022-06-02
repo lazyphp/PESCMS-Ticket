@@ -19,6 +19,9 @@ class HandleTicket_model extends \Core\Slice\Slice {
     public function before() {
 
         if(in_array(METHOD, ['POST', 'PUT'])){
+            if(empty($_POST['group_id']) && !is_array($_POST['group_id'])){
+                $this->error('请提交工单模型正确的管辖客户分组');
+            }
             $_POST['group_id'] = ','.implode(',', $_POST['group_id']).',';
         }
 

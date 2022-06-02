@@ -232,7 +232,7 @@ class Setting extends \Core\Controller\Controller {
      */
     public function mtUpgrade() {
         $file = $_FILES['zip'];
-        if (pathinfo($file['name'])['extension'] != 'zip') {
+        if (isset(pathinfo($file['name'])['extension']) && pathinfo($file['name'])['extension'] != 'zip') {
             $this->error('请导入zip的更新补丁');
         }
 

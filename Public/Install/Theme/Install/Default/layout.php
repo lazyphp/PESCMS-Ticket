@@ -61,6 +61,11 @@
             border-radius: 4px;
             background: #F8F8F8;
         }
+
+        .agree h2{
+            padding-bottom: 10px;
+            border-bottom: 1px solid #cfcfcf;
+        }
     </style>
 </head>
 <body>
@@ -99,8 +104,20 @@
                 <?php require 'Index/Index_option.php' ?>
                 <hr/>
                 <div class="am-g am-g-collapse am-margin-bottom">
+                    <div class="am-u-sm-12 am-u-sm-centered am-text-center am-margin-bottom-xs">
+                        <div class="am-checkbox am-inline-block">
+                            <label>
+                                <input type="checkbox" class="i-do"> <strong>我已阅读且同意<a href="https://www.pescms.com/article/view/-1.html" target="_blank">《<?= $program ?>软件使用协议》</a> </strong>
+                            </label>
+
+                        </div>
+                    </div>
+
                     <div class="am-u-sm-12 am-u-sm-centered am-text-center">
-                        <button type="submit" class="am-btn am-btn-success am-btn-sm begin-install">开始安装</button>
+                        <div class="am-text-danger install-tips am-margin-bottom-xs">
+                            [勾选阅读且同意框方可安装程序]
+                        </div>
+                        <button type="submit" class="am-btn am-btn-success am-btn-sm begin-install" disabled >开始安装</button>
                     </div>
                 </div>
             </form>
@@ -191,13 +208,23 @@
                     var responseText = obj.responseJSON == '' || obj.responseJSON == undefined ? obj.responseText : obj.responseJSON.msg
                     d.content("<p class='am-text-break'>Status Code: " + obj.status + " " + obj.statusText + "</p>" +
                         "<p class='am-text-break'>Response Text: " + responseText + "</p>" +
-                        "<p>请访问<a href=\"http://www.pescms.com/d/v/10/37\" target='_blank'>本链接</a>获取解决方案</p>" +
+                        "<p>请访问<a href=\"https://document.pescms.com/article/1/385975176602320896.html\" target='_blank'>本链接</a>获取解决方案</p>" +
                         "<p>注意：请先检查程序根目录下是否存在STRICT_TRANS_TABLES.txt文件</p>"
                     );
                 }
             })
 
             return false;
+        })
+
+        $('.i-do').on('click', function (){
+            if($(this).prop('checked') == true){
+                $('.am-btn-success').removeAttr('disabled')
+                $('.install-tips').hide();
+            }else{
+                $('.am-btn-success').attr('disabled', 'disabled')
+                $('.install-tips').show();
+            }
         })
 
     })

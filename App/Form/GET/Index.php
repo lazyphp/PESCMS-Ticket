@@ -159,7 +159,7 @@ class Index extends \Core\Controller\Controller {
             'table' => 'ticket AS t',
             'field' => 't.ticket_id, t.ticket_status, t.ticket_number, t.member_id, t.ticket_submit_time, t.ticket_refer_time, t.ticket_contact_account, t.ticket_contact, tm.ticket_model_close_time, tm.ticket_model_close_type',
             'join' => "{$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id",
-            'condition' => 't.ticket_status IN (0, 2) AND t.ticket_close = 0 AND tm.ticket_model_open_close = 1',
+            'condition' => 't.ticket_status IN (0, 1, 2) AND t.ticket_close = 0 AND tm.ticket_model_open_close = 1',
             'lock' => $this->rowlock,
         ]);
 
@@ -175,6 +175,7 @@ class Index extends \Core\Controller\Controller {
                         $close = true;
                     }
                     break;
+                case '1':
                 case '2':
                     if($item['ticket_refer_time'] < time() - $item['ticket_model_close_time'] * 60 ){
                         $close = true;

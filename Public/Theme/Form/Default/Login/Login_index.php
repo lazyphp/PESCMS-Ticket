@@ -41,13 +41,18 @@
 
 <button type="submit" class="am-btn am-btn-primary am-radius am-btn-sm am-margin-top-sm am-btn-block">登录</button>
 
-<div class="am-input-group am-margin-bottom signBAT" style="display: none">
+<?php if(!empty(json_decode($system['weixin_api'] ?? [], true)['appID']) ): ?>
+<div class="am-input-group signBAT" >
     <span class="am-margin-right-xs">社交账号登录</span>
     <span>
-        <a href="<?= $label->url('Login-weixinAgree') ?>" class="login-weixin am-text-success"><i class="am-icon-weixin"></i> 微信</a>
-        <!--        <a href="" class=""><i class="am-icon-qq"></i> QQ</a>-->
+        <a href="<?= $label->url('Login-weixinAgree') ?>" class="login-weixin am-text-success" style="display: none"><i class="am-icon-weixin"></i> 微信</a>
+        <a href="javascript:;" class="am-text-success am-show-md-up weixin-scan"><i class="am-icon-weixin"></i> 微信扫一扫</a>
+        <i id="qrcode"></i>
+        <?= (new \Core\Plugin\Plugin())->event('OAuth2', NULL); ?>
     </span>
 </div>
+<script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/qrcode.min.js?v=<?= $resources ?>"></script>
+<?php endif; ?>
 
 <?= $label->loginEvent(); ?>
 
@@ -59,7 +64,85 @@
         var ua = navigator.userAgent.toLowerCase();
         //判断是否微信浏览器访问
         if( ua.indexOf("wechat") != -1 || ua.indexOf("micromessenger") != -1 ){
-            $('.signBAT').show();
+            $('.login-weixin').show();
+            $('.weixin-scan').hide();
+        }else{
+            $('.login-weixin').hide();
         }
+
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            width : 180,
+            height : 180
+        });
+
+        let qrStatus = false;
+
+        $('.weixin-scan').popover({
+            trigger: 'click',
+            content: $('#qrcode')
+        }).on('open.popover.amui',function(){
+            qrStatus = true;
+            qrcode.makeCode('<?= $system['domain']. $label->url('Login-weixinAgree', ['qrcode' => $qrcode]) ?>');
+        }).on('close.popover.amui',function(){
+            qrStatus = false;
+        });
+
+
+
+        (function qrVerify(interval){
+            interval = interval || 5000; // default polling to 1 second
+            let timer
+
+            timer = setTimeout(function(){
+
+                if(qrStatus == true){
+
+                    $.getJSON(PESCMS_PATH+'/?m=Login&a=weixinScanVerify&qrcode=<?= $qrcode ?>&timing='+Math.random(), function (res){
+                        try{
+                            switch (res.status){
+                                case 200:
+                                    qrStatus = false;
+                                    dialog({content:'微信登录成功', zIndex: 2000, skin: 'submit-success'}).showModal();
+                                    setTimeout(function (){
+                                        window.location.href = '<?= $label->url('Login-weixin', ['qrcode' => $qrcode]) ?>';
+                                    }, 1800)
+                                    break;
+                                case 201:
+                                    qrStatus = false;
+                                    dialog({content:'微信二维码发生变化，本页面将刷新', zIndex: 2000, skin:'submit-error'}).showModal();
+                                    setTimeout(function (){
+                                        window.location.reload();
+                                    }, 3000)
+                                    break;
+                                case 0:
+                                    break;
+                            }
+                        }catch (e){
+                            qrStatus = false;
+                            dialog({content:'系统出错了', zIndex: 2000, skin:'submit-error'}).showModal();
+                            setTimeout(function (){
+                                window.location.reload();
+                            }, 3000)
+                        }
+                    }).fail(function (){
+                        qrStatus = false;
+                        dialog({content:'请求异常', zIndex: 2000, skin:'submit-error'}).showModal();
+                        setTimeout(function (){
+                            window.location.reload();
+                        }, 3000)
+                    })
+                }
+
+                qrVerify();
+            }, interval);
+
+        })();
+
+        (function loopsiloop( interval ){
+
+        })();
+
+        // clearInterval(timer)
+
     })
 </script>

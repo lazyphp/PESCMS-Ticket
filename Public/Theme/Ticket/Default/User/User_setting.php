@@ -72,6 +72,22 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="am-g am-g-collapse">
+                    <div class="am-u-sm-12 am-u-sm-centered">
+                        <div class="am-form-group">
+                            <label class="am-block">开启悬浮按钮<i class="am-text-danger">*</i></label>
+                            <label class="form-radio-label am-radio-inline">
+                                <input class="form-radio" type="radio" name="suspension_button" value="0" required="" <?= $user_suspension_button == 0 ? 'checked="checked"' : '' ?>>
+                                <span>开启</span>
+                            </label>
+                            <label class="form-radio-label am-radio-inline">
+                                <input class="form-radio" type="radio" name="suspension_button" value="1" required="" <?= $user_suspension_button == 1 ? 'checked="checked"' : '' ?>><span>关闭</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="am-g am-g-collapse">
                     <div class="am-u-sm-12 am-u-sm-centered">
 

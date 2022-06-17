@@ -665,7 +665,7 @@ class Ticket extends \Core\Model\Model {
         $ticket_model_custom_no = strtoupper($field['ticket_model_custom_no']);
         if(empty($ticket_model_custom_no)){
             return str_pad(substr(\Model\Extra::getOnlyNumber(), 0, 15), 15, 0, STR_PAD_RIGHT);
-        }elseif($ticket_model_custom_no == 'X'){
+        }elseif($ticket_model_custom_no == '{X}'){
             return (new \Godruoyi\Snowflake\Snowflake)->id();
         }else{
             $zKeyWord = self::db('ticket')->field('count(*) AS total')->where('ticket_model_id = :ticket_model_id')->find([
@@ -677,8 +677,8 @@ class Ticket extends \Core\Model\Model {
                 'ticket_submit_time' => strtotime(date('Y-m-d').' 00:00:00')
             ])['total'] + 1;
 
-            $search = ['Y', 'M', 'D', 'Z', 'A'];
-            $replace = [date('Y'), date('m'), date('d'), sprintf('%04d', $zKeyWord), sprintf('%04d', $aKeyWord)];
+            $search = ['{Y}', '{M}', '{D}', '{Z}', '{A}', '{S}'];
+            $replace = [date('Y'), date('m'), date('d'), sprintf('%04d', $zKeyWord), sprintf('%04d', $aKeyWord), sprintf('%05d', range(0, 99999))];
 
             return str_replace($search, $replace, $ticket_model_custom_no);
 

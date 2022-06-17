@@ -9,6 +9,7 @@ class weixin {
 
     public $access_token = '', $error;
     public $appID, $appsecret;
+    private $errorNum = 0;
 
     public function __construct() {
         $weixin_api = json_decode(\Core\Func\CoreFunc::$param['system']['weixin_api'], true);
@@ -21,19 +22,28 @@ class weixin {
 
         $FileCache = new FileCache();
         $FileCache->setTime = 6500;
-        $result = $FileCache->loadCache('access_token');
+        $result = $FileCache->loadCache('weixin_access_token');
         if(empty($result)){
+            createApiCache:
             $result = (new cURL())->init("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$this->appID}&secret={$this->appsecret}");
             if(empty($result)){
                 $this->error = '获取微信access_token失败';
+                $FileCache->clearCache('weixin_access_token');
                 return $this->error;
             }
-            $FileCache->creatCache('access_token', $result);
+            $FileCache->creatCache('weixin_access_token', $result);
         }
         $this->access_token = json_decode($result, true)['access_token'];
         if(empty($this->access_token)){
             $this->error = '解析微信access_token失败';
-            return $this->error;
+            if($this->errorNum > 5){
+                $FileCache->clearCache('weixin_access_token');
+                return $this->error;
+            }else{
+                $this->errorNum++;
+                goto createApiCache;
+            }
+
         }
     }
 

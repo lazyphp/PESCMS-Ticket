@@ -47,17 +47,15 @@
     </div>
 </div>
 
-<?php if (empty($_POST['weixin'])): ?>
-    <div class="am-cf login-options am-text-sm">
-        <div class="am-fl">
-            已有<?= $system['siteTitle'] ?>账号？<a href="<?= $label->url('Login-index') ?>"
-                                               class="login-signup-link">立即登录!</a>
-        </div>
-        <div class="am-fr">
 
-        </div>
+<div class="am-cf login-options am-text-sm">
+    <div class="am-fl">
+        已有<?= $system['siteTitle'] ?>账号？<a href="<?= $label->url('Login-index') ?>" class="login-signup-link">立即登录!</a>
     </div>
-<?php endif; ?>
+    <div class="am-fr">
+
+    </div>
+</div>
 
 
 <button type="submit" class="am-btn am-btn-primary am-radius am-btn-sm am-margin-top-sm am-btn-block">注册</button>

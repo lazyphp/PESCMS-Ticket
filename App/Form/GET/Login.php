@@ -95,16 +95,7 @@ class Login extends \Core\Controller\Controller {
             $this->error($weixin->error);
         }
 
-        //添加go back的地址
-        if(!empty($_GET['back_url'])){
-            $urlParam = [
-                'back_url' => $this->g('back_url')
-            ];
-        }else{
-            $urlParam = [];
-        }
-
-        $this->assign('login', $weixin->agree(\Core\Func\CoreFunc::$param['system']['domain'].$this->url('Login-weixin', $urlParam)));
+        $this->weixinLoginUrl($weixin);
         $this->display();
     }
 
@@ -139,9 +130,27 @@ class Login extends \Core\Controller\Controller {
         }
 
         $this->assign('user', $user);
-
+        $this->weixinLoginUrl($weixin);
         $this->assign('title', '注册账号');
         $this->layout('', 'Login_layout');
+    }
+
+    /**
+     * 微信登录URL地址
+     * @param $weixin
+     * @return void
+     */
+    private function weixinLoginUrl($weixin){
+        //添加go back的地址
+        if(!empty($_GET['back_url'])){
+            $urlParam = [
+                'back_url' => $this->g('back_url')
+            ];
+        }else{
+            $urlParam = [];
+        }
+
+        $this->assign('login', $weixin->agree(\Core\Func\CoreFunc::$param['system']['domain'].$this->url('Login-weixin', $urlParam)));
     }
 
     /**

@@ -227,12 +227,12 @@ class Login extends \Core\Controller\Controller {
      */
     public function weixin(){
         $param['member_weixin'] = $this->isP('openid', '获取openid失败');
-        $param['member_name'] = $this->isP('name', '获取用户名失败');
 
         //邮件地址没有填写，则直接随机创建账号
         if(empty($_POST['email'])){
             $randomAccount = \Model\Extra::getOnlyNumber();
             $param['member_email'] = "{$randomAccount}@default.wx";
+            $param['member_name'] = "微信用户".\Model\Extra::getOnlyNumber();
             $param['member_account'] = "wx_{$randomAccount}";
             $param['member_password'] = md5(\Model\Extra::getOnlyNumber());//随机写入一些字符，随机账号无法使用
             $param['member_status'] = \Core\Func\CoreFunc::$param['system']['member_review'] == 2 ? 0 : \Core\Func\CoreFunc::$param['system']['member_review'];

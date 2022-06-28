@@ -41,13 +41,17 @@
 
 <button type="submit" class="am-btn am-btn-primary am-radius am-btn-sm am-margin-top-sm am-btn-block">登录</button>
 
-<div class="am-input-group am-margin-bottom signBAT" style="display: none">
+<?php if(!empty(json_decode($system['weixin_api'] ?? [], true)['appID']) ): ?>
+<div class="am-input-group signBAT" >
     <span class="am-margin-right-xs">社交账号登录</span>
     <span>
-        <a href="<?= $label->url('Login-weixinAgree') ?>" class="login-weixin am-text-success"><i class="am-icon-weixin"></i> 微信</a>
-        <!--        <a href="" class=""><i class="am-icon-qq"></i> QQ</a>-->
+        <a href="<?= $label->url('Login-weixinAgree') ?>" class="login-weixin am-text-success" style="display: none"><i class="am-icon-weixin"></i> 微信</a>
+        <a href="javascript:;" class="am-text-success am-show-md-up weixin-scan"><i class="am-icon-weixin"></i> 微信扫一扫</a>
+        <i id="qrcode"></i>
     </span>
 </div>
+<script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/qrcode.min.js?v=<?= $resources ?>"></script>
+<?php endif; ?>
 
 <?= $label->loginEvent(); ?>
 
@@ -59,7 +63,20 @@
         var ua = navigator.userAgent.toLowerCase();
         //判断是否微信浏览器访问
         if( ua.indexOf("wechat") != -1 || ua.indexOf("micromessenger") != -1 ){
-            $('.signBAT').show();
+            // $('.signBAT').show();
         }
+
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            width : 180,
+            height : 180
+        });
+
+        $('.weixin-scan').popover({
+            trigger: 'click',
+            content: $('#qrcode')
+        }).on('open.popover.amui',function(){
+            // qrcode.makeCode('http://www.baidu.com');
+        });
+
     })
 </script>

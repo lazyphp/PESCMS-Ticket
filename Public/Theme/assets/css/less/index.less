@@ -3,89 +3,107 @@
   background: linear-gradient(127deg, #19b1f0 0%, #003d7b 100%);
   margin-bottom: 0px;
 }
-#ticket-nav,
-#ticket-nav a,
-#ticket-nav .am-topbar-brand a:hover {
+
+#ticket-nav, #ticket-nav a, #ticket-nav .am-topbar-brand a:hover {
   color: #fff;
 }
+
 /*次级导航*/
 .tool-container {
-  -webkit-box-shadow: 0 2px 5px 0 rgba(30, 30, 30, 0.09);
-  -moz-box-shadow: 0 2px 5px 0 rgba(30, 30, 30, 0.09);
-  box-shadow: 0 2px 5px 0 rgba(30, 30, 30, 0.09);
+  -webkit-box-shadow: 0 2px 5px 0 rgba(30, 30, 30, .09);
+  -moz-box-shadow: 0 2px 5px 0 rgba(30, 30, 30, .09);
+  box-shadow: 0 2px 5px 0 rgba(30, 30, 30, .09);
   background: #fff;
   margin-bottom: 0;
-}
-.tool-container ul li a {
-  font-size: 1.5rem;
-}
-@media only screen and (min-width: 1025px) {
-  .tool-container {
+
+  ul li a {
+    font-size: 1.5rem;
+  }
+
+  @media only screen and (min-width: 1025px) {
     padding: 20px 10px;
   }
+
 }
-.logo a {
-  display: block;
-  padding: 0.8rem 1rem;
-}
-.logo img {
-  max-height: 30px;
-}
-@media only screen and (min-width: 1025px) {
-  .logo a {
-    padding: 20px 20px !important;
+
+.logo {
+  a {
+    display: block;
+    padding: 0.8rem 1.0rem;
   }
-  .logo img {
-    max-height: 50px !important;
+
+  img {
+    max-height: 30px;
   }
+
+  @media only screen and (min-width: 1025px) {
+    a {
+      padding: 20px 20px !important;
+    }
+
+    img {
+      max-height: 50px !important;
+    }
+  }
+
 }
+
 #wrapper {
   padding-top: 1.6rem;
   min-height: 73vh;
 }
+
 .index-background {
   background-color: #fff;
 }
+
 /*解决手机版内边距异常问题*/
 @media only screen and (max-width: 1024px) {
-  #ticket-nav .am-u-sm-centered,
-  .tool-container .am-u-sm-centered {
+  #ticket-nav .am-u-sm-centered, .tool-container .am-u-sm-centered {
     padding: 0px !important;
   }
 }
+
 /*屏蔽链接下标和设置鼠标指针浮动*/
-#ticket-nav .am-topbar-nav > li > a:hover,
-.tool-container .am-topbar-nav > li > a:hover {
+#ticket-nav .am-topbar-nav > li > a:hover, .tool-container .am-topbar-nav > li > a:hover {
   color: #32beff;
   background: transparent;
 }
-#ticket-nav .am-topbar-nav > li > a:hover:after,
-.tool-container .am-topbar-nav > li > a:hover:after {
+
+#ticket-nav .am-topbar-nav > li > a:hover:after, .tool-container .am-topbar-nav > li > a:hover:after {
   display: none;
 }
+
+
 /*首页搜索*/
 @media only screen and (max-width: 640px) {
   .index-search .am-input-group {
     display: block !important;
   }
+
   .index-search .am-input-group-btn {
     padding-top: 2rem;
     text-align: center;
   }
+
 }
+
 .index-logo {
   padding-top: 11.6rem;
 }
+
 /*面包屑*/
 @media only screen and (max-width: 640px) {
   .categort-breadcrumb li {
     display: block;
     margin-bottom: 0.5rem;
   }
+
   .categort-breadcrumb li:before {
     display: none;
   }
 }
+
 /*工单分类*/
 .ticket-category {
   display: block;
@@ -96,62 +114,76 @@
   border-radius: 4px;
   color: #333;
 }
+
 @media only screen and (min-width: 1025px) {
   .ticket-ul {
     display: flex;
     align-items: stretch;
     flex-wrap: wrap;
   }
+
   .ticket-ul li a {
     position: relative;
     height: 100%;
     overflow: hidden;
   }
 }
+
 .ticket-list {
   position: relative;
   height: 100%;
   overflow: hidden;
 }
-.ticket-list-active,
-.ticket-list-active:hover {
+
+.ticket-list-active, .ticket-list-active:hover {
   background-color: #FFB800 !important;
 }
-.ticket-list-active,
-.ticket-list-active a,
-.ticket-list-active:hover,
-.ticket-list-active a:hover {
+
+.ticket-list-active, .ticket-list-active a, .ticket-list-active:hover, .ticket-list-active a:hover {
   color: #FFFFFF !important;
 }
+
 .ticket-category:hover {
   color: #333;
   background-color: #e5e5e5;
 }
+
 .categort-breadcrumb .am-active a {
   color: #333;
 }
+
 .categort-breadcrumb .am-active .am-badge {
   background-color: #0e90d2;
 }
+
 .categort-breadcrumb a {
   color: #e5e5e5;
 }
+
 .categort-breadcrumb .am-badge {
   background-color: #e5e5e5;
 }
+
 /*登录界面*/
 @media only screen and (min-width: 1025px) {
   .login-form {
     /*width: 430px;*/
   }
 }
+
 .login {
   min-height: 46rem;
   padding: 5rem 0 10px 0;
 }
+
+.login-panel {
+
+}
+
 #login-enterplorer {
   padding: 0 24px 30px;
 }
+
 .login-tab {
   display: inline-block;
   color: #444;
@@ -161,36 +193,48 @@
   margin-right: 24px;
   cursor: pointer;
 }
+
 .login-tab.am-active {
   border-bottom: 2px solid #0084ff;
 }
+
 .loginFlow {
   margin: 1rem 0;
 }
+
 .pes-login-input {
   padding: 1.6rem 1.6rem 1.6rem 0 !important;
   border: none !important;
   border-bottom: 1px solid #ebebeb !important;
-  border-bottom-color: #ebebeb;
+  border-bottom-color: rgb(235, 235, 235);
   -webkit-box-shadow: none !important;
 }
+
 .pes-login-input:focus {
   -webkit-box-shadow: none !important;
 }
+
 .pes-login-input.am-field-error {
   border-bottom: 1px solid #dd514c !important;
-  -webkit-box-shadow: inset 0 0px 1px 0px rgba(0, 0, 0, 0.075) !important;
+  -webkit-box-shadow: inset 0 0px 1px 0px rgba(0, 0, 0, .075) !important;
 }
+
+.login-verify {
+
+}
+
 .login-options {
   margin: 20px 0;
 }
-.login-options,
-.login-options a {
+
+.login-options, .login-options a {
   color: grey;
 }
+
 .login-signup-link {
   color: #e56c0c !important;
 }
+
 .signBAT {
   font-size: 14px;
   margin-top: 25px;
@@ -199,62 +243,76 @@
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+
 /*fqa问答指引*/
 .ticket-fqa {
   /*border: 1px solid #ddd;*/
 }
+
 .ticket-fqa ul {
   list-style-type: none;
   padding-bottom: 0 !important;
   margin-top: 0;
 }
-.ticket-fqa ul,
-.fqa-list {
+
+.ticket-fqa ul, .fqa-list {
   border-top: 1px solid #ddd;
   padding: 1rem 1.5rem;
 }
+
 .fqa-list > li {
   margin: 0.5rem 0;
 }
+
 .fqa-list a {
   padding: 0.2rem 0;
   color: #333333;
   line-height: 20px;
 }
+
 .fqa-list a:hover {
   color: #e1e6eb;
   text-decoration: none;
 }
+
 /*FQA列表*/
 .fqa-search {
   margin: 2rem auto 5rem auto;
 }
+
 .fqa-item h2 {
   margin: 0;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid #eee;
 }
+
 .fqa-item h3 {
   margin: 1.5rem 0;
   /*color: #b9b9b9;*/
 }
+
 .fqa-ul {
   list-style-type: none;
   margin: 0.5rem 0 1.6rem 0;
 }
+
 .fqa-ul li {
   margin: 0.5rem 0;
 }
+
 /*个人中心*/
 @media only screen and (min-width: 1025px) {
   .member-center {
-    padding: 30px 50px;
+    padding: 30px 50px
   }
+
   .member-info th {
     width: 10%;
   }
 }
+
 /*个人中心*/
+
 /*页脚*/
 .my-footer {
   color: #343434;
@@ -263,9 +321,11 @@
   text-align: inherit;
   padding: 0;
 }
+
 .pescms-introduce {
   padding: 40px 0;
 }
+
 .my-footer h4 {
   margin: 20px 0 0 0;
   background-color: #32beff;
@@ -281,22 +341,27 @@
   font-weight: 300;
   text-transform: uppercase;
 }
+
 .my-footer ul {
   list-style: none;
   color: #6E7076;
   margin: 0;
   padding: 10px 0 0;
 }
+
 .my-footer ul li {
   padding: 0.5rem;
 }
+
 .my-footer ul li a {
   color: #343434;
 }
+
 .my-footer ul li a:hover {
   text-decoration: none;
   color: #32beff;
 }
+
 .copyright {
   color: #fff;
   background: #353536;

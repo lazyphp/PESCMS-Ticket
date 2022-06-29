@@ -112,9 +112,9 @@ class Controller {
      */
     protected static function isG($name, $message, $htmlentities = TRUE) {
         //当为0时，直接返回
-        if ($_GET[$name] == '0') {
+        if (isset($_GET[$name]) && $_GET[$name] == '0') {
             return self::g($name, $htmlentities);
-        } elseif (is_array($_GET[$name])) {
+        } elseif (is_array($_GET[$name] ?? '')) {
             return $_GET[$name];
         }
         if (empty($_GET[$name]) || !trim($_GET[$name]) || !is_string($_GET[$name])) {
@@ -133,9 +133,9 @@ class Controller {
      */
     protected static function isP($name, $message, $htmlentities = TRUE) {
         //当为0时，直接返回
-        if ($_POST[$name] == '0') {
+        if (isset($_POST[$name]) && $_POST[$name] == '0') {
             return self::p($name, $htmlentities);
-        } elseif (is_array($_POST[$name])) {
+        } elseif (is_array($_POST[$name] ?? '')) {
             return $_POST[$name];
         }
         if (empty($_POST[$name]) || !trim($_POST[$name]) || !is_string($_POST[$name])) {

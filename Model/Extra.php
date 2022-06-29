@@ -92,7 +92,7 @@ class Extra extends \Core\Model\Model {
      * @param $type 通知类型
      * @return mixed
      */
-    public static function insertSend($account, $title = '', $content, $type){
+    public static function insertSend($account, $title, $content, $type){
         $param = [
             'send_account' => $account,
             'send_title' => $title,

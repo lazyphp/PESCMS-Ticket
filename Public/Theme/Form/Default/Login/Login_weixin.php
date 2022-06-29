@@ -34,11 +34,12 @@
         </div>
 
         <button type="submit" class="am-btn am-btn-primary am-radius am-btn-sm am-margin-top am-btn-block"><i class="am-icon-save"></i> 提交</button>
-        <a href="<?= $login ?? $label->url('Login-index') ?>" class="am-btn am-btn-white am-radius am-btn-sm am-margin-top am-btn-block"><i class="am-icon-reply"></i> 返回</a>
+        <a href="<?= $login && empty($_GET['qrcode']) ? $login : $label->url('Login-index') ?>" class="am-btn am-btn-white am-radius am-btn-sm am-margin-top am-btn-block"><i class="am-icon-reply"></i> 返回</a>
 
     </div>
     <script>
         $(function () {
+
             $('input[type=submit]').hide();
 
             $('.account-bind').on('click', function () {

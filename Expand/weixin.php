@@ -49,12 +49,14 @@ class weixin {
 
     /**
      * 跳转用户同意授权页面
+     * @param string $redirect_uri 重定向地址
+     * @param string $state 返回参数
      * @param string $scope 应用授权作用域，snsapi_base （不弹出授权页面，直接跳转，只能获取用户openid），snsapi_userinfo （弹出授权页面，可通过openid拿到昵称、性别、所在地。并且， 即使在未关注的情况下，只要用户授权，也能获取其信息 ）
      */
-    public function agree($redirect_uri, $scope = 'snsapi_userinfo'){
+    public function agree($redirect_uri, $state = 'STATE',  $scope = 'snsapi_userinfo'){
         $url = urlencode($redirect_uri);
 
-        return "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$this->appID}&redirect_uri={$url}&response_type=code&scope={$scope}&state=STATE#wechat_redirect";
+        return "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$this->appID}&redirect_uri={$url}&response_type=code&scope={$scope}&state={$state}#wechat_redirect";
     }
 
     /**
@@ -64,8 +66,9 @@ class weixin {
     public function user_access_token($code){
         $result = (new cURL())->init("https://api.weixin.qq.com/sns/oauth2/access_token?appid={$this->appID}&secret={$this->appsecret}&code={$code}&grant_type=authorization_code");
         $access_token = json_decode($result, true);
+
         if(empty($access_token['openid']) ){
-            die('获取openid失败');
+            return false;
         }
 
         return $access_token['openid'];

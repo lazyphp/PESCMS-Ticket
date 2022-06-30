@@ -139,7 +139,7 @@
 
 <?php $label->footerEvent() ?>
 
-<?php if(MODULE !== 'Login'): ?>
+<?php if(MODULE !== 'Login' && \Core\Func\CoreFunc::session()->get('ticket')['user_suspension_button'] == 0 ): ?>
 <div class="amz-toolbar" id="amz-toolbar" style="">
 
     <?= (new \Core\Plugin\Plugin())->event('suspensionButton', NULL); ?>

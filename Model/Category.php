@@ -94,7 +94,7 @@ class Category extends \Core\Model\Model {
         if(!empty($id)){
             $getTicketModelResult = \Model\Content::listContent([
                 'table' => 'ticket_model',
-                'field' => 'ticket_model_number, ticket_model_name, ticket_model_explain, ticket_model_organize_id',
+                'field' => 'ticket_model_number, ticket_model_name, ticket_model_explain, ticket_model_organize_id, ticket_model_fqa_tips',
                 'condition' => 'ticket_model_cid = :id AND ticket_model_status = 1',
                 'order' => 'ticket_model_listsort ASC, ticket_model_id DESC',
                 'param' => [

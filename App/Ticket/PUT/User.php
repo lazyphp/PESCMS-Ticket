@@ -47,6 +47,7 @@ class User extends Content {
         $data['user_vacation'] = $this->isP('vacation', '请提交您的状态');
         $data['user_browser_msg'] = $this->p('browser_msg');
         $data['user_browser_msg_time'] = $this->p('browser_msg_time');
+        $data['user_suspension_button'] = $this->p('suspension_button');
         $data['noset']['user_id'] = $userID;
         $this->db('user')->where('user_id = :user_id')->update($data);
 

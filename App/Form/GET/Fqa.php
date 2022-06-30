@@ -75,7 +75,7 @@ class Fqa extends \Core\Controller\Controller{
         }
 
         $this->assign('title', '常见问题');
-        $this->assign('list', $list);
+        $this->assign('list', $list ?? []);
         $this->assign('category', \Model\Category::getAllCategoryCidPrimaryKey());
         $this->layout('Fqa_list');
     }
@@ -92,6 +92,10 @@ class Fqa extends \Core\Controller\Controller{
         $this->assign($content);
 
         $ticket = \Model\TicketModel::getTicketModelList($content['fqa_ticket_model_id']);
+        if($ticket['ticket_model_login'] == 1 && empty($this->session()->get('member')) ){
+            $this->jump($this->url('Login-index', ['back_url' => base64_encode($_SERVER['REQUEST_URI'])]));
+        }
+
         $this->assign('ticketModel', $ticket);
 
         $this->assign('title', $content['fqa_title']);

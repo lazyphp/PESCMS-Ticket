@@ -12,6 +12,13 @@ namespace App\Ticket\PUT;
 
 class User extends Content {
 
+    public function action($jump = TRUE, $commit = TRUE) {
+        if($_POST['id'] == 1 && $this->session()->get('ticket')['user_id'] != 1){
+            $this->error('天呐，您竟然敢修改超级管理账户！');
+        }
+        parent::action($jump, $commit);
+    }
+
     /**
      * 个人设置
      */

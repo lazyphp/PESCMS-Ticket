@@ -22,6 +22,10 @@ class Member extends Content {
                 break;
         }
 
+        $requisitionStatus = $this->db()->fetch("SHOW COLUMNS FROM pes_member WHERE FIELD = 'member_requisition'")['Default'];
+
+
+        $this->assign('requisitionStatus', $requisitionStatus);
         parent::index($display);
     }
 

@@ -6,25 +6,11 @@
     </div>
 <?php endif; ?>
 
-
+<?php foreach ($field as $key => $value) : ?>
 <div class="loginFlow">
-    <input type="text" maxlength="10" name="name" class="pes-login-input"
-           value="<?= !empty($_POST['name']) ? $label->xss($_POST['name']) : '' ?>" placeholder="用户名称"
-           required="required">
+    <?= $form->formList($value); ?>
 </div>
-
-<?php if (!empty($registerForm['email'])): ?>
-    <div class="loginFlow">
-        <input type="email" name="email" class="pes-login-input" placeholder="邮箱地址" required="required">
-    </div>
-<?php endif; ?>
-
-<?php if (!empty($registerForm['phone'])): ?>
-    <div class="loginFlow">
-        <input type="text" name="phone" class="pes-login-input" placeholder="手机号码" required="required">
-    </div>
-<?php endif; ?>
-
+<?php endforeach; ?>
 
 <div class="loginFlow">
     <input type="password" name="password" class="pes-login-input" placeholder="密码" minlength="6"
@@ -35,6 +21,7 @@
     <input type="password" name="repassword" class="pes-login-input" placeholder="确认密码" minlength="6"
            data-am-popover="{trigger:'focus', theme: 'danger sm', content: '请输入不小于6位数的密码'}" required="required">
 </div>
+
 
 <div class="login-verify">
     <div class="am-alert am-alert-secondary am-text-center">

@@ -19,7 +19,7 @@
                     <?php if ($value['member_id'] == -1): ?>
                         匿名用户
                     <?php else: ?>
-                        <a href="<?= $label->url('Ticket-Ticket-' . ACTION, ['member' => $value['member_id']]) ?>"><?= $member[$value['member_id']]['member_name'] ?></a>
+                        <a href="<?= $label->url('Ticket-Ticket-' . ACTION, ['member' => $value['member_id']]) ?>"><?= $member[$value['member_id']]['member_name'] ?? 'NULL' ?></a>
                     <?php endif; ?>
 
                     <span>发布于: <?= date('Y-m-d H:i', $value['ticket_submit_time']); ?></span>

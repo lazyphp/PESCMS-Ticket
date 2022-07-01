@@ -21,9 +21,7 @@ class Member extends Content {
             $this->error('您不能进行此操作');
         }
 
-        $requisitionStatus = $this->db()->fetch("SHOW COLUMNS FROM pes_member WHERE FIELD = 'member_requisition'")['Default'];
-
-        $status = $requisitionStatus == 1 ? 0 : 1;
+        $status = \Model\Member::getRequisitionStatus() == 1 ? 0 : 1;
 
         $this->db()->query("ALTER TABLE `{$this->prefix}member` CHANGE `member_requisition` `member_requisition` INT(11) NOT NULL DEFAULT '{$status}';");
 

@@ -37,7 +37,7 @@ class Content extends \Core\Controller\Controller {
 
         //获取模型的字段列表
         $fieldShowType = ACTION == 'index' ? 'field_list' : 'field_form';
-        $this->field = \Model\Field::fieldList($this->model['model_id'], ['field_status' => '1', $fieldShowType => '1']);
+        $this->field = \Model\Field::fieldList($this->model['model_id'], "AND field_status = 1 AND `{$fieldShowType}` IN (1, 2)");
     }
 
     /**

@@ -281,7 +281,7 @@ class Ticket extends \Core\Controller\Controller {
             $this->assign('form', $content['form']);
             $this->assign('member', $content['member']);
             $this->assign('prefix', 'member_');
-            $this->assign('memberField', \Model\Field::fieldList('20', ['field_status' => 1, 'field_list' => '1']));
+            $this->assign('memberField', \Model\Field::fieldList('20', 'AND field_status = 1 AND field_list = 1'));
             $this->assign('global_contact', $content['global_contact']);
             $this->assign('chat', $content['chat']['list']);
             $this->assign('page', $content['chat']['page']);

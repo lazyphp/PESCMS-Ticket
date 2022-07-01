@@ -16,3 +16,9 @@ CREATE TABLE IF NOT EXISTS `pes_qrcode` (
 ALTER TABLE `pes_ticket_model` ADD `ticket_model_fqa_tips` TINYINT(1) NOT NULL COMMENT 'FQA指引';
 
 ALTER TABLE `pes_user` ADD `user_suspension_button` TINYINT(1) NOT NULL COMMENT '是否关闭悬浮按钮' AFTER `user_browser_msg_time`;
+
+UPDATE `pes_field` SET `field_option` = '{&quot;\\u663e\\u793a&quot;:&quot;1&quot;,&quot;\\u9690\\u85cf&quot;:&quot;0&quot;,&quot;\\u4ec5\\u540e\\u53f0&quot;:&quot;2&quot;}' WHERE `pes_field`.`field_id` = 15;
+UPDATE `pes_field` SET `field_form` = '2' WHERE `pes_field`.`field_id` = 235;
+UPDATE `pes_field` SET `field_form` = '2' WHERE `pes_field`.`field_id` = 270;
+UPDATE `pes_field` SET `field_form` = '2' WHERE `pes_field`.`field_id` = 273;
+UPDATE `pes_field` SET `field_form` = '2' WHERE `pes_field`.`field_id` = 281;

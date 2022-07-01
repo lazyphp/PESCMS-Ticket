@@ -149,10 +149,10 @@
   min-height: 46rem;
   padding: 5rem 0 10px 0;
 }
-#login-enterplorer {
+.login #login-enterplorer {
   padding: 0 24px 30px;
 }
-.login-tab {
+.login .login-tab {
   display: inline-block;
   color: #444;
   font-size: 16px;
@@ -161,37 +161,38 @@
   margin-right: 24px;
   cursor: pointer;
 }
-.login-tab.am-active {
+.login .login-tab.am-active {
   border-bottom: 2px solid #0084ff;
 }
-.loginFlow {
+.login .loginFlow {
   margin: 1rem 0;
 }
-.pes-login-input {
+.login .loginFlow input {
   padding: 1.6rem 1.6rem 1.6rem 0 !important;
   border: none !important;
   border-bottom: 1px solid #ebebeb !important;
   border-bottom-color: #ebebeb;
   -webkit-box-shadow: none !important;
 }
-.pes-login-input:focus {
+.login .loginFlow input :focus {
   -webkit-box-shadow: none !important;
 }
-.pes-login-input.am-field-error {
+.login .loginFlow input.am-field-error {
+  border-radius: 0 !important;
   border-bottom: 1px solid #dd514c !important;
   -webkit-box-shadow: inset 0 0px 1px 0px rgba(0, 0, 0, 0.075) !important;
 }
-.login-options {
+.login .login-options {
   margin: 20px 0;
 }
-.login-options,
-.login-options a {
+.login .login-options,
+.login .login-options a {
   color: grey;
 }
-.login-signup-link {
+.login .login-signup-link {
   color: #e56c0c !important;
 }
-.signBAT {
+.login .signBAT {
   font-size: 14px;
   margin-top: 25px;
   justify-content: space-between;

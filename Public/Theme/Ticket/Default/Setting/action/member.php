@@ -33,7 +33,7 @@
                         <input type="radio" value="2" name="member_review" required="" <?= $member_review['value'] == '2' ? 'checked="checked"' : '' ?>> 邮件激活验证
                     </label>
                     <div class="pes-alert pes-alert-info am-text-xs " >
-                        <i class="am-icon-lightbulb-o"></i> 注册的客户是否需要进行审核。选择邮件激活验证的话，用户点击邮件的链接地址则完成审核。
+                        <i class="am-icon-lightbulb-o"></i> 按需启用审核，若为邮件激活验证，请确保系统注册选项中启用了邮箱字段。
                     </div>
                 </div>
             </div>
@@ -60,19 +60,11 @@
         <div class="am-g am-g-collapse">
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
-                    <label class="am-block">注册填写选项<i class="am-text-danger">*</i></label>
-                    <label class="am-checkbox-inline">
-                        <input type="checkbox" value="email" name="register_form[email]"  <?= $register_form['email'] == 'email' ? 'checked="checked"' : '' ?> > 邮箱地址
-                    </label>
-                    <label class="am-checkbox-inline">
-                        <input type="checkbox" value="account" name="register_form[account]"  <?= $register_form['account'] == 'account' ? 'checked="checked"' : '' ?>> 账号
-                    </label>
-                    <label class="am-checkbox-inline">
-                        <input type="checkbox" value="phone" name="register_form[phone]"  <?= $register_form['phone'] == 'phone' ? 'checked="checked"' : '' ?>> 手机号码
-                    </label>
+                    <label class="am-block">自定义注册选项</label>
+                    <a href="<?= $label->url('Ticket-Field-index', ['model_id' => 20]) ?>" class="am-btn am-btn-danger am-btn-xs" target="_blank" onclick="return confirm('请先阅读文档说明，本操作极可能导致系统崩溃。')" >进行修改</a>
                 </div>
-                <div class="pes-alert pes-alert-info am-text-xs " >
-                    <i class="am-icon-lightbulb-o"></i> 更改此选项时，请确认网站当前客户账号审核规则。否则将会导致客户无法完成正常注册流程！
+                <div class="pes-alert pes-alert-warning am-text-xs " >
+                    <i class="am-icon-lightbulb-o"></i> 修改前务必先阅读 <a href="https://document.pescms.com/article/3/276180133704892416.html" target="_blank">《客户管理》</a> 文档。任何修改导致系统崩溃，后果自负。
                 </div>
             </div>
         </div>

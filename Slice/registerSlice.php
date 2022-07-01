@@ -103,6 +103,13 @@ $SLICE_ARRYR = [
         ['\Ticket\Login', '\Ticket\Auth',],
     ],
 
+    //部分操作需要超级管理员才可以进行。
+    'ADMIN-LIMIT' => [
+        'any',
+        ['Ticket-Model-:a', 'Ticket-Field-:a', 'Ticket-Setting-:a'],
+        ['\Ticket\AdminLimit'],
+    ],
+
     //注册自动更新用户组字段的信息
     'TICKET-UPDATE-USERGROUP' => [
         'any',

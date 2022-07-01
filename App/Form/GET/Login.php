@@ -20,9 +20,10 @@ class Login extends \Core\Controller\Controller {
      * 注册账号
      */
     public function signup() {
-        $registerForm = json_decode(\Core\Func\CoreFunc::$param['system']['register_form'], true);
 
-        $this->assign('registerForm', $registerForm);
+        $this->assign(\Model\Member::getModelField());
+        $this->assign('form', new \Expand\Form\Form());
+        
         $this->assign('title', '注册账号');
         $this->layout('', 'Login_layout');
     }

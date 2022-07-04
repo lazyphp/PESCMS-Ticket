@@ -48,6 +48,7 @@
         <a href="<?= $label->url('Login-weixinAgree') ?>" class="login-weixin am-text-success" style="display: none"><i class="am-icon-weixin"></i> 微信</a>
         <a href="javascript:;" class="am-text-success am-show-md-up weixin-scan"><i class="am-icon-weixin"></i> 微信扫一扫</a>
         <i id="qrcode"></i>
+        <?= (new \Core\Plugin\Plugin())->event('OAuth2', NULL); ?>
     </span>
 </div>
 <script src="<?= DOCUMENT_ROOT; ?>/Theme/assets/js/qrcode.min.js?v=<?= $resources ?>"></script>

@@ -149,7 +149,7 @@ class Extra extends \Core\Model\Model {
             }
 
             if(DEBUG == true){
-                echo "<p>{$value['send_type']}T: {$result['msg']}, 详细JSON格式: ".json_encode($result)."</p>";
+                echo "<p>{$value['send_type']}T: {$result['msg']}, 详细JSON格式: ".json_encode($result, JSON_UNESCAPED_UNICODE)."</p>";
             }
 
         }

@@ -10,7 +10,17 @@ class weixinWork {
     public $access_token = '';
     public $corpid, $AgentId, $Secret, $error;
 
-    public function __construct() {
+    public function __construct(){
+        $initResult = $this->__init();
+
+        //将错误信息生成日志
+        if (!empty($this->error)) {
+            (new \Expand\Log())->creatLog('weixinWork_log', date('Y-m-d H:i:s')." {$this->error}\n");
+        }
+        return $initResult;
+    }
+
+    public function __init() {
         $weixinWork_api = json_decode(\Core\Func\CoreFunc::$param['system']['weixinWork_api'], true);
         if(empty($weixinWork_api['corpid']) || empty($weixinWork_api['AgentId'])){
             $this->error = '未配置企业微信接口信息';
@@ -31,13 +41,23 @@ class weixinWork {
 
             if(empty($result)){
                 $this->error = '获取企业微信access_token失败';
+                $FileCache->clearCache('weixinWork_access_token');
                 return $this->error;
             }
+
+            $checkJSON = json_decode($result, true);
+            if(empty($checkJSON['access_token'])){
+                $this->error = "受网络波动原因，本次请求出错，请再次尝试，若多次出现请联系网站管理员处理。".($checkJSON['errmsg'] ?? $result);
+                $FileCache->clearCache('weixinWork_access_token');
+                return $this->error;
+            }
+
             $FileCache->creatCache('weixinWork_access_token', $result);
         }
         $this->access_token = json_decode($result, true)['access_token'];
         if(empty($this->access_token)){
             $this->error = '解析企业微信access_token失败';
+            $FileCache->clearCache('weixinWork_access_token');
             return $this->error;
         }
     }

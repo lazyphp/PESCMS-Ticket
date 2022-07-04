@@ -10,7 +10,17 @@ class dingtalk {
     public $access_token = '';
     public $AgentId, $AppKey, $AppSecret, $error;
 
-    public function __construct() {
+    public function __construct(){
+        $initResult = $this->__init();
+
+        //将错误信息生成日志
+        if (!empty($this->error)) {
+            (new \Expand\Log())->creatLog('dingtalk_log', date('Y-m-d H:i:s')." {$this->error}\n");
+        }
+        return $initResult;
+    }
+
+    public function __init() {
         $dingtalkSetting = json_decode(\Core\Func\CoreFunc::$param['system']['dingtalk'], true);
         if(empty($dingtalkSetting['AppKey']) || empty($dingtalkSetting['AppSecret'])){
             $this->error = '未配置钉钉企业接口信息';
@@ -32,13 +42,23 @@ class dingtalk {
 
             if(empty($result)){
                 $this->error = '获取钉钉企业access_token失败';
+                $FileCache->clearCache('dingtalk_access_token');
                 return $this->error;
             }
+
+            $checkJSON = json_decode($result, true);
+            if(empty($checkJSON['access_token'])){
+                $this->error = "受网络波动原因，本次请求出错，请再次尝试，若多次出现请联系网站管理员处理。".($checkJSON['errmsg'] ?? $result);
+                $FileCache->clearCache('dingtalk_access_token');
+                return $this->error;
+            }
+
             $FileCache->creatCache('dingtalk_access_token', $result);
         }
         $this->access_token = json_decode($result, true)['access_token'];
         if(empty($this->access_token)){
             $this->error = '解析钉钉企业access_token失败';
+            $FileCache->clearCache('dingtalk_access_token');
             return $this->error;
         }
     }

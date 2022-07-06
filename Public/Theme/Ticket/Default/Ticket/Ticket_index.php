@@ -8,7 +8,7 @@
             </div>
             <div class="am-g am-margin-bottom-xs am-g-collapse am-margin-top-xs">
                 <div class="am-u-sm-12 am-u-md-12">
-                    <?php foreach(array_merge(['最近反馈'], array_column($ticketStatus, 'name'), ['所有工单']) as $key => $name): ?>
+                    <?php foreach(array_merge(['最近反馈'], array_column($ticketStatus, 'name'), ['所有工单', '已关闭']) as $key => $name): ?>
                     <a href="<?= $label->url('Ticket-'.MODULE.'-'.ACTION, ['q' => $key]) ?>" class="am-btn am-btn-default am-btn-xs am-fl <?= (isset($_GET['q']) && $_GET['q'] == $key && empty($_GET['search'])) || (empty($_GET['q']) && $key == 0 ) ? 'am-disabled' : '' ?>"><?= $name ?></a>
                     <?php endforeach; ?>
                     <a href="javascript:;" class="am-btn am-btn-primary show-search-form am-btn-xs am-fl" data="<?= !empty($_GET['search']) ? '0' : '1' ?>" ><i class="am-icon-search"></i> 工单搜索</a>

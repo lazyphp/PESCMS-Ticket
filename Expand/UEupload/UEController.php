@@ -77,11 +77,8 @@ class UEController {
             $info = json_decode($result, true);
             if(!in_array($action, ['listimage', 'listfile'])){
                 //上传成功，顺便将文件信息记录数据库
-                if($info['state'] == 'SUCCESS'){
-
+                if(isset($info['state']) && $info['state'] == 'SUCCESS'){
                     $session = \Core\Func\CoreFunc::session()->getAll();
-
-
                     switch ($action){
                         case 'uploadimage':
                             $type = 0;

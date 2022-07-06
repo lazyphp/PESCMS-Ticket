@@ -22,3 +22,5 @@ UPDATE `pes_field` SET `field_form` = '2' WHERE `pes_field`.`field_id` = 235;
 UPDATE `pes_field` SET `field_form` = '2' WHERE `pes_field`.`field_id` = 270;
 UPDATE `pes_field` SET `field_form` = '2' WHERE `pes_field`.`field_id` = 273;
 UPDATE `pes_field` SET `field_form` = '2' WHERE `pes_field`.`field_id` = 281;
+
+UPDATE `pes_field` SET `field_option` = '{&quot;\\u5f85\\u89e3\\u51b3&quot;:&quot;0&quot;,&quot;\\u53d7\\u7406\\u4e2d&quot;:&quot;1&quot;,&quot;\\u5f85\\u56de\\u590d&quot;:&quot;2&quot;}' WHERE `pes_field`.`field_id` = 269;

@@ -5,11 +5,10 @@
     <input type="hidden" name="back_url" value="<?= $label->xss($_GET['back_url'] ?? '') ?>"/>
 <?= $label->token(); ?>
 
-    <div class="am-panel-group am-margin-bottom-sm" id="accordion">
+    <div class="am-margin-bottom-sm" id="accordion">
         <?php foreach ($field as $tagName => $item) : ?>
 
-
-            <div class="am-panel am-panel-warning">
+            <div class="am-panel am-panel-warning am-margin-bottom">
                 <div class="am-panel-hd">
                     <h4 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#<?= substr(md5($tagName), 0, 5) ?>'}">
                         <?= $tagName ?>
@@ -48,6 +47,13 @@
 
     <script>
         $(function () {
+
+            $('.am-panel-title').each(function (){
+                let option = $(this).data('am-collapse');
+                let target = AMUI.utils.parseOptions(option).target;
+                $(target).collapse('open')
+            })
+
             var closeTicket = function (val) {
                 var showCloseType = $('input[name="close_type[]"]').parent().parent()
                 var showCloseSetting = $('input[name="close_time"]').parent()

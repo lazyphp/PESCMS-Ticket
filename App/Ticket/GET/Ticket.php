@@ -97,6 +97,9 @@ class Ticket extends \Core\Controller\Controller {
                     break;
                 case '5':
                     break;
+                case '6':
+                    $this->condition .= " AND t.ticket_close = 1 ";
+                    break;
                 default:
                     $this->condition .= " AND  t.ticket_read = 0";
                     break;

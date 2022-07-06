@@ -657,6 +657,23 @@ class Ticket extends \Core\Model\Model {
     }
 
     /**
+     * 设置客服消息已读
+     * @param $ticketNumber
+     * @param $userID
+     * @return void
+     */
+    public static function csnoticeRead($ticketNumber, $userID){
+        self::db('csnotice')->where("ticket_number = :ticket_number AND user_id = :user_id AND csnotice_read = 0")->update([
+            'noset' => [
+                'ticket_number' => $ticketNumber,
+                'user_id' => $userID
+            ],
+            'csnotice_read' => 1,
+            'csnotice_read_time' => time(),
+        ]);
+    }
+
+    /**
      * 自定义工单单号格式
      * @param $field
      * @return array|string|string[]

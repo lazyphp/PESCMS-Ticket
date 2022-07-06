@@ -279,6 +279,8 @@ class Ticket extends \Core\Controller\Controller {
             ]));
 
             \Model\Ticket::readStatus($content['ticket']['ticket_id'], -1);
+            \Model\Ticket::csnoticeRead($content['ticket']['ticket_number'], $userID);
+
 
             $this->assign('ticketModel', \Model\Content::listContent(['table' => 'ticket_model', 'field' => 'ticket_model_id, ticket_model_number, ticket_model_cid, ticket_model_name']));
             $this->assign('form', $content['form']);

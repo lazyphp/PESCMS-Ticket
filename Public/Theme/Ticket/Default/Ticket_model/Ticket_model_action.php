@@ -48,11 +48,17 @@
     <script>
         $(function () {
 
-            $('.am-panel-title').each(function (){
-                let option = $(this).data('am-collapse');
-                let target = AMUI.utils.parseOptions(option).target;
-                $(target).collapse('open')
-            })
+            let searchParams = new URLSearchParams(window.location.href);
+            let urlID = searchParams.get('id');
+
+            if(urlID == null){
+                $('.am-panel-title').each(function (){
+                    let option = $(this).data('am-collapse');
+                    let target = AMUI.utils.parseOptions(option).target;
+                    $(target).collapse('open')
+                })
+            }
+
 
             var closeTicket = function (val) {
                 var showCloseType = $('input[name="close_type[]"]').parent().parent()

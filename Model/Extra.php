@@ -71,14 +71,14 @@ class Extra extends \Core\Model\Model {
                 }
                 break;
             case 4:
-                if(!preg_match("/^[a-z\d]$/i",$value)){
+                if(!preg_match("/^[a-z]*$/i",$value)){
                     return false;
                 }
                 break;
             case 5:
                 return filter_var($value, FILTER_VALIDATE_URL);
             case 6:
-                if(!preg_match("/^[a-z0-9\d]$/i",$value)){
+                if(!preg_match("/^[a-z\d]*$/i",$value)){
                     return false;
                 }
         }

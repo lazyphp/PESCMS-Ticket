@@ -16,7 +16,6 @@
     <script src="<?= str_replace("/Install", "", DOCUMENT_ROOT) ?>/Theme/assets/js/jquery.min.js"></script>
     <script src="<?= str_replace("/Install", "", DOCUMENT_ROOT) ?>/Theme/assets/js/amazeui.min.js"></script>
     <script src="<?= str_replace("/Install", "", DOCUMENT_ROOT) ?>/Theme/assets/js/dialog-min.js"></script>
-    <script src="<?= str_replace("/Install", "", DOCUMENT_ROOT) ?>/Theme/assets/js/app.js"></script>
     <!--<![endif]-->
     <style>
         html, body {

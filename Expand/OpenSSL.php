@@ -46,7 +46,9 @@ class OpenSSL{
             return 'openssl加密扩展未部署';
         }
         $ivlen = openssl_cipher_iv_length($method);
-        $this->iv = openssl_random_pseudo_bytes($ivlen);
+        if(!empty($ivlen)){
+            $this->iv = openssl_random_pseudo_bytes($ivlen);
+        }
     }
 
     /**

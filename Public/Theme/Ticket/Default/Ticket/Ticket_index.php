@@ -9,9 +9,10 @@
             <div class="am-g am-margin-bottom-xs am-g-collapse am-margin-top-xs">
                 <div class="am-u-sm-12 am-u-md-12">
                     <?php foreach(array_merge(['最近反馈'], array_column($ticketStatus, 'name'), ['所有工单', '已关闭']) as $key => $name): ?>
-                    <a href="<?= $label->url('Ticket-'.MODULE.'-'.ACTION, ['q' => $key]) ?>" class="am-btn am-btn-default am-btn-xs am-fl <?= (isset($_GET['q']) && $_GET['q'] == $key && empty($_GET['search'])) || (empty($_GET['q']) && $key == 0 ) ? 'am-disabled' : '' ?>"><?= $name ?></a>
+                    <a href="<?= $label->url('Ticket-'.MODULE.'-'.ACTION, ['q' => $key]) ?>" class="am-btn am-btn-default am-btn-xs am-fl <?= (isset($_GET['q']) && $_GET['q'] == $key && empty($_GET['search'])) || (empty($_GET['q']) && $key == 0 && empty($_GET['search']) ) ? 'am-disabled' : '' ?>"><?= $name ?></a>
                     <?php endforeach; ?>
                     <a href="javascript:;" class="am-btn am-btn-primary show-search-form am-btn-xs am-fl" data="<?= !empty($_GET['search']) ? '0' : '1' ?>" ><i class="am-icon-search"></i> 工单搜索</a>
+                    <a href="<?= $label->url('Ticket-'.MODULE.'-'.ACTION, ['q' => (int) ($_GET['q'] ?? ''), 'csv' => '1']) ?>" class="am-btn am-btn-success am-btn-xs am-fl pes-quick-csv" <?= !empty($_GET['search']) ? 'style="display:none"' : '' ?>><i class="am-icon-upload"></i> 导出CSV</a>
                 </div>
 
                 <div class="am-u-sm-12 am-u-md-12 ticket-search-form am-margin-top " style="display: none">
@@ -44,10 +45,12 @@
                 dom.html('<i class="am-icon-search"></i> 工单搜索');
                 dom.attr('data', '0')
                 $('.ticket-search-form').fadeOut('800')
+                $('.pes-quick-csv').show();
             }else{
                 dom.html('<i class="am-icon-compress"></i> 收起搜索');
                 dom.attr('data', '1')
                 $('.ticket-search-form').fadeIn('800');
+                $('.pes-quick-csv').hide();
             }
         }
 

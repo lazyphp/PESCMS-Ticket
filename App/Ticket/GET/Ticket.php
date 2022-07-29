@@ -80,8 +80,9 @@ class Ticket extends \Core\Controller\Controller {
             $sort = 't.ticket_top_list DESC,';
         }
 
+
         //工单前置状态筛选
-        if(empty($_GET['search']) && ACTION != 'complain' ){
+        if(empty($_GET['search']) && empty($_GET['search-csv'])  && ACTION != 'complain' ){
             switch ($this->g('q')){
                 case '1':
                     $this->condition .= " AND t.ticket_status = 0 AND t.ticket_close = 0 ";
@@ -121,7 +122,7 @@ class Ticket extends \Core\Controller\Controller {
             'count' => empty($this->group) ? sprintf($sql, 'count(*)') : 'SELECT COUNT(*) FROM ('.sprintf($sql, 't.ticket_id').') AS t ',
             'normal' => sprintf($sql, 't.*, tm.ticket_model_name, tm.ticket_model_cid, tm.ticket_model_time_out'),
             'param' => $this->param,
-            'page' => !empty($_GET['csv']) ? '9919999' : '20'
+            'page' => !empty($_GET['search-csv']) || !empty($_GET['csv']) ? '9919999' : '20'
         ]);
 
         $this->assign('ticketModel', \Model\Content::listContent(['table' => 'ticket_model']));
@@ -154,7 +155,7 @@ class Ticket extends \Core\Controller\Controller {
     }
 
     public function csv(){
-        if(empty($_GET['csv'])){
+        if(empty($_GET['csv']) && empty($_GET['search-csv']) ){
             return false;
         }
 
@@ -186,25 +187,28 @@ class Ticket extends \Core\Controller\Controller {
 
         $num = 0;
 
-        foreach (\Core\Func\CoreFunc::$param['list'] as $key => $item){
+        $list = \Core\Func\CoreFunc::$param['list'] ;
+        if (!empty($list )){
+            foreach ($list as $key => $item){
 
-            if ($num == 1) {
-                ob_flush();
-                flush();
-                $num = 0;
+                if ($num == 1) {
+                    ob_flush();
+                    flush();
+                    $num = 0;
+                }
+                $num++;
+
+                $content = [
+                    $item['ticket_number'],
+                    "{$category[$item['ticket_model_cid']]['category_name']} - {$item['ticket_model_name']}",
+                    $item['ticket_title'],
+                    $statsu[$item['ticket_status']]['name'],
+                    $item['member_id'] == '-1' ? '匿名用户' :$member[$item['member_id']]['member_name'],
+                    $item['user_name'],
+                    date('Y-m-d H:i', $item['ticket_submit_time']),
+                ];
+                fputcsv($fp, $content);
             }
-            $num++;
-
-            $content = [
-                $item['ticket_number'],
-                "{$category[$item['ticket_model_cid']]['category_name']} - {$item['ticket_model_name']}",
-                $item['ticket_title'],
-                $statsu[$item['ticket_status']]['name'],
-                $item['member_id'] == '-1' ? '匿名用户' :$member[$item['member_id']]['member_name'],
-                $item['user_name'],
-                date('Y-m-d H:i', $item['ticket_submit_time']),
-            ];
-            fputcsv($fp, $content);
         }
 
         fclose($fp);

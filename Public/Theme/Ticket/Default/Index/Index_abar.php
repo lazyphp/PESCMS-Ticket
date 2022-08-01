@@ -11,24 +11,22 @@
             <div class="am-margin"><i class="am-icon-spinner am-icon-spin"></i> 正在获取PT推荐应用...</div>
         </div>
 
-        <div class="pes-app-str am-hide" style="display: none;">
-            <ul data-am-widget="gallery" class="am-gallery am-avg-sm-4 am-gallery-imgbordered">
-                <li>
-                    <div class="am-gallery-item am-text-center">
-                        <a href="{app-url}" class="app-detail">
-                            <img src="{app-img}" class="am-img-responsive am-img-thumbnail" alt="{app-title}">
-                        </a>
-                        <h3 class="am-gallery-title am-text-xl"><strong>{app-title}</strong></h3>
-                        <div class="am-text-danger am-text-sm">{app-price}</div>
+        <ul class="pes-app-str am-hide" style="display: none;">
+            <li>
+                <div class="am-gallery-item am-text-center">
+                    <a href="{app-url}">
+                        <img src="{app-img}" class="am-img-responsive am-img-thumbnail" alt="{app-title}">
+                    </a>
+                    <h3 class="am-gallery-title am-text-xl"><strong>{app-title}</strong></h3>
+                    <div class="am-text-danger am-text-sm">{app-price}</div>
 
-                        <div>
-                            <a href="{app-url}" class="app-detail">查看详细</a>
-                        </div>
-
+                    <div>
+                        <a href="{app-url}">查看详细</a>
                     </div>
-                </li>
-            </ul>
-        </div>
+
+                </div>
+            </li>
+        </ul>
     </div>
 
 
@@ -48,15 +46,35 @@
 
             $.getJSON('https://www.pescms.com/?g=Api&m=Application&a=recommend&project=5', function (res) {
                 var status = res.status;
+
                 if (status == 200) {
+
+                    var templateStr = '';
+
                     var str = $('.pes-app-str').html();
-                    console.dir(str)
 
-                    console.dir(str.replace(/\{app-url\}/, 'dddd'))
 
-                    console.dir(str)
+
+                    for (var i in res.data) {
+                        var result = str.replace(/\{app-url\}|\{app-title\}|\{app-img\}|\{app-price\}/g, function (match) {
+                            var map = {
+                                '{app-url}': '/?g=Ticket&m=Application&a=index&open='+res['data'][i]['url'],
+                                '{app-title}': res['data'][i]['name'],
+                                '{app-img}': res['data'][i]['cover'],
+                                "{app-price}": res['data'][i]['price']
+                            };
+                            return map[match];
+                        });
+                        templateStr += result;
+                    }
+
+                    $('.pes-app-recommend').html('<ul data-am-widget="gallery" class="am-gallery am-avg-sm-4 am-gallery-imgbordered">'+templateStr+'</ul>');
 
                 }
+
+
+
+
             })
 
             $.getJSON('https://www.pescms.com/?g=Api&m=Article&a=index&type=5', function (res) {

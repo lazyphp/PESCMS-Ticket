@@ -139,6 +139,13 @@ Page({
     this.commonRequest(0, 0);
   },
 
+  onShareAppMessage(){
+    return {
+      title: '{{wxapp_title}}',
+      path: 'page/index/index'
+    }
+  },
+
   /**
    * 公共请求方法
    * @param {*} id 

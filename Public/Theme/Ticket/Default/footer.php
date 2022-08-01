@@ -60,7 +60,7 @@
         <?php endif; ?>
 
         <?php if($system['help_document'] == 0): ?>
-            $('header').before('<div class="am-alert am-alert-postscript am-text-sm am-margin-0" data-am-alert><button type="button" class="close-f1 am-close">&times;</button><i class="am-icon-leanpub"></i> 按F1可以打开PESCMS Ticket帮助文档</div>')
+            $('header').before('<div class="am-alert am-alert-postscript am-text-sm am-margin-0" data-am-alert><button type="button" class="close-f1 am-close">&times;</button><i class="am-icon-leanpub"></i> 按F1可以打开PESCMS Ticket帮助文档。 [点击右方&times;按钮可关闭本提示]</div>')
             $('html, body').animate({scrollTop: 0}, '500');
             $('.close-f1').on('click', function (){
                 confirm('请谨记在客服端按F1可随时打开PESCMS Ticket帮助文档。');

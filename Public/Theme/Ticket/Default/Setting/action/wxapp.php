@@ -29,7 +29,7 @@
                             <option value="<?= $value['mail_template_id'] ?>"><?= $label->getFieldOptionToMatch(183, $value['mail_template_type']); ?></option>
                         <?php endforeach; ?>
                     </select>
-                    <input type="text" class="test_account am-inline" placeholder="接收消息的微信小程序openid" style="width: 20%">
+                    <input type="text" class="test_account am-inline" placeholder="接收消息的微信小程序openid" <?= empty($wxapp_api['appID']) ? "readonly data-am-popover=\"{content: '请先填写微信小程序配置信息并保存', trigger: 'hover focus'}\"" : '' ?> style="width: 20%">
                     <a href="javascript:;" data="<?= $label->url(GROUP.'-Setting-wxappTest') ?>" type="submit" class="am-inline am-btn am-btn-warning send-test" >发送模板消息</a>
                     <a href="<?= $label->url(GROUP.'-Setting-wxappTest', ['debug_access_token' => true]) ?>" target="_blank">[access_token调试]</a>
                 </div>

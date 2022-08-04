@@ -32,3 +32,6 @@ VALUES
 (NULL, '安装模板', LAST_INSERT_ID(), '0', NULL, 'GET', 'index', 'TicketGETThemeinstall', LAST_INSERT_ID(), '0'),
 (NULL, '更新模板', LAST_INSERT_ID(), '0', NULL, 'GET', 'index', 'TicketGETThemeupgrade', LAST_INSERT_ID(), '0'),
 (NULL, '切换模板', LAST_INSERT_ID(), '0', NULL, 'PUT', 'index', 'TicketGETThemecall', LAST_INSERT_ID(), '0');
+
+INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_link`, `menu_listsort`, `menu_type`) VALUES
+(NULL, '日志快查', 9, 'am-icon-ambulance', 'Ticket-Log-index', 90, 0);

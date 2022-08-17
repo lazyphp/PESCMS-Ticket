@@ -174,7 +174,7 @@
   left: 0px;
   font-size: 12px;
   position: absolute;
-  display: none;
+  opacity: 0;
 }
 .login .loginFlow input {
   padding: 1.6rem 1.6rem 1rem 0 !important;
@@ -196,7 +196,9 @@
 .login .loginFlow input:focus + span,
 .login .loginFlow input:active + span,
 .login .loginFlow input.am-field-error + span {
-  display: block;
+  -webkit-transition: opacity 0.15s ease-in-out;
+  transition: opacity 0.15s ease-in-out;
+  opacity: 1;
 }
 .login .loginFlow input.am-field-error {
   border-radius: 0 !important;
@@ -204,10 +206,12 @@
   -webkit-box-shadow: inset 0 0px 1px 0px rgba(0, 0, 0, 0.075) !important;
 }
 .login .loginFlow input.am-field-error + span {
+  -webkit-transition: color 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out;
   color: #dd514c;
 }
 .login .loginFlow input.am-field-valid + span {
-  display: block;
+  opacity: 1;
 }
 .login .login-options {
   margin: 20px 0;

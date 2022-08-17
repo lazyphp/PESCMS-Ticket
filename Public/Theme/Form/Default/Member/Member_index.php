@@ -112,7 +112,7 @@
                                                 <td>
                                                     <div class="am-form-group am-margin-bottom-0">
                                                         <div class="am-margin-bottom-xs">企业微信ID:</div>
-                                                        <input type="text" name="wxWork" placeholder="企业微信ID" value="<?= $member['member_wxWork'] ?>" required="required">
+                                                        <input type="text" name="wxWork" placeholder="企业微信ID" value="<?= $member['member_wxWork'] ?>" >
                                                     </div>
                                                 </td>
                                             </tr>
@@ -120,7 +120,7 @@
                                                 <td>
                                                     <div class="am-form-group am-margin-bottom-0">
                                                         <div class="am-margin-bottom-xs">钉钉ID:</div>
-                                                        <input type="text" name="dingtalk" placeholder="钉钉ID" value="<?= $member['member_dingtalk'] ?>" required="required">
+                                                        <input type="text" name="dingtalk" placeholder="钉钉ID" value="<?= $member['member_dingtalk'] ?>" >
                                                     </div>
                                                 </td>
                                             </tr>

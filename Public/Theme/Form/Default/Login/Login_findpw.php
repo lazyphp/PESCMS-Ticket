@@ -1,5 +1,6 @@
 <div class="loginFlow">
     <input type="email" name="email" class="pes-login-input" placeholder="邮箱地址" required="required">
+    <span>邮箱地址</span>
 </div>
 
 <div class="login-verify">
@@ -10,6 +11,7 @@
 
     <div class="loginFlow">
         <input type="text" class="pes-login-input" name="verify" placeholder="验证码" maxlength="<?= $system['verifyLength'] ?>" autocomplete="off" required>
+        <span>验证码</span>
     </div>
 </div>
 

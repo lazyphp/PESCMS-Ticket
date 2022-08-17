@@ -20,8 +20,7 @@
                 <li><a href="https://www.pescms.com/Page/Authorization.html">商业授权</a></li>
                 <li><a href="https://www.pescms.com/Authorize-Verify">授权查询</a></li>
                 <li><a href="https://www.pescms.com/service.html">有偿服务</a></li>
-                <li><a href="https://www.pescms.com/Page/ad.html">广告投放</a></li>
-                <li><a href="https://www.pescms.com/Page/donate.html">赞助捐赠</a></li>
+                <li><a href="https://www.pescms.com/Page/about.html">关于我们</a></li>
             </ul>
         </div>
     </div>

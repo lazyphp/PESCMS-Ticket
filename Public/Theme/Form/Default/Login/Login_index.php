@@ -1,15 +1,19 @@
 <div class="loginFlow">
     <?php if ($system['member_login'] == 1): ?>
         <input type="text" name="account" class="pes-login-input" placeholder="登录账号" autofocus required="required">
+        <span>登录账号</span>
     <?php elseif ($system['member_login'] == 2): ?>
         <input type="text" name="phone" class="pes-login-input" placeholder="手机号码" autofocus required="required">
+        <span>手机号码</span>
     <?php else: ?>
         <input type="email" name="email" class="pes-login-input" placeholder="邮箱地址" autofocus required="required">
+        <span>邮箱地址</span>
     <?php endif; ?>
 </div>
 
 <div class="loginFlow">
     <input type="password" name="password" class="pes-login-input" placeholder="登录密码" minlength="6" data-am-popover="{trigger:'focus', theme: 'danger sm', content: '请输入不小于6位数的登录密码'}" required="required">
+    <span>登录密码</span>
 </div>
 
 <?php if (json_decode($system['login_verify'])[0] == '1'): ?>
@@ -21,6 +25,7 @@
 
         <div class="loginFlow">
             <input type="text" class="pes-login-input" name="verify" placeholder="验证码" maxlength="<?= $system['verifyLength'] ?>" autocomplete="off" required>
+            <span>验证码</span>
         </div>
     </div>
 

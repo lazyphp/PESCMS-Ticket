@@ -59,7 +59,7 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">邮件发送测试</label>
-                    <input type="email" class="test_email am-inline" placeholder="填写要可以接收邮件的E-mail地址" style="width: 20%">
+                    <input type="email" class="test_email am-inline" placeholder="填写要可以接收邮件的E-mail地址" <?= empty($mail['account']) ? "readonly data-am-popover=\"{content: '请先填写Email配置信息并保存', trigger: 'hover focus'}\"" : '' ?>  style="width: 20%">
                     <a href="javascript:;" data="<?= $label->url(GROUP.'-Setting-emailTest') ?>" type="submit" class="am-inline am-btn am-btn-warning email-test" >发送测试邮件</a>
                     <div class="pes-alert pes-alert-info am-text-xs " >
                         <i class="am-icon-lightbulb-o"></i> 请先保存邮件smtp的设置，再进行邮件发送测试。

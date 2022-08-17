@@ -32,7 +32,7 @@
                             <option value="<?= $value['mail_template_id'] ?>"><?= $label->getFieldOptionToMatch(183, $value['mail_template_type']); ?></option>
                         <?php endforeach; ?>
                     </select>
-                    <input type="text" class="test_account am-inline" placeholder="接收消息的微信openid" style="width: 20%">
+                    <input type="text" class="test_account am-inline" placeholder="接收消息的微信openid" <?= empty($weixin_api['appID']) ? "readonly data-am-popover=\"{content: '请先填写微信配置信息并保存', trigger: 'hover focus'}\"" : '' ?> style="width: 20%">
                     <a href="javascript:;" data="<?= $label->url(GROUP.'-Setting-weixinTest') ?>" type="submit" class="am-inline am-btn am-btn-warning send-test" >发送模板消息</a>
                     <a href="<?= $label->url(GROUP.'-Setting-weixinTest', ['debug_access_token' => true]) ?>" target="_blank">[access_token调试]</a>
                 </div>
@@ -80,7 +80,7 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">企业微信调试</label>
-                    <input type="text" class="test_account am-inline" placeholder="接收消息的企业微信账号" style="width: 20%">
+                    <input type="text" class="test_account am-inline" placeholder="接收消息的企业微信账号" <?= empty($weixinWork_api['AgentId']) ? "readonly data-am-popover=\"{content: '请先填写企业微信配置信息并保存', trigger: 'hover focus'}\"" : '' ?> style="width: 20%">
                     <a href="javascript:;" data="<?= $label->url(GROUP.'-Setting-weixinWorkTest') ?>" type="submit" class="am-inline am-btn am-btn-warning send-test" >企业消息测试</a>
                     <a href="<?= $label->url(GROUP.'-Setting-weixinWorkTest', ['debug_access_token' => true]) ?>" target="_blank">[access_token调试]</a>
 

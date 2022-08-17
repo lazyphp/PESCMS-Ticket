@@ -80,7 +80,9 @@
         </div>
 
         <button type="submit" name="search" value="1" class="am-btn am-btn-default am-btn-sm am-radius"><i class="am-icon-search"></i> 搜索</button>
-        <button type="submit" name="csv" value="1" class="am-btn am-btn-success am-btn-sm am-radius"><i class="am-icon-file-excel-o"></i> 导出CSV</button>
+        <?php if(!empty($_GET['search'])): ?>
+        <button type="submit" name="search-csv" value="1" class="am-btn am-btn-success am-btn-sm am-radius"><i class="am-icon-file-excel-o"></i> 导出CSV</button>
+        <?php endif; ?>
     </div>
 
 </form>

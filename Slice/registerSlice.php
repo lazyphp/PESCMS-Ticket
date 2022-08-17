@@ -106,7 +106,7 @@ $SLICE_ARRYR = [
     //部分操作需要超级管理员才可以进行。
     'ADMIN-LIMIT' => [
         'any',
-        ['Ticket-Model-:a', 'Ticket-Field-:a', 'Ticket-Setting-:a'],
+        ['Ticket-Model-:a', 'Ticket-Field-:a', 'Ticket-Setting-:a', 'Ticket-Log-:a'],
         ['\Ticket\AdminLimit'],
     ],
 

@@ -94,7 +94,8 @@ class Ticket extends \Core\Model\Model {
 
         $param = [];
 
-        if (!empty($csUserInfo)) {
+        //需要返回正确的user_id才执行自动分单和专属客服
+        if (!empty($csUserInfo['user_id'])) {
             $param['user_id'] = $csUserInfo['user_id'];
             $param['user_name'] = $csUserInfo['user_name'];
             $param['ticket_exclusive'] = empty($csUserInfo['exclusive']) ? 0 : 1;
@@ -254,9 +255,12 @@ class Ticket extends \Core\Model\Model {
                 $avgTotal = count($user);
 
                 array_walk($ticket, function ($value) use (&$user, &$avgSubTotal, &$userSort) {
-                    $user[$value['user_id']]['total'] = $value['total'];
-                    $avgSubTotal += $value['total'];
-                    $userSort[$value['user_id']] = $value['total'];
+                    if(isset($user[$value['user_id']])){
+                        $user[$value['user_id']]['total'] = $value['total'];
+                        $avgSubTotal += $value['total'];
+                        $userSort[$value['user_id']] = $value['total'];
+                    }
+
                 });
                 array_multisort($userSort, SORT_ASC, $user);
 

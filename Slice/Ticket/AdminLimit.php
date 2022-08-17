@@ -17,7 +17,7 @@ namespace Slice\Ticket;
 class AdminLimit extends \Core\Slice\Slice{
 
     public function before() {
-        if($this->session()->get('ticket')['user_id'] !== 1){
+        if($this->session()->get('ticket')['user_id'] != 1){
             $this->error('您没有权限进行本次操作.');
         }
     }

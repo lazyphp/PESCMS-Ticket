@@ -27,10 +27,12 @@
 
         <div class="loginFlow">
             <input type="email" name="email" class="pes-login-input" placeholder="要绑定的已注册邮箱地址" required="required">
+            <span>填写要绑定的已注册邮箱地址</span>
         </div>
 
         <div class="loginFlow">
             <input type="password" name="password" class="pes-login-input" placeholder="密码" data-am-popover="{trigger:'focus', theme: 'danger sm', content: '请输入不小于6位数的密码'}" required="required">
+            <span>填写绑定的账户密码</span>
         </div>
 
         <button type="submit" class="am-btn am-btn-primary am-radius am-btn-sm am-margin-top am-btn-block"><i class="am-icon-save"></i> 提交</button>

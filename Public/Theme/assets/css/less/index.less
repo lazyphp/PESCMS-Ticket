@@ -192,29 +192,62 @@
     margin-right: 24px;
     cursor: pointer;
 
-    &.am-active{
+    &.am-active {
       border-bottom: 2px solid #0084ff;
     }
 
   }
 
   .loginFlow {
+    position: relative;
     margin: 1rem 0;
+    padding-top: 5px;
 
-    input{
-      padding: 1.6rem 1.6rem 1.6rem 0 !important;
+    span {
+      top: 0;
+      left: 0px;
+      font-size: 12px;
+      position: absolute;
+      opacity: 0;
+    }
+
+    input {
+      padding: 1.6rem 1.6rem 1rem 0 !important;
       border: none !important;
       border-bottom: 1px solid #ebebeb !important;
       border-bottom-color: rgb(235, 235, 235);
       -webkit-box-shadow: none !important;
-      :focus{
+
+      &:focus, &:active, &.am-field-error {
         -webkit-box-shadow: none !important;
+        &::placeholder {
+          color: transparent;
+        }
+
+        + span {
+          -webkit-transition: opacity .15s ease-in-out;
+          transition: opacity .15s ease-in-out;
+          opacity: 1;
+        }
       }
 
-      &.am-field-error{
+
+      &.am-field-error {
         border-radius: 0 !important;
         border-bottom: 1px solid #dd514c !important;
         -webkit-box-shadow: inset 0 0px 1px 0px rgba(0, 0, 0, .075) !important;
+
+        + span {
+          -webkit-transition: color .15s ease-in-out;
+          transition: color .15s ease-in-out;
+          color: #dd514c;
+        }
+
+      }
+
+      &.am-field-valid + span{
+        opacity: 1;
+        //color: #5eb95e;
       }
 
     }

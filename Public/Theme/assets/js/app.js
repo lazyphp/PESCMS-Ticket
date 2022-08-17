@@ -295,7 +295,7 @@ $(function () {
             "rotate",
             "close"
         ],
-        selector: '[data-fancybox="gallery"]'
+        selector: '[data-fancybox^="gallery"]'
     });
 
 })

@@ -3,23 +3,27 @@
 <?php if (!empty($registerForm['account'])): ?>
     <div class="loginFlow">
         <input type="text" name="account" class="pes-login-input" placeholder="登录账号" autofocus required="required">
+        <span>登录账号</span>
     </div>
 <?php endif; ?>
 
 <?php foreach ($field as $key => $value) : ?>
 <div class="loginFlow">
     <?= $form->formList($value); ?>
+    <span><?= $value['field_display_name'] ?></span>
 </div>
 <?php endforeach; ?>
 
 <div class="loginFlow">
     <input type="password" name="password" class="pes-login-input" placeholder="密码" minlength="6"
            data-am-popover="{trigger:'focus', theme: 'danger sm', content: '请输入不小于6位数的密码'}" required="required">
+    <span>密码</span>
 </div>
 
 <div class="loginFlow">
     <input type="password" name="repassword" class="pes-login-input" placeholder="确认密码" minlength="6"
            data-am-popover="{trigger:'focus', theme: 'danger sm', content: '请输入不小于6位数的密码'}" required="required">
+    <span>确认密码</span>
 </div>
 
 
@@ -31,6 +35,7 @@
     <div class="loginFlow">
         <input type="text" class="pes-login-input login-verify" name="verify" placeholder="验证码"
                maxlength="<?= $system['verifyLength'] ?>" autocomplete="off" required>
+        <span>验证码</span>
     </div>
 </div>
 

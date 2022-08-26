@@ -366,7 +366,7 @@ class Ticket extends \Core\Model\Model {
                             $suffix = pathinfo($item);
                             $small = "{$item}_150x150.{$suffix['extension']}";
                             $imgStr .= '<li>
-<a href="' . $item . '" data-fancybox="gallery" ><img src="' . $small . '" alt="' . imgs . '" class="am-img-thumbnail" width="50" height="50" /></a>
+<a href="' . $item . '" data-fancybox="gallery" ><img src="' . $small . '" alt="" class="am-img-thumbnail" width="50" height="50" /></a>
 </li>';
                         }
                     }

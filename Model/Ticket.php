@@ -699,7 +699,7 @@ class Ticket extends \Core\Model\Model {
             ])['total'] + 1;
 
             $search = ['{Y}', '{M}', '{D}', '{Z}', '{A}', '{S}'];
-            $replace = [date('Y'), date('m'), date('d'), sprintf('%04d', $zKeyWord), sprintf('%04d', $aKeyWord), sprintf('%05d', range(0, 99999))];
+            $replace = [date('Y'), date('m'), date('d'), sprintf('%04d', $zKeyWord), sprintf('%04d', $aKeyWord), sprintf('%05d', rand(0, 99999))];
 
             return str_replace($search, $replace, $ticket_model_custom_no);
 

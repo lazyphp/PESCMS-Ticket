@@ -13,10 +13,11 @@
 
         <ul class="pes-app-str am-hide" style="display: none;">
             <li>
-                <div class="am-gallery-item am-text-center">
+                <div class="am-gallery-item am-text-center" style="position: relative">
                     <a href="{app-url}">
                         <img src="{app-img}" class="am-img-responsive am-img-thumbnail" alt="{app-title}">
                     </a>
+                    {app-vip}
                     <h3 class="am-gallery-title am-text-xl"><strong>{app-title}</strong></h3>
                     <div class="am-text-danger am-text-sm">{app-price}</div>
 
@@ -56,15 +57,17 @@
 
 
                     for (var i in res.data) {
-                        var result = str.replace(/\{app-url\}|\{app-title\}|\{app-img\}|\{app-price\}/g, function (match) {
+                        var result = str.replace(/\{app-url\}|\{app-title\}|\{app-img\}|\{app-price\}|\{app-vip\}/g, function (match) {
                             var map = {
                                 '{app-url}': '/?g=Ticket&m=Application&a=index&open='+res['data'][i]['url'],
                                 '{app-title}': res['data'][i]['name'],
                                 '{app-img}': res['data'][i]['cover'],
-                                "{app-price}": res['data'][i]['price']
+                                "{app-price}": res['data'][i]['price'],
+                                "{app-vip}": res['data'][i]['vip'] == 1 ? '<span class="am-badge am-badge-danger pes-vip" style="position: absolute;top: 2px;right: 2px">授权专属</span>' : ''
                             };
                             return map[match];
                         });
+
                         templateStr += result;
                     }
 

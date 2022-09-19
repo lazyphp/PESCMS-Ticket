@@ -76,6 +76,19 @@ class Route {
             exit;
         }
 
+        //URL公共参数别名功能
+        $urlAlias = CoreFunc::loadConfig('URL_ALIAS');
+        if(!empty($urlAlias)){
+            foreach ($urlAlias as $key => $item){
+                if($key == 'method' && !empty($_REQUEST[$item]) ){
+                    $_REQUEST[$key] = $_REQUEST[$item];
+                }elseif(!empty($_GET[$item])){
+                    $_GET[$key] = $_GET[$item];
+                }
+
+            }
+        }
+
         $this->custom($requestUri);
 
         if (empty($_GET['m']) || empty($_GET['a'])) {

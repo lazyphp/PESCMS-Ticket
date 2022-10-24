@@ -138,6 +138,16 @@ class Index extends \Core\Controller\Controller {
                 ],
                 'url' => $this->url('Ticket-Ticket-index', ['q' => 1]),
             ],
+            'lately' => [
+                'title' => '近一个月的工单',
+                'condition' => 't.ticket_close = 0 AND tm.ticket_model_group_id LIKE :group_id AND (t.user_id = 0 OR t.user_id = :user_id ) AND t.ticket_refer_time >= :ticket_refer_time ',
+                'param' => [
+                    'user_id' => $this->session()->get('ticket')['user_id'],
+                    'group_id' => "%,{$this->session()->get('ticket')['user_group_id']},%",
+                    'ticket_refer_time' => time() - 86400 * 30
+                ],
+                'tips' => '本列表将列出您负责的近一个月内有变动的工单。依据最新动态时间倒叙',
+            ],
             'am-panel-success' => [
                 'title' => '已完成/关闭工单',
                 'condition' => 't.user_id = :user_id AND (t.ticket_status = 3 OR t.ticket_close = 1)',
@@ -150,6 +160,7 @@ class Index extends \Core\Controller\Controller {
 
             $list[$key]['title'] = $value['title'];
             $list[$key]['url'] = $value['url'];
+            $list[$key]['tips'] = $value['tips'];
             $list[$key]['list'] = \Model\Content::listContent([
                 'table' => 'ticket AS t',
                 'field' => 't.*, tm.ticket_model_name, tm.ticket_model_cid, tm.ticket_model_time_out',

@@ -83,6 +83,11 @@ class Ticket extends \Core\Controller\Controller {
 
         //工单前置状态筛选
         if(empty($_GET['search']) && empty($_GET['search-csv'])  && ACTION != 'complain' ){
+
+            if(!isset($_GET['q']) && isset($this->session()->get('ticket')['user_ticket_status']) ){
+                $_GET['q'] = $this->session()->get('ticket')['user_ticket_status'];
+            }
+
             switch ($this->g('q')){
                 case '1':
                     $this->condition .= " AND t.ticket_status = 0 AND t.ticket_close = 0 ";

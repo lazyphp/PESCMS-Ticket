@@ -89,6 +89,18 @@
                             <a href="<?= $label->url('Ticket-status', ['number' => $ticket_number, 'back_url' => base64_encode($_SERVER['REQUEST_URI']), 'method' => 'PUT']) ?>"
                                class="am-text-success ajax-click ajax-dialog" msg="您可以恢复7天内由您主动结束的工单。">[<i class="am-icon-refresh"></i> 恢复工单]</a>
                         <?php endif; ?>
+
+                        <?php if ($label->checkAuth('TicketPUTTicketcomplete') === true && GROUP == 'Ticket' && $ticket_status == 3 ): ?>
+                            <form action="<?= $label->url('Ticket-Ticket-reply'); ?>" class="am-form ajax-submit" method="POST" data-am-validator>
+                                <a name="handleTicket"></a>
+                                <input type="hidden" name="number" value="<?= $ticket_number; ?>"/>
+                                <input type="hidden" name="back_url" value="<?= $_GET['back_url']; ?>"/>
+                                <input type="hidden" name="assign" value="5">
+                                <?= $label->token() ?>
+                                <button type="submit" class="am-btn am-btn-xs am-btn-warning" onclick="return confirm('确认要恢复本工单状态吗？')"><i class="am-icon-refresh"></i> 恢复工单</button>
+                            </form>
+                        <?php endif; ?>
+
                     </div>
                 </div>
             </div>

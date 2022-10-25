@@ -28,69 +28,88 @@ class Ticket extends \Core\Controller\Controller {
 
         $csText = \Model\Option::csText();
 
-        switch ($ticket['ticket_status']) {
-            case '0':
-                $status = '1';
-                $templateType = 2;
-                $content = $csText['accept']['content'];
-                \Model\Ticket::setUser($ticket['ticket_id'], $this->session()->get('ticket')['user_id'], $this->session()->get('ticket')['user_name']);
-                $referTime = $ticket['ticket_submit_time'];
-                break;
-            case '1':
-            case '2':
-                $status = '2';
-                $referTime = $ticket['ticket_refer_time'];
+        if($_POST['assign'] == 5 && $ticket['ticket_status'] == 3 ) {
+            $auth = \Model\Auth::check('TicketPUTTicketcomplete');
+            if ($auth !== true) {
+                $this->error($auth);
+            }
+            $status = '1';
+            $templateType = 2;
+            $content = $csText['recovery']['content'] ?? '因业务需要，客服已将本工单状态重置。';
 
-                if ($_POST['assign'] == '2') {
-                    $content = $this->isP('content', '请提交回复内容');
-                    $templateType = 3;
+            \Model\Ticket::inTicketIdWithUpdate([
+                'ticket_complete_time' => time(),
+                'noset'                => ['ticket_id' => $ticket['ticket_id']],
+            ]);
+        }else{
+            switch ($ticket['ticket_status']) {
+                case '0':
+                    $status = '1';
+                    $templateType = 2;
+                    $content = $csText['accept']['content'];
+                    \Model\Ticket::setUser($ticket['ticket_id'], $this->session()->get('ticket')['user_id'], $this->session()->get('ticket')['user_name']);
+                    $referTime = $ticket['ticket_submit_time'];
+                    break;
+                case '1':
+                case '2':
+                    $status = '2';
+                    $referTime = $ticket['ticket_refer_time'];
 
-                } elseif ($_POST['assign'] == '3') {
-                    $status = '0';//转派用户，工单状态应该为待解决
-                    $userID = $this->isP('uid', '请选择您要指派的用户');
-                    $checkUser = \Model\Content::findContent('user', $userID, 'user_id');
-                    if (empty($checkUser) || $checkUser['user_status'] == 0) {
-                        $this->error('转派的用户不存在');
+                    if ($_POST['assign'] == '2') {
+                        $content = $this->isP('content', '请提交回复内容');
+                        $templateType = 3;
+
+                    } elseif ($_POST['assign'] == '3') {
+                        $status = '0';//转派用户，工单状态应该为待解决
+                        $userID = $this->isP('uid', '请选择您要指派的用户');
+                        $checkUser = \Model\Content::findContent('user', $userID, 'user_id');
+                        if (empty($checkUser) || $checkUser['user_status'] == 0) {
+                            $this->error('转派的用户不存在');
+                        }
+                        if ($checkUser['user_vacation'] == 1) {
+                            $this->error('转派的用户正在休假');
+                        }
+                        \Model\Ticket::setUser($ticket['ticket_id'], $checkUser['user_id'], $checkUser['user_name'], $this->session()->get('ticket')['user_id']);
+                        $templateType = 4;
+                        $content = $csText['assign']['content'];
+                        \Model\Notice::addCSNotice($ticket['ticket_number'], $checkUser, -$templateType);
+
+                    } elseif ($_POST['assign'] == '4') {
+                        $auth = \Model\Auth::check('TicketPUTTicketcomplete');
+                        if ($auth !== true) {
+                            $this->error($auth);
+                        }
+                        $status = '3';
+                        $templateType = 5;
+                        $content = $csText['complete']['content'];
+
+                        \Model\Ticket::inTicketIdWithUpdate([
+                            'ticket_complete_time' => time(),
+                            'noset'                => ['ticket_id' => $ticket['ticket_id']],
+                        ]);
+
+                    } else {
+                        $this->error('未知的工单选择状态，请重新选择');
                     }
-                    if ($checkUser['user_vacation'] == 1) {
-                        $this->error('转派的用户正在休假');
-                    }
-                    \Model\Ticket::setUser($ticket['ticket_id'], $checkUser['user_id'], $checkUser['user_name'], $this->session()->get('ticket')['user_id']);
-                    $templateType = 4;
-                    $content = $csText['assign']['content'];
-                    \Model\Notice::addCSNotice($ticket['ticket_number'], $checkUser, -$templateType);
 
-                } elseif ($_POST['assign'] == '4') {
-                    $auth = \Model\Auth::check('TicketPUTTicketcomplete');
-                    if ($auth !== true) {
-                        $this->error($auth);
-                    }
-                    $status = '3';
-                    $templateType = 5;
-                    $content = $csText['complete']['content'];
-
-                    \Model\Ticket::inTicketIdWithUpdate([
-                        'ticket_complete_time' => time(),
-                        'noset'                => ['ticket_id' => $ticket['ticket_id']],
-                    ]);
-
-                } else {
-                    $this->error('未知的工单选择状态，请重新选择');
-                }
-
-                break;
-            case '4':
-                $this->error('本工单已处理结束！');
-            default:
-                $this->error('获取工单状态失败');
+                    break;
+                case '4':
+                    $this->error('本工单已处理结束！');
+                default:
+                    $this->error('获取工单状态失败');
+            }
         }
+
+
+
+
         \Model\Ticket::updateReferTime($ticket['ticket_id']);
         \Model\Ticket::runTime($ticket['ticket_id'], $referTime, $ticket['ticket_run_time']);
         \Model\Ticket::changeStatus($ticket, $status);
         \Model\Ticket::addReply($ticket['ticket_id'], $content);
 
         //只有勾选告知客户才生成通知(完成工单不受影响)，尽量减少对客户的滋扰。
-        if ($_POST['notice'] == 1 || $_POST['assign'] == '4') {
+        if ($_POST['notice'] == 1 || in_array($_POST['assign'], ['4', '5'])) {
 
             //没有选择通知方式或者匿名工单，则按照工单基础表中记录的联系方式生成通知。
             if (empty($_POST['contact_type']) || $ticket['member_id'] == '-1') {

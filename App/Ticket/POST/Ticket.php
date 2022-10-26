@@ -38,7 +38,7 @@ class Ticket extends \Core\Controller\Controller {
             $content = $csText['recovery']['content'] ?? '因业务需要，客服已将本工单状态重置。';
 
             \Model\Ticket::inTicketIdWithUpdate([
-                'ticket_complete_time' => time(),
+                'ticket_complete_time' => 0,
                 'noset'                => ['ticket_id' => $ticket['ticket_id']],
             ]);
         }else{

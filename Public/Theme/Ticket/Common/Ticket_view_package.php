@@ -85,9 +85,9 @@
                         <?php if (GROUP == 'Form' && $ticket_status < 3 && $ticket_close == 0): ?>
                             <a href="<?= $label->url('Ticket-status', ['number' => $ticket_number, 'back_url' => base64_encode($_SERVER['REQUEST_URI']), 'method' => 'PUT']) ?>"
                                class="am-text-warning ajax-click ajax-dialog" msg="您确定要结束本工单吗?">[<i class="am-icon-check"></i> 结束工单]</a>
-                        <?php elseif(GROUP == 'Form' && $ticket_status == 3 && $ticket_close == 0 && $ticket_complete_time >= time() - 86400 * 7 ): ?>
+                        <?php elseif(GROUP == 'Form' && $ticket_status == 3 && $ticket_close == 0 && $ticket_complete_time >= time() - 86400 * $ticket_model_recovery_day ): ?>
                             <a href="<?= $label->url('Ticket-status', ['number' => $ticket_number, 'back_url' => base64_encode($_SERVER['REQUEST_URI']), 'method' => 'PUT']) ?>"
-                               class="am-text-success ajax-click ajax-dialog" msg="您可以恢复7天内由您主动结束的工单。">[<i class="am-icon-refresh"></i> 恢复工单]</a>
+                               class="am-text-success ajax-click ajax-dialog" msg="您可以恢复<?=$ticket_model_recovery_day ?? 7?>天内由已结束的工单。">[<i class="am-icon-refresh"></i> 恢复工单]</a>
                         <?php endif; ?>
 
                         <?php if ($label->checkAuth('TicketPUTTicketcomplete') === true && GROUP == 'Ticket' && $ticket_status == 3 ): ?>

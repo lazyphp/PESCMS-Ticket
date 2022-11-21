@@ -159,8 +159,8 @@ class Index extends \Core\Controller\Controller {
         foreach ($type as $key => $value) {
 
             $list[$key]['title'] = $value['title'];
-            $list[$key]['url'] = $value['url'];
-            $list[$key]['tips'] = $value['tips'];
+            $list[$key]['url'] = $value['url'] ?? '';
+            $list[$key]['tips'] = $value['tips'] ?? '';
             $list[$key]['list'] = \Model\Content::listContent([
                 'table' => 'ticket AS t',
                 'field' => 't.*, tm.ticket_model_name, tm.ticket_model_cid, tm.ticket_model_time_out',

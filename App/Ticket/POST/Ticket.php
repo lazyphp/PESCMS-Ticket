@@ -28,7 +28,7 @@ class Ticket extends \Core\Controller\Controller {
 
         $csText = \Model\Option::csText();
 
-        if($_POST['assign'] == 5 && $ticket['ticket_status'] == 3 ) {
+        if ($_POST['assign'] == 5 && $ticket['ticket_status'] == 3) {
             $auth = \Model\Auth::check('TicketPUTTicketcomplete');
             if ($auth !== true) {
                 $this->error($auth);
@@ -41,7 +41,7 @@ class Ticket extends \Core\Controller\Controller {
                 'ticket_complete_time' => 0,
                 'noset'                => ['ticket_id' => $ticket['ticket_id']],
             ]);
-        }else{
+        } else {
             switch ($ticket['ticket_status']) {
                 case '0':
                     $status = '1';
@@ -99,8 +99,6 @@ class Ticket extends \Core\Controller\Controller {
                     $this->error('获取工单状态失败');
             }
         }
-
-
 
 
         \Model\Ticket::updateReferTime($ticket['ticket_id']);
@@ -181,10 +179,11 @@ class Ticket extends \Core\Controller\Controller {
         \Model\Ticket::addReply($ticket['ticket_id'], \Model\Option::csText()['close']['content']);
 
         \Model\Ticket::inTicketIdWithUpdate([
-            'noset' => [
+            'noset'               => [
                 'ticket_id' => $ticket['ticket_id'],
             ],
             'ticket_close'        => '1',
+            'ticket_close_time'   => time(),
             'ticket_close_reason' => $reason,
         ]);
 

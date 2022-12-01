@@ -13,3 +13,5 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (NULL, 15, 'recovery_day', '工单恢复期限', 'text', '', '一般工单结束后，客户可以在7天内手动恢复功能。修改本参数可以调整对应的恢复期限。', '7', 0, 65, 1, 1, 1, 0, 0, 'POST,PUT');
 
 UPDATE `pes_field` SET `field_listsort` = '9999' WHERE `field_model_id` = 15 AND field_name = 'status' ;
+
+ALTER TABLE `pes_ticket` ADD `ticket_close_time` INT NOT NULL COMMENT '工单关闭时间' AFTER `ticket_close`;

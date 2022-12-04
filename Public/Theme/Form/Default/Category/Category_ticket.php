@@ -23,7 +23,7 @@
 
                     <?php foreach ($contact as $contactID => $contactValue): ?>
                         <?php
-                        if (($contactValue['key'] == 3 && empty($member['member_weixin'])) || $contactValue['key'] == 6) {
+                        if (($contactValue['key'] == 3 && empty($member['member_weixin'])) || $contactValue['key'] == 6 || empty($member[$contactValue['field']]) ) {
                             continue;
                         }
 

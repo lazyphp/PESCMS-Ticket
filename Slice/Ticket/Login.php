@@ -18,6 +18,9 @@ namespace Slice\Ticket;
 class Login extends \Core\Slice\Slice{
 
     public function before() {
+        
+        //埋入登录切片插件事件
+        (new \Core\Plugin\Plugin())->event('loginSlice', NULL);
 
         if(!empty($_GET['_notice_login'])){
             $notice_login = $this->g('_notice_login');

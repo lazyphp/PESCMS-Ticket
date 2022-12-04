@@ -83,6 +83,9 @@
         <?php if(!empty($_GET['search'])): ?>
         <button type="submit" name="search-csv" value="1" class="am-btn am-btn-success am-btn-sm am-radius"><i class="am-icon-file-excel-o"></i> 导出CSV</button>
         <?php endif; ?>
+
+        <?= (new \Core\Plugin\Plugin())->event('searchTool', NULL); ?>
+
     </div>
 
 </form>

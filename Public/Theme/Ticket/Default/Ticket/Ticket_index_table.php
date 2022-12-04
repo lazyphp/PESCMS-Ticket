@@ -31,6 +31,9 @@
                     <a href="<?= $label->url(GROUP . '-Ticket-handle', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>">
                         <span class="am-text-primary"><?= $value['ticket_read'] == '0' ? '[未读]' : ''; ?></span>
                         <?= $value['ticket_title'] ?>
+                        
+                        <?= $value['ticket_close'] == 1 && !empty($value['ticket_close_time']) ? '<small class="am-text-gray">[关闭于'.date('Y-m-d H:i', $value['ticket_close_time']).']</small>' : '' ?>
+                        
                     </a>
                 </div>
                 <?php if (!empty($value['ticket_remark'])): ?>

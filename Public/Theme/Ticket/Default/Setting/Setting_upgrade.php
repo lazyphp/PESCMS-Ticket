@@ -2,28 +2,35 @@
     <div class="am-panel am-panel-default">
         <div class="am-panel-bd">
 
-    <div class="am-cf">
-        <div class="am-fl am-cf">
-            <?php if (!empty($_GET['back_url'])): ?>
-                <a href="<?= base64_decode($_GET['back_url']) ?>" class="am-margin-right-xs am-text-danger"><i class="am-icon-reply"></i>返回</a>
-            <?php endif; ?>
-            <strong class="am-text-primary am-text-lg"><?= $title; ?></strong>
-        </div>
-    </div>
-    <div class="pes-alert pes-alert-error am-margin-bottom"  >
-        <i class="am-icon-warning"></i> 每次执行升级前，请务必备份数据库！
-    </div>
-    <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
+            <div class="am-cf">
+                <div class="am-fl am-cf">
+                    <?php if (!empty($_GET['back_url'])): ?>
+                        <a href="<?= base64_decode($_GET['back_url']) ?>" class="am-margin-right-xs am-text-danger"><i class="am-icon-reply"></i>返回</a>
+                    <?php endif; ?>
+                    <strong class="am-text-primary am-text-lg"><?= $title; ?></strong>
+                </div>
+            </div>
 
-    <div class="pes-alert pes-alert-info" id="patch" >
-        正在与PESCMS官网进行通讯，获取更新中……
-    </div>
-    <article class="am-article am-hide"></article>
+            <?php if ($zip == false): ?>
+                <div class="am-alert am-alert-warning">
+                    <i class="am-icon-warning"></i> 当前运行环境没有开启zip扩展，软件升级程序可能会出错，请参考PHP官网zip按照教程：<a href="https://www.php.net/manual/zh/zip.installation.php" target="_blank">https://www.php.net/manual/zh/zip.installation.php</a>
+                </div>
+            <?php endif; ?>
+
+            <div class="pes-alert pes-alert-error am-margin-bottom">
+                <i class="am-icon-warning"></i> 每次执行升级前，请务必备份数据库！
+            </div>
+            <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
+
+            <div class="pes-alert pes-alert-info" id="patch">
+                正在与PESCMS官网进行通讯，获取更新中……
+            </div>
+            <article class="am-article am-hide"></article>
 
             <hr/>
             <a href="<?= $label->url(GROUP . '-Setting-atUpgrade', ['method' => 'PUT']) ?>" class="am-btn am-radius am-btn-success am-btn-xs">执行自动更新</a>
             <hr/>
-            <div class="pes-alert pes-alert-info am-margin-bottom"  >
+            <div class="pes-alert pes-alert-info am-margin-bottom">
                 当自动更新多次失败时，您可以尝试将补丁下载到本地，执行手动升级。
             </div>
             <form action="<?= $label->url(GROUP . '-Setting-mtUpgrade') ?>" method="POST" enctype="multipart/form-data">
@@ -55,17 +62,17 @@
     </div>
 </div>
 <script>
-    $(function(){
+    $(function () {
 
-        $.getJSON(PESCMS_URL+'/patch/5/<?= $system['version'] ?>', function(data){
-            if(data.status == 200){
+        $.getJSON(PESCMS_URL + '/patch/5/<?= $system['version'] ?>', function (data) {
+            if (data.status == 200) {
                 var update_patch_file = data.data.update_patch_file ? ' <a class="am-btn am-radius am-btn-primary am-radius am-btn-xs" href="' + PESCMS_URL + data.data.update_patch_file + '" >下载更新</a>' : '';
-                $('#patch').html('有新版本发布: '+data.data.new_version + update_patch_file);
-                $('.am-article').html('<h3>更新内容:</h3>'+data.data.update_content).removeClass('am-hide')
-            }else{
+                $('#patch').html('有新版本发布: ' + data.data.new_version + update_patch_file);
+                $('.am-article').html('<h3>更新内容:</h3>' + data.data.update_content).removeClass('am-hide')
+            } else {
                 $('#patch').html(data.msg)
             }
-        }).fail(function(){
+        }).fail(function () {
             $('#patch').html('与PESCMS官网无法取得链接，请检查您的网络是否正常。');
         })
     })

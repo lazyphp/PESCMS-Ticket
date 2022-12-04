@@ -215,6 +215,7 @@ class Setting extends \Core\Controller\Controller {
      */
     public function upgrade(){
         $this->assign('title', '检查更新');
+        $this->assign('zip', in_array('zip', get_loaded_extensions()));
         $this->layout();
     }
 

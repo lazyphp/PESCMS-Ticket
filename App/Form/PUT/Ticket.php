@@ -18,6 +18,7 @@ class Ticket extends \Core\Controller\Controller{
 
         $ticket = \Model\Ticket::getTicketBaseInfo($number);
 
+
         if(empty($ticket) ||  $ticket['ticket_close'] == 1 ){
             $this->error('当前工单不存在或已完成.');
         }
@@ -32,8 +33,8 @@ class Ticket extends \Core\Controller\Controller{
 
         if($ticket['ticket_status']  == 3 ){
 
-            if(time() - 86400 * 7 > $ticket['ticket_complete_time']){
-                $this->error('无法恢复工单：要恢复工单的完成时间已超过7天有效期，请重新提交工单。');
+            if(time() - 86400 * $ticket['ticket_model_recovery_day'] > $ticket['ticket_complete_time']){
+                $this->error("无法恢复工单：要恢复工单的完成时间已超过{$ticket['ticket_model_recovery_day']}天有效期，请重新提交工单。");
             }
 
             $status = 1;

@@ -354,19 +354,19 @@ class Ticket extends \Core\Model\Model {
                     break;
                 case 'thumb':
                     $suffix = pathinfo($value['ticket_form_content']);
-                    $small = "{$value['ticket_form_content']}_150x150.{$suffix['extension']}";
+                    $small = "{$value['ticket_form_content']}";
 
-                    $form[$value['ticket_form_id']]['ticket_value'] = empty($value['ticket_form_content']) ? '' : '<a href="' . $value['ticket_form_content'] . '" data-fancybox="gallery"><img src="' . $small . '" alt="' . $value['ticket_form_content'] . '" class="am-img-thumbnail" width="50" height="50" /></a>';
+                    $form[$value['ticket_form_id']]['ticket_value'] = empty($value['ticket_form_content']) ? '' : '<img src="' . $small . '" alt="' . $value['ticket_form_content'] . '" class="am-img-thumbnail" width="50" height="50" />';
                     break;
                 case 'img':
                     $splitImg = explode(',', $value['ticket_form_content']);
-                    $imgStr = '<ul class="am-avg-sm am-thumbnails">';
+                    $imgStr = '<ul class="pes-ticket-form-img-group">';
                     if (!empty($value['ticket_form_content'])) {
                         foreach ($splitImg as $item) {
                             $suffix = pathinfo($item);
-                            $small = "{$item}_150x150.{$suffix['extension']}";
+                            $small = "{$item}";
                             $imgStr .= '<li>
-<a href="' . $item . '" data-fancybox="gallery" ><img src="' . $small . '" alt="' . imgs . '" class="am-img-thumbnail" width="50" height="50" /></a>
+<img src="' . $small . '" alt="" class="am-img-thumbnail"  />
 </li>';
                         }
                     }
@@ -699,7 +699,7 @@ class Ticket extends \Core\Model\Model {
             ])['total'] + 1;
 
             $search = ['{Y}', '{M}', '{D}', '{Z}', '{A}', '{S}'];
-            $replace = [date('Y'), date('m'), date('d'), sprintf('%04d', $zKeyWord), sprintf('%04d', $aKeyWord), sprintf('%05d', range(0, 99999))];
+            $replace = [date('Y'), date('m'), date('d'), sprintf('%04d', $zKeyWord), sprintf('%04d', $aKeyWord), sprintf('%05d', rand(0, 99999))];
 
             return str_replace($search, $replace, $ticket_model_custom_no);
 

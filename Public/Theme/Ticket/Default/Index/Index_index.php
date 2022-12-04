@@ -32,8 +32,11 @@
                 } ?>
                 <div class="am-panel am-panel-default">
                     <div class="am-panel-bd am-margin-bottom">
-                        <span class="am-fl"><strong><?= $item['title'] ?></strong></span>
-                        <a href="<?= $item['url'] ?>" class="am-fr">更多>></a>
+
+                        <span class="am-fl"><strong><?= $item['title'] ?></strong> <?= empty($item['tips']) ? '' : '<i class="am-icon-question-circle"  title="'.$item['tips'].'"></i>' ?> </span>
+                        <?php if (!empty($item['url'])): ?>
+                            <a href="<?= $item['url'] ?>" class="am-fr">更多>></a>
+                        <?php endif; ?>
                     </div>
                     <table class="am-table am-table-striped am-table-hover ticket-index-table ticket-list-table">
                         <?php if (empty($item['list'])): ?>
@@ -45,7 +48,8 @@
                                 <tr>
                                     <td class="">
                                         <div class="admin-task-meta">
-                                            <span class="am-badge" style="background-color: <?= $ticketStatus[$value['ticket_status']]['color']; ?>"><?= $ticketStatus[$value['ticket_status']]['name']; ?></span>
+                                            <span class="am-badge"
+                                                  style="background-color: <?= $ticketStatus[$value['ticket_status']]['color']; ?>"><?= $ticketStatus[$value['ticket_status']]['name']; ?></span>
                                             [<?= $category[$value['ticket_model_cid']]['category_name'] ?>
                                             - <?= $value['ticket_model_name'] ?>]
                                             <?= $value['ticket_number'] ?>
@@ -60,7 +64,8 @@
                                         <a href="<?= $label->url(GROUP . '-Ticket-handle', ['number' => $value['ticket_number'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>">处理</a>
                                         <?php if ($label->checkAuth(GROUP . 'DELETETicketaction') === true): ?>
                                             <i class="am-margin-left-xs am-margin-right-xs">|</i>
-                                            <a href="<?= $label->url(GROUP . '-Ticket-action', ['id' => $value['ticket_id'], 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>" class="ajax-click ajax-dialog" msg="确定删除吗？将无法恢复的！">删除</a>
+                                            <a href="<?= $label->url(GROUP . '-Ticket-action', ['id' => $value['ticket_id'], 'method' => 'DELETE', 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) ?>"
+                                               class="ajax-click ajax-dialog" msg="确定删除吗？将无法恢复的！">删除</a>
                                         <?php endif; ?>
                                     </td>
                                 </tr>
@@ -73,7 +78,7 @@
         </div>
         <div class="am-u-sm-12 am-u-lg-4">
 
-            <?php require_once __DIR__.'/Index_abar.php'?>
+            <?php require_once __DIR__ . '/Index_abar.php' ?>
 
             <div class="am-panel am-panel-default">
                 <div class="am-panel-bd am-margin-bottom">

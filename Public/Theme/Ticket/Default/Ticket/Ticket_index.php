@@ -13,6 +13,9 @@
                     <?php endforeach; ?>
                     <a href="javascript:;" class="am-btn am-btn-primary show-search-form am-btn-xs am-fl" data="<?= !empty($_GET['search']) ? '0' : '1' ?>" ><i class="am-icon-search"></i> 工单搜索</a>
                     <a href="<?= $label->url('Ticket-'.MODULE.'-'.ACTION, ['q' => (int) ($_GET['q'] ?? ''), 'csv' => '1']) ?>" class="am-btn am-btn-success am-btn-xs am-fl pes-quick-csv" <?= !empty($_GET['search']) ? 'style="display:none"' : '' ?>><i class="am-icon-upload"></i> 导出CSV</a>
+
+                    <?= (new \Core\Plugin\Plugin())->event('filterTool', NULL); ?>
+
                 </div>
 
                 <div class="am-u-sm-12 am-u-md-12 ticket-search-form am-margin-top " style="display: none">

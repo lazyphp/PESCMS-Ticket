@@ -23,7 +23,13 @@
 
                     <?php foreach ($contact as $contactID => $contactValue): ?>
                         <?php
-                        if (($contactValue['key'] == 3 && empty($member['member_weixin'])) || $contactValue['key'] == 6 || empty($member[$contactValue['field']]) ) {
+                        if (
+                            //非登录状态下，微信公众号选项隐藏
+                            ( in_array($contactValue['key'], [3]) && empty($member))
+                            //小程序PC/移动端默认隐藏
+                            || $contactValue['key'] == 6
+                            //登录状态下判断账号是否拥有工单模型设置的联系方式
+                            || (isset($member) && empty($member[$contactValue['field']])) ) {
                             continue;
                         }
 
@@ -33,7 +39,7 @@
 
                         ?>
                         <label class="form-radio-label am-radio-inline">
-                            <input class="form-radio" type="radio" name="contact" value="<?= $contactValue['key'] ?>" required="required" <?= $ticketInfo['contact_default'] == $contactValue['key'] ? 'checked="checked"' : '' ?> data="<?= !empty($member) ? $member[$contactValue['field']] : '' ?>"/>
+                            <input class="form-radio" type="radio" name="contact" value="<?= $contactValue['key'] ?>" required="required" <?= $ticketInfo['contact_default'] == $contactValue['key'] ? 'checked="checked"' : '' ?> data="<?= !empty($member) ? $member[$contactValue['field']] : '' ?>" islogin="<?= (int) isset($member) ?>"/>
                             <span><?= $contactValue['title'] ?></span>
                         </label>
                     <?php endforeach; ?>
@@ -141,16 +147,21 @@
     <script>
         $(function () {
             var contact = function () {
-                var dom = $('input[name=contact]:checked');
-                var checkContact = dom.val();
-                var label = dom.parent().text().trim()
+                let dom = $('input[name=contact]:checked');
+                let checkContact = dom.val();
+                let label = dom.parent().text().trim()
 
-                $('.contact_label').html(' (' + label + ')')
+                let isLogin = dom.attr('islogin')
+
+                $('.contact_label').html( label.length > 0 ? '  (' + label + ')' : '')
 
                 switch (checkContact) {
                     case '3':
                     case '4':
                     case '5':
+                        if(isLogin == '0' && checkContact != 3 ){
+                            break;
+                        }
                         $('input[name=contact_account]').parent().hide()
                         break;
                     default:

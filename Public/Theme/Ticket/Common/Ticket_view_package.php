@@ -114,6 +114,7 @@
                 <div class="am-padding-left am-margin-top">
                     <span class="pt-text-explode">工单关闭理由：</span>
                     <?= $ticket_close_reason ?>
+                    <span class="pt-text-explode"><?= !empty($ticket_close_time) ? '[关闭于 '. date('Y-m-d H:s', $ticket_close_time).']' : ''   ?></span>
                 </div>
                 <?php endif; ?>
 

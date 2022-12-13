@@ -55,23 +55,17 @@ class UpdateRoute extends \Core\Slice\Slice {
               unlink($routeUrl);
           }
         } else {
-            $routeStr['route'] = $routeStr['url'] = "<?php\r\n return array(\r\n";
+            $routeArray =[];
             foreach ($route as $key => $value) {
-                $routeStr['route'] .= " '{$value['route_rule']}' => '{$value['route_controller']}',  \r\n";
-                $routeStr['url'] .= " '{$value['route_hash']}' => '{$value['route_rule']}', \r\n";
+                $routeArray['route'][$value['route_rule']] = $value['route_controller'];
+                $routeArray['url'][$value['route_hash']] = $value['route_rule'];
             }
-            $routeStr['route'] .= ");\r\n";
-            $routeStr['url'] .= ");\r\n";
 
             //写入自定义路由规则
-            $routeFopen = fopen($routePath, 'w+');
-            fwrite($routeFopen, $routeStr['route']);
-            fclose($routeFopen);
+            file_put_contents($routePath, "<?php \n return ".var_export($routeArray['route'], true).';');
 
             //写入\Core\Func\Core::url()方法使用的匹配路由规则
-            $urlFopen = fopen($routeUrl, 'w+');
-            fwrite($urlFopen, $routeStr['url']);
-            fclose($urlFopen);
+            file_put_contents($routeUrl, "<?php \n return ".var_export($routeArray['url'], true).';');
         }
     }
 

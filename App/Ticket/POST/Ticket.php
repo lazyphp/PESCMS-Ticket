@@ -182,6 +182,7 @@ class Ticket extends \Core\Controller\Controller {
             'noset'               => [
                 'ticket_id' => $ticket['ticket_id'],
             ],
+            'ticket_read'         => '1',
             'ticket_close'        => '1',
             'ticket_close_time'   => time(),
             'ticket_close_reason' => $reason,

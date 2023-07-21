@@ -23,13 +23,13 @@ class Extra extends \Core\Model\Model {
     const PHONE = 5;
 
     public static $checkType = [
-        '不验证' => 'noVerify',
-        '电子邮箱' => '1',
+        '不验证'    => 'noVerify',
+        '电子邮箱'   => '1',
         '国内手机号码' => '2',
-        '数字' => '3',
-        '英文' => '4',
-        '网址' => '5',
-        '英文数字' => '6'
+        '数字'     => '3',
+        '英文'     => '4',
+        '网址'     => '5',
+        '英文数字'   => '6',
     ];
 
     /**
@@ -71,14 +71,14 @@ class Extra extends \Core\Model\Model {
                 }
                 break;
             case 4:
-                if(!preg_match("/^[a-z]*$/i",$value)){
+                if (!preg_match("/^[a-z]*$/i", $value)) {
                     return false;
                 }
                 break;
             case 5:
                 return filter_var($value, FILTER_VALIDATE_URL);
             case 6:
-                if(!preg_match("/^[a-z\d]*$/i",$value)){
+                if (!preg_match("/^[a-z\d]*$/i", $value)) {
                     return false;
                 }
         }
@@ -92,13 +92,13 @@ class Extra extends \Core\Model\Model {
      * @param $type 通知类型
      * @return mixed
      */
-    public static function insertSend($account, $title, $content, $type){
+    public static function insertSend($account, $title, $content, $type) {
         $param = [
             'send_account' => $account,
-            'send_title' => $title,
-            'send_time' => time(),
+            'send_title'   => $title,
+            'send_time'    => time(),
             'send_content' => $content,
-            'send_type' => $type
+            'send_type'    => $type,
         ];
         return self::db('send')->insert($param);
     }
@@ -106,21 +106,21 @@ class Extra extends \Core\Model\Model {
     /**
      * 执行通知发送
      */
-    public static function actionNoticeSend(){
+    public static function actionNoticeSend() {
 
         //删除7天发送失败和成功的记录
         self::db('send')->where('send_time < :time AND send_status > 0')->delete([
-            'time' => time() - 86400 * 7
+            'time' => time() - 86400 * 7,
         ]);
 
         //获取未发送或者重发少于5次的通知
         $list = \Model\Content::listContent([
-            'table' => 'send',
+            'table'     => 'send',
             'condition' => "send_time <= :time AND send_status < 2 AND send_sequence < 5 ",
-            'lock' => 'FOR UPDATE',
-            'param' => [
-                'time' => time()
-            ]
+            'lock'      => 'FOR UPDATE',
+            'param'     => [
+                'time' => time(),
+            ],
         ]);
 
         foreach ($list as $value) {
@@ -148,8 +148,8 @@ class Extra extends \Core\Model\Model {
                     $result = (new \Expand\OtherNotice())->send($value);
             }
 
-            if(DEBUG == true){
-                echo "<p>{$value['send_type']}T: {$result['msg']}, 详细JSON格式: ".json_encode($result, JSON_UNESCAPED_UNICODE)."</p>";
+            if (DEBUG == true) {
+                echo "<p>{$value['send_type']}T: {$result['msg']}, 详细JSON格式: " . json_encode($result, JSON_UNESCAPED_UNICODE) . "</p>";
             }
 
         }
@@ -160,13 +160,13 @@ class Extra extends \Core\Model\Model {
      * @param $sendID
      * @param $msg
      */
-    public static function stopSend($sendID, $msg){
+    public static function stopSend($sendID, $msg) {
         \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->update([
-            'noset' => [
-                'send_id' => $sendID
+            'noset'         => [
+                'send_id' => $sendID,
             ],
-            'send_result' => $msg,
-            'send_status' => 1,
+            'send_result'   => $msg,
+            'send_status'   => 1,
             'send_sequence' => 5,
         ]);
     }
@@ -175,14 +175,14 @@ class Extra extends \Core\Model\Model {
      * 更新发送状态
      * @param array $param 参数有 id, msg, status, second
      */
-    public static function updateSendStatus(array $param){
+    public static function updateSendStatus(array $param) {
         \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->update([
-            'noset' => [
-                'send_id' => $param['id']
+            'noset'         => [
+                'send_id' => $param['id'],
             ],
-            'send_result' => $param['msg'],
-            'send_status' => $param['status'],
-            'send_time' => time() + $param['second'], //发送失败，则增加600秒时间，再重发
+            'send_result'   => $param['msg'],
+            'send_status'   => $param['status'],
+            'send_time'     => time() + $param['second'], //发送失败，则增加600秒时间，再重发
             'send_sequence' => $param['sequence'] + 1,
         ]);
     }
@@ -193,7 +193,7 @@ class Extra extends \Core\Model\Model {
      * @param string $stopDir 停止移除的目录
      * @return array
      */
-    public static function clearDirAllFile($dirName = PES_CORE.'Temp', $stopDir = PES_CORE.'Temp') {
+    public static function clearDirAllFile($dirName = PES_CORE . 'Temp', $stopDir = PES_CORE . 'Temp') {
         if ($handle = opendir("$dirName")) {
             while (false !== ($item = readdir($handle))) {
                 if ($item != "." && $item != "..") {
@@ -203,7 +203,7 @@ class Extra extends \Core\Model\Model {
                         if (!unlink("$dirName/$item")) {
                             return [
                                 'status' => 0,
-                                'msg' => "移除文件失败： $dirName/$item"
+                                'msg'    => "移除文件失败： $dirName/$item",
                             ];
                         }
                     }
@@ -213,14 +213,14 @@ class Extra extends \Core\Model\Model {
             if ($dirName == $stopDir) {
                 return [
                     'status' => 200,
-                    'msg' => "{$dirName}目录已清空"
+                    'msg'    => "{$dirName}目录已清空",
                 ];
             }
 
             if (!rmdir($dirName)) {
                 return [
                     'status' => 0,
-                    'msg' => "移除{$dirName}目录失败"
+                    'msg'    => "移除{$dirName}目录失败",
                 ];
             }
 
@@ -237,28 +237,28 @@ class Extra extends \Core\Model\Model {
      * @param string $msg 提示信息
      * @return bool
      */
-    public static function limitSubmit($mark, $frequency, $interval, $msg = '你手速有点快，请休息一下再来'){
-        if(DEBUG == true){
+    public static function limitSubmit($mark, $frequency, $interval, $msg = '你手速有点快，请休息一下再来') {
+        if (DEBUG == true) {
             return true;
         }
         $res = self::session()->get($mark);
-        if(empty($res)){
+        if (empty($res)) {
             $res = [
                 'frequency' => 1,
-                'interval' => time()
+                'interval'  => time(),
             ];
             self::session()->set($mark, $res);
             return true;
         }
 
-        if($res['frequency'] >= $frequency && $res['interval'] > time() - $interval){
+        if ($res['frequency'] >= $frequency && $res['interval'] > time() - $interval) {
             $res['interval'] = time();
             self::session()->set($mark, $res);
             self::error($msg);
-        }elseif($res['frequency'] >= $frequency && $res['interval'] <= time() - $interval){
+        } elseif ($res['frequency'] >= $frequency && $res['interval'] <= time() - $interval) {
             $res['frequency'] = 1;
             $res['interval'] = time();
-        }else{
+        } else {
             $res['frequency'] += 1;
             $res['interval'] = time();
         }
@@ -271,11 +271,11 @@ class Extra extends \Core\Model\Model {
      * 验证提交过来的密码
      * @return mixed|string
      */
-    public static function verifyPassword(){
+    public static function verifyPassword() {
         $password = self::isP('password', '请填密码');
         $repassword = self::isP('repassword', '请填写再次确认密码');
 
-        if(strlen($password) < 6){
+        if (strlen($password) < 6) {
             self::error('登录密码长度至少需要6位，请重新填写。');
         }
 
@@ -292,15 +292,30 @@ class Extra extends \Core\Model\Model {
      * @param $end
      * @return bool
      */
-    public static function notDisturb($begin, $end){
+    public static function notDisturb($begin, $end) {
         $hour = date('H');
-        if(($hour >= $begin || $hour < $end) && $begin > $end  ){
+        if (($hour >= $begin || $hour < $end) && $begin > $end) {
             return true;
-        }elseif($hour >= $begin && $hour < $end){
+        } elseif ($hour >= $begin && $hour < $end) {
             return true;
-        }else{
+        } else {
             return false;
         }
+    }
+
+    /**
+     * 获取扩展表单的内容和地址
+     * @return array 返回对应数组和文件地址
+     */
+    public static function getFormContent() {
+        $jsonFile = PES_CORE . '/Expand/Form/Form.json';
+
+        $json = json_decode(file_get_contents($jsonFile), true) ?? [];
+
+        return [
+            'json' => $json,
+            'path' => $jsonFile,
+        ];
     }
 
 }

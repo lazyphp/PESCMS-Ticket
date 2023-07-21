@@ -16,7 +16,8 @@
 
 <?php if (empty($list)): ?>
     <div class="pes-alert pes-alert-info am-margin-top am-margin-bottom am-text-center" >
-        <p class="am-margin-0">本页面没有数据 :-(</p>
+        <p class="am-margin-0">当前工单还没有添加任何表单</p>
+        <p class="am-margin-top-xs am-text-danger">点击查看 <a href="https://document.pescms.com/article/3/269002122886905856.html" target="_blank">《<i class="am-icon-book"></i>工单表单功能介绍》</a>教程文档</p>
     </div>
 <?php else: ?>
     <form class="am-form ajax-submit" action="<?= $label->url(GROUP . '-' . MODULE . '-listsort'); ?>" method="POST">

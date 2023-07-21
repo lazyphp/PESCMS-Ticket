@@ -47,8 +47,8 @@ class ComposerStaticInit777c7af0956f9a947068ec95c3599f29
         ),
         'voku\\' => 
         array (
-            0 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
-            1 => __DIR__ . '/..' . '/voku/portable-utf8/src/voku',
+            0 => __DIR__ . '/..' . '/voku/portable-utf8/src/voku',
+            1 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
         ),
         'duncan3dc\\Sessions\\' => 
         array (
@@ -85,6 +85,7 @@ class ComposerStaticInit777c7af0956f9a947068ec95c3599f29
     );
 
     public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Normalizer' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
     );
 

@@ -151,7 +151,6 @@ class Login extends \Core\Controller\Controller {
 
         $user = $weixin->getUser($openid);
 
-
         //检查是否已绑定账号，已存在则直接执行登录
         $member = \Model\Content::findContent('member', $user['openid'], 'member_weixin');
         if (!empty($member)) {
@@ -271,7 +270,7 @@ class Login extends \Core\Controller\Controller {
             $user = $weixin->getUser($openid);
 
             $log = new \Expand\Log();
-            $fileName = 'wx_log' . md5(\Core\Func\CoreFunc::loadConfig('PRIVATE_KEY') . date("Ymd"));
+            $fileName = 'weixin_log' . md5(\Core\Func\CoreFunc::loadConfig('PRIVATE_KEY') . date("Ymd"));
 
             $info = date('H:i:s') . "\n";
             $info .= "OPENID: {$openid} \n";

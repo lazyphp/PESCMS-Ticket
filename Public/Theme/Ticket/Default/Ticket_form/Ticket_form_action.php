@@ -1,8 +1,8 @@
 <?php include THEME_PATH . '/Content/Content_action_header.php' ?>
 <input type="hidden" name="method" value="<?= $method ?>"/>
 <input type="hidden" name="id" value="<?= $id ?>"/>
-<input type="hidden" name="number" value="<?= $_GET['number'] ?>"/>
-<input type="hidden" name="back_url" value="<?= $_GET['back_url'] ?>"/>
+<input type="hidden" name="number" value="<?= $label->xss($_GET['number']) ?>"/>
+<input type="hidden" name="back_url" value="<?= $label->xss($_GET['back_url']) ?>"/>
 <?= $label->token(); ?>
 <?php foreach ($field as $key => $value) : ?>
     <?php if ($value['field_form']): ?>

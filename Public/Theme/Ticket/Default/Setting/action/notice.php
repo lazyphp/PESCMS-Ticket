@@ -19,7 +19,7 @@
                         两者兼有
                     </label>
                     <div class="pes-alert pes-alert-info am-text-xs " >
-                        <i class="am-icon-lightbulb-o"></i> 被动触发需要系统有人访问才生效。建议有动手能力的，选用定时触发。
+                        <i class="am-icon-lightbulb-o"></i> 被动触发需要系统有人访问才生效。建议有动手能力的，选用定时触发。《<a href="https://document.pescms.com/article/1/369305279499599872.html" target="_blank">脚本定时执行设置</a>》
                     </div>
                 </div>
             </div>

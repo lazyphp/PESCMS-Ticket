@@ -6,5 +6,5 @@
 ?>
 <input type="hidden" name="method" value="<?= $method ?? null ?>"/>
 <input type="hidden" name="id" value="<?= $id ?? null ?>"/>
-<input type="hidden" name="back_url" value="<?= $_GET['back_url'] ?? null ?>"/>
+<input type="hidden" name="back_url" value="<?= !empty($_GET['back_url']) ? $label->xss($_GET['back_url']) : null ?>"/>
 <?= $label->token() ?>

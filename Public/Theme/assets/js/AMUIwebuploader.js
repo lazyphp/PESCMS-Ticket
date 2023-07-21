@@ -57,6 +57,7 @@ $(function () {
                             '<div class="am-gallery-item webuploader-item am-img-thumbnail am-radius">' +
                             '<a href="javascript:;" class="file-preview-other" >' +
                             '<i class="am-icon-file-o am-icon-lg am-block"></i>' +
+                            '<div class="pes-upload-operate"><i class="am-icon-trash"></i></div>' +
                             '<h3 class="am-gallery-title am-text-center am-hide"></h3>' +
                             '</a>' +
                             '<div class="am-text-truncate am-text-xs file-preview-other-text am-text-center" >' + file.name + '</div> ' +
@@ -65,7 +66,8 @@ $(function () {
                         var $li =
                             '<div class="am-gallery-item webuploader-item am-img-thumbnail am-radius">' +
                             '<a href="javascript:;" >' +
-                            '<img src="' + src + '"  alt="点击上传图片"/>' +
+                            '<div class="pes-upload-operate"><i class="am-icon-search-plus"></i><i class="am-icon-trash"></i></div>' +
+                            '<img src="' + src + '"  alt="上次图片"/>' +
                             '<h3 class="am-gallery-title am-text-center am-hide"></h3>' +
                             '</a>' +
                             '</div>'
@@ -103,6 +105,7 @@ $(function () {
                             break;
                         case 'uploadimage':
                         default:
+                            $('#' + file.id).find('img').attr('src', response.url)
                             var inputValue = response.url;
                     }
 
@@ -113,7 +116,7 @@ $(function () {
 
             // 文件上传失败
             uploader.on('uploadError', function (file, reason) {
-                $('#' + file.id + ' h3.am-gallery-title').html('上传失败').removeClass('am-hide');
+                $('#' + file.id + ' h3.am-gallery-title').html('上传失败 - 请求异常').removeClass('am-hide');
             });
 
             // 完成上传完了，成功或者失败，结束进度条。
@@ -154,10 +157,19 @@ $(function () {
         /**
          * 移除简易版上传队列中的文件
          */
-        $(document).on('click', "[data-am-webuploader-simple] li", function () {
-            if (!$(this).attr('id').match('before')) {
-                $(this).remove();
+        $(document).on('click', "[data-am-webuploader-simple] li .pes-upload-operate>.am-icon-trash", function () {
+            var parentLi = $(this).parents('li')
+            if (!parentLi.attr('id').match('before')) {
+                parentLi.remove();
             }
+        })
+
+        $(document).on('click', "[data-am-webuploader-simple] li .pes-upload-operate>.am-icon-search-plus", function () {
+            var img = $(this).parents('li').find('img').attr('src')
+            $.fancybox.open({
+                src  : img,
+                type: 'image'
+            });
         })
 
     };
@@ -202,6 +214,7 @@ var AMUIwebuploader = {
             var icon =
                 '<a href="javascript:;" class="file-preview-other" title="' + param.src + '"   >' +
                 '<i class="am-icon-file-o am-icon-lg am-block"></i>' +
+                '<div class="pes-upload-operate"><i class="am-icon-trash"></i></div>' +
                 '<h3 class="am-gallery-title am-text-center am-hide"></h3>' +
                 '</a>'+
                 '<div class="am-text-truncate am-text-xs file-preview-other-text am-text-center" >' + param.src + '</div>';
@@ -209,6 +222,7 @@ var AMUIwebuploader = {
             var icon =
                 '<a href="javascript:;" >' +
                 '<img src="' + param.src + '"  alt="点击上传图片"/>' +
+                '<div class="pes-upload-operate"><i class="am-icon-search-plus"></i><i class="am-icon-trash"></i></div>' +
                 '<h3 class="am-gallery-title am-text-center am-hide"></h3>' +
                 '</a>';
         }

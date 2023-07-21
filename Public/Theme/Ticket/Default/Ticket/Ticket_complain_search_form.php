@@ -41,7 +41,7 @@
         <?php if(!empty($member[$_GET['member'] ?? ''])): ?>
             <select name="member" class="am-form-field am-input-sm am-radius" data-am-selected="{btnSize: 'sm', dropUp: 0}">
                 <option value="-1" >不筛选用户</option>
-                <option value="<?= $_GET['member'] ?>" selected="selected" ><?= $member[$_GET['member']]['member_name'] ?></option>
+                <option value="<?= $label->xss($_GET['member']) ?>" selected="selected" ><?= $member[$_GET['member']]['member_name'] ?></option>
             </select>
         <?php endif; ?>
 

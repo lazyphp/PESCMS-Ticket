@@ -151,12 +151,13 @@ class CoreFunc {
         return $url;
     }
 
+
     /**
-     * 连接数据库
-     * @param string $name 要连接数据库表名称
-     * @param string $database 要连接数据库名称
-     * @param string $dbPrefix 要连接数据库表的前缀
-     * @return \Core\Db\Mysql
+     * 数据库连接方法
+     * @param $name 要连接数据库表名称
+     * @param $database 要连接数据库名称
+     * @param $dbPrefix 要连接数据库表的前缀
+     * @return \Core\Db\Mysql|mixed
      */
     public static function db($name = '', $database = '', $dbPrefix = '') {
         static $db;

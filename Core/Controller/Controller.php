@@ -51,12 +51,14 @@ class Controller {
     }
 
     /**
-     * 初始化数据库
-     * @param str $name 表名
-     * @return obj 返回数据库对象
+     * 数据库连接方法
+     * @param $name 数据库表名称
+     * @param $database 数据库名称
+     * @param $dbPrefix 表前缀
+     * @return \Core\Db\Mysql|mixed
      */
-    protected static function db($name = '', $database = '', $dbPrefix = '') {
-        return \Core\Func\CoreFunc::db($name, $database, $dbPrefix);
+    protected static function db($name = '', $dataBase = '', $dbPrefix = '') {
+        return \Core\Func\CoreFunc::db($name, $dataBase, $dbPrefix);
     }
 
     /**
@@ -77,6 +79,16 @@ class Controller {
      */
     protected static function p($name, $htmlentities = TRUE) {
         return self::handleData($_POST[$name] ?? null, $htmlentities);
+    }
+
+    /**
+     * 安全过滤任意类型请求提交的数据
+     * @param string $name 名称
+     * @param boolean $htmlentities 是否转义HTML标签
+     * @return string 返回处理完的数据
+     */
+    protected static function r($name, $htmlentities = TRUE) {
+        return self::handleData($_REQUEST[$name] ?? null, $htmlentities);
     }
 
     /**
@@ -109,20 +121,11 @@ class Controller {
      * @param sting $name 名称
      * @param sting $message 返回的提示信息
      * @param boolean $htmlentities 是否转义HTML标签
+     * @return mixed|void
      */
     protected static function isG($name, $message, $htmlentities = TRUE) {
         //当为0时，直接返回
-        if (isset($_GET[$name]) && $_GET[$name] == '0') {
-            return self::g($name, $htmlentities);
-        } elseif (is_array($_GET[$name] ?? '')) {
-            return $_GET[$name];
-        }
-        if (empty($_GET[$name]) || !trim($_GET[$name]) || !is_string($_GET[$name])) {
-            self::error($message);
-        } elseif (empty($_GET[$name]) && is_array($_GET[$name])) {
-            self::error($message);
-        }
-        return self::g($name, $htmlentities);
+        return self::isEmpty('g', $name, $message, $htmlentities);
     }
 
     /**
@@ -130,20 +133,61 @@ class Controller {
      * @param sting $name 名称
      * @param sting $message 返回的提示信息
      * @param boolean $htmlentities 是否转义HTML标签
+     * @return mixed|void
      */
     protected static function isP($name, $message, $htmlentities = TRUE) {
+        return self::isEmpty('p', $name, $message, $htmlentities);
+    }
+
+    /**
+     * 判断任意类型请求是否有数据提交
+     * @param sting $name 名称
+     * @param sting $message 返回的提示信息
+     * @param boolean $htmlentities 是否转义HTML标签
+     * @return mixed|void
+     */
+    protected static function isR($name, $message, $htmlentities = TRUE) {
+        return self::isEmpty('r', $name, $message, $htmlentities);
+    }
+
+    /**
+     * 判断提交参数是否为空
+     * @param $type 提交类型
+     * @param sting $name 名称
+     * @param sting $message 返回的提示信息
+     * @param boolean $htmlentities 是否转义HTML标签
+     * @return mixed|void
+     */
+    private static function isEmpty($type, $name, $message, $htmlentities){
+        switch ($type){
+            case 'g':
+                $type = $_GET;
+                $func = 'g';
+                break;
+            case 'p':
+                $type = $_POST;
+                $func = 'p';
+                break;
+            case 'r':
+                $type = $_REQUEST;
+                $func = 'r';
+                break;
+            default:
+                die('请求方法不存在，请检查代码');
+        }
         //当为0时，直接返回
-        if (isset($_POST[$name]) && $_POST[$name] == '0') {
-            return self::p($name, $htmlentities);
-        } elseif (is_array($_POST[$name] ?? '')) {
-            return $_POST[$name];
+        if (isset($type[$name]) && $type[$name] == '0') {
+            return self::$func($name, $htmlentities);
+        } elseif (is_array($type[$name] ?? '')) {
+            return $type[$name];
         }
-        if (empty($_POST[$name]) || !trim($_POST[$name]) || !is_string($_POST[$name])) {
+        if (empty($type[$name]) || !trim($type[$name]) || !is_string($type[$name])) {
             self::error($message);
-        } elseif (empty($_POST[$name]) && is_array($_POST[$name])) {
+        } elseif (empty($type[$name]) && is_array($type[$name])) {
             self::error($message);
         }
-        return self::p($name, $htmlentities);
+
+        return self::$func($name, $htmlentities);
     }
 
     /**

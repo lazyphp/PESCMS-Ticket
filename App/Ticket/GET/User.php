@@ -12,6 +12,20 @@ namespace App\Ticket\GET;
 
 class User extends Content {
 
+    public function index($display = false) {
+        parent::index($display);
+        $bindMid = array_unique(array_column(\Core\Func\CoreFunc::$param['list'], 'user_bind_mid'));
+
+        $memberList = [];
+        if(!empty($bindMid)){
+            $memberList = $this->db('member')->field('member_id, member_name')->where("member_id IN (". implode(',', $bindMid) .")")->arrayKey('member_id')->select();
+        }
+
+        $this->assign('memberList', $memberList);
+
+        $this->layout();
+    }
+
     /**
      * 个人设置
      */

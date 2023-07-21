@@ -1,6 +1,6 @@
 <?php include THEME_PATH . '/Content/Content_action_header.php' ?>
 <?php include THEME_PATH . '/Content/Content_action_hidden.php' ?>
-    <input type="hidden" name="model_id" value="<?= $_GET['model_id'] ?>"/>
+    <input type="hidden" name="model_id" value="<?= (int) $_GET['model_id'] ?>"/>
 <?php include THEME_PATH . '/Content/Content_action_form.php' ?>
     <script>
         $(function () {

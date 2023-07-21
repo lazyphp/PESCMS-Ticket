@@ -20,14 +20,14 @@ use \PDO,
  */
 class Mysql {
 
-    public $dbh, $getLastSql, $getLastInsert, $prefix, $errorInfo = array(), $param = array();
-    private $defaultDb, $tableName, $field = '*', $where = '', $join = array(), $order = '',
-        $group = '', $limit = '', $lock = '', $transaction = false;
+    public $dbh, $getLastSql, $getLastInsert, $prefix, $errorInfo = [], $param = [];
+    private $defaultDb, $tableName, $field = '*', $where = '', $join = [], $order = '',
+        $group = '', $limit = '', $lock = '', $arrayKey, $transaction = false;
 
     public function __construct() {
         try {
             $config = CoreFunc::loadConfig();
-            $configParam = array('DB_TYPE', 'DB_HOST', 'DB_NAME', 'DB_PORT', 'DB_USER', 'DB_PWD', 'DB_PREFIX');
+            $configParam = ['DB_TYPE', 'DB_HOST', 'DB_NAME', 'DB_PORT', 'DB_USER', 'DB_PWD', 'DB_PREFIX'];
             foreach ($configParam as $value) {
                 $useConfig[$value] = !empty($config[GROUP][$value]) ? $config[GROUP][$value] : $config[$value];
             }
@@ -102,7 +102,7 @@ class Mysql {
      */
     public function join($condition) {
         if (empty($condition)) {
-            $this->join = array();
+            $this->join = [];
         } else {
             $this->join[] = ' LEFT JOIN ' . $condition;
         }
@@ -176,8 +176,8 @@ class Mysql {
         $this->dealParam($param, $fieldType);
 
         $limit = ' LIMIT 1 ';
-        $this->join = empty($this->join) ? array('') : $this->join;
-        $this->getLastSql = 'SELECT ' . $this->field . ' FROM ' . $this->tableName . implode('', $this->join) . $this->where . $this->group . $this->order . $limit. $this->lock;
+        $this->join = empty($this->join) ? [''] : $this->join;
+        $this->getLastSql = 'SELECT ' . $this->field . ' FROM ' . $this->tableName . implode('', $this->join) . $this->where . $this->group . $this->order . $limit . $this->lock;
         $sth = $this->PDOBindArray();
         $result = $sth->fetch();
         $sth->closeCursor();
@@ -194,14 +194,27 @@ class Mysql {
      */
     public function select($param = '', $fieldType = '') {
         $this->dealParam($param, $fieldType);
-        $this->join = empty($this->join) ? array('') : $this->join;
-        $this->getLastSql = 'SELECT ' . $this->field . ' FROM ' . $this->tableName . implode('', $this->join) . $this->where . $this->group . $this->order . $this->limit. $this->lock;
+        $this->join = empty($this->join) ? [''] : $this->join;
+        $this->getLastSql = 'SELECT ' . $this->field . ' FROM ' . $this->tableName . implode('', $this->join) . $this->where . $this->group . $this->order . $this->limit . $this->lock;
         $sth = $this->PDOBindArray();
-        $result = $sth->fetchALL();
+
+        if (!empty($this->arrayKey)) {
+            $result = [];
+            foreach ($sth as $item) {
+                $result[$item[$this->arrayKey] ?? ''] = $item;
+            }
+        } else {
+            $result = $sth->fetchALL();
+        }
         $sth->closeCursor();
 
         $this->emptyParam();
         return $result;
+    }
+
+    public function arrayKey($key) {
+        $this->arrayKey = $key;
+        return $this;
     }
 
     /**
@@ -237,7 +250,7 @@ class Mysql {
      * @return array 返回处理好的字段默认值
      */
     private function tableFieldParam($param) {
-        if($this->checkSqlTransTable() == false){
+        if ($this->checkSqlTransTable() == false) {
             return $param;
         }
 
@@ -262,7 +275,7 @@ class Mysql {
      */
     private function handleFiledType($type, $defualt, $isNULL) {
 
-        if(strtoupper($isNULL) == 'YES'){
+        if (strtoupper($isNULL) == 'YES') {
             return NULL;
         }
 
@@ -306,15 +319,15 @@ class Mysql {
      * 检查当前环境MYSQL的数据SQL MODEL。
      * @return bool 严格模式则返回TRUE 反之 FALSE
      */
-    private function checkSqlTransTable(){
+    private function checkSqlTransTable() {
         $sqlModel = CoreFunc::loadConfig('SQL_MODEL', true);
-        if(empty($sqlModel)){
-            $configFile = CONFIG_PATH.'config.php';
+        if (empty($sqlModel)) {
+            $configFile = CONFIG_PATH . 'config.php';
 
-            if(!is_file($configFile)){
+            if (!is_file($configFile)) {
                 $this->returnError([
-                    'msg' => '验证SQL MODEL时，获取程序配置文件失败',
-                    'string' => '验证SQL MODEL时，获取程序配置文件失败'
+                    'msg'    => '验证SQL MODEL时，获取程序配置文件失败',
+                    'string' => '验证SQL MODEL时，获取程序配置文件失败',
                 ]);
             }
 
@@ -325,16 +338,16 @@ class Mysql {
             //添加2个严格模式的判断
             if (strpos(strtoupper($model['model']), 'STRICT_TRANS_TABLES') !== false || strpos(strtoupper($model['model']), 'STRICT_ALL_TABLES') !== false) {
                 $sqlModel = 'STRICT_TRANS_TABLES';
-            }else{
+            } else {
                 $sqlModel = 'EASY_TRANS_TABLES';
             }
 
             $config = file($configFile);
 
             $f = fopen($configFile, 'w+');
-            foreach ($config as $line => $value){
+            foreach ($config as $line => $value) {
                 fwrite($f, $value);
-                if($line == '8'){
+                if ($line == '8') {
                     fwrite($f, "'SQL_MODEL' => '{$sqlModel}',\n");
                 }
             }
@@ -381,8 +394,8 @@ class Mysql {
      * @param $param
      * @return mixed
      */
-    private function updateFieldCover($param){
-        if($this->checkSqlTransTable() == false){
+    private function updateFieldCover($param) {
+        if ($this->checkSqlTransTable() == false) {
             return $param;
         }
         $sth = $this->dbh->prepare("DESC {$this->tableName}");
@@ -390,7 +403,7 @@ class Mysql {
         $fields = $sth->fetchAll();
 
         foreach ($fields as $fieldItem) {
-            if(isset($param[$fieldItem['Field']]) && empty($param[$fieldItem['Field']]) && !is_numeric($param[$fieldItem['Field']]) ){
+            if (isset($param[$fieldItem['Field']]) && empty($param[$fieldItem['Field']]) && !is_numeric($param[$fieldItem['Field']])) {
                 $param[$fieldItem['Field']] = $this->handleFiledType($fieldItem['Type'], $fieldItem['Default'], $fieldItem['Null']);
             }
         }
@@ -471,7 +484,7 @@ class Mysql {
         $sth = $this->PDOBindArray();
         $statistics = $sth->rowCount();
         $this->emptyParam();
-        $lastInsertId = $this->getLastInsert  = $this->dbh->lastInsertId();
+        $lastInsertId = $this->getLastInsert = $this->dbh->lastInsertId();
         if (!empty($lastInsertId)) {
             return $lastInsertId;
         } elseif ($statistics >= 0) {
@@ -512,8 +525,8 @@ class Mysql {
             return true;
         } else {
             $this->returnError([
-                'msg' => '参数绑定只能为数组',
-                'string' => '参数绑定只能为数组'
+                'msg'    => '参数绑定只能为数组',
+                'string' => '参数绑定只能为数组',
             ]);
         }
         //分析字段设置
@@ -521,8 +534,8 @@ class Mysql {
             $fieldTypeArray = explode(',', $fieldType);
         } else {
             $this->returnError([
-                'msg' => '字段类型只能为字符串',
-                'string' => '字段类型只能为字符串'
+                'msg'    => '字段类型只能为字符串',
+                'string' => '字段类型只能为字符串',
             ]);
         }
 
@@ -537,8 +550,8 @@ class Mysql {
         $arrayLength = count($array);
         if ($arrayLength != count($fieldTypeArray)) {
             $this->returnError([
-                'msg' => '参数绑定与字段设置长度不一致',
-                'string' => '参数绑定与字段设置长度不一致'
+                'msg'    => '参数绑定与字段设置长度不一致',
+                'string' => '参数绑定与字段设置长度不一致',
             ]);
         }
 
@@ -563,12 +576,16 @@ class Mysql {
                     $sth->bindValue(':' . $key, $value['value'], $value['fieldType']);
                 }
             }
-            $sth->execute();
-            return $sth;
+            if ($sth->execute() == true) {
+                return $sth;
+            } else {
+                return false;
+            }
+
         } catch (\PDOException $e) {
             $this->returnError([
-                'msg' => $e->getMessage(),
-                'string' => $e->getTraceAsString()
+                'msg'    => $e->getMessage(),
+                'string' => $e->getTraceAsString(),
             ]);
         }
     }
@@ -577,7 +594,7 @@ class Mysql {
      * 返回错误信息
      * @param $data
      */
-    private function returnError($data){
+    private function returnError($data) {
         $this->errorInfo['message'] = $data['msg'];
         $this->errorInfo['string'] = $data['string'];
         \Core\Abnormal\Error::errorSql();
@@ -598,11 +615,11 @@ class Mysql {
         }
         $this->field = '*';
         $this->where = '';
-        $this->join = array();
+        $this->join = [];
         $this->order = '';
         $this->group = '';
         $this->limit = '';
-        $this->param = array();
+        $this->param = [];
     }
 
     /**
@@ -610,7 +627,7 @@ class Mysql {
      * @param $sql 要执行的SQL语句
      * @return int
      */
-    public function exec($sql){
+    public function exec($sql) {
         return $this->dbh->exec($sql);
     }
 
@@ -626,7 +643,7 @@ class Mysql {
      * 事务回滚
      */
     public function rollBack() {
-        if($this->transaction === true){
+        if ($this->transaction === true) {
             return $this->dbh->rollBack();
         }
     }

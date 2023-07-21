@@ -10,11 +10,17 @@
 
             <div class="am-g" style="display: flex;align-items: center;height: 400px;">
                 <div class="am-u-sm-6 am-u-lg-centered am-text-center">
-                    <form target="_blank">
-                        <input type="hidden" name="g" value="<?= GROUP ?>">
-                        <input type="hidden" name="m" value="<?= MODULE ?>">
-                        <input type="hidden" name="a" value="issueLogin">
+                    <form <?= ACTION == 'issue' ? 'target="_blank"' : 'class="am-form am-form-horizontal ajax-submit" method="POST"' ?>>
+                        <?php if (ACTION == 'issue'): ?>
+                            <input type="hidden" name="g" value="<?= GROUP ?>">
+                            <input type="hidden" name="m" value="<?= MODULE ?>">
+                            <input type="hidden" name="a" value="issueLogin">
+                        <?php else: ?>
+                            <input type="hidden" name="back_url" value="<?= htmlspecialchars($_GET['back_url'] ?? NULL) ?>">
+                            <input type="hidden" name="method" value="PUT">
+                        <?php endif; ?>
                         <?= $label->token(); ?>
+
                         <select class="organize" data-am-selected="{searchBox: 1, maxHeight: 200}" placeholder="请选择客户分组" required>
                             <option value="">请选择客户分组</option>
                             <?php foreach ($member_organize as $key => $value): ?>
@@ -24,7 +30,7 @@
                         <select name="id" data-am-selected="{searchBox: 1, maxHeight: 200}" required>
                             <option value="">请选择客户</option>
                         </select>
-                        <button type="submit" class="am-btn am-btn-primary am-radius">调用此账号</button>
+                        <button type="submit" class="am-btn am-btn-primary am-radius"><?= ACTION == 'issue' ? '调用此账号' : '绑定此账号' ?></button>
                     </form>
 
                 </div>
@@ -37,10 +43,10 @@
     $(function () {
         $('.organize').on('change', function () {
             var id = $(this).val()
-            $.getJSON(PESCMS_PATH+'/?g=Ticket&m=Member&a=issue&id='+id+'&keepToken='+Math.random(), function (data) {
-                if(data.status == 200){
+            $.getJSON(PESCMS_PATH + '/?g=Ticket&m=Member&a=issue&id=' + id + '&keepToken=' + Math.random(), function (data) {
+                if (data.status == 200) {
                     $('select[name="id"]').html(data.data)
-                }else{
+                } else {
                     alert(data.msg || '请求出错了，请刷新页面')
                 }
             })

@@ -34,8 +34,23 @@ class weixin {
         $this->appID = $weixin_api['appID'];
         $this->appsecret = $weixin_api['appsecret'];
 
+        $this->createAccessTokenCache();
+
+    }
+
+    /**
+     * 创建微信的接口token
+     * @param $reload 是否重载缓存 | 默认不重载
+     * @return string|void
+     */
+    private function createAccessTokenCache($reload = false){
         $FileCache = new FileCache();
         $FileCache->setTime = 6500;
+
+        if($reload == true){
+            $FileCache->clearCache('weixin_access_token');
+        }
+
         $result = $FileCache->loadCache('weixin_access_token');
         if (empty($result)) {
             createApiCache:
@@ -104,8 +119,28 @@ class weixin {
      * @return mixed
      */
     public function getUser($openid) {
-        $result = (new cURL())->init("https://api.weixin.qq.com/cgi-bin/user/info?access_token={$this->access_token}&openid={$openid}&lang=zh_CN");
-        return json_decode($result, true);
+
+        static $tryAgainToGetUserInfo = 0;
+
+        tryAgainToGetUserInfo:
+
+        $result = json_decode((new cURL())->init("https://api.weixin.qq.com/cgi-bin/user/info?access_token={$this->access_token}&openid={$openid}&lang=zh_CN"), true);
+
+        if(!empty($result['errcode'])){
+            (new \Expand\Log())->creatLog('weixin_log', date('Y-m-d H:i:s')." 读取用户信息失败,接口返回错误信息: errcode: {$result['errcode']} errmsg: {$result['errmsg']}\n");
+
+            //token失效，强制刷新
+            if($result['errcode'] == '40001'){
+                $this->createAccessTokenCache(true);
+                if($tryAgainToGetUserInfo == 0){
+                    goto tryAgainToGetUserInfo;
+                    $tryAgainToGetUserInfo = 1;
+                }
+
+            }
+        }
+
+        return $result;
     }
 
     /**

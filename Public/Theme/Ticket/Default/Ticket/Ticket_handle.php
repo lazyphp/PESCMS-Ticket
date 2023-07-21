@@ -5,7 +5,7 @@
         <form action="<?= $label->url('Ticket-Ticket-reply'); ?>" class="am-form ajax-submit" method="POST" data-am-validator>
             <a name="handleTicket"></a>
             <input type="hidden" name="number" value="<?= $ticket_number; ?>"/>
-            <input type="hidden" name="back_url" value="<?= $_GET['back_url']; ?>"/>
+            <input type="hidden" name="back_url" value="<?= $label->xss($_GET['back_url']); ?>"/>
             <?= $label->token() ?>
             <div class="am-panel am-panel-default">
                 <div class="am-panel-bd">
@@ -48,6 +48,15 @@
                                             开始受理工单
                                         </label>
                                     </div>
+
+                                    <div class="am-form-group">
+                                        <label class="am-form-label am-margin-bottom-0">是否生成受理的文字消息 : </label>
+                                        <label class="form-checkbox-label am-checkbox-inline">
+                                            <input type="checkbox" name="exchange" value="1" checked="checked" >
+                                            生成
+                                        </label>
+                                    </div>
+
                                 <?php elseif (in_array($ticket_status, ['1', '2'])): ?>
                                     <div class="am-form-group">
                                         <label class="am-form-label am-margin-bottom-0">是否需要转派 : </label>
@@ -87,6 +96,18 @@
                                             <select name="uid" size="5">
                                                 <option value="" disabled>等待获取用户信息</option>
                                             </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="am-form-group am-hide assign-user">
+                                        <label class="am-form-label am-margin-bottom-0">留言给客户需要转派的文字消息 : </label>
+                                        <label class="form-checkbox-label am-checkbox-inline">
+                                            <input type="checkbox" name="exchange" value="1" checked="checked" >
+                                            生成
+                                        </label>
+                                        <div class="pes-alert pes-alert-warning am-text-xs " data-am-alert>
+                                            <i class="am-icon-lightbulb-o"></i> 一般来说进行转派工单最好告知客户此消息，可以提高售后处理的体验感。
                                         </div>
                                     </div>
 

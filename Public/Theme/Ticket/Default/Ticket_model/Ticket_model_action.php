@@ -5,59 +5,53 @@
     <input type="hidden" name="back_url" value="<?= $label->xss($_GET['back_url'] ?? '') ?>"/>
 <?= $label->token(); ?>
 
-    <div class="am-margin-bottom-sm" id="accordion">
-        <?php foreach ($field as $tagName => $item) : ?>
 
-            <div class="am-panel am-panel-warning am-margin-bottom">
-                <div class="am-panel-hd">
-                    <h4 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#<?= substr(md5($tagName), 0, 5) ?>'}">
-                        <?= $tagName ?>
-                    </h4>
-                </div>
+    <div class="am-tabs am-margin-bottom" data-am-tabs="{noSwipe: 1}">
+        <ul class="am-tabs-nav am-nav am-nav-tabs">
+            <?php foreach (array_keys($field) as $k => $name): ?>
+                <li class="<?= $k == 0 ? 'am-active' : '' ?>">
+                    <a href="#tab_<?= substr(md5($name), 0, 5) ?>"><?= $name ?></a></li>
+            <?php endforeach; ?>
+            <li class="am-active">
+                <button type="submit" class="am-btn am-btn-primary am-btn-xs am-radius"><i class="am-icon-save"></i>
+                    保存设置
+                </button>
+            </li>
+        </ul>
+
+        <div class="am-tabs-bd">
+            <?php foreach ($field as $tagName => $item): ?>
+                <div class="am-tab-panel am-fade <?= $tagName == '工单基础属性' ? 'am-in am-active' : '' ?>" id="tab_<?= substr(md5($tagName), 0, 5) ?>">
 
 
-                <div id="<?= substr(md5($tagName), 0, 5) ?>" class="am-panel-collapse am-collapse">
-                    <div class="am-panel-bd">
-                        <?php foreach ($item as $key => $value): ?>
-                            <?php if ($value['field_form'] && in_array($method, explode(',', $value['field_action']))): ?>
-                                <div class="am-g am-g-collapse">
-                                    <div class="am-u-sm-12 am-u-sm-centered">
-                                        <div class="am-form-group">
-                                            <label class="am-block"><?= $value['field_display_name'] ?><?= $value['field_required'] == '1' ? '<i class="am-text-danger">*</i>' : '' ?></label>
-                                            <?= $form->formList($value); ?>
-                                            <?php if (!empty($value['field_explain'])): ?>
-                                                <div class="pes-alert pes-alert-info am-text-xs ">
-                                                    <i class="am-icon-lightbulb-o"></i> <?= $value['field_explain'] ?>
-                                                </div>
-                                            <?php endif; ?>
-                                        </div>
+                    <?php foreach ($item as $key => $value): ?>
+                        <?php if ($value['field_form'] && in_array($method, explode(',', $value['field_action']))): ?>
+                            <div class="am-g am-g-collapse">
+                                <div class="am-u-sm-12 am-u-sm-centered">
+                                    <div class="am-form-group">
+                                        <label class="am-block"><?= $value['field_display_name'] ?><?= $value['field_required'] == '1' ? '<i class="am-text-danger">*</i>' : '' ?></label>
+                                        <?= $form->formList($value); ?>
+                                        <?php if (!empty($value['field_explain'])): ?>
+                                            <div class="pes-alert pes-alert-info am-text-xs ">
+                                                <i class="am-icon-lightbulb-o"></i> <?= $value['field_explain'] ?>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                    </div>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+
+
                 </div>
+            <?php endforeach; ?>
+        </div>
 
-
-            </div>
-
-
-        <?php endforeach; ?>
     </div>
+
 
     <script>
         $(function () {
-
-            let searchParams = new URLSearchParams(window.location.href);
-            let urlID = searchParams.get('id');
-
-            if(urlID == null){
-                $('.am-panel-title').each(function (){
-                    let option = $(this).data('am-collapse');
-                    let target = AMUI.utils.parseOptions(option).target;
-                    $(target).collapse('open')
-                })
-            }
 
 
             var closeTicket = function (val) {

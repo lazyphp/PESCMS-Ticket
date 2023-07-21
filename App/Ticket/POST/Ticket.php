@@ -46,7 +46,9 @@ class Ticket extends \Core\Controller\Controller {
                 case '0':
                     $status = '1';
                     $templateType = 2;
-                    $content = $csText['accept']['content'];
+                    if(!empty($_POST['exchange'])){
+                        $content = $csText['accept']['content'];
+                    }
                     \Model\Ticket::setUser($ticket['ticket_id'], $this->session()->get('ticket')['user_id'], $this->session()->get('ticket')['user_name']);
                     $referTime = $ticket['ticket_submit_time'];
                     break;
@@ -71,7 +73,9 @@ class Ticket extends \Core\Controller\Controller {
                         }
                         \Model\Ticket::setUser($ticket['ticket_id'], $checkUser['user_id'], $checkUser['user_name'], $this->session()->get('ticket')['user_id']);
                         $templateType = 4;
-                        $content = $csText['assign']['content'];
+                        if(!empty($_POST['exchange'])){
+                            $content = $csText['assign']['content'];
+                        }
                         \Model\Notice::addCSNotice($ticket['ticket_number'], $checkUser, -$templateType);
 
                     } elseif ($_POST['assign'] == '4') {
@@ -104,7 +108,10 @@ class Ticket extends \Core\Controller\Controller {
         \Model\Ticket::updateReferTime($ticket['ticket_id']);
         \Model\Ticket::runTime($ticket['ticket_id'], $referTime, $ticket['ticket_run_time']);
         \Model\Ticket::changeStatus($ticket, $status);
-        \Model\Ticket::addReply($ticket['ticket_id'], $content);
+        if(!empty($content)){
+            \Model\Ticket::addReply($ticket['ticket_id'], $content);
+        }
+
 
         //只有勾选告知客户才生成通知(完成工单不受影响)，尽量减少对客户的滋扰。
         if ($_POST['notice'] == 1 || in_array($_POST['assign'], ['4', '5'])) {
@@ -216,6 +223,37 @@ class Ticket extends \Core\Controller\Controller {
         ]);
 
         $this->success('备注已更新');
+    }
+
+    /**
+     * 添加留言提醒内容
+     * @return void
+     */
+    public function tips(){
+        $id = $this->isP('id', '请提交工单ID');
+        $cid = $this->isP('cid', '请提交要添加提醒的留言ID');
+        $type = $this->isP('type', '请提交您要添加提醒的类型');
+        $content = $this->isP('content', '请提交您要添加的提醒内容');
+
+        $param = [
+            'ticket_id' => $id,
+            'ticket_chat_id' => $cid,
+            'tips_type' => $type,
+            'tips_user_id' => $this->session()->get('ticket')['user_id']
+        ];
+
+        $check = \Model\Content::getContentWithConditions('ticket_chat_tips', $param);
+
+        if(!empty($check)){
+            $this->error('您已经添加了提醒，请先删除再重新添加。');
+        }
+
+        $param['tips_content'] = $content;
+        $param['tips_time'] = time();
+
+        $this->db('ticket_chat_tips')->insert($param);
+
+        $this->success('提醒添加成功！');
     }
 
 

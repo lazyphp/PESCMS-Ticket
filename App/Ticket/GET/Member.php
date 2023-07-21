@@ -13,7 +13,7 @@ namespace App\Ticket\GET;
 class Member extends Content {
 
     public function index($display = true) {
-        switch ($_GET['sortby'] ?? ''){
+        switch ($_GET['sortby'] ?? '') {
             case '1':
                 $this->sortBy = 'CONVERT( member_name USING gbk ) ASC';
                 break;
@@ -30,21 +30,21 @@ class Member extends Content {
     /**
      * 登录客户的账号，发起工单
      */
-    public function issue(){
-        if(!empty($_GET['id'])){
+    public function issue() {
+        if (!empty($_GET['id'])) {
             $member = $this->db('member')->field('member_id, member_name')->where('member_organize_id = :member_organize_id AND member_requisition = 1')->select([
-                'member_organize_id' => $this->g('id')
+                'member_organize_id' => $this->g('id'),
             ]);
             $option = '<option value="">请选择客户</option>';
-            if (!empty($member)){
-                foreach ($member as $item){
-                    $option .= '<option value="'.$item['member_id'].'">'.$item['member_name'].'</option>';
+            if (!empty($member)) {
+                foreach ($member as $item) {
+                    $option .= '<option value="' . $item['member_id'] . '">' . $item['member_name'] . '</option>';
                 }
             }
 
             $this->success(['msg' => '获取客户信息完成', 'data' => $option]);
 
-        }else{
+        } else {
             $list = $this->db('member_organize AS mo')
                 ->field('mo.*')
                 ->join("{$this->prefix}member AS m ON m.member_organize_id = mo.member_organize_id")
@@ -52,16 +52,36 @@ class Member extends Content {
                 ->group('mo.member_organize_name')
                 ->select();
             $this->assign('member_organize', $list);
-            $this->assign('title', '发起工单');
-            $this->layout();
+
+            $uid = ACTION == 'issue' ? $this->session()->get('ticket')['user_id'] : $this->isG('uid', '请提交要绑定的客服账号');
+            $user = \Model\Content::findContent('user', $uid, 'user_id', 'user_id, user_name, user_bind_mid');
+            if (ACTION == 'issue' && $user['user_bind_mid'] > 0) {
+                $_GET['id'] = (string)$user['user_bind_mid'];
+                $this->issueLogin();
+            }
+
+            $this->assign('user', $user);
+
+
+            $this->assign('title', ACTION == 'issue' ? '发起工单' : '绑定前台客户账号');
+            $this->layout('Member_issue');
         }
+    }
+
+    /**
+     * 绑定前台客户账号
+     */
+    public function bind() {
+        $this->issue();
     }
 
     /**
      * 执行登录客户账号
      */
-    public function issueLogin(){
-        $this->checkToken();
+    public function issueLogin() {
+        if (ACTION != 'issue') {
+            $this->checkToken();
+        }
         $id = $this->isG('id', '请选择您要登录的客户账号');
         $member = \Model\Content::findContent('member', $id, 'member_id');
         $this->session()->set('member', $member);

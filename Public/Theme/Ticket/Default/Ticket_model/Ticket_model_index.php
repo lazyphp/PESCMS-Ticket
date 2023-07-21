@@ -9,7 +9,9 @@
 
 <?php if (empty($list)): ?>
     <div class="pes-alert pes-alert-info am-margin-top am-margin-bottom am-text-center">
-        <p class="am-margin-0">本页面没有数据 :-(</p>
+        <p class="am-margin-0">当前系统还没有创建工单模型，客户无法向您正常反馈问题。</p>
+
+        <p class="am-margin-top-xs am-text-danger">点击查看 <a href="https://document.pescms.com/article/3/268655938838200320.html" target="_blank">《<i class="am-icon-book"></i>工单模型》</a>教程文档</p>
     </div>
 <?php else: ?>
     <form class="am-form ajax-submit" action="<?= $label->url(GROUP . '-' . MODULE . '-listsort'); ?>" method="POST">
@@ -28,6 +30,7 @@
                         <td class="am-text-middle ticket_model_base">
                             <div>
                                 <strong><?= $value['ticket_model_name'] ?></strong>
+                                <span>#<?= $value['ticket_model_number'] ?></span>
                                 <?php require __DIR__.'/Ticket_model_index_button.php' ?>
                             </div>
                             <div>

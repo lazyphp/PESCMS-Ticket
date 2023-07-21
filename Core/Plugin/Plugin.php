@@ -47,14 +47,22 @@ class Plugin{
             }
 
             foreach ($item[$type] as $action => $auth){
-                if(strcmp($this->placeholder($auth), GROUP.'-'.MODULE.'-'.ACTION) !== 0){
-                    continue;
+
+                if(is_array($auth) == false){
+                    $auth = explode(',', $auth);
                 }
 
-                if(empty(self::$pluginObj[$key])){
-                    self::$pluginObj[$key] = new $key();
+                foreach ($auth as $route){
+                    if(strcmp($this->placeholder($route), GROUP.'-'.MODULE.'-'.ACTION) !== 0){
+                        continue;
+                    }
+
+                    if(empty(self::$pluginObj[$key])){
+                        self::$pluginObj[$key] = new $key();
+                    }
+                    self::$pluginObj[$key]->$action($arguments);
                 }
-                self::$pluginObj[$key]->$action($arguments);
+
             }
         }
 

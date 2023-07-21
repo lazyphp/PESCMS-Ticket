@@ -228,7 +228,7 @@
             var dom = $(this)
             var parent = $(this).parent();
             if(parent[0].tagName != 'a'){
-                var imgStr = '<a href="'+dom.attr('src')+'" data-fancybox="gallery" class="am-inline-block"><img src="'+dom.attr('src')+'" class="am-img-responsive" style="max-height: 300px"/></a>';
+                var imgStr = '<a href="'+dom.attr('src')+'" data-fancybox="gallery" class="am-inline-block view-pic"><img src="'+dom.attr('src')+'" class="am-img-responsive" style="max-height: 300px"/></a>';
                 parent.append(imgStr)
                 dom.remove();
             }

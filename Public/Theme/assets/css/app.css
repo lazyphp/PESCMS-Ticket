@@ -333,6 +333,10 @@ html,body{
 .pt-text-border a:hover{
     border-bottom: 1px solid;
 }
+.view-pic:hover{
+    border: none !important;
+    box-shadow: 0 2px 30px rgb(0 0 0 / 22%), 0 2px 5px rgb(0 0 0 / 10%) !important;
+}
 /*工单内容描述结束*/
 
 /*鼠标移动至li上的背景颜色*/

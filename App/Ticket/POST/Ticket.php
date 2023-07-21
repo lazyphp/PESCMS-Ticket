@@ -46,7 +46,9 @@ class Ticket extends \Core\Controller\Controller {
                 case '0':
                     $status = '1';
                     $templateType = 2;
-                    $content = $csText['accept']['content'];
+                    if(!empty($_POST['exchange'])){
+                        $content = $csText['accept']['content'];
+                    }
                     \Model\Ticket::setUser($ticket['ticket_id'], $this->session()->get('ticket')['user_id'], $this->session()->get('ticket')['user_name']);
                     $referTime = $ticket['ticket_submit_time'];
                     break;
@@ -71,7 +73,9 @@ class Ticket extends \Core\Controller\Controller {
                         }
                         \Model\Ticket::setUser($ticket['ticket_id'], $checkUser['user_id'], $checkUser['user_name'], $this->session()->get('ticket')['user_id']);
                         $templateType = 4;
-                        $content = $csText['assign']['content'];
+                        if(!empty($_POST['exchange'])){
+                            $content = $csText['assign']['content'];
+                        }
                         \Model\Notice::addCSNotice($ticket['ticket_number'], $checkUser, -$templateType);
 
                     } elseif ($_POST['assign'] == '4') {
@@ -104,7 +108,10 @@ class Ticket extends \Core\Controller\Controller {
         \Model\Ticket::updateReferTime($ticket['ticket_id']);
         \Model\Ticket::runTime($ticket['ticket_id'], $referTime, $ticket['ticket_run_time']);
         \Model\Ticket::changeStatus($ticket, $status);
-        \Model\Ticket::addReply($ticket['ticket_id'], $content);
+        if(!empty($content)){
+            \Model\Ticket::addReply($ticket['ticket_id'], $content);
+        }
+
 
         //只有勾选告知客户才生成通知(完成工单不受影响)，尽量减少对客户的滋扰。
         if ($_POST['notice'] == 1 || in_array($_POST['assign'], ['4', '5'])) {

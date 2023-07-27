@@ -51,12 +51,14 @@ class Controller {
     }
 
     /**
-     * 初始化数据库
-     * @param str $name 表名
-     * @return obj 返回数据库对象
+     * 数据库连接方法
+     * @param $name 数据库表名称
+     * @param $database 数据库名称
+     * @param $dbPrefix 表前缀
+     * @return \Core\Db\Mysql|mixed
      */
-    protected static function db($name = '', $database = '', $dbPrefix = '') {
-        return \Core\Func\CoreFunc::db($name, $database, $dbPrefix);
+    protected static function db($name = '', $dataBase = '', $dbPrefix = '') {
+        return \Core\Func\CoreFunc::db($name, $dataBase, $dbPrefix);
     }
 
     /**

@@ -33,4 +33,39 @@ class Member extends Content {
 
     }
 
+    /**
+     * 对指定客服账号绑定新工单的账号
+     * @return void
+     */
+    public function bind(){
+        $uid = $this->isG('uid', '请提交要绑定的客服账号');
+        $id = $this->isP('id', '请提交您要绑定的客户账号');
+
+        $this->db('user')->where('user_id = :user_id')->update([
+            'noset' => [
+                'user_id' => $uid
+            ],
+            'user_bind_mid' => $id
+        ]);
+
+        if(empty($_POST['back_url'])){
+            $url = $this->url('Ticket-User-index');
+        }else{
+            $url = base64_decode($this->p('back_url'));
+        }
+
+
+        $this->success('客服绑定客户账号完成', $url);
+
+    }
+
+    /**
+     * 解除绑定
+     * @return void
+     */
+    public function unbind(){
+        $_POST['id'] = (string) '0';
+        $this->bind();
+    }
+
 }

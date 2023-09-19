@@ -22,9 +22,10 @@
         }, 1000);
     })();
 </script>
+
 <!--请勿删除页脚这部分代码，否则会导致程序异常-->
 <footer class="my-footer my-footer-ticket pescms-footer-<?= $system['notice_way'] ?>">
-    <small>© Copyright 2015-<?= date('Y') ?>. Power by <a href="//www.pescms.com" target="_blank">PESCMS Ticket</a>
+    <small>© Copyright 2015-<?= date('Y') ?>. <?= $authorize_type == 0 ? 'Power by <a href="https://www.pescms.com" target="_blank">PESCMS Ticket</a>' : '' ?>
     </small>
 </footer>
 <?php include THEME_PATH.'/footer.php'; ?>

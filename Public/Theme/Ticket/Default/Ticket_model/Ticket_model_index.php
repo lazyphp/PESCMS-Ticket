@@ -28,6 +28,7 @@
                         <td class="am-text-middle ticket_model_base">
                             <div>
                                 <strong><?= $value['ticket_model_name'] ?></strong>
+                                <span>#<?= $value['ticket_model_number'] ?></span>
                                 <?php require __DIR__.'/Ticket_model_index_button.php' ?>
                             </div>
                             <div>

@@ -138,6 +138,13 @@ class Index extends \Core\Controller\Controller {
                 ],
                 'url' => $this->url('Ticket-Ticket-index', ['q' => 1]),
             ],
+            'entrust' => [
+                'title' => '转派给我的工单',
+                'condition' => 't.ticket_status = 0 AND t.old_user_id != 0 AND  t.ticket_close = 0 AND t.user_id = :user_id',
+                'param' => [
+                    'user_id' => $this->session()->get('ticket')['user_id'],
+                ],
+            ],
             'lately' => [
                 'title' => '近一个月的工单',
                 'condition' => 't.ticket_close = 0 AND tm.ticket_model_group_id LIKE :group_id AND (t.user_id = 0 OR t.user_id = :user_id ) AND t.ticket_refer_time >= :ticket_refer_time ',

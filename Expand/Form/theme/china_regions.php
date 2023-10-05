@@ -15,11 +15,17 @@
         <option>请选择</option>
     </select>
 
-    <input class="form-text-input input-leng3 am-hide" name="<?= $field['field_name'] ?>"  type="text" value="<?= $field['value'] ?? '' ?>" <?= $field['field_required'] == '1' ? 'required' : '' ?>  />
+    <input class="form-text-input input-leng3 am-hide am-block am-margin-top" name="<?= $field['field_name'] ?>"  type="text" value="<?= $field['value'] ?? '' ?>" <?= $field['field_required'] == '1' ? 'required' : '' ?>  />
 
 </div>
 <script>
     $(function(){
+        
+        try{
+            var defaultOption = JSON.parse('<?= htmlspecialchars_decode($field['field_option']) ?>');
+        }catch (e) {
+            var defaultOption = {};
+        }
 
         $('select[class^="pes_regions_<?= $field['field_name'] ?>_"]').on('change', function(){
             var str = '';
@@ -55,11 +61,26 @@
                 }else{
                     var foo = data
                 }
+
+
+
                 var option = '<option value="">请选择</option>';
+
+                if(defaultOption[name]){
+
+                    foo = foo.filter(function(item){
+                        return item.name == defaultOption[name]
+                    })
+                    option = '';
+                }
+
+
                 for(var key in foo){
                     option += '<option value="'+foo[key]['name']+'" data="'+foo[key]['code']+'">'+foo[key]['name']+'</option>'
                 }
                 $('.pes_regions_<?= $field['field_name'] ?>_'+name).html(option).selected('enable')
+
+
             })
         }
 
@@ -69,7 +90,15 @@
             })
         }
 
+
+
+        console.dir(defaultOption)
+        if(defaultOption['show']){
+            $('input[name="<?= $field['field_name'] ?>"]').removeClass('am-hide')
+        }
+
         getJsonRegions('provinces', '');
+
         clearOption(['cities', 'areas', 'streets'])
 
 

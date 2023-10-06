@@ -68,6 +68,35 @@ class PluginController extends \Core\Controller\Controller {
     }
 
     /**
+     * 注册Form组件
+     * @param array $name
+     * @return void
+     */
+    public function regForm(array $name){
+
+        $res = \Model\Extra::getFormContent();
+        $json = array_merge($res['json'], $name);
+
+        $f = fopen($res['path'], 'w+');
+        fwrite($f, json_encode($json ?? [], JSON_UNESCAPED_UNICODE));
+        fclose($f);
+    }
+
+    /**
+     * 删除Form组件
+     * @param $key
+     * @return void
+     */
+    public function removeForm($key){
+        $res = \Model\Extra::getFormContent();
+        unset($res['json'][$key]);
+        $f = fopen($res['path'], 'w+');
+        fwrite($f, json_encode($res['json'] ?? [], JSON_UNESCAPED_UNICODE));
+        fclose($f);
+
+    }
+
+    /**
      * 读取配置信息
      * @param $obj
      * @return array|bool

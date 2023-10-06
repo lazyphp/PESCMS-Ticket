@@ -332,76 +332,82 @@ class Ticket extends \Core\Model\Model {
         foreach ($result as $value) {
             $form[$value['ticket_form_id']] = $value;
 
-            switch ($value['ticket_form_type']) {
-                case 'radio':
-                case 'checkbox':
-                case 'select':
-                case 'checkbox':
-                    //获取相应工单字段的选项值
-                    $form[$value['ticket_form_id']]['ticket_form_option'] = json_decode(htmlspecialchars_decode($value['ticket_form_option']), true);
-                    //复选项要做特殊处理
-                    if ($value['ticket_form_type'] == 'checkbox') {
-                        $ticketValue = [];
-                        foreach (explode(',', $value['ticket_form_content']) as $item) {
-                            $ticketValue[] = array_search($item, $form[$value['ticket_form_id']]['ticket_form_option']);
+            if(in_array($value['ticket_form_type'], \Model\Extra::getFormContent()['json'])){
+                (new \Core\Plugin\Plugin())->event("{$value['ticket_form_type']}_ticket", $value);
+            }else{
+                switch ($value['ticket_form_type']) {
+                    case 'radio':
+                    case 'checkbox':
+                    case 'select':
+                    case 'checkbox':
+                        //获取相应工单字段的选项值
+                        $form[$value['ticket_form_id']]['ticket_form_option'] = json_decode(htmlspecialchars_decode($value['ticket_form_option']), true);
+                        //复选项要做特殊处理
+                        if ($value['ticket_form_type'] == 'checkbox') {
+                            $ticketValue = [];
+                            foreach (explode(',', $value['ticket_form_content']) as $item) {
+                                $ticketValue[] = array_search($item, $form[$value['ticket_form_id']]['ticket_form_option']);
+                            }
+                            $form[$value['ticket_form_id']]['ticket_value'] = implode(' , ', $ticketValue);
+                        } else {
+                            $form[$value['ticket_form_id']]['ticket_value'] = array_search($value['ticket_form_content'], $form[$value['ticket_form_id']]['ticket_form_option']);
                         }
-                        $form[$value['ticket_form_id']]['ticket_value'] = implode(' , ', $ticketValue);
-                    } else {
-                        $form[$value['ticket_form_id']]['ticket_value'] = array_search($value['ticket_form_content'], $form[$value['ticket_form_id']]['ticket_form_option']);
-                    }
 
 
-                    break;
-                case 'thumb':
-                    $suffix = pathinfo($value['ticket_form_content']);
-                    $small = "{$value['ticket_form_content']}";
+                        break;
+                    case 'thumb':
+                        $suffix = pathinfo($value['ticket_form_content']);
+                        $small = "{$value['ticket_form_content']}";
 
-                    $form[$value['ticket_form_id']]['ticket_value'] = empty($value['ticket_form_content']) ? '' : '<img src="' . $small . '" alt="' . $value['ticket_form_content'] . '" class="am-img-thumbnail" width="50" height="50" />';
-                    break;
-                case 'img':
-                    $splitImg = explode(',', $value['ticket_form_content']);
-                    $imgStr = '<ul class="pes-ticket-form-img-group">';
-                    if (!empty($value['ticket_form_content'])) {
-                        foreach ($splitImg as $item) {
-                            $suffix = pathinfo($item);
-                            $small = "{$item}";
-                            $imgStr .= '<li>
+                        $form[$value['ticket_form_id']]['ticket_value'] = empty($value['ticket_form_content']) ? '' : '<img src="' . $small . '" alt="' . $value['ticket_form_content'] . '" class="am-img-thumbnail" width="50" height="50" />';
+                        break;
+                    case 'img':
+                        $splitImg = explode(',', $value['ticket_form_content']);
+                        $imgStr = '<ul class="pes-ticket-form-img-group">';
+                        if (!empty($value['ticket_form_content'])) {
+                            foreach ($splitImg as $item) {
+                                $suffix = pathinfo($item);
+                                $small = "{$item}";
+                                $imgStr .= '<li>
 <img src="' . $small . '" alt="" class="am-img-thumbnail"  />
 </li>';
-                        }
-                    }
-                    $imgStr .= '</ul>';
-                    $form[$value['ticket_form_id']]['ticket_value'] = $imgStr;
-                    break;
-                case 'file':
-                    //@todo 待优化,下载应该基于header方法
-
-                    $downloadFile = (new \Expand\UBB())->url($value['ticket_form_content']);
-                    if ($downloadFile == false) {
-                        $splitImg = explode(',', $value['ticket_form_content']);
-                        $imgStr = '<ul class="am-avg-sm am-thumbnails">';
-                        if (!empty($value['ticket_form_content'])) {
-                            foreach ($splitImg as $key => $item) {
-                                $imgStr .= '<li><a href="' . $item . '">下载附件' . ($key + 1) . '</a></li>';
                             }
                         }
                         $imgStr .= '</ul>';
                         $form[$value['ticket_form_id']]['ticket_value'] = $imgStr;
-                    } else {
-                        $imgStr = '<ul class="am-avg-sm am-thumbnails">';
-                        foreach ($downloadFile as $item) {
-                            $imgStr .= "<li>{$item}</li>";
+                        break;
+                    case 'file':
+                        //@todo 待优化,下载应该基于header方法
+
+                        $downloadFile = (new \Expand\UBB())->url($value['ticket_form_content']);
+                        if ($downloadFile == false) {
+                            $splitImg = explode(',', $value['ticket_form_content']);
+                            $imgStr = '<ul class="am-avg-sm am-thumbnails">';
+                            if (!empty($value['ticket_form_content'])) {
+                                foreach ($splitImg as $key => $item) {
+                                    $imgStr .= '<li><a href="' . $item . '">下载附件' . ($key + 1) . '</a></li>';
+                                }
+                            }
+                            $imgStr .= '</ul>';
+                            $form[$value['ticket_form_id']]['ticket_value'] = $imgStr;
+                        } else {
+                            $imgStr = '<ul class="am-avg-sm am-thumbnails">';
+                            foreach ($downloadFile as $item) {
+                                $imgStr .= "<li>{$item}</li>";
+                            }
+                            $imgStr .= '</ul>';
+                            $form[$value['ticket_form_id']]['ticket_value'] = $imgStr;
                         }
-                        $imgStr .= '</ul>';
-                        $form[$value['ticket_form_id']]['ticket_value'] = $imgStr;
-                    }
-                    break;
-                case 'encrypt':
-                    $form[$value['ticket_form_id']]['ticket_value'] = !empty(self::session()->get('ticket')['user_id']) ? (new \Expand\OpenSSL(\Core\Func\CoreFunc::loadConfig('USER_KEY', true)))->decrypt($value['ticket_form_content']) : '<i class="am-text-warning">您提交了加密信息,此部分只有客服可知.</i>';
-                    break;
-                default:
-                    $form[$value['ticket_form_id']]['ticket_value'] = (new \voku\helper\AntiXSS())->xss_clean(htmlspecialchars_decode($value['ticket_form_content']));
+                        break;
+                    case 'encrypt':
+                        $form[$value['ticket_form_id']]['ticket_value'] = !empty(self::session()->get('ticket')['user_id']) ? (new \Expand\OpenSSL(\Core\Func\CoreFunc::loadConfig('USER_KEY', true)))->decrypt($value['ticket_form_content']) : '<i class="am-text-warning">您提交了加密信息,此部分只有客服可知.</i>';
+                        break;
+                    default:
+                        $form[$value['ticket_form_id']]['ticket_value'] = (new \voku\helper\AntiXSS())->xss_clean(htmlspecialchars_decode($value['ticket_form_content']));
+                }
             }
+
+
 
             if ($value['ticket_form_bind'] > 0) {
                 $form[$value['ticket_form_id']]['ticket_form_bind_value'] = explode(',', $value['ticket_form_bind_value']);

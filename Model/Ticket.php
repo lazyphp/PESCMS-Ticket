@@ -480,14 +480,21 @@ class Ticket extends \Core\Model\Model {
         //若是评价工单详情，已删除的工单回复内容会全部正常展示出来。
         $condition = ACTION == 'complainDetail' ? '' : 'AND ticket_chat_delete = 0';
 
-        $sql = "SELECT %s FROM " . self::$modelPrefix . "ticket_chat WHERE ticket_id = :ticket_id {$condition} ORDER BY ticket_chat_id ASC";
+        $sql = "SELECT %s FROM " . self::$modelPrefix . "ticket_chat WHERE ticket_id = :ticket_id {$condition} ORDER BY ticket_chat_id DESC";
 
-        return \Model\Content::quickListContent([
+        $res = \Model\Content::quickListContent([
             'count'  => sprintf($sql, 'count(*)'),
             'normal' => sprintf($sql, '*'),
             'param'  => ['ticket_id' => $id],
             'page'   => $chatPage,
         ]);
+
+
+        if(!empty($res['list'])){
+            krsort($res['list']);
+        }
+
+        return $res;
     }
 
     /**

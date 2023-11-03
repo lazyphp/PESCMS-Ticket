@@ -23,7 +23,7 @@ class Content extends \Core\Model\Model {
     private static $contentResult = null;
 
     /**
-     * 查找指定内容（动态条件）
+     * 查找指定内容 [单一查询条件]（动态条件）
      * @param type $param 设置参数，字符串形式则为表名 | array 数组情况下，key 0 的为表名, key 1的为连贯操作
      * @param type $value 内容值
      * @param type $field 查找的字段
@@ -272,7 +272,7 @@ class Content extends \Core\Model\Model {
     }
 
     /**
-     * 检查重复
+     * 检查重复[单一筛选条件]
      * @param $table 查询的表
      * @param $field 查询的字段
      * @param $value 匹配的内容
@@ -289,6 +289,26 @@ class Content extends \Core\Model\Model {
             return false;
         }
 
+    }
+
+    /**
+     * 通过多个等于匹配的条件查找指定表一条内容
+     * @param string $table 要查找的表
+     * @param array $params 查找内容的字段和筛选值
+     * @return array|void 返回查询结果
+     */
+    public static function getContentWithConditions(string $table, array $params){
+        $field = '1 = 1 ';
+
+        if(empty($params)){
+            die('请不要提交空白参数');
+        }
+
+        foreach (array_keys($params) as $item){
+            $field .= " AND {$item} = :{$item}";
+        }
+
+        return self::db($table)->where($field)->find($params);
     }
 
 }

@@ -22,13 +22,14 @@
 
         <div class="am-padding pt-info-panel">
             <div class="am-u-sm-12 am-u-sm-centered">
-                <div class="pt-view-desc-question"><span class="pt-text-explode">问题标题 : </span> <?= $ticket_title; ?> <?= $member_id == '-1' && GROUP == 'Ticket' ? '<b class="am-text-gray">[匿名工单]</b>' : '' ?>
+                <div class="pt-view-desc-question">
+                    <span class="pt-text-explode">问题标题 : </span> <?= $ticket_title; ?> <?= $member_id == '-1' && GROUP == 'Ticket' ? '<b class="am-text-gray">[匿名工单]</b>' : '' ?>
                 </div>
                 <div class="am-g am-g-collapse pt-view-desc">
                     <div class="am-u-sm-12 am-u-lg-3"><span class="pt-text-explode">工单编号 : </span><?= $ticket_number; ?>
                     </div>
                     <div class="am-u-sm-12 am-u-lg-3"><span class="pt-text-explode">工单类型 : </span>
-                            <?= $ticket_model_name; ?>
+                        <?= $ticket_model_name; ?>
                     </div>
                     <div class="am-u-sm-12 am-u-lg-3">
                         <span class="pt-text-explode">提交时间 : </span><?= date('Y-m-d H:i:s', $ticket_submit_time); ?>
@@ -47,15 +48,15 @@
                     </div>
 
                     <div class="am-u-sm-12 am-u-lg-3">
-                        <?php if (!empty($this->session()->get('ticket')['user_id']) && !empty($member) && GROUP == 'Ticket' ): ?>
+                        <?php if (!empty($this->session()->get('ticket')['user_id']) && !empty($member) && GROUP == 'Ticket'): ?>
                         <span class="pt-text-explode">客户信息 :
                             <div class="am-dropdown ticket-member-table-dropdown" data-am-dropdown>
                                 <a href="javascript:;" class=" am-dropdown-toggle" data-am-dropdown-toggle><?= $member['member_name'] ?> <span class="am-icon-caret-down"></span></a>
                                 <ul class="am-dropdown-content">
                                     <li class="am-dropdown-header">客户详细信息</li>
                                     <li class="am-scrollable-horizontal ticket-member-table">
-                                        <?php if(!empty($memberField)): ?>
-                                        <table class="am-table am-table-bordered am-table-striped am-table-hover am-text-xs am-text-nowrap">
+                                        <?php if (!empty($memberField)): ?>
+                                            <table class="am-table am-table-bordered am-table-striped am-table-hover am-text-xs am-text-nowrap">
                                             <tr>
                                                 <?php foreach ($memberField as $value) : ?>
                                                     <?php if ($value['field_name'] == 'status'): ?>
@@ -84,20 +85,24 @@
                     <div class="am-u-sm-12 am-u-lg-3">
                         <?php if (GROUP == 'Form' && $ticket_status < 3 && $ticket_close == 0): ?>
                             <a href="<?= $label->url('Ticket-status', ['number' => $ticket_number, 'back_url' => base64_encode($_SERVER['REQUEST_URI']), 'method' => 'PUT']) ?>"
-                               class="am-text-warning ajax-click ajax-dialog" msg="您确定要结束本工单吗?">[<i class="am-icon-check"></i> 结束工单]</a>
-                        <?php elseif(GROUP == 'Form' && $ticket_status == 3 && $ticket_close == 0 && $ticket_complete_time >= time() - 86400 * $ticket_model_recovery_day ): ?>
+                               class="am-text-warning ajax-click ajax-dialog" msg="您确定要结束本工单吗?">[<i class="am-icon-check"></i>
+                                结束工单]</a>
+                        <?php elseif (GROUP == 'Form' && $ticket_status == 3 && $ticket_close == 0 && $ticket_complete_time >= time() - 86400 * $ticket_model_recovery_day): ?>
                             <a href="<?= $label->url('Ticket-status', ['number' => $ticket_number, 'back_url' => base64_encode($_SERVER['REQUEST_URI']), 'method' => 'PUT']) ?>"
-                               class="am-text-success ajax-click ajax-dialog" msg="您可以恢复<?=$ticket_model_recovery_day ?? 7?>天内由已结束的工单。">[<i class="am-icon-refresh"></i> 恢复工单]</a>
+                               class="am-text-success ajax-click ajax-dialog" msg="您可以恢复<?= $ticket_model_recovery_day ?? 7 ?>天内由已结束的工单。">[<i class="am-icon-refresh"></i>
+                                恢复工单]</a>
                         <?php endif; ?>
 
-                        <?php if ($label->checkAuth('TicketPUTTicketcomplete') === true && GROUP == 'Ticket' && $ticket_status == 3 ): ?>
+                        <?php if ($label->checkAuth('TicketPUTTicketcomplete') === true && GROUP == 'Ticket' && $ticket_status == 3): ?>
                             <form action="<?= $label->url('Ticket-Ticket-reply'); ?>" class="am-form ajax-submit" method="POST" data-am-validator>
                                 <a name="handleTicket"></a>
                                 <input type="hidden" name="number" value="<?= $ticket_number; ?>"/>
                                 <input type="hidden" name="back_url" value="<?= $_GET['back_url']; ?>"/>
                                 <input type="hidden" name="assign" value="5">
                                 <?= $label->token() ?>
-                                <button type="submit" class="am-btn am-btn-xs am-btn-warning" onclick="return confirm('确认要恢复本工单状态吗？')"><i class="am-icon-refresh"></i> 恢复工单</button>
+                                <button type="submit" class="am-btn am-btn-xs am-btn-warning" onclick="return confirm('确认要恢复本工单状态吗？')">
+                                    <i class="am-icon-refresh"></i> 恢复工单
+                                </button>
                             </form>
                         <?php endif; ?>
 
@@ -109,13 +114,13 @@
                 <div class="am-padding-left"><span class="pt-text-explode">备注说明 : </span>
                     <input type="text" class="ticket-remark-input" maxlength="22" old="<?= $label->xss($ticket_remark) ?>" value="<?= $label->xss($ticket_remark) ?>" placeholder="若需要在列表标记说明，请在此处填写一句话，限22个字">
                 </div>
-                
-                <?php if($ticket_close == 1): ?>
-                <div class="am-padding-left am-margin-top">
-                    <span class="pt-text-explode">工单关闭理由：</span>
-                    <?= $ticket_close_reason ?>
-                    <span class="pt-text-explode"><?= !empty($ticket_close_time) ? '[关闭于 '. date('Y-m-d H:s', $ticket_close_time).']' : ''   ?></span>
-                </div>
+
+                <?php if ($ticket_close == 1): ?>
+                    <div class="am-padding-left am-margin-top">
+                        <span class="pt-text-explode">工单关闭理由：</span>
+                        <?= $ticket_close_reason ?>
+                        <span class="pt-text-explode"><?= !empty($ticket_close_time) ? '[关闭于 ' . date('Y-m-d H:s', $ticket_close_time) . ']' : '' ?></span>
+                    </div>
                 <?php endif; ?>
 
             <?php endif; ?>
@@ -163,6 +168,8 @@
         <?php if (!empty($chat)): ?>
             <?php foreach ($chat as $value): ?>
                 <li class="<?= $value['user_id'] == '-1' ? ' am-text-gray-background' : '' ?> ">
+
+
                     <div class="am-g">
                         <div class="am-u-sm-2 am-u-lg-1">
                             <?php if ($value['user_id'] == '-1'): ?>
@@ -178,16 +185,23 @@
 
                             <div class="am-block">
                                 <div class="am-fl"><?= date('Y-m-d H:i:s', $value['ticket_chat_time']); ?>
-                                    <?php if($system['ticket_read'] == 1 || ( !empty(self::session()->get('ticket')) && GROUP == 'Ticket' ) ): ?>
+                                    <?php if ($system['ticket_read'] == 1 || (!empty(self::session()->get('ticket')) && GROUP == 'Ticket')): ?>
                                         <span class="am-text-gray">[<?= $value['ticket_chat_read'] == 1 ? '已读' : '未读' ?>]</span>
                                     <?php endif; ?>
                                 </div>
 
-                                <?php if(!empty(self::session()->get('ticket')) && self::session()->get('ticket')['user_id'] == $value['user_id'] && $value['ticket_chat_delete'] == 0 && $ticket_close == 0 && $ticket_status != 3 ): ?>
-                                <div class="am-fr">
-                                    <span><a href="<?= $label->url('Ticket-Ticket-chat', ['id' => $value['ticket_chat_id'], 'method' => 'DELETE']) ?>" class="am-text-danger ajax-click ajax-dialog"  msg="确定删除此回复内容吗？已产生的通知是不会被删除的。" >[<i class="am-icon-remove"></i> 删除]</a></span>
-                                </div>
+
+                                <?php if (!empty(self::session()->get('ticket')) && self::session()->get('ticket')['user_id'] == $value['user_id'] && $value['ticket_chat_delete'] == 0 && $ticket_close == 0 && $ticket_status != 3): ?>
+                                    <div class="am-fr">
+                                        <span><a href="<?= $label->url('Ticket-Ticket-chat', ['id' => $value['ticket_chat_id'], 'method' => 'DELETE']) ?>" class="am-text-danger ajax-click ajax-dialog" msg="确定删除此回复内容吗？已产生的通知是不会被删除的。">[<i class="am-icon-remove"></i> 删除]</a></span>
+                                    </div>
                                 <?php endif; ?>
+
+
+                                <div class="am-fr am-margin-right">
+                                    <a href="javascript:;" class="add-chat-tips" cid="<?= $value['ticket_chat_id'] ?>">[<i class="am-icon-lightbulb-o"></i> 添加提醒]</a>
+                                </div>
+
                             </div>
 
                         </div>
@@ -205,6 +219,31 @@
         </li>
     </ul>
 </div>
+
+<form action="<?= $label->url('Ticket-Ticket-tips') ?>'" class="am-form" id="append-tips" method="POST">
+    <input type="hidden" name="method" value="POST">
+    <input type="hidden" name="id" value="<?= $ticket_id ?>">
+    <input type="hidden" name="cid" value="">
+    <div class="am-form-group">
+        <label>提醒内容</label>
+        <textarea class="" rows="5" name="content" ></textarea>
+    </div>
+
+    <div class="am-form-group">
+        <label class="am-radio-inline">
+            <input type="radio" name="type" value="0"> 全局
+        </label>
+        <label class="am-radio-inline">
+            <input type="radio" name="type" value="1"> 仅自己
+        </label>
+    </div>
+
+    <div>
+        <button type="submit" class="am-btn am-btn-xs am-btn-primary" >提交</button>
+    </div>
+
+</form>
+
 <?php if ($pageObj->totalRow >= $pageObj->listRows): ?>
     <ul class="am-pagination am-pagination-centered am-text-sm">
         <?= $page; ?>
@@ -227,11 +266,24 @@
         $('.pes-chat img').each(function () {
             var dom = $(this)
             var parent = $(this).parent();
-            if(parent[0].tagName != 'a'){
-                var imgStr = '<a href="'+dom.attr('src')+'" data-fancybox="gallery" class="am-inline-block view-pic"><img src="'+dom.attr('src')+'" class="am-img-responsive" style="max-height: 300px"/></a>';
+            if (parent[0].tagName != 'a') {
+                var imgStr = '<a href="' + dom.attr('src') + '" data-fancybox="gallery" class="am-inline-block view-pic"><img src="' + dom.attr('src') + '" class="am-img-responsive" style="max-height: 300px"/></a>';
                 parent.append(imgStr)
                 dom.remove();
             }
+        })
+
+        $('.add-chat-tips').on('click', function () {
+
+            var cid = $(this).attr('cid')
+            $('#append-tips').find('input[name="cid"]').val(cid)
+
+            var d = dialog({
+                id: 'tips-from',
+                content: $('#append-tips'),
+                quickClose: true
+            })
+            d.show($(this)[0]);
         })
 
     })

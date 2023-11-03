@@ -225,5 +225,36 @@ class Ticket extends \Core\Controller\Controller {
         $this->success('备注已更新');
     }
 
+    /**
+     * 添加留言提醒内容
+     * @return void
+     */
+    public function tips(){
+        $id = $this->isP('id', '请提交工单ID');
+        $cid = $this->isP('cid', '请提交要添加提醒的留言ID');
+        $type = $this->isP('type', '请提交您要添加提醒的类型');
+        $content = $this->isP('content', '请提交您要添加的提醒内容');
+
+        $param = [
+            'ticket_id' => $id,
+            'ticket_chat_id' => $cid,
+            'tips_type' => $type,
+            'tips_user_id' => $this->session()->get('ticket')['user_id']
+        ];
+
+        $check = \Model\Content::getContentWithConditions('ticket_chat_tips', $param);
+
+        if(!empty($check)){
+            $this->error('您已经添加了提醒，请点击编辑按钮或者删除后再补充。');
+        }
+
+        $param['tips_content'] = $content;
+        $param['tips_time'] = time();
+
+        $this->db('ticket_chat_tips')->insert($param);
+
+        $this->success('提醒添加成功！');
+    }
+
 
 }

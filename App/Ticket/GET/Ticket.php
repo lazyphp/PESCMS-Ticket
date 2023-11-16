@@ -268,7 +268,12 @@ class Ticket extends \Core\Controller\Controller {
         if ($content['ticket']['ticket_read'] == '0') {
             \Model\Ticket::inTicketIdWithUpdate(['ticket_read' => '1', 'noset' => ['ticket_id' => $content['ticket']['ticket_id']]]);
         }
+
         $this->assign($content['ticket']);
+
+
+        $chatTips = \Model\TicketChat::chatTips($content['chat']['list']);
+        self::assign('chatTips', $chatTips);
 
         //查询工单是否有新回复。
         if(!empty($_GET['replyRefresh'])){

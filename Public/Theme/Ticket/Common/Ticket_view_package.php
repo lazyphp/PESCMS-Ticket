@@ -206,6 +206,9 @@
 
                         </div>
                     </div>
+
+
+                    <?php require_once __DIR__.'/Ticket_vew_chat_tips.php'?>
                 </li>
             <?php endforeach; ?>
 
@@ -220,7 +223,7 @@
     </ul>
 </div>
 
-<form action="<?= $label->url('Ticket-Ticket-tips') ?>'" class="am-form" id="append-tips" method="POST">
+<form action="<?= $label->url('Ticket-Ticket-tips') ?>" class="am-form" id="append-tips" method="POST">
     <input type="hidden" name="method" value="POST">
     <input type="hidden" name="id" value="<?= $ticket_id ?>">
     <input type="hidden" name="cid" value="">

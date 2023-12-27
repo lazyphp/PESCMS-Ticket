@@ -157,6 +157,13 @@ $SLICE_ARRYR = [
         ['\Ticket\HandleForm\HandleModelTicket_form']
     ],
 
+    //注册处理工单表单管理 添加/编辑 提交的表单内容
+    'TICKET-TIPS' => [
+        'any',
+        ['Ticket-Ticket-tips'],
+        ['\Ticket\HandleForm\HandleTicketChatTips']
+    ],
+
     //注册处理后台 工单模型添加/编辑提交过来的密码表单
     'TICKET-MODEL-ACTION' => [
         'any',

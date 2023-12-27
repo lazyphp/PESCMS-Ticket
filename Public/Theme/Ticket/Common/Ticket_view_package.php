@@ -198,17 +198,19 @@
                                 <?php endif; ?>
 
 
-                                <div class="am-fr am-margin-right">
-                                    <a href="javascript:;" class="add-chat-tips" cid="<?= $value['ticket_chat_id'] ?>">[<i class="am-icon-lightbulb-o"></i> 添加提醒]</a>
-                                </div>
+                                <?php if (!empty(self::session()->get('ticket')) && self::session()->get('ticket')['user_id'] == $value['user_id']): ?>
+                                    <div class="am-fr am-margin-right">
+                                        <a href="javascript:;" class="add-chat-tips" cid="<?= $value['ticket_chat_id'] ?>">[<i class="am-icon-lightbulb-o"></i>
+                                            添加提醒]</a>
+                                    </div>
+                                <?php endif; ?>
 
                             </div>
 
                         </div>
                     </div>
 
-
-                    <?php require_once __DIR__.'/Ticket_vew_chat_tips.php'?>
+                    <?php require __DIR__ . '/Ticket_vew_chat_tips.php' ?>
                 </li>
             <?php endforeach; ?>
 
@@ -223,13 +225,13 @@
     </ul>
 </div>
 
-<form action="<?= $label->url('Ticket-Ticket-tips') ?>" class="am-form" id="append-tips" method="POST">
+<form action="<?= $label->url('Ticket-Ticket-tips') ?>" class="am-form ajax-submit" id="append-tips" method="POST" STYLE="display: none">
     <input type="hidden" name="method" value="POST">
     <input type="hidden" name="id" value="<?= $ticket_id ?>">
     <input type="hidden" name="cid" value="">
     <div class="am-form-group">
         <label>提醒内容</label>
-        <textarea class="" rows="5" name="content" ></textarea>
+        <textarea class="" rows="5" name="content"></textarea>
     </div>
 
     <div class="am-form-group">
@@ -242,7 +244,7 @@
     </div>
 
     <div>
-        <button type="submit" class="am-btn am-btn-xs am-btn-primary" >提交</button>
+        <button type="submit" class="am-btn am-btn-xs am-btn-primary">提交</button>
     </div>
 
 </form>

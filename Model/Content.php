@@ -55,19 +55,32 @@ class Content extends \Core\Model\Model {
 
     /**
      * 列出内容（动态条件）
-     * @param type $table 内容表名
-     * @param array $param 绑定参数
-     * @param type $where 查找条件
-     * @param type $order 排序
-     * @param type $limit 限制输出
-     * @return type
+     * @param $param 动态查询条件
+     * @param $setKey 是否设置返回指定键值的内容
+     * @return array
      */
-    public static function listContent($param) {
+    public static function listContent($param, $setKey = null) {
         if (empty($param['table'])) {
             self::error('Unkonw Table!');
         }
         $value = array_merge(['field' => '*', 'db' => '', 'prefix' => '', 'join' => '', 'condition' => '', 'order' => '', 'group' => '', 'limit' => '', 'lock' => '', 'param' => []], $param);
-        return self::db($value['table'], $value['db'], $value['prefix'])->field($value['field'])->join($value['join'])->where($value['condition'])->order($value['order'])->group($value['group'])->limit($value['limit'])->lock($value['lock'])->select($value['param']);
+
+        $result = self::db($value['table'], $value['db'], $value['prefix'])->field($value['field'])->join($value['join'])->where($value['condition'])->order($value['order'])->group($value['group'])->limit($value['limit'])->lock($value['lock'])->select($value['param']);
+
+        if(!empty($setKey)){
+            $list = [];
+            foreach ($result as $item){
+                //如果setkey不存在，则结束循环
+                if(empty($item[$setKey])){
+                    $list = $result;
+                    break;
+                }
+                $list[$item[$setKey]] = $item;
+            }
+            return $list;
+        }else{
+            return $result;
+        }
     }
 
     /**

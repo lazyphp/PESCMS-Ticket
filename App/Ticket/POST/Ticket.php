@@ -245,7 +245,7 @@ class Ticket extends \Core\Controller\Controller {
         $check = \Model\Content::getContentWithConditions('ticket_chat_tips', $param);
 
         if(!empty($check)){
-            $this->error('您已经添加了提醒，请点击编辑按钮或者删除后再补充。');
+            $this->error('您已经添加了提醒，请先删除再重新添加。');
         }
 
         $param['tips_content'] = $content;

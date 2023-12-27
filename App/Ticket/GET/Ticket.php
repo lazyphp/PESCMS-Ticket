@@ -275,6 +275,7 @@ class Ticket extends \Core\Controller\Controller {
         $chatTips = \Model\TicketChat::chatTips($content['chat']['list']);
         self::assign('chatTips', $chatTips);
 
+
         //查询工单是否有新回复。
         if(!empty($_GET['replyRefresh'])){
             echo $content['chat']['pageObj']->totalRow;
@@ -295,6 +296,12 @@ class Ticket extends \Core\Controller\Controller {
             \Model\Ticket::readStatus($content['ticket']['ticket_id'], -1);
             \Model\Ticket::csnoticeRead($content['ticket']['ticket_number'], $userID);
 
+            $getUserList = \Model\Content::listContent([
+                'table' => 'user',
+                'field' => 'user_id, user_name'
+            ], 'user_id');
+
+            $this->assign('getUserList', $getUserList);
 
             $this->assign('ticketModel', \Model\Content::listContent(['table' => 'ticket_model', 'field' => 'ticket_model_id, ticket_model_number, ticket_model_cid, ticket_model_name']));
             $this->assign('form', $content['form']);

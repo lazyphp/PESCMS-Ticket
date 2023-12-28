@@ -116,7 +116,7 @@ $(function () {
 
             // 文件上传失败
             uploader.on('uploadError', function (file, reason) {
-                $('#' + file.id + ' h3.am-gallery-title').html('上传失败').removeClass('am-hide');
+                $('#' + file.id + ' h3.am-gallery-title').html('上传失败 - 请求异常').removeClass('am-hide');
             });
 
             // 完成上传完了，成功或者失败，结束进度条。

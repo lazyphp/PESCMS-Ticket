@@ -5,7 +5,7 @@
         <form action="<?= $label->url('Ticket-Ticket-reply'); ?>" class="am-form ajax-submit" method="POST" data-am-validator>
             <a name="handleTicket"></a>
             <input type="hidden" name="number" value="<?= $ticket_number; ?>"/>
-            <input type="hidden" name="back_url" value="<?= $_GET['back_url']; ?>"/>
+            <input type="hidden" name="back_url" value="<?= $label->xss($_GET['back_url']); ?>"/>
             <?= $label->token() ?>
             <div class="am-panel am-panel-default">
                 <div class="am-panel-bd">

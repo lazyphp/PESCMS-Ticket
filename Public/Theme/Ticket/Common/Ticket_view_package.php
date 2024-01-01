@@ -97,7 +97,7 @@
                             <form action="<?= $label->url('Ticket-Ticket-reply'); ?>" class="am-form ajax-submit" method="POST" data-am-validator>
                                 <a name="handleTicket"></a>
                                 <input type="hidden" name="number" value="<?= $ticket_number; ?>"/>
-                                <input type="hidden" name="back_url" value="<?= $_GET['back_url']; ?>"/>
+                                <input type="hidden" name="back_url" value="<?= $label->xss($_GET['back_url']); ?>"/>
                                 <input type="hidden" name="assign" value="5">
                                 <?= $label->token() ?>
                                 <button type="submit" class="am-btn am-btn-xs am-btn-warning" onclick="return confirm('确认要恢复本工单状态吗？')">

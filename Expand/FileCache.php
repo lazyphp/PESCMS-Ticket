@@ -70,6 +70,11 @@ class FileCache {
         }
     }
 
+    /**
+     * 清除缓存文件
+     * @param $fileName
+     * @return void
+     */
     public function clearCache($fileName){
         $cacheFile = sprintf($this->cacheFileName, $fileName);
         if(is_file($cacheFile)){

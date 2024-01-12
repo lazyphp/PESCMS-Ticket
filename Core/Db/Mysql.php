@@ -212,6 +212,11 @@ class Mysql {
         return $result;
     }
 
+    /**
+     * 是否设置返回指定key值的数组。
+     * @param $key
+     * @return $this
+     */
     public function arrayKey($key) {
         $this->arrayKey = $key;
         return $this;
@@ -462,7 +467,16 @@ class Mysql {
         $this->dealParam($param, $fieldType);
         $this->getLastSql = $sql;
         $sth = $this->PDOBindArray();
-        $result = $sth->fetchALL();
+
+        if (!empty($this->arrayKey)) {
+            $result = [];
+            foreach ($sth as $item) {
+                $result[$item[$this->arrayKey] ?? ''] = $item;
+            }
+        } else {
+            $result = $sth->fetchALL();
+        }
+
         $this->emptyParam();
         if (!empty($result)) {
             return $result;
@@ -613,6 +627,7 @@ class Mysql {
                 $this->getLastSql = str_replace($placeholder, $paramValue, $this->getLastSql);
             }
         }
+        $this->arrayKey = '';
         $this->field = '*';
         $this->where = '';
         $this->join = [];

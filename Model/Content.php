@@ -63,22 +63,41 @@ class Content extends \Core\Model\Model {
         if (empty($param['table'])) {
             self::error('Unkonw Table!');
         }
-        $value = array_merge(['field' => '*', 'db' => '', 'prefix' => '', 'join' => '', 'condition' => '', 'order' => '', 'group' => '', 'limit' => '', 'lock' => '', 'param' => []], $param);
+        $value = array_merge([
+            'field'     => '*',
+            'db'        => '',
+            'prefix'    => '',
+            'join'      => '',
+            'condition' => '',
+            'order'     => '',
+            'group'     => '',
+            'limit'     => '',
+            'lock'      => '',
+            'param'     => [],
+        ], $param);
 
-        $result = self::db($value['table'], $value['db'], $value['prefix'])->field($value['field'])->join($value['join'])->where($value['condition'])->order($value['order'])->group($value['group'])->limit($value['limit'])->lock($value['lock'])->select($value['param']);
+        $result = self::db($value['table'], $value['db'], $value['prefix'])
+            ->field($value['field'])
+            ->join($value['join'])
+            ->where($value['condition'])
+            ->order($value['order'])
+            ->group($value['group'])
+            ->limit($value['limit'])
+            ->lock($value['lock'])
+            ->select($value['param']);
 
-        if(!empty($setKey)){
+        if (!empty($setKey)) {
             $list = [];
-            foreach ($result as $item){
+            foreach ($result as $item) {
                 //如果setkey不存在，则结束循环
-                if(empty($item[$setKey])){
+                if (empty($item[$setKey])) {
                     $list = $result;
                     break;
                 }
                 $list[$item[$setKey]] = $item;
             }
             return $list;
-        }else{
+        } else {
             return $result;
         }
     }
@@ -291,14 +310,14 @@ class Content extends \Core\Model\Model {
      * @param $value 匹配的内容
      * @return bool 存在重复返回true 。反之false
      */
-    public static function checkRepeat($table, $field, $value){
+    public static function checkRepeat($table, $field, $value) {
         $checkRepeat = self::db($table)->where("$field = :$field")->find([
-            $field => $value
+            $field => $value,
         ]);
 
-        if(!empty($checkRepeat)){
+        if (!empty($checkRepeat)) {
             return true;
-        }else{
+        } else {
             return false;
         }
 
@@ -310,14 +329,14 @@ class Content extends \Core\Model\Model {
      * @param array $params 查找内容的字段和筛选值
      * @return array|void 返回查询结果
      */
-    public static function getContentWithConditions(string $table, array $params){
+    public static function getContentWithConditions(string $table, array $params) {
         $field = '1 = 1 ';
 
-        if(empty($params)){
+        if (empty($params)) {
             die('请不要提交空白参数');
         }
 
-        foreach (array_keys($params) as $item){
+        foreach (array_keys($params) as $item) {
             $field .= " AND {$item} = :{$item}";
         }
 

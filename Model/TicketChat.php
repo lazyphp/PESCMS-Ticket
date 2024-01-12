@@ -16,7 +16,7 @@ class TicketChat extends \Core\Model\Model {
      * @param $array
      * @return array
      */
-    public static function chatTips($array) {
+    public static function chatTips($array): array {
 
         if (empty($array)) {
             return [];
@@ -24,7 +24,7 @@ class TicketChat extends \Core\Model\Model {
 
         $id = array_column($array, 'ticket_chat_id');
 
-        $res = self::db('ticket_chat_tips')->where('ticket_chat_id IN (:' . implode(array_keys($array), ', :') . ')')->select($id);
+        $res = self::db('ticket_chat_tips')->where('ticket_chat_id IN (:' . implode(', :', array_keys($array)) . ')')->select($id);
 
         $list = [];
         if (!empty($res)) {

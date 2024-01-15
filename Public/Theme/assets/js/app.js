@@ -274,9 +274,9 @@ $(function () {
      * 快速跳转到工单处理
      */
     $('.pes-handleTicket').on('click', function () {
-        var height = $('a[name="handleTicket"]').offset().top - 250;
+        var height = $('#btn-submit').length > 0 ? $('#btn-submit').offset().top  : document.getElementsByClassName('pes-chat')[0].offsetTop;
         var $w = $(window);
-        $w.smoothScroll({position: $(document).height() - height});
+        $w.smoothScroll({position: height});
     })
 
     /**

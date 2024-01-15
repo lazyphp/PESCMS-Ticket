@@ -191,3 +191,10 @@
   padding: 5px;
   border: 1px solid #cfcfcf;
 }
+.pes-ticket-content {
+  margin: 0px !important;
+}
+.pes-ticket-content > li {
+  background-color: #f8f8f8 !important;
+  border: none;
+}

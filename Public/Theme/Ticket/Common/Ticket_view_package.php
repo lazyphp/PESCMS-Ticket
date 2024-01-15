@@ -125,6 +125,43 @@
 
             <?php endif; ?>
 
+            <hr/>
+            <ul class="am-list am-list-static am-text-sm am-list-hover pes-ticket-content">
+                <li class="am-text-gray-background">
+                    <div class="am-g">
+                        <div class="am-u-sm-2 am-u-lg-1">
+                            <i class="am-icon-btn am-primary am-icon-user"></i>
+                        </div>
+                        <div class="am-u-sm-10 am-u-lg-11">
+                            <div class="am-block">
+                                <?php foreach ($form as $key => $value): ?>
+                                    <?php if ($value['ticket_form_bind'] == '0'): ?>
+
+                                        <div class="pt-text-border">
+                                            <div class="pt-text-explode"><?= $value['ticket_form_description']; ?>:
+                                            </div>
+                                            <div><?= strlen($value['ticket_value']) == 0 ? '<del class="am-text-gray am-text-xs">(此选项值为空)</del>' : $value['ticket_value']; ?></div>
+                                        </div>
+
+                                    <?php else: ?>
+                                        <?php if (in_array($form[$value['ticket_form_bind']]['ticket_form_content'], $value['ticket_form_bind_value'])): ?>
+
+                                            <div class="pt-text-border">
+                                                <div class="pt-text-explode"><?= $value['ticket_form_description']; ?>
+                                                    :
+                                                </div>
+                                                <div><?= $value['ticket_value']; ?></div>
+                                            </div>
+
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
         </div>
 
     </div>
@@ -135,36 +172,7 @@
         <h3 class="am-margin-0">沟通记录</h3>
     </div>
     <ul class="am-list am-list-static am-text-sm am-list-hover pes-chat">
-        <li class="am-text-gray-background">
-            <div class="am-g">
-                <div class="am-u-sm-2 am-u-lg-1">
-                    <i class="am-icon-btn am-primary am-icon-user"></i>
-                </div>
-                <div class="am-u-sm-10 am-u-lg-11">
-                    <div class="am-block">
-                        <?php foreach ($form as $key => $value): ?>
-                            <?php if ($value['ticket_form_bind'] == '0'): ?>
 
-                                <div class="pt-text-border">
-                                    <div class="pt-text-explode"><?= $value['ticket_form_description']; ?>:</div>
-                                    <div><?= strlen($value['ticket_value']) == 0 ? '<del class="am-text-gray am-text-xs">(此选项值为空)</del>' : $value['ticket_value']; ?></div>
-                                </div>
-
-                            <?php else: ?>
-                                <?php if (in_array($form[$value['ticket_form_bind']]['ticket_form_content'], $value['ticket_form_bind_value'])): ?>
-
-                                    <div class="pt-text-border">
-                                        <div class="pt-text-explode"><?= $value['ticket_form_description']; ?>:</div>
-                                        <div><?= $value['ticket_value']; ?></div>
-                                    </div>
-
-                                <?php endif; ?>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-            </div>
-        </li>
         <?php if (!empty($chat)): ?>
             <?php foreach ($chat as $value): ?>
                 <li class="<?= $value['user_id'] == '-1' ? ' am-text-gray-background' : '' ?> ">
@@ -213,7 +221,10 @@
                     <?php require __DIR__ . '/Ticket_vew_chat_tips.php' ?>
                 </li>
             <?php endforeach; ?>
-
+        <?php else: ?>
+            <li>
+                暂时还没有沟通记录。
+            </li>
         <?php endif; ?>
         <li class="replyRefresh" data="<?= $pageObj->totalRow ?>" style="display: none">
             <a href="#reply" onClick="window.location.reload()" class="am-padding-0">
@@ -268,7 +279,7 @@
             })
         }, 60000)
 
-        $('.pes-chat img').each(function () {
+        $('.pes-ticket-content img, .pes-chat img').each(function () {
             var dom = $(this)
             var parent = $(this).parent();
             if (parent[0].tagName != 'a') {

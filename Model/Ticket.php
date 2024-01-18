@@ -156,7 +156,7 @@ class Ticket extends \Core\Model\Model {
                 $form = (new \Expand\OpenSSL(\Core\Func\CoreFunc::loadConfig('USER_KEY', true)))->encrypt($form);
             }
 
-            if(!empty($form)){
+            if (!empty($form)) {
                 switch ($value['ticket_form_verify']) {
                     case 'noVerify':
                         break;
@@ -168,20 +168,20 @@ class Ticket extends \Core\Model\Model {
             }
 
             //特定字段需要校验提交的内容和设置是否一致。
-            if(isset($form) && in_array($value['ticket_form_type'], ['radio', 'checkbox', 'select', 'multiple']) ){
+            if (isset($form) && in_array($value['ticket_form_type'], ['radio', 'checkbox', 'select', 'multiple'])) {
                 $optionName = \Model\Field::getFieldOptionToMatch($form, $value['ticket_form_option']);
-                if($optionName === NULL){
+                if ($optionName === NULL) {
                     self::error("您提交的'<b>{$value['ticket_form_description']}</b>'选项值存在异常，请提交正确的值，或者刷新页面再提交。");
                 }
 
-            }else{
-				$optionName  = '';
-			}
+            } else {
+                $optionName = '';
+            }
 
             $result = self::db('ticket_content')->insert([
-                'ticket_id'           => $ticketID,
-                'ticket_form_id'      => $value['ticket_form_id'],
-                'ticket_form_content' => $form,
+                'ticket_id'               => $ticketID,
+                'ticket_form_id'          => $value['ticket_form_id'],
+                'ticket_form_content'     => $form,
                 'ticket_form_option_name' => $optionName,
             ]);
             if ($result === false) {
@@ -255,7 +255,7 @@ class Ticket extends \Core\Model\Model {
                 $avgTotal = count($user);
 
                 array_walk($ticket, function ($value) use (&$user, &$avgSubTotal, &$userSort) {
-                    if(isset($user[$value['user_id']])){
+                    if (isset($user[$value['user_id']])) {
                         $user[$value['user_id']]['total'] = $value['total'];
                         $avgSubTotal += $value['total'];
                         $userSort[$value['user_id']] = $value['total'];
@@ -322,7 +322,13 @@ class Ticket extends \Core\Model\Model {
      */
     public static function getTicketContent($id) {
         $form = [];
-        $result = self::db('ticket_content AS tc')->join(self::$modelPrefix . 'ticket_form AS tf ON tf.ticket_form_id = tc.ticket_form_id')->where('tc.ticket_id = :ticket_id')->order('tf.ticket_form_listsort ASC, tf.ticket_form_id DESC')->select(['ticket_id' => $id]);
+        $result = self::db('ticket_content AS tc')
+            ->join(self::$modelPrefix . 'ticket_form AS tf ON tf.ticket_form_id = tc.ticket_form_id')
+            ->where('tc.ticket_id = :ticket_id')
+            ->order('tf.ticket_form_listsort ASC, tf.ticket_form_id DESC')
+            ->select([
+                'ticket_id' => $id,
+            ]);
         if (empty($result)) {
             return $form;
         }
@@ -332,9 +338,14 @@ class Ticket extends \Core\Model\Model {
         foreach ($result as $value) {
             $form[$value['ticket_form_id']] = $value;
 
-            if(in_array($value['ticket_form_type'], \Model\Extra::getFormContent()['json'])){
+            if (in_array($value['ticket_form_type'], \Model\Extra::getFormContent()['json'])) {
+                ob_start();
                 (new \Core\Plugin\Plugin())->event("{$value['ticket_form_type']}_ticket", $value);
-            }else{
+                $getThemeContent = ob_get_contents();
+                ob_clean();
+                $form[$value['ticket_form_id']]['ticket_value'] = $getThemeContent ?? null;
+
+            } else {
                 switch ($value['ticket_form_type']) {
                     case 'radio':
                     case 'checkbox':
@@ -408,7 +419,6 @@ class Ticket extends \Core\Model\Model {
             }
 
 
-
             if ($value['ticket_form_bind'] > 0) {
                 $form[$value['ticket_form_id']]['ticket_form_bind_value'] = explode(',', $value['ticket_form_bind_value']);
             }
@@ -429,8 +439,8 @@ class Ticket extends \Core\Model\Model {
             return false;
         }
 
-        foreach (json_decode(\Model\Content::findContent('option', 'ticket_contact', 'option_name')['value'], true) as $item){
-            if($item['key'] == $ticket['ticket_contact']){
+        foreach (json_decode(\Model\Content::findContent('option', 'ticket_contact', 'option_name')['value'], true) as $item) {
+            if ($item['key'] == $ticket['ticket_contact']) {
                 $ticket['ticket_contact_name'] = $item['title'];
                 break;
             }
@@ -440,15 +450,15 @@ class Ticket extends \Core\Model\Model {
         $chat = self::getTicketChat($ticket['ticket_id'], $chatPage);
 
         $member = $ticket['member_id'] == '-1' ? '' : \Model\Content::findContent('member', $ticket['member_id'], 'member_id');
-        if(!empty($member)){
+        if (!empty($member)) {
             unset($member['member_password']);
         }
 
         return [
-            'ticket' => $ticket,
-            'form' => $form,
-            'chat' => $chat,
-            'member' => $member,
+            'ticket'         => $ticket,
+            'form'           => $form,
+            'chat'           => $chat,
+            'member'         => $member,
             'global_contact' => array_flip(\Model\Field::findField('240', true)->deFieldOptionToArray()),
         ];
 
@@ -490,10 +500,9 @@ class Ticket extends \Core\Model\Model {
         ]);
 
 
-        if(!empty($res['list'])){
+        if (!empty($res['list'])) {
             krsort($res['list']);
         }
-
 
 
         return $res;
@@ -528,7 +537,7 @@ class Ticket extends \Core\Model\Model {
     public static function setUser($id, $userID, $userName, $oldID = NULL) {
         $param = ['user_id' => $userID, 'user_name' => $userName, 'noset' => ['ticket_id' => $id]];
 
-        if(!empty($oldID)){
+        if (!empty($oldID)) {
             $param['old_user_id'] = $oldID;
         }
 
@@ -551,8 +560,8 @@ class Ticket extends \Core\Model\Model {
      * @param $status | -1 状态为关闭工单
      * @return bool
      */
-    public static function recordStatusLine($ticket, $status){
-        if($ticket['ticket_status'] == $status){
+    public static function recordStatusLine($ticket, $status) {
+        if ($ticket['ticket_status'] == $status) {
             return true;
         }
 
@@ -560,21 +569,21 @@ class Ticket extends \Core\Model\Model {
         $memberID = 0;
 
         //@todo API接口因为session没无法使用，所以记录前台提交的信息会异常。待解决
-        if(GROUP == 'Ticket'){
+        if (GROUP == 'Ticket') {
             $userID = self::session()->get('ticket')['user_id'];
             $name = self::session()->get('ticket')['user_name'];
-        }else{
+        } else {
             $memberID = self::session()->get('member')['member_id'] ?? '-1';
             $name = self::session()->get('member')['member_name'] ?? '匿名用户';
         }
 
         self::db('ticket_status_line')->insert([
-            'ticket_id' => $ticket['ticket_id'],
-            'ticket_status' => $status,
-            'member_id' => $memberID,
-            'user_id' => $userID,
-            'display_name' => $name,
-            'status_line_time' => time()
+            'ticket_id'        => $ticket['ticket_id'],
+            'ticket_status'    => $status,
+            'member_id'        => $memberID,
+            'user_id'          => $userID,
+            'display_name'     => $name,
+            'status_line_time' => time(),
         ]);
     }
 
@@ -594,7 +603,7 @@ class Ticket extends \Core\Model\Model {
      * @return mixed
      */
     public static function runTime($id, $referTime, $runTime) {
-        if($referTime > 0 ){
+        if ($referTime > 0) {
             $runTime = (time() - $referTime) + $runTime;
         }
         return self::inTicketIdWithUpdate(['ticket_run_time' => $runTime, 'noset' => ['ticket_id' => $id]]);
@@ -664,14 +673,14 @@ class Ticket extends \Core\Model\Model {
      * @param $ticketID 工单ID
      * @param $type 更新的已读类型 | 0：将客服的消息标记已读 非0 任意数值则将客户的消息标记已读
      */
-    public static function readStatus($ticketID, $type){
+    public static function readStatus($ticketID, $type) {
         $condition = $type == 0 ? ' AND user_id != -1' : ' AND user_id = -1';
 
         self::db('ticket_chat')->where("ticket_id = :ticket_id {$condition} AND ticket_chat_read = 0")->update([
-            'noset' => [
+            'noset'            => [
                 'ticket_id' => $ticketID,
             ],
-            'ticket_chat_read' => 1
+            'ticket_chat_read' => 1,
         ]);
     }
 
@@ -681,13 +690,13 @@ class Ticket extends \Core\Model\Model {
      * @param $userID
      * @return void
      */
-    public static function csnoticeRead($ticketNumber, $userID){
+    public static function csnoticeRead($ticketNumber, $userID) {
         self::db('csnotice')->where("ticket_number = :ticket_number AND user_id = :user_id AND csnotice_read = 0")->update([
-            'noset' => [
+            'noset'              => [
                 'ticket_number' => $ticketNumber,
-                'user_id' => $userID
+                'user_id'       => $userID,
             ],
-            'csnotice_read' => 1,
+            'csnotice_read'      => 1,
             'csnotice_read_time' => time(),
         ]);
     }
@@ -697,21 +706,21 @@ class Ticket extends \Core\Model\Model {
      * @param $field
      * @return array|string|string[]
      */
-    private static function customNO($field){
+    private static function customNO($field) {
         $ticket_model_custom_no = strtoupper($field['ticket_model_custom_no']);
-        if(empty($ticket_model_custom_no)){
+        if (empty($ticket_model_custom_no)) {
             return str_pad(substr(\Model\Extra::getOnlyNumber(), 0, 15), 15, 0, STR_PAD_RIGHT);
-        }elseif($ticket_model_custom_no == '{X}'){
+        } elseif ($ticket_model_custom_no == '{X}') {
             return (new \Godruoyi\Snowflake\Snowflake)->id();
-        }else{
+        } else {
             $zKeyWord = self::db('ticket')->field('count(*) AS total')->where('ticket_model_id = :ticket_model_id')->find([
-                'ticket_model_id' => $field['ticket_model_id']
-            ])['total'] + 1;
-            
+                    'ticket_model_id' => $field['ticket_model_id'],
+                ])['total'] + 1;
+
             $aKeyWord = self::db('ticket')->field('count(*) AS total')->where('ticket_model_id = :ticket_model_id AND ticket_submit_time >= :ticket_submit_time')->find([
-                'ticket_model_id' => $field['ticket_model_id'],
-                'ticket_submit_time' => strtotime(date('Y-m-d').' 00:00:00')
-            ])['total'] + 1;
+                    'ticket_model_id'    => $field['ticket_model_id'],
+                    'ticket_submit_time' => strtotime(date('Y-m-d') . ' 00:00:00'),
+                ])['total'] + 1;
 
             $search = ['{Y}', '{M}', '{D}', '{Z}', '{A}', '{S}'];
             $replace = [date('Y'), date('m'), date('d'), sprintf('%04d', $zKeyWord), sprintf('%04d', $aKeyWord), sprintf('%05d', rand(0, 99999))];

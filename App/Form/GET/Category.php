@@ -62,7 +62,7 @@ class Category extends \Core\Controller\Controller {
         $number = $this->isG('number', '请提交您要生成的工单');
         $result = \Model\TicketForm::getFormWithNumber($number);
 
-        \Model\Ticket::organizeCheck(current($result), self::session()->get('member')['member_organize_id']);
+        \Model\Ticket::organizeCheck(current($result), self::session()->get('member')['member_organize_id'] ?? 0);
 
 
         if (empty($result)) {

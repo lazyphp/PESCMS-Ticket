@@ -97,7 +97,7 @@ class Controller {
      * @param bool $htmlentities 是否转义
      * @return array|bool|string
      */
-    private static function handleData($data, $htmlentities = TRUE){
+    protected static function handleData($data, $htmlentities = TRUE){
         if (empty($data) && !is_numeric($data)) {
             return '';
         }

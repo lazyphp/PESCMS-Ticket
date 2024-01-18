@@ -20,8 +20,14 @@
     font-size: 1.5rem;
   }
 
+
   @media only screen and (min-width: 1025px) {
     padding: 20px 10px;
+    > div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 
 }
@@ -76,20 +82,78 @@
 
 
 /*首页搜索*/
-@media only screen and (max-width: 640px) {
-  .index-search .am-input-group {
-    display: block !important;
+.index-search {
+  position: relative;
+  input {
+    height: 50px !important;
+    width: 100%;
+    display: block;
+    font-size: 14px;
+    padding-left: 20px;
+    padding-right: 46px;
+    color: #172b4d;
+    border: 1px solid #979797;
+    border-radius: 3px;
+
+    &:focus, &:hover {
+      outline-style: none;
+      box-shadow: 0 0 0 2px #4c9aff;
+      outline-color: #4c9aff;
+    }
   }
 
-  .index-search .am-input-group-btn {
-    padding-top: 2rem;
-    text-align: center;
+  .pes-search-button{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    right: 20px;
+    border: none;
+    z-index: 1;
+    cursor: pointer;
+    width: 120px;
+    height: 40px;
+    background-color: #ecf5ff;
+    color: #0573e3;
   }
 
+  .pes-submit-ticket{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    right: 145px;
+    border: none;
+    z-index: 1;
+    width: 120px;
+    height: 40px;
+  }
+
+  @media only screen and (max-width: 640px) {
+
+    input{
+      &::placeholder{
+        font-size: 1.4rem;
+      }
+    }
+
+    .pes-search-button, .pes-submit-ticket{
+      font-size: 1.2rem;
+      width: 8rem;
+    }
+    .pes-search-button{
+      right: 15px;
+    }
+    .pes-submit-ticket{
+      right: 100px;
+      line-height: 2.4;
+    }
+  }
 }
 
+
 .index-logo {
-  padding-top: 11.6rem;
+  padding-top: 10rem;
 }
 
 /*面包屑*/
@@ -220,6 +284,7 @@
 
       &:focus, &:active, &.am-field-error {
         -webkit-box-shadow: none !important;
+
         &::placeholder {
           color: transparent;
         }
@@ -245,7 +310,7 @@
 
       }
 
-      &.am-field-valid + span{
+      &.am-field-valid + span {
         opacity: 1;
         //color: #5eb95e;
       }

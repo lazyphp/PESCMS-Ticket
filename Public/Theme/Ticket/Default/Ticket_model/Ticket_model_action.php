@@ -53,6 +53,36 @@
     <script>
         $(function () {
 
+            const form = document.getElementsByClassName('am-form')[0];
+
+            const requiredFields = form.querySelectorAll('[required]')
+            // console.dir(requiredFields)
+
+            function isFieldValid(field) {
+                if (field.type === 'radio') {
+                    const radios = form.querySelectorAll(`[name="${field.name}"]`);
+                    return Array.from(radios).some(radio => radio.checked);
+                } else if (field.type === 'checkbox') {
+                    return field.checked;
+                } else if (field.tagName.toLowerCase() === 'select') {
+                    return field.value !== '';
+                } else {
+                    return field.checkValidity();
+                }
+            }
+
+            $('.am-form').submit(function (){
+                if($(this).validator('isFormValid') == false){
+                    for (let i = 0; i < requiredFields.length; i++) {
+                        if (!isFieldValid(requiredFields[i])) {
+                            var index = $(requiredFields[i]).parents('.am-tab-panel').index();
+                            $('.am-tabs').tabs('open', index)
+                            break;
+                        }
+                    }
+                }
+            })
+
 
             var closeTicket = function (val) {
                 var showCloseType = $('input[name="close_type[]"]').parent().parent()

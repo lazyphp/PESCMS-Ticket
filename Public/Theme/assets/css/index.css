@@ -131,8 +131,118 @@
     line-height: 2.4;
   }
 }
+.hot-search {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  line-height: 24px;
+  margin-top: 1.6rem;
+  text-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  font-size: 1.8rem;
+}
+.hot-search a {
+  color: #575d6c;
+}
+.hot-search a:hover {
+  color: #32beff;
+}
 .index-logo {
   padding-top: 10rem;
+}
+.index-ticket-service {
+  margin-top: 4rem;
+}
+.index-ticket-service ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+.index-ticket-service ul li {
+  display: flex;
+}
+.index-ticket-service .index-ticket-service-title {
+  font-weight: 700;
+  font-size: 24px;
+  padding-bottom: 2.5rem;
+}
+.index-ticket-service .am-panel {
+  width: 100%;
+}
+.index-ticket-service .am-panel .am-panel-bd {
+  padding: 0 !important;
+  font-size: 1.6rem;
+}
+.index-ticket-service .am-panel .am-panel-bd a {
+  padding: 1.2rem;
+  background-color: #f8fafd;
+  display: block;
+  color: #575d6c;
+}
+.index-ticket-service .am-panel .am-panel-bd a i {
+  width: 30px;
+  height: 30px;
+  color: #0366f1;
+}
+.index-ticket-service .am-panel .am-panel-bd a i:before {
+  font-size: 135%;
+}
+.index-ticket-service .am-panel .am-panel-bd a img {
+  width: 30px;
+  height: 30px;
+}
+.index-ticket-service .am-panel .am-panel-bd a:hover {
+  color: #32beff;
+  background-color: #ebf3fe;
+}
+/*首页fqa*/
+.pes-index-fqa {
+  margin-top: 4rem;
+}
+.pes-index-fqa ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+.pes-index-fqa ul li {
+  display: flex;
+}
+.pes-index-fqa .fqa-title {
+  font-weight: 700;
+  font-size: 24px;
+  padding-bottom: 2.5rem;
+}
+.pes-index-fqa h2 {
+  color: #111;
+}
+.pes-index-fqa a {
+  color: #575d6c;
+}
+.pes-index-fqa a:hover {
+  color: #32beff;
+}
+.pes-index-fqa .am-panel {
+  width: 100%;
+  background-color: #f7f8fa;
+}
+.pes-index-fqa .am-panel .am-panel-bd .subcard {
+  min-height: 150px;
+}
+.pes-index-fqa .am-panel .am-panel-bd .subcard div {
+  padding: 0.5rem 2rem;
+}
+.pes-index-fqa .am-panel .am-panel-bd a {
+  position: relative;
+}
+.pes-index-fqa .am-panel .am-panel-bd a::before {
+  background: #000;
+  content: "";
+  display: block;
+  height: 2px;
+  margin-left: -14px;
+  margin-top: -1px;
+  position: absolute;
+  top: 10px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  width: 6px;
 }
 /*面包屑*/
 @media only screen and (max-width: 640px) {
@@ -315,6 +425,28 @@
   color: #e1e6eb;
   text-decoration: none;
 }
+.fqa-search-result {
+  margin: 2rem auto 5rem auto;
+  padding-bottom: 2rem;
+  max-width: 1000px;
+  border-bottom: 1px solid #e5e5e5;
+}
+.fqa-search-result:last-child {
+  border-bottom: none;
+}
+.fqa-search-result h2 {
+  font-size: 1.6em;
+  border-bottom: none !important;
+}
+.fqa-search-result h2 a {
+  color: #606266;
+}
+.fqa-search-result .fqa-search-result-desc a {
+  color: #b3b3b3;
+}
+.fqa-search-result .fqa-search-result-tool {
+  color: #606266;
+}
 /*FQA列表*/
 .fqa-search {
   margin: 2rem auto 5rem auto;
@@ -392,19 +524,28 @@
   background: #353536;
   font-size: 13px;
 }
-.pes-ticket-form-img-group {
+.pes-ticket-form-img-group,
+.pes-ticket-form-video-group {
   padding: 0;
   list-style: none;
   column-count: 5;
   column-gap: 1em;
 }
-.pes-ticket-form-img-group li {
+.pes-ticket-form-img-group li,
+.pes-ticket-form-video-group li {
   padding: 1px;
 }
-.pes-ticket-form-img-group li a:hover {
+.pes-ticket-form-img-group li a:hover,
+.pes-ticket-form-video-group li a:hover {
   border: none !important;
 }
-.pes-ticket-form-img-group li img {
+.pes-ticket-form-img-group li video,
+.pes-ticket-form-video-group li video {
+  width: 100%;
+  height: 20rem;
+}
+.pes-ticket-form-img-group li img,
+.pes-ticket-form-video-group li img {
   padding: 5px;
   border: 1px solid #cfcfcf;
 }

@@ -84,6 +84,7 @@
 /*首页搜索*/
 .index-search {
   position: relative;
+
   input {
     height: 50px !important;
     width: 100%;
@@ -102,7 +103,7 @@
     }
   }
 
-  .pes-search-button{
+  .pes-search-button {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -117,7 +118,7 @@
     color: #0573e3;
   }
 
-  .pes-submit-ticket{
+  .pes-submit-ticket {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -131,30 +132,173 @@
 
   @media only screen and (max-width: 640px) {
 
-    input{
-      &::placeholder{
+    input {
+      &::placeholder {
         font-size: 1.4rem;
       }
     }
 
-    .pes-search-button, .pes-submit-ticket{
+    .pes-search-button, .pes-submit-ticket {
       font-size: 1.2rem;
       width: 8rem;
     }
-    .pes-search-button{
+
+    .pes-search-button {
       right: 15px;
     }
-    .pes-submit-ticket{
+
+    .pes-submit-ticket {
       right: 100px;
       line-height: 2.4;
     }
   }
 }
 
+.hot-search {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  line-height: 24px;
+  margin-top: 1.6rem;
+  text-shadow: 0 0 30px rgba(0, 0, 0, .1);
+  font-size: 1.8rem;
+  //color: rgba(255, 255, 255, .7);
+  a {
+    color: #575d6c;
+
+    &:hover {
+      color: #32beff;
+    }
+  }
+}
 
 .index-logo {
   padding-top: 10rem;
 }
+
+//首页工单服务
+.index-ticket-service {
+  margin-top: 4rem;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+
+    li {
+      display: flex;
+    }
+  }
+
+  .index-ticket-service-title {
+    font-weight: 700;
+    font-size: 24px;
+    padding-bottom: 2.5rem;
+  }
+
+  .am-panel {
+    width: 100%;
+
+    .am-panel-bd {
+      padding: 0 !important;
+      font-size: 1.6rem;
+
+      a {
+        padding: 1.2rem;
+        background-color: #f8fafd;
+        display: block;
+        color: #575d6c;
+
+        i {
+          width: 30px;
+          height: 30px;
+          color: #0366f1;
+
+          &:before {
+            font-size: 135%;
+          }
+        }
+
+        img {
+          width: 30px;
+          height: 30px;
+        }
+
+        &:hover {
+          color: #32beff;
+          background-color: #ebf3fe;
+        }
+      }
+    }
+
+  }
+
+}
+
+/*首页fqa*/
+.pes-index-fqa {
+  margin-top: 4rem;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+
+    li {
+      display: flex;
+    }
+  }
+
+  .fqa-title {
+    font-weight: 700;
+    font-size: 24px;
+    padding-bottom: 2.5rem;
+  }
+
+  h2 {
+    color: #111;
+  }
+
+  a {
+    color: #575d6c;
+
+    &:hover {
+      color: #32beff;
+    }
+  }
+
+  .am-panel {
+    width: 100%;
+    background-color: #f7f8fa;
+
+    .am-panel-bd {
+      .subcard {
+        min-height: 150px;
+
+        div {
+          padding: 0.5rem 2rem;
+        }
+      }
+
+      a {
+        position: relative;
+
+        &::before {
+          background: #000;
+          content: "";
+          display: block;
+          height: 2px;
+          margin-left: -14px;
+          margin-top: -1px;
+          position: absolute;
+          top: 10px;
+          -webkit-transition: all .3s;
+          transition: all .3s;
+          width: 6px;
+        }
+      }
+    }
+  }
+}
+
 
 /*面包屑*/
 @media only screen and (max-width: 640px) {
@@ -375,6 +519,35 @@
 .fqa-list a:hover {
   color: #e1e6eb;
   text-decoration: none;
+}
+
+.fqa-search-result {
+  margin: 2rem auto 5rem auto;
+  padding-bottom: 2rem;
+  max-width: 1000px;
+  border-bottom: 1px solid #e5e5e5;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  h2 {
+    font-size: 1.6em;
+    border-bottom: none !important;
+
+    a {
+      color: #606266;
+    }
+  }
+
+  .fqa-search-result-desc a {
+    color: #b3b3b3;
+  }
+
+  .fqa-search-result-tool {
+    color: #606266;
+  }
+
 }
 
 /*FQA列表*/

@@ -21,7 +21,11 @@
             <?php endforeach; ?>
         </table>
     </div>
+
+
+
 </div>
+<?= $label->token() ?>
 <?php if (!empty($list)): ?>
     <div class="am-g ">
         <div class="am-u-sm-12 am-u-lg-8">

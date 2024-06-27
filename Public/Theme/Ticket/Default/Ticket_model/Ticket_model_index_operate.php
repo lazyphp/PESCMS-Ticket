@@ -1,5 +1,5 @@
 <div>
-    <a class="am-text-warning" href="<?= $label->url('Ticket-' . 'Ticket_form-index', ['number' => $value["ticket_model_number"], 'cid' => $value['ticket_model_cid'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>"><i class="am-icon-compass"></i> 添加工单字段</a>
+    <a class="am-text-warning" href="<?= $label->url('Ticket-' . 'Ticket_form-index', ['number' => $value["ticket_model_number"], 'cid' => $value['ticket_model_cid'], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]); ?>"><i class="am-icon-compass"></i> 添加和管理工单字段</a>
 </div>
 
 <div>

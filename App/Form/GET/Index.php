@@ -16,7 +16,7 @@ class Index extends \Core\Controller\Controller {
     private $rowlock = '';
 
     public function index() {
-        if(!empty($_GET)){
+        if (!empty($_GET)) {
             $this->jump('/');
         }
         $system = \Core\Func\CoreFunc::$param['system'];
@@ -25,7 +25,77 @@ class Index extends \Core\Controller\Controller {
         }
         $template = $system['indexStyle'] == 0 ? '' : 'Index_ticket';
 
+        $indexSetting = \Model\Theme::getThemeIndexSetting();
+
+        $this->indexTicketType($indexSetting);
+        $this->fqa($indexSetting);
+
+        $this->assign('indexSetting', $indexSetting);
+
         $this->layout($template);
+    }
+
+    /**
+     * 首页工单分类/模型类型输出
+     * @param $indexSetting
+     * @return void
+     */
+    private function indexTicketType($indexSetting) {
+        $listType = [];
+
+        switch ($indexSetting['index_type']) {
+            case 1:
+                $listType = \Model\Content::listContent([
+                    'table'     => 'category',
+                    'field'     => 'category_id AS id, category_img AS img, category_name AS name',
+                    'condition' => 'category_parent = 0',
+                    'order'     => 'category_listsort ASC, category_id DESC',
+                ]);
+                break;
+            case 2:
+                $listType = \Model\Content::listContent([
+                    'table'     => 'category AS c',
+                    'field'     => 'c.category_id AS id, c.category_img AS img, c.category_name AS name',
+                    'join'      => "{$this->prefix}ticket_model AS tm ON tm.ticket_model_cid = c.category_id",
+                    'condition' => 'tm.ticket_model_id IS NOT NULL',
+                    'group'     => 'c.category_id',
+                    'order'     => 'category_listsort ASC, category_id DESC',
+                ]);
+                break;
+            case 3:
+                $listType = \Model\Content::listContent([
+                    'table'     => 'ticket_model',
+                    'field'     => 'ticket_model_name AS name, ticket_model_number AS number, ticket_model_img AS img, ticket_model_cid AS id',
+                    'condition' => 'ticket_model_cid = :ticket_model_cid AND ticket_model_status = 1 ',
+                    'order'     => 'ticket_model_listsort ASC, ticket_model_id  DESC',
+                    'param'     => [
+                        'ticket_model_cid' => $indexSetting['index_cid'],
+                    ],
+                ]);
+
+        }
+
+        $this->assign('listType', $listType);
+    }
+
+    /**
+     * 首页FQA显示
+     * @param $indexSetting
+     * @return void
+     */
+    private function fqa($indexSetting) {
+        $fqa = [];
+        if ($indexSetting['fqa'] == 1) {
+            $fqaList = \Model\Fqa::getList();
+            if (!empty($fqaList)) {
+                foreach ($fqaList as $value) {
+                    $fqa[$value['ticket_model_name']][] = $value;
+                }
+            }
+        }
+
+
+        $this->assign('fqa', $fqa);
     }
 
     /**
@@ -33,7 +103,7 @@ class Index extends \Core\Controller\Controller {
      */
     public function verify() {
         $verify = new \Expand\Verify();
-        if(!empty($_GET['height'])){
+        if (!empty($_GET['height'])) {
             $verify->height = intval($this->g('height'));
         }
         $verifyLength = \Core\Func\CoreFunc::$param['system']['verifyLength'];
@@ -56,12 +126,12 @@ class Index extends \Core\Controller\Controller {
     /**
      * 工单系统行为事件
      */
-    public function behavior(){
+    public function behavior() {
         $system = \Core\Func\CoreFunc::$param['system'];
         $this->rowlock = $system['rowlock'] == 1 ? 'FOR UPDATE' : '';
         $openDisturb = false;
         $disturb = json_decode($system['disturb'], true);
-        if(is_numeric($disturb['begin']) && is_numeric($disturb['end'])){
+        if (is_numeric($disturb['begin']) && is_numeric($disturb['end'])) {
             $openDisturb = \Model\Extra::notDisturb($disturb['begin'], $disturb['end']);
         }
 
@@ -76,7 +146,7 @@ class Index extends \Core\Controller\Controller {
                     if ($item['template_type'] > 0) {
                         \Model\Notice::insertMemberNoticeSendTemplate($item);
                     } else {
-                        if($openDisturb == true){
+                        if ($openDisturb == true) {
                             continue;
                         }
                         \Model\Notice::insertCSNoticeSendTemplate($item);
@@ -100,51 +170,51 @@ class Index extends \Core\Controller\Controller {
      * 工单超时提醒
      * @return bool
      */
-    private function ticketTimeOut(){
+    private function ticketTimeOut() {
         $list = \Model\Content::listContent([
-            'table' => 'ticket AS t',
-            'field' => 't.ticket_id, t.ticket_number, t.ticket_status, t.ticket_submit_time, t.user_id, t.ticket_time_out_sequence, t.ticket_exclusive, tm.ticket_model_group_id, tm.ticket_model_time_out, tm.ticket_model_time_out_sequence',
-            'join' => "{$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id",
+            'table'     => 'ticket AS t',
+            'field'     => 't.ticket_id, t.ticket_number, t.ticket_status, t.ticket_submit_time, t.user_id, t.ticket_time_out_sequence, t.ticket_exclusive, tm.ticket_model_group_id, tm.ticket_model_time_out, tm.ticket_model_time_out_sequence',
+            'join'      => "{$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id",
             'condition' => 't.ticket_status = 0 AND t.ticket_close = 0 AND ticket_time_out_sequence < ticket_model_time_out_sequence  ',
-            'lock' => $this->rowlock
+            'lock'      => $this->rowlock,
         ]);
 
-        if(empty($list)){
+        if (empty($list)) {
             return true;
         }
-        foreach ($list as $item){
+        foreach ($list as $item) {
             //已通知的次数大于设定的次数则不再通知
-            if($item['ticket_time_out_sequence'] >= $item['ticket_model_time_out_sequence'] || empty($item['ticket_model_group_id']) ){
+            if ($item['ticket_time_out_sequence'] >= $item['ticket_model_time_out_sequence'] || empty($item['ticket_model_group_id'])) {
                 continue;
             }
 
-            $timeOutTime = $item['ticket_submit_time'] + (1 + $item['ticket_time_out_sequence']) * $item['ticket_model_time_out'] * 60 ;
-            if($timeOutTime > time()){
+            $timeOutTime = $item['ticket_submit_time'] + (1 + $item['ticket_time_out_sequence']) * $item['ticket_model_time_out'] * 60;
+            if ($timeOutTime > time()) {
                 continue;
             }
 
 
-            if($item['ticket_exclusive'] == 1 && !empty($item['user_id'])){
+            if ($item['ticket_exclusive'] == 1 && !empty($item['user_id'])) {
 
                 $user = \Model\Content::findContent('user', $item['user_id'], 'user_id');
                 \Model\Notice::addCSNotice($item['ticket_number'], $user, -504);
-            }else{
+            } else {
                 //移除手尾,
                 $item['ticket_model_group_id'] = trim($item['ticket_model_group_id'], ',');
 
                 $userList = self::db('user')->where("user_group_id IN ({$item['ticket_model_group_id']})")->select();
-                if(!empty($userList)){
-                    foreach ($userList as $user){
+                if (!empty($userList)) {
+                    foreach ($userList as $user) {
                         \Model\Notice::addCSNotice($item['ticket_number'], $user, -504);
                     }
                 }
             }
 
             $this->db('ticket')->where('ticket_id = :ticket_id')->update([
-                'noset' => [
-                    'ticket_id' => $item['ticket_id']
+                'noset'                    => [
+                    'ticket_id' => $item['ticket_id'],
                 ],
-                'ticket_time_out_sequence' => $item['ticket_time_out_sequence'] + 1
+                'ticket_time_out_sequence' => $item['ticket_time_out_sequence'] + 1,
             ]);
 
         }
@@ -154,30 +224,30 @@ class Index extends \Core\Controller\Controller {
     /**
      * 自动关闭工单
      */
-    private function autoClose(){
+    private function autoClose() {
         $list = \Model\Content::listContent([
-            'table' => 'ticket AS t',
-            'field' => 't.ticket_id, t.ticket_status, t.ticket_number, t.member_id, t.ticket_submit_time, t.ticket_refer_time, t.ticket_contact_account, t.ticket_contact, tm.ticket_model_close_time, tm.ticket_model_close_type',
-            'join' => "{$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id",
+            'table'     => 'ticket AS t',
+            'field'     => 't.ticket_id, t.ticket_status, t.ticket_number, t.member_id, t.ticket_submit_time, t.ticket_refer_time, t.ticket_contact_account, t.ticket_contact, tm.ticket_model_close_time, tm.ticket_model_close_type',
+            'join'      => "{$this->prefix}ticket_model AS tm ON tm.ticket_model_id = t.ticket_model_id",
             'condition' => 't.ticket_status IN (0, 1, 2) AND t.ticket_close = 0 AND tm.ticket_model_open_close = 1',
-            'lock' => $this->rowlock,
+            'lock'      => $this->rowlock,
         ]);
 
-        foreach ($list as $item){
+        foreach ($list as $item) {
             $closeType = explode(',', $item['ticket_model_close_type']);
-            if(!in_array($item['ticket_status'], $closeType)){
+            if (!in_array($item['ticket_status'], $closeType)) {
                 continue;
             }
 
-            switch ($item['ticket_status']){
+            switch ($item['ticket_status']) {
                 case '0':
-                    if($item['ticket_submit_time'] < time() - $item['ticket_model_close_time'] * 60 ){
+                    if ($item['ticket_submit_time'] < time() - $item['ticket_model_close_time'] * 60) {
                         $close = true;
                     }
                     break;
                 case '1':
                 case '2':
-                    if($item['ticket_refer_time'] < time() - $item['ticket_model_close_time'] * 60 ){
+                    if ($item['ticket_refer_time'] < time() - $item['ticket_model_close_time'] * 60) {
                         $close = true;
                     }
                     break;
@@ -186,7 +256,7 @@ class Index extends \Core\Controller\Controller {
                     break;
             }
 
-            if($close === true){
+            if ($close === true) {
                 \Model\Ticket::addReply($item['ticket_id'], '工单已关闭，若还有疑问，请重新发表工单咨询!');
                 \Model\Ticket::inTicketIdWithUpdate(['ticket_close' => '1', 'noset' => ['ticket_id' => $item['ticket_id']]]);
                 \Model\Notice::addTicketNoticeAction($item['ticket_number'], $item['ticket_contact_account'], $item['ticket_contact'], 6);

@@ -24,7 +24,6 @@ class Setting extends \Core\Controller\Controller {
                 'siteTitle',
                 'pescmsIntroduce',
                 'openindex',
-                'indexStyle',
                 'open_register',
                 'member_review',
                 'notice_way',
@@ -199,9 +198,18 @@ class Setting extends \Core\Controller\Controller {
             //更新完毕，删除文件
             unlink($patchSave);
 
-            //继续跳转至自动更新方法
-            $this->success("{$getPatch['data']['new_version']}升级完毕,自动更新程序正在运行,请勿关闭浏览器", $this->url(GROUP . '-Setting-atUpgrade', ['method' => 'PUT', 'complete' => 1]), '1');
+            $continueUrl = $this->url(GROUP . '-Setting-atUpgrade', ['method' => 'PUT', 'complete' => 1]);
 
+            if($getPatch['data']['confirm'] == 1){
+                $this->assign('title', '[重要提示]本次更新需要二次确认');
+                $this->assign('continueUrl', $continueUrl);
+                $this->assign('version', $getPatch['data']['new_version']);
+                $this->assign('detail', $getPatch['data']['update_content']);
+                $this->layout('Setting_upgrade_confirm');
+            }else{
+                //继续跳转至自动更新方法
+                $this->success("{$getPatch['data']['new_version']}升级完毕,自动更新程序正在运行,请勿关闭浏览器", $continueUrl, '1');
+            }
         } elseif ($getPatch['status'] == 0) {
             //不是从自动更新跳转的，则提示接口信息
             if (empty($_GET['complete'])) {

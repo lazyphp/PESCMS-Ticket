@@ -36,7 +36,9 @@
                                 <p class="am-margin-xs">版本：<?= $item['version'] ?></p>
                                 <p class="am-margin-xs">官网：<?= $item['website'] ?></p>
                                 <p class="am-margin-xs">简介：<?= $item['content'] ?></p>
-
+                                <?php if ($item['setting'] == true): ?>
+                                    <a href="/?g=Ticket&m=Theme&a=setting&theme=<?= $item['enname'] ?>&title=<?= $item['name'] ?>&back_url=<?= base64_encode($_SERVER['REQUEST_URI']) ?>" class="am-btn am-btn-default am-btn-sm"><i class="am-icon-wrench"></i> 设置首页布局</a>
+                                <?php endif; ?>
                                 <a href="<?= $label->url(GROUP.'-Theme-upgrade', ['name' => $item['name'], 'enname' => $item['enname'], 'version' => $item['version'], 'method' => 'GET']) ?>" class="am-badge am-badge-warning am-radius check-update am-margin-vertical am-hide" name="<?= $item['name'] ?>" version="<?= $item['version'] ?>">有可用更新</a>
                             </div>
 

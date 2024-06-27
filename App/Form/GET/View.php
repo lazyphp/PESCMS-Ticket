@@ -62,7 +62,7 @@ class View extends \Core\Controller\Controller{
     private function getTicketInfo($chatPage = 30){
         $content = \Model\Ticket::view($chatPage);
         if($content == false){
-            $this->_404();
+            $this->jump($this->url('Form-Fqa-list', ['keyword' => $this->g('number')]));
         }else{
             return $content;
         }

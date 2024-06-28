@@ -41,11 +41,13 @@ class Theme extends \Core\Controller\Controller {
                     continue;
                 }
 
+                $themeSetting = $themePatch . $patchName . '/index.json';
+
                 $info = parse_ini_file($themeInfo, true);
 
 
                 $themeList[$patchName] = $info['Theme'];
-
+                $themeList[$patchName]['setting'] = is_file($themeSetting) ?? false;
             }
         }
         closedir($handler);
@@ -57,6 +59,20 @@ class Theme extends \Core\Controller\Controller {
     public function shop(){
         $this->assign('title', '主题商店');
         $this->assign('installed', json_encode(array_column($this->getThemeList(), 'name')));
+        $this->layout();
+    }
+
+    /**
+     * 模板设置
+     * @return void
+     */
+    public function setting() {
+        $check = \Model\Theme::checkIndexSetting();
+        $title = $this->g('title') ?: $check['theme'];
+
+        self::assign('setting', $check['setting']);
+        $this->assign('title', "「{$title}」主题首页布局");
+
         $this->layout();
     }
 

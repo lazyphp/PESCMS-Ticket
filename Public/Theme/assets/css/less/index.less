@@ -84,6 +84,7 @@
 /*首页搜索*/
 .index-search {
   position: relative;
+
   input {
     height: 50px !important;
     width: 100%;
@@ -102,7 +103,7 @@
     }
   }
 
-  .pes-search-button{
+  .pes-search-button {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -117,7 +118,7 @@
     color: #0573e3;
   }
 
-  .pes-submit-ticket{
+  .pes-submit-ticket {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -131,20 +132,22 @@
 
   @media only screen and (max-width: 640px) {
 
-    input{
-      &::placeholder{
+    input {
+      &::placeholder {
         font-size: 1.4rem;
       }
     }
 
-    .pes-search-button, .pes-submit-ticket{
+    .pes-search-button, .pes-submit-ticket {
       font-size: 1.2rem;
       width: 8rem;
     }
-    .pes-search-button{
+
+    .pes-search-button {
       right: 15px;
     }
-    .pes-submit-ticket{
+
+    .pes-submit-ticket {
       right: 100px;
       line-height: 2.4;
     }
@@ -375,6 +378,32 @@
 .fqa-list a:hover {
   color: #e1e6eb;
   text-decoration: none;
+}
+
+.fqa-search-result {
+  margin: 2rem auto 5rem auto;
+  padding-bottom: 2rem;
+  max-width: 1000px;
+  border-bottom: 1px solid #e5e5e5;
+
+  &:last-child{
+    border-bottom: none;
+  }
+  h2 {
+    font-size: 1.6em;
+    border-bottom: none !important;
+    a{
+      color: #606266;
+    }
+  }
+
+  .fqa-search-result-desc a{
+    color: #b3b3b3;
+  }
+  .fqa-search-result-tool{
+    color: #606266;
+  }
+
 }
 
 /*FQA列表*/

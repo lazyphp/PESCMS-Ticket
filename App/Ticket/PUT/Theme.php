@@ -41,6 +41,11 @@ class Theme extends \Core\Controller\Controller {
             'fqa'        => (int)$this->p('fqa'),
         ];
 
+        if (!empty($check['indexField']) && count($check['indexField']) > 0) {
+            foreach ($check['indexField'] as $key => $value) {
+                $data[$key] = $this->p($key);
+            }
+        }
 
         $f = fopen($check['settingFile'], 'w');
         fwrite($f, json_encode($data, JSON_UNESCAPED_UNICODE));

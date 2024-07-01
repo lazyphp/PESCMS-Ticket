@@ -9,7 +9,7 @@
             <input type="hidden" name="m" value="View"/>
             <input type="hidden" name="a" value="ticket">
 
-            <input type="text" name="number" class="am-form-field " required placeholder="填写工单编号，了解进度">
+            <input type="text" name="number" class="am-form-field " required placeholder="提交单号或者搜索问题解决方案">
 
 
             <?php if ($system['interior_ticket'] == 1): ?>
@@ -18,7 +18,7 @@
             <?php endif; ?>
 
             <button class="am-btn am-btn-default pes-search-button am-radius" type="submit"><i class="am-icon-search"></i>
-                查询进度
+                搜索
             </button>
 
 

@@ -12,6 +12,10 @@ namespace Model;
 
 class Theme extends \Core\Model\Model {
 
+    /**
+     * 获取主题首页设置信息
+     * @return array|mixed
+     */
     public static function getThemeIndexSetting(){
         $settingFile = THEME_PATH . '/index.json';
         return is_file($settingFile) ? json_decode(file_get_contents($settingFile), true) : [];
@@ -38,10 +42,15 @@ class Theme extends \Core\Model\Model {
 
         $setting = json_decode(file_get_contents($settingFile), true);
 
+
+        $indexFieldFile = $themeDir . '/indexField.php';
+        $indexField = is_file($indexFieldFile) === false ? [] : require_once $indexFieldFile;
+
         return [
             'theme'       => $theme,
             'setting'     => $setting,
-            'settingFile' => $settingFile
+            'settingFile' => $settingFile,
+            'indexField'  => $indexField
         ];
     }
 

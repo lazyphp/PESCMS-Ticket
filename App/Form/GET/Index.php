@@ -25,6 +25,8 @@ class Index extends \Core\Controller\Controller {
         }
         $template = $system['indexStyle'] == 0 ? '' : 'Index_ticket';
 
+        $this->assign('indexSetting', \Model\Theme::getThemeIndexSetting());
+
         $this->layout($template);
     }
 

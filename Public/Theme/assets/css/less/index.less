@@ -159,6 +159,66 @@
   padding-top: 10rem;
 }
 
+/*首页fqa*/
+.pes-index-fqa {
+  margin-top: 4rem;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+
+    li {
+      display: flex;
+    }
+  }
+
+  .fqa-title {
+    font-weight: 700;
+    font-size: 24px;
+    padding-bottom: 2.5rem;
+  }
+
+  h2 {
+    color: #111;
+  }
+
+  a {
+    color: #575d6c;
+  }
+
+  .am-panel {
+    width: 100%;
+    background-color: #f7f8fa;
+
+    .am-panel-bd {
+      .subcard{
+        min-height: 150px;
+        div{
+          padding: 0.5rem 2rem;
+        }
+      }
+      a {
+        position: relative;
+
+        &::before {
+          background: #000;
+          content: "";
+          display: block;
+          height: 2px;
+          margin-left: -14px;
+          margin-top: -1px;
+          position: absolute;
+          top: 10px;
+          -webkit-transition: all .3s;
+          transition: all .3s;
+          width: 6px;
+        }
+      }
+    }
+  }
+}
+
+
 /*面包屑*/
 @media only screen and (max-width: 640px) {
   .categort-breadcrumb li {
@@ -386,21 +446,24 @@
   max-width: 1000px;
   border-bottom: 1px solid #e5e5e5;
 
-  &:last-child{
+  &:last-child {
     border-bottom: none;
   }
+
   h2 {
     font-size: 1.6em;
     border-bottom: none !important;
-    a{
+
+    a {
       color: #606266;
     }
   }
 
-  .fqa-search-result-desc a{
+  .fqa-search-result-desc a {
     color: #b3b3b3;
   }
-  .fqa-search-result-tool{
+
+  .fqa-search-result-tool {
     color: #606266;
   }
 

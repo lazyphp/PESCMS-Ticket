@@ -4,7 +4,7 @@
         <img src="<?= $system['siteLogo'] ?>" width="180"/>
     </div>
 
-    <div class="am-u-sm-12 am-u-sm-centered am-u-lg-6 index-search">
+    <div class="am-u-sm-12 am-u-sm-centered am-u-lg-8 index-search">
         <form action="<?= $label->url('View-ticket') ?>" method="GET" data-am-validator>
             <input type="hidden" name="m" value="View"/>
             <input type="hidden" name="a" value="ticket">
@@ -24,4 +24,7 @@
 
         </form>
     </div>
+
+    <?php require_once __DIR__.'/Index_fqa.php'?>
+
 </div>

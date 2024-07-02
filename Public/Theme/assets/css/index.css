@@ -134,6 +134,54 @@
 .index-logo {
   padding-top: 10rem;
 }
+/*首页fqa*/
+.pes-index-fqa {
+  margin-top: 4rem;
+}
+.pes-index-fqa ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+.pes-index-fqa ul li {
+  display: flex;
+}
+.pes-index-fqa .fqa-title {
+  font-weight: 700;
+  font-size: 24px;
+  padding-bottom: 2.5rem;
+}
+.pes-index-fqa h2 {
+  color: #111;
+}
+.pes-index-fqa a {
+  color: #575d6c;
+}
+.pes-index-fqa .am-panel {
+  width: 100%;
+  background-color: #f7f8fa;
+}
+.pes-index-fqa .am-panel .am-panel-bd .subcard {
+  min-height: 150px;
+}
+.pes-index-fqa .am-panel .am-panel-bd .subcard div {
+  padding: 0.5rem 2rem;
+}
+.pes-index-fqa .am-panel .am-panel-bd a {
+  position: relative;
+}
+.pes-index-fqa .am-panel .am-panel-bd a::before {
+  background: #000;
+  content: "";
+  display: block;
+  height: 2px;
+  margin-left: -14px;
+  margin-top: -1px;
+  position: absolute;
+  top: 10px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  width: 6px;
+}
 /*面包屑*/
 @media only screen and (max-width: 640px) {
   .categort-breadcrumb li {

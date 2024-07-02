@@ -64,11 +64,11 @@
                             <div class="am-form-group">
                                 <label class="am-block">首页显示常见问题<i class="am-text-danger">*</i></label>
                                 <label class="form-radio-label am-radio-inline">
-                                    <input class="form-radio" type="radio" name="title_display" value="0" required="" <?= $setting['fqa'] == 0 ? 'checked="checked"' : '' ?>>
+                                    <input class="form-radio" type="radio" name="fqa" value="0" required="" <?= $setting['fqa'] == 0 ? 'checked="checked"' : '' ?>>
                                     <span>隐藏</span>
                                 </label>
                                 <label class="form-radio-label am-radio-inline">
-                                    <input class="form-radio" type="radio" name="title_display" value="1" required="" <?= $setting['fqa'] == 1 ? 'checked="checked"' : '' ?>>
+                                    <input class="form-radio" type="radio" name="fqa" value="1" required="" <?= $setting['fqa'] == 1 ? 'checked="checked"' : '' ?>>
                                     <span>显示</span>
                                 </label>
                             </div>

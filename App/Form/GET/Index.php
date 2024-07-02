@@ -25,7 +25,22 @@ class Index extends \Core\Controller\Controller {
         }
         $template = $system['indexStyle'] == 0 ? '' : 'Index_ticket';
 
-        $this->assign('indexSetting', \Model\Theme::getThemeIndexSetting());
+        $indexSetting = \Model\Theme::getThemeIndexSetting();
+
+        $fqa = [];
+        if($indexSetting['fqa'] == 1){
+            $fqaList = \Model\Fqa::getList();
+            if(!empty($fqaList)){
+                foreach ($fqaList as $value) {
+                    $fqa[$value['ticket_model_name']][] = $value;
+                }
+            }
+            $this->assign('category', \Model\Category::getAllCategoryCidPrimaryKey());
+        }
+
+
+        $this->assign('fqa', $fqa);
+        $this->assign('indexSetting', $indexSetting);
 
         $this->layout($template);
     }

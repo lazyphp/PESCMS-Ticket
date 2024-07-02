@@ -131,6 +131,21 @@
     line-height: 2.4;
   }
 }
+.hot-search {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  line-height: 24px;
+  margin-top: 1.6rem;
+  text-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  font-size: 1.8rem;
+}
+.hot-search a {
+  color: #575d6c;
+}
+.hot-search a:hover {
+  color: #32beff;
+}
 .index-logo {
   padding-top: 10rem;
 }
@@ -155,6 +170,9 @@
 }
 .pes-index-fqa a {
   color: #575d6c;
+}
+.pes-index-fqa a:hover {
+  color: #32beff;
 }
 .pes-index-fqa .am-panel {
   width: 100%;

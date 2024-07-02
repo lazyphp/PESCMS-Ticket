@@ -24,7 +24,6 @@ class Setting extends \Core\Controller\Controller {
                 'siteTitle',
                 'pescmsIntroduce',
                 'openindex',
-                'indexStyle',
                 'open_register',
                 'member_review',
                 'notice_way',

@@ -16,18 +16,12 @@ namespace Model;
 class Fqa extends \Core\Model\Model {
 
     public static
-        $field = "fqa_id, fqa_url, fqa_title, fqa_ticket_model_id, tm.ticket_model_name, fqa_createtime, tm.ticket_model_cid, fqa_content",
+        $field = "fqa_id, fqa_url, fqa_title, fqa_ticket_model_id, tm.ticket_model_name, fqa_createtime, tm.ticket_model_cid, fqa_content, ticket_model_login",
         $condition = " f.fqa_status = 1 ",
         $param = [];
 
     public static function getList() {
-
-        //登录可看所有FQA
-        if (empty(self::session()->get('member')['member_id'])) {
-            self::$condition .= ' AND tm.ticket_model_login = 0 ';
-        }
-
-
+        
         $result = \Model\Content::listContent([
             'table'     => 'fqa AS f',
             'field'     => '',

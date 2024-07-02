@@ -252,6 +252,11 @@ class Setting extends \Core\Controller\Controller {
      * 生成微信小程序
      */
     public function wxapp(){
+        $domain = \Core\Func\CoreFunc::$param['system']['domain'];
+        if(stripos($domain, 'https://') === false){
+            $this->error("小程序调用的网站URL必须是「https://」开头<br/>当前系统设置-基础信息中填写的网站URL是：{$domain}");
+        }
+
         $wxapp = new \Expand\wxapp();
         $result = $wxapp->make();
         if($result['status'] == 200){

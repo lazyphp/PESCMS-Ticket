@@ -62,6 +62,7 @@ class Ticket_model extends Content {
             'title_description' => '工单基础属性',
             'fqa_tips'          => '工单基础属性',
             'recovery_day'      => '工单基础属性',
+            'img'               => '工单基础属性',
 
             'auto'              => '工单自动化',
             'auto_logic'        => '工单自动化',

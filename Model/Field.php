@@ -171,7 +171,7 @@ class Field extends \Core\Model\Model {
         if (!is_array($option)) {
             return false;
         }
-        return json_encode($option);
+        return json_encode($option, JSON_UNESCAPED_UNICODE);
     }
 
     /**

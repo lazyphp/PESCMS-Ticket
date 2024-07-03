@@ -153,7 +153,8 @@
     }
   }
 }
-.hot-search{
+
+.hot-search {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -162,9 +163,10 @@
   text-shadow: 0 0 30px rgba(0, 0, 0, .1);
   font-size: 1.8rem;
   //color: rgba(255, 255, 255, .7);
-  a{
+  a {
     color: #575d6c;
-    &:hover{
+
+    &:hover {
       color: #32beff;
     }
   }
@@ -172,6 +174,64 @@
 
 .index-logo {
   padding-top: 10rem;
+}
+
+//首页工单服务
+.index-ticket-service {
+  margin-top: 4rem;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+
+    li {
+      display: flex;
+    }
+  }
+
+  .index-ticket-service-title {
+    font-weight: 700;
+    font-size: 24px;
+    padding-bottom: 2.5rem;
+  }
+
+  .am-panel {
+    width: 100%;
+
+    .am-panel-bd {
+      padding: 0 !important;
+      font-size: 1.6rem;
+
+      a {
+        padding: 1.2rem;
+        background-color: #f8fafd;
+        display: block;
+        color: #575d6c;
+
+        i {
+          width: 30px;
+          height: 30px;
+          color: #0366f1;
+
+          &:before {
+            font-size: 135%;
+          }
+        }
+
+        img {
+          width: 30px;
+          height: 30px;
+        }
+
+        &:hover {
+          color: #32beff;
+          background-color: #ebf3fe;
+        }
+      }
+    }
+
+  }
+
 }
 
 /*首页fqa*/
@@ -199,7 +259,8 @@
 
   a {
     color: #575d6c;
-    &:hover{
+
+    &:hover {
       color: #32beff;
     }
   }
@@ -209,12 +270,14 @@
     background-color: #f7f8fa;
 
     .am-panel-bd {
-      .subcard{
+      .subcard {
         min-height: 150px;
-        div{
+
+        div {
           padding: 0.5rem 2rem;
         }
       }
+
       a {
         position: relative;
 

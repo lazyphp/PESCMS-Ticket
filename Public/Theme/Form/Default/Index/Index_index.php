@@ -1,8 +1,10 @@
 <div class="am-g">
-    <!--    logo-->
-    <div class="am-text-center index-logo am-margin-bottom">
-        <img src="<?= $system['siteLogo'] ?>" width="180"/>
-    </div>
+    <?php if ($indexSetting['index_type'] == 0): ?>
+        <!--    logo-->
+        <div class="am-text-center index-logo am-margin-bottom">
+            <img src="<?= $system['siteLogo'] ?>" width="180"/>
+        </div>
+    <?php endif; ?>
 
     <div class="am-u-sm-12 am-u-sm-centered am-u-lg-8 index-search">
         <form action="<?= $label->url('View-ticket') ?>" method="GET" data-am-validator>
@@ -22,14 +24,20 @@
         <div class="am-u-sm-12 am-u-sm-centered am-u-lg-8 ">
             <div class="hot-search ">
                 <span class="am-margin-top-xs">热门搜索：</span>
-                <?php foreach(explode(';', $indexSetting['hot_key']) as $key => $value): ?>
-                <?php if(strlen($value) == 0){ continue; }?>
-                <div class="am-margin-right am-margin-top-xs"><a href="<?= $label->url('Form-Fqa-list', ['keyword' => $label->xss($value)]) ?>"><?= $value ?></a></div>
+                <?php foreach (explode(';', $indexSetting['hot_key']) as $key => $value): ?>
+                    <?php if (strlen($value) == 0) {
+                        continue;
+                    } ?>
+                    <div class="am-margin-right am-margin-top-xs">
+                        <a href="<?= $label->url('Form-Fqa-list', ['keyword' => $label->xss($value)]) ?>"><?= $value ?></a>
+                    </div>
                 <?php endforeach; ?>
             </div>
         </div>
     <?php endif; ?>
 
+
+    <?php require_once __DIR__ . '/Index_ticket.php' ?>
 
     <?php require_once __DIR__ . '/Index_fqa.php' ?>
 

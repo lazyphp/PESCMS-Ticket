@@ -149,6 +149,50 @@
 .index-logo {
   padding-top: 10rem;
 }
+.index-ticket-service {
+  margin-top: 4rem;
+}
+.index-ticket-service ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+.index-ticket-service ul li {
+  display: flex;
+}
+.index-ticket-service .index-ticket-service-title {
+  font-weight: 700;
+  font-size: 24px;
+  padding-bottom: 2.5rem;
+}
+.index-ticket-service .am-panel {
+  width: 100%;
+}
+.index-ticket-service .am-panel .am-panel-bd {
+  padding: 0 !important;
+  font-size: 1.6rem;
+}
+.index-ticket-service .am-panel .am-panel-bd a {
+  padding: 1.2rem;
+  background-color: #f8fafd;
+  display: block;
+  color: #575d6c;
+}
+.index-ticket-service .am-panel .am-panel-bd a i {
+  width: 30px;
+  height: 30px;
+  color: #0366f1;
+}
+.index-ticket-service .am-panel .am-panel-bd a i:before {
+  font-size: 135%;
+}
+.index-ticket-service .am-panel .am-panel-bd a img {
+  width: 30px;
+  height: 30px;
+}
+.index-ticket-service .am-panel .am-panel-bd a:hover {
+  color: #32beff;
+  background-color: #ebf3fe;
+}
 /*首页fqa*/
 .pes-index-fqa {
   margin-top: 4rem;

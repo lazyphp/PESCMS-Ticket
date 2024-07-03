@@ -24,7 +24,7 @@
                         <div class="am-u-sm-12 am-u-sm-centered">
                             <div class="am-form-group">
                                 <label class="am-block">首页布局形式<i class="am-text-danger">*</i></label>
-                                <?php foreach (['0' => '简洁搜索框', '1' => '工单列表模式', '2' => '展示特定工单分类'] as $key => $name): ?>
+                                <?php foreach (['0' => '简洁搜索框', '1' => '首层工单分类', '2' => '列出拥有工单模型的分类', '3' => '列出特定工单分类工单模型'] as $key => $name): ?>
                                     <label class="form-radio-label am-radio-inline">
                                         <input class="form-radio" type="radio" name="index_type" value="<?= $key ?>" required="" <?= $setting['index_type'] == $key ? 'checked="checked"' : '' ?>>
                                         <span><?= $name ?></span>
@@ -108,16 +108,11 @@
     $(function () {
 
         $('input[name="index_type"]').on('click', function () {
-            if ($(this).val() == 0) {
-                $('#hot_key').show();
-                $('#index_cid').hide();
-            } else if ($(this).val() == 1) {
-                $('#hot_key').hide();
-                $('#index_cid').hide();
-            } else if ($(this).val() == 2) {
-                $('#hot_key').hide();
+             if ($(this).val() == 3) {
                 $('#index_cid').show();
-            }
+            }else{
+                $('#index_cid').hide();
+             }
         })
         var index_type = $('input[name="index_type"]:checked').val();
         $('input[name="index_type"][value="' + index_type + '"]').prop('checked', true).click();

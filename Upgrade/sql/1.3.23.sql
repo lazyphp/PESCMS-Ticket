@@ -13,5 +13,22 @@ ALTER TABLE `pes_field` CHANGE `field_explain` `field_explain` VARCHAR(1000) CHA
 
 UPDATE `pes_field` SET `field_explain` = '若您的工单表单需要设置默认值，可以在这里填写对应的数值。页面渲染时会自动填充。<br/>部分表单类型默认值的作用说明：<a href=\"https://document.pescms.com/article/3/552003742304567296.html\" target="_blank">「编辑器作用说明」</a> <a href=\"https://document.pescms.com/article/3/649484225052934144.html\" target="_blank">「上传组件作用说明」</a> <br/>注意：部分表单类型可能不起效' WHERE `pes_field`.`field_id` = 295;
 
+INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES (NULL, '查看模板首页设置', '144', '0', NULL, 'GET', 'index', 'TicketGETThemesetting', '144', '9');
+
+INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES (NULL, '更新模板首页设置', '144', '0', NULL, 'PUT', 'index', 'TicketPUTThemesetting', '144', '10');
+
+INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES
+(NULL, '查看发送列表', 11, 1, NULL, 'GET', 'index', 'TicketGETSendindex', 99, 9900),
+(NULL, '新增/编辑发送消息', 11, 1, NULL, 'GET', 'action', 'TicketGETSendaction', 99, 9901),
+(NULL, '新增发送消息', 11, 1, NULL, 'POST', 'action', 'TicketPOSTSendaction', 99, 9902),
+(NULL, '更新发送消息', 11, 1, NULL, 'PUT', 'action', 'TicketPUTSendaction', 99, 9903),
+(NULL, '删除发送记录', 11, 1, NULL, 'DELETE', 'action', 'TicketDELETESendaction', 99, 9904),
+(NULL, '重新发送发送记录', 11, 1, NULL, 'PUT', 'refresh', 'TicketPUTSendrefresh', 99, 9905);
 
 
+INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `node_msg`, `node_method_type`, `node_value`, `node_check_value`, `node_controller`, `node_listsort`) VALUES
+(NULL, '查看客服消息模板列表', 11, 1, NULL, 'GET', 'index', 'TicketGETCssend_templateindex', 99, 9920),
+(NULL, '新增/编辑客服消息模板', 11, 1, NULL, 'GET', 'action', 'TicketGETCssend_templateaction', 99, 9921),
+(NULL, '新增客服消息模板', 11, 1, NULL, 'POST', 'action', 'TicketPOSTCssend_templateaction', 99, 9922),
+(NULL, '更新客服消息模板', 11, 1, NULL, 'PUT', 'action', 'TicketPUTCssend_templateaction', 99, 9923),
+(NULL, '删除客服消息模板', 11, 1, NULL, 'DELETE', 'action', 'TicketDELETECssend_templateaction', 99, 9924);

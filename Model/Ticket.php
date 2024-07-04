@@ -387,6 +387,19 @@ class Ticket extends \Core\Model\Model {
                         $imgStr .= '</ul>';
                         $form[$value['ticket_form_id']]['ticket_value'] = $imgStr;
                         break;
+                    case 'video':
+                        $splitImg = explode(',', $value['ticket_form_content']);
+                        $imgStr = '<ul class="pes-ticket-form-video-group">';
+                        if (!empty($value['ticket_form_content'])) {
+                            foreach ($splitImg as $item) {
+                                $suffix = pathinfo($item);
+                                $small = "{$item}";
+                                $imgStr .= '<li><video controls><source src="'.$small.'"></video></li>';
+                            }
+                        }
+                        $imgStr .= '</ul>';
+                        $form[$value['ticket_form_id']]['ticket_value'] = $imgStr;
+                        break;
                     case 'file':
                         //@todo 待优化,下载应该基于header方法
 

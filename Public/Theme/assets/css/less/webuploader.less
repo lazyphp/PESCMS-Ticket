@@ -1,15 +1,17 @@
 .webuploader-container {
   position: relative;
 }
+
 .webuploader-element-invisible {
   position: absolute !important;
-  clip: rect(1px 1px 1px 1px);
-  /* IE6, IE7 */
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
   clip: rect(1px, 1px, 1px, 1px);
 }
+
 .webuploader-container {
   display: block;
 }
+
 .webuploader-pick {
   position: relative;
   display: inline-block;
@@ -19,58 +21,69 @@
   border-radius: 3px;
   overflow: hidden;
 }
+
 .webuploader-pick-disable {
   opacity: 0.6;
   pointer-events: none;
 }
+
 .am-webuploader-ul li.pes-upload-video {
   width: 15rem !important;
+
+  .am-img-thumbnail {
+    width: 100%;
+    background-color: #000;
+  }
+
+  .pes-upload-operate {
+    top: 0
+  }
+
+  .pes-upload-operate-video {
+    width: 100%;
+    min-height: 10.8rem;
+
+    video {
+      width: 100%;
+      height: 10rem;
+    }
+  }
+
+  .am-gallery-title {
+    width: 100% !important;
+  }
+
 }
-.am-webuploader-ul li.pes-upload-video .am-img-thumbnail {
-  width: 100%;
-  background-color: #000;
-}
-.am-webuploader-ul li.pes-upload-video .pes-upload-operate {
-  top: 0;
-}
-.am-webuploader-ul li.pes-upload-video .pes-upload-operate-video {
-  width: 100%;
-  min-height: 10.8rem;
-}
-.am-webuploader-ul li.pes-upload-video .pes-upload-operate-video video {
-  width: 100%;
-  height: 10rem;
-}
-.am-webuploader-ul li.pes-upload-video .am-gallery-title {
-  width: 100% !important;
-}
+
 .am-webuploader-ul li {
   width: 12rem !important;
 }
-.webuploader-item img,
-.file-preview-other,
-.file-preview-other-text,
-.webuploader-item h3,
-.webuploader-pick {
+
+
+.webuploader-item img, .file-preview-other, .file-preview-other-text, .webuploader-item h3, .webuploader-pick {
   width: 10rem !important;
 }
+
 .webuploader-item .am-gallery-title {
   font-size: 1.2rem;
   text-indent: 0px;
   left: 0px;
   width: 10.4rem !important;
 }
-.webuploader-item img,
-.webuploader-pick {
+
+.webuploader-item img, .webuploader-pick {
   height: 10rem !important;
 }
+
 .webuploader-pick {
   /*background: url('../i/image.png') no-repeat -1.0rem -0.3rem;*/
   /*background-size: cover; -moz-background-size: cover;*/
 }
+
 .webuploader-background-img:hover {
   border: 1px solid #868585;
 }
+
 .webuploader-pick:before {
   width: 2px;
   height: 4rem;
@@ -82,6 +95,7 @@
   transform: translate(-50%, -50%);
   background-color: #d9d9d9;
 }
+
 .webuploader-pick:after {
   width: 4rem;
   height: 2px;
@@ -93,14 +107,17 @@
   transform: translate(-50%, -50%);
   background-color: #d9d9d9;
 }
+
 .file-preview-other {
   height: 8.38rem !important;
 }
+
 .file-preview-other {
   display: table-cell;
   text-align: center;
   vertical-align: middle;
 }
+
 .pes-upload-operate {
   position: absolute;
   top: 30%;
@@ -108,8 +125,10 @@
   color: #fff;
   text-align: center;
   font-size: 2rem;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, .5);
 }
+
 .pes-upload-operate i:nth-child(2) {
   margin-left: 10px;
 }
+

@@ -524,19 +524,28 @@
   background: #353536;
   font-size: 13px;
 }
-.pes-ticket-form-img-group {
+.pes-ticket-form-img-group,
+.pes-ticket-form-video-group {
   padding: 0;
   list-style: none;
   column-count: 5;
   column-gap: 1em;
 }
-.pes-ticket-form-img-group li {
+.pes-ticket-form-img-group li,
+.pes-ticket-form-video-group li {
   padding: 1px;
 }
-.pes-ticket-form-img-group li a:hover {
+.pes-ticket-form-img-group li a:hover,
+.pes-ticket-form-video-group li a:hover {
   border: none !important;
 }
-.pes-ticket-form-img-group li img {
+.pes-ticket-form-img-group li video,
+.pes-ticket-form-video-group li video {
+  width: 100%;
+  height: 20rem;
+}
+.pes-ticket-form-img-group li img,
+.pes-ticket-form-video-group li img {
   padding: 5px;
   border: 1px solid #cfcfcf;
 }

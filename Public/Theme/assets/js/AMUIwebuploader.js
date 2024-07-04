@@ -5,7 +5,7 @@ $(function () {
      * @param api {server:'请求地址', gallery_url:'图库地址'}
      * @returns {*}
      */
-    $.webuploaderConfig = function(api){
+    $.webuploaderConfig = function (api) {
 
 
         $.webuploader_for_amazeui = function (param) {
@@ -24,7 +24,7 @@ $(function () {
                 //是否打开图库 默认为 关闭false | true开启
                 gallery: false,
 
-                thumb:{type:''}
+                thumb: {type: ''}
             };
 
 
@@ -32,10 +32,10 @@ $(function () {
 
             // 优化retina, 在retina下这个值是2
             var ratio = window.devicePixelRatio || 1,
-            // 缩略图大小
+                // 缩略图大小
                 thumbnailWidth = 100 * ratio,
                 thumbnailHeight = 100 * ratio,
-            // Web Uploader实例
+                // Web Uploader实例
                 uploader;
 
             // 初始化Web Uploader
@@ -51,29 +51,42 @@ $(function () {
                 // 创建缩略图
                 uploader.makeThumb(file, function (error, src) {
 
-                    //没有缩略图则选用预设的图案
-                    if (error) {
+                    if (obj.type == 'video') {
                         var $li =
                             '<div class="am-gallery-item webuploader-item am-img-thumbnail am-radius">' +
-                            '<a href="javascript:;" class="file-preview-other" >' +
-                            '<i class="am-icon-file-o am-icon-lg am-block"></i>' +
-                            '<div class="pes-upload-operate"><i class="am-icon-trash"></i></div>' +
+                            '<i class="am-video-camera am-icon-lg am-block"></i>' +
+                            '<div class="pes-upload-operate-video "></div>' +
+                            '<a href="javascript:;"><div class="pes-upload-operate am-hide"><i class="am-icon-trash"></i></div></a>' +
                             '<h3 class="am-gallery-title am-text-center am-hide"></h3>' +
-                            '</a>' +
-                            '<div class="am-text-truncate am-text-xs file-preview-other-text am-text-center" >' + file.name + '</div> ' +
                             '</div>';
                     } else {
-                        var $li =
-                            '<div class="am-gallery-item webuploader-item am-img-thumbnail am-radius">' +
-                            '<a href="javascript:;" >' +
-                            '<div class="pes-upload-operate"><i class="am-icon-search-plus"></i><i class="am-icon-trash"></i></div>' +
-                            '<img src="' + src + '"  alt="上次图片"/>' +
-                            '<h3 class="am-gallery-title am-text-center am-hide"></h3>' +
-                            '</a>' +
-                            '</div>'
+                        //没有缩略图则选用预设的图案
+                        if (error) {
+
+                            var $li =
+                                '<div class="am-gallery-item webuploader-item am-img-thumbnail am-radius">' +
+                                '<a href="javascript:;" class="file-preview-other" >' +
+                                '<i class="am-icon-file-o am-icon-lg am-block"></i>' +
+                                '<div class="pes-upload-operate am-hide"><i class="am-icon-trash"></i></div>' +
+                                '<h3 class="am-gallery-title am-text-center am-hide"></h3>' +
+                                '</a>' +
+                                '<div class="am-text-truncate am-text-xs file-preview-other-text am-text-center" >' + file.name + '</div> ' +
+                                '</div>';
+
+
+                        } else {
+                            var $li =
+                                '<div class="am-gallery-item webuploader-item am-img-thumbnail am-radius">' +
+                                '<a href="javascript:;" >' +
+                                '<div class="pes-upload-operate am-hide"><i class="am-icon-search-plus"></i><i class="am-icon-trash"></i></div>' +
+                                '<img src="' + src + '"  alt="上次图片"/>' +
+                                '<h3 class="am-gallery-title am-text-center am-hide"></h3>' +
+                                '</a>' +
+                                '</div>'
+                        }
                     }
 
-                    var appendStr = '<li id="' + file.id + '">' + $li + '</li>';
+                    var appendStr = '<li id="' + file.id + '" class="pes-upload-' + obj.type + '">' + $li + '</li>';
 
                     if (obj.pick.multiple == true) {
                         $("#before" + obj.id).before(appendStr);
@@ -99,9 +112,17 @@ $(function () {
                 if (response.state == 'SUCCESS') {
 
                     //判断上传类型
-                    switch(response.action){
+                    switch (response.action) {
                         case 'uploadfile':
-                            var inputValue = '[url='+response.url+']'+response.original+'[/url]';
+                            var inputValue = '[url=' + response.url + ']' + response.original + '[/url]';
+                            break;
+                        case 'uploadvideo':
+                            $('#' + file.id).find('.pes-upload-operate-video').html(
+                                '<video controls >' +
+                                '<source src="' + response.url + '" type="video/mp4">' +
+                                '</video>'
+                            )
+                            var inputValue = response.url;
                             break;
                         case 'uploadimage':
                         default:
@@ -121,6 +142,9 @@ $(function () {
 
             // 完成上传完了，成功或者失败，结束进度条。
             uploader.on('uploadComplete', function (file) {
+
+                $('#' + file.id).find('.pes-upload-operate').removeClass('am-hide');
+
                 $.AMUI.progress.done();
             });
         };
@@ -144,10 +168,10 @@ $(function () {
                 $.each(img_content.split(','), function (key, value) {
                     var img_src = value.replace(/\{base64\}/g, "base64,")
                     AMUIwebuploader.append({
-                        id:options.id,
-                        src:img_src,
-                        name:options.name,
-                        type:options.type
+                        id: options.id,
+                        src: img_src,
+                        name: options.name,
+                        type: options.type
                     });
                 });
             }
@@ -167,7 +191,7 @@ $(function () {
         $(document).on('click', "[data-am-webuploader-simple] li .pes-upload-operate>.am-icon-search-plus", function () {
             var img = $(this).parents('li').find('img').attr('src')
             $.fancybox.open({
-                src  : img,
+                src: img,
                 type: 'image'
             });
         })
@@ -195,30 +219,39 @@ var AMUIwebuploader = {
         var upload_icon = options.type == 'file' ? 'upload_file_icon' : ''
 
         return (
-        '<ul class="am-gallery am-avg-lg am-gallery-overlay am-webuploader-ul" >' +
+            '<ul id="pes-upload-list-' + options.id + '" class="am-gallery am-avg-lg am-gallery-overlay am-webuploader-ul" >' +
             '<li id="before' + options.id + '">' +
-                '<div class="am-gallery-item webuploader-item am-img-thumbnail am-radius webuploader-background-img">' +
-                    '<a href="javascript:;" id="' + options.id + '" class="'+upload_icon+'"></a>' +
-                '</div>' +
+            '<div class="am-gallery-item webuploader-item am-img-thumbnail am-radius webuploader-background-img">' +
+            '<a href="javascript:;" id="' + options.id + '" class="' + upload_icon + '"></a>' +
+            '</div>' +
             '</li>' +
-        '</ul>');
+            '</ul>');
     },
 
     /**
      * 追加内容
      * @param 必要的参数 param:{id:'', src:'', name:''}
      */
-    append:function(param){
+    append: function (param) {
 
-        if(param.type == 'file'){
+        if (param.type == 'file') {
             var icon =
                 '<a href="javascript:;" class="file-preview-other" title="' + param.src + '"   >' +
                 '<i class="am-icon-file-o am-icon-lg am-block"></i>' +
                 '<div class="pes-upload-operate"><i class="am-icon-trash"></i></div>' +
                 '<h3 class="am-gallery-title am-text-center am-hide"></h3>' +
-                '</a>'+
+                '</a>' +
                 '<div class="am-text-truncate am-text-xs file-preview-other-text am-text-center" >' + param.src + '</div>';
-        }else{
+        } else if (param.type == 'video') {
+            var icon =
+                '<i class="am-video-camera am-icon-lg am-block"></i>' +
+                '<div class="pes-upload-operate-video ">' +
+                '<video controls >' +
+                '<source src="' + param.src + '" type="video/mp4">' +
+                '</video>' +
+                '</div>' +
+                '<a href="javascript:;"><div class="pes-upload-operate"><i class="am-icon-trash"></i></div></a>';
+        } else {
             var icon =
                 '<a href="javascript:;" >' +
                 '<img src="' + param.src + '"  alt="点击上传图片"/>' +
@@ -232,7 +265,7 @@ var AMUIwebuploader = {
             '</div>';
 
         $li += '<input type="hidden" name="' + param.name + '" value="' + param.src + '" autocomplete="off">';
-        $("#before" + param.id).before('<li id="' + Math.random() + '">' + $li + '</li>');
+        $("#before" + param.id).before('<li id="' + Math.random() + '" class="pes-upload-' + param.type + '">' + $li + '</li>');
     },
 
     /**

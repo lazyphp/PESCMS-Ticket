@@ -32,3 +32,9 @@ INSERT INTO `pes_node` (`node_id`, `node_name`, `node_parent`, `node_verify`, `n
 (NULL, '新增客服消息模板', 11, 1, NULL, 'POST', 'action', 'TicketPOSTCssend_templateaction', 99, 9922),
 (NULL, '更新客服消息模板', 11, 1, NULL, 'PUT', 'action', 'TicketPUTCssend_templateaction', 99, 9923),
 (NULL, '删除客服消息模板', 11, 1, NULL, 'DELETE', 'action', 'TicketDELETECssend_templateaction', 99, 9924);
+
+INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_link`, `menu_listsort`, `menu_type`) VALUES (NULL, '本地应用', '9', 'am-icon-sliders', 'Ticket-Application-local', '3', '0');
+
+INSERT INTO `pes_menu` (`menu_id`, `menu_name`, `menu_pid`, `menu_icon`, `menu_link`, `menu_listsort`, `menu_type`) VALUES (NULL, '模板商店', '9', 'am-icon-shopping-bag', 'Ticket-Theme-shop', '10', '0');
+
+ALTER TABLE `pes_menu` CHANGE `menu_listsort` `menu_listsort` INT(11) NOT NULL DEFAULT '0';

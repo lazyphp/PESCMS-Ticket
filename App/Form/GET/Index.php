@@ -25,12 +25,10 @@ class Index extends \Core\Controller\Controller {
         }
         $template = $system['indexStyle'] == 0 ? '' : 'Index_ticket';
 
-        $indexSetting = \Model\Theme::getThemeIndexSetting();
+        $indexSetting = \Core\Func\CoreFunc::$param['indexSetting'];
 
         $this->indexTicketType($indexSetting);
         $this->fqa($indexSetting);
-
-        $this->assign('indexSetting', $indexSetting);
 
         $this->layout($template);
     }
@@ -47,7 +45,7 @@ class Index extends \Core\Controller\Controller {
             case 1:
                 $listType = \Model\Content::listContent([
                     'table'     => 'category',
-                    'field'     => 'category_id AS id, category_img AS img, category_name AS name',
+                    'field'     => 'category_id AS id, category_img AS img, category_name AS name, category_description AS description',
                     'condition' => 'category_parent = 0',
                     'order'     => 'category_listsort ASC, category_id DESC',
                 ]);
@@ -55,7 +53,7 @@ class Index extends \Core\Controller\Controller {
             case 2:
                 $listType = \Model\Content::listContent([
                     'table'     => 'category AS c',
-                    'field'     => 'c.category_id AS id, c.category_img AS img, c.category_name AS name',
+                    'field'     => 'c.category_id AS id, c.category_img AS img, c.category_name AS name, c.category_description AS description',
                     'join'      => "{$this->prefix}ticket_model AS tm ON tm.ticket_model_cid = c.category_id",
                     'condition' => 'tm.ticket_model_id IS NOT NULL',
                     'group'     => 'c.category_id',
@@ -65,7 +63,7 @@ class Index extends \Core\Controller\Controller {
             case 3:
                 $listType = \Model\Content::listContent([
                     'table'     => 'ticket_model',
-                    'field'     => 'ticket_model_name AS name, ticket_model_number AS number, ticket_model_img AS img, ticket_model_cid AS id',
+                    'field'     => 'ticket_model_name AS name, ticket_model_number AS number, ticket_model_img AS img, ticket_model_cid AS id, ticket_model_explain AS description',
                     'condition' => 'ticket_model_cid = :ticket_model_cid AND ticket_model_status = 1 ',
                     'order'     => 'ticket_model_listsort ASC, ticket_model_id  DESC',
                     'param'     => [
@@ -89,7 +87,8 @@ class Index extends \Core\Controller\Controller {
             $fqaList = \Model\Fqa::getList();
             if (!empty($fqaList)) {
                 foreach ($fqaList as $value) {
-                    $fqa[$value['ticket_model_name']][] = $value;
+                    $fqa[$value['ticket_model_name']]['img'] = $value['ticket_model_img'];
+                    $fqa[$value['ticket_model_name']]['list'][] = $value;
                 }
             }
         }

@@ -17,6 +17,22 @@
                 </div>
             </div>
         </div>
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">启用手机验证码登录<i class="am-text-danger">*</i></label>
+                    <label class="am-radio-inline">
+                        <input type="radio" value="1" name="sms_login" required="" <?= $sms_login['value'] == '1' ? 'checked="checked"' : '' ?>> 开启
+                    </label>
+                    <label class="am-radio-inline">
+                        <input type="radio" value="0" name="sms_login" required="" <?= $sms_login['value'] == '0' ? 'checked="checked"' : '' ?>> 关闭
+                    </label>
+                    <div class="pes-alert pes-alert-info am-text-xs " >
+                        <i class="am-icon-lightbulb-o"></i> 开启后不受「开放注册」限制。默认手机号未注册时自动注册，除了手机号是真实，其余信息均为随机生成。
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <hr class="am-margin-top-0 am-divider-default"/>
         <div class="am-g am-g-collapse">

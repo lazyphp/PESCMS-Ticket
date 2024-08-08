@@ -58,7 +58,7 @@ $SLICE_ARRYR = [
     //全局的工单状态get请求输出
     'TICKET-STATUS' => [
         'get',
-        ['Ticket-Index-:a', 'Ticket-Ticket-:a', 'Form-View-:a', 'Form-Member-ticket', 'API-:m-:a', 'Ticket-User-setting'],
+        ['Ticket-Index-:a', 'Ticket-Ticket-:a', 'Form-View-:a', 'Form-Member-:a', 'API-:m-:a', 'Ticket-User-setting'],
         ['\Common\TicketStatus'],
         ['Ticket-Ticket-Login']
     ],
@@ -90,7 +90,7 @@ $SLICE_ARRYR = [
     'FORM-GET' => [
         'get',
         ['Form-:m-:a'],
-        ['\Form\Menu'],
+        ['\Form\Menu', '\Form\ThemeSetting'],
         ['Form-Index-notice', 'Form-Index-behavior']
     ],
 

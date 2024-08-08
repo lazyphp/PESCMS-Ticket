@@ -10786,7 +10786,11 @@ UE.plugin.register('autosubmit',function(){
                             return;
                         }
                         me.sync();
-                        form.submit();
+                        if (form && form.classList.contains('am-form')) {
+                            $(form).trigger('submit');
+                        }else{
+                            form.submit();
+                        }
                     }
                 }
             }

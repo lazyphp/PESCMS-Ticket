@@ -70,8 +70,16 @@ class Theme extends \Core\Controller\Controller {
         $check = \Model\Theme::checkIndexSetting();
         $title = $this->g('title') ?: $check['theme'];
 
+        $tabTitle = ['首页'];
+
+        if(!empty($check['indexField'])){
+            $tabTitle = array_merge($tabTitle, array_keys($check['indexField']));
+            $tabTitle = array_unique($tabTitle); // 去除重复值
+        }
+
         self::assign('setting', $check['setting']);
         self::assign('indexField', $check['indexField']);
+        self::assign('tabTitle', $tabTitle);
         $this->assign('title', "「{$title}」主题首页布局");
 
         $this->assign('form', new \Expand\Form\Form());
@@ -85,7 +93,7 @@ class Theme extends \Core\Controller\Controller {
     public function install() {
         $name = $this->isP('name', '请提交您要安装的主题');
 
-        (new \Expand\Install('2', THEME . '/Form/'))->downloadPlugin($name);
+        (new \Expand\Install('2'))->downloadPlugin($name);
 
         $this->success('主题安装完毕', $this->url('Ticket-Theme-index'));
 
@@ -100,7 +108,7 @@ class Theme extends \Core\Controller\Controller {
         $enname = $this->isG('enname', '请提交主题英文名称');
 
         //开始下载新版本和安装新版文件。
-        $installObj = new \Expand\Install('2', THEME . '/Form/');
+        $installObj = new \Expand\Install('2');
         $installObj->downloadPlugin($name, $version);
 
         $templateList = $this->getThemeList();

@@ -37,7 +37,10 @@
         <block wx:for="{{ data.form }}" wx:key="unique" wx:for-item="item">
           <view class="pes-ticket-from">
             <view class="pes-text-info pes-margin-top-xs">{{item.name}}：</view>
-            <view class="pes-margin-top-xs pes-text-sm">{{item.value}}</view>
+            <view class="pes-margin-top-xs pes-text-sm">
+              <rich-text wx:if="{{item.type == 'editor'}}" nodes="{{item.value}}"></rich-text>
+              <view wx:else>{{item.value}}</view>
+            </view>
           </view>
         </block>
       </van-col>
@@ -70,7 +73,7 @@
   </view>
 
   <!-- 回复工单 -->
-  <view class="pes-panel pes-margin-top">
+  <view wx:if="{{data.ticket.status != '3'}}" class="pes-panel pes-margin-top">
     <form bindsubmit="reply">
       <textarea placeholder="回复或补充工单说明" value="{{textarea}}" name="content" class="reply-textarea" >
       </textarea>

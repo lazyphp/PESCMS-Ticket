@@ -98,6 +98,7 @@ class Ticket extends \Core\Controller\Controller {
             $form[] = [
                 'name' => $item['ticket_form_description'],
                 'value' => $item['ticket_value'],
+                'type'  => $item['ticket_form_type'],
             ];
         }
 

@@ -90,15 +90,21 @@ class Extra extends \Core\Model\Model {
      * @param string $title 标题 | 可以为空
      * @param $content 发送的内容
      * @param $type 通知类型
+     * @param $send_result 发送结果
+     * @param $send_status 发送状态
+     * @param $send_sequence 发送次数
      * @return mixed
      */
-    public static function insertSend($account, $title, $content, $type) {
+    public static function insertSend($account, $title, $content, $type, $send_result = '', $send_status = 0, $send_sequence = 0) {
         $param = [
-            'send_account' => $account,
-            'send_title'   => $title,
-            'send_time'    => time(),
-            'send_content' => $content,
-            'send_type'    => $type,
+            'send_account'  => $account,
+            'send_title'    => $title,
+            'send_time'     => time(),
+            'send_content'  => $content,
+            'send_type'     => $type,
+            'send_result'   => $send_result,
+            'send_status'   => $send_status,
+            'send_sequence' => $send_sequence,
         ];
         return self::db('send')->insert($param);
     }

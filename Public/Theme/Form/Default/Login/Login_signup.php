@@ -8,10 +8,10 @@
 <?php endif; ?>
 
 <?php foreach ($field as $key => $value) : ?>
-<div class="loginFlow">
-    <?= $form->formList($value); ?>
-    <span><?= $value['field_display_name'] ?></span>
-</div>
+    <div class="loginFlow">
+        <?= $form->formList($value); ?>
+        <span><?= $value['field_display_name'] ?></span>
+    </div>
 <?php endforeach; ?>
 
 <div class="loginFlow">
@@ -45,7 +45,9 @@
         已有<?= $system['siteTitle'] ?>账号？<a href="<?= $label->url('Login-index') ?>" class="login-signup-link">立即登录!</a>
     </div>
     <div class="am-fr">
-
+        <?php if ($system['sms_login'] == 1): ?>
+            <a href="<?= $label->url('Login-phone') ?>">手机验证码登录</a>
+        <?php endif; ?>
     </div>
 </div>
 

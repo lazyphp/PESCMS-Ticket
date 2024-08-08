@@ -11,7 +11,7 @@ $(function () {
     $.fn.datetimepicker.dates['zh-CN'] = {
         days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
         daysShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六", "周日"],
-        daysMin:  ["日", "一", "二", "三", "四", "五", "六", "日"],
+        daysMin: ["日", "一", "二", "三", "四", "五", "六", "日"],
         months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
         monthsShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
         today: "今天",
@@ -63,7 +63,7 @@ $(function () {
 
         $.ajaxsubmit({
             url: url,
-            data:{token:token}
+            data: {token: token}
         }, function () {
         });
         return false;
@@ -77,11 +77,11 @@ $(function () {
      * @returns {boolean}
      */
     $.ajaxsubmit = function (param, callback) {
-        var obj = {url: '', data: {'': ''}, dialog: true};
+        var obj = {url: '', data: {'': ''}, dialog: true, jump: true};
         $.extend(obj, param)
 
         var progress = $.AMUI.progress;
-        var dialogOption = {id:'submit-tips', zIndex: '9999', fixed:true, skin:'submit-warning'};
+        var dialogOption = {id: 'submit-tips', zIndex: '9999', fixed: true, skin: 'submit-warning'};
 
         progress.start();
 
@@ -91,28 +91,31 @@ $(function () {
                 if (data.status == 200) {
                     dialogOption.content = '<i class="am-icon-check-circle"></i>  ';
                     dialogOption.skin = 'submit-success';
-                    if(data.waitSecond == -1){
+                    if (data.waitSecond == -1 && obj.jump == true) {
                         window.location.href = data.url
                         return false;
                     }
 
-                    setTimeout(function () {
-                        data.url ? window.location.href = data.url : location.reload();
-                    }, 2000);
-                }else{
+                    if (obj.jump == true) {
+                        setTimeout(function () {
+                            data.url ? window.location.href = data.url : location.reload();
+                        }, 2000);
+                    }
+
+                } else {
                     dialogOption.content = '<i class="am-icon-exclamation-circle"></i>  ';
                 }
                 dialogOption.content += data.msg;
 
             }
             $.refreshToken(data.token);
-            callback(data);
+            callback(data, dialogOption);
 
         }, 'JSON').fail(function (res, textStatus, error) {
             var msg = '系统请求出错！请再次提交!';
-            try{
+            try {
                 $.refreshToken(res.responseJSON.token);
-                switch (res.status){
+                switch (res.status) {
                     case 500:
                         msg = res.responseJSON.msg;
                         break;
@@ -123,9 +126,9 @@ $(function () {
                         obj.dialog = false;
                         var redirectDialog = dialog({
                             title: '重定向提示',
-                            content: '<i class="am-icon-refresh am-icon-spin"></i> '+res.responseJSON.msg,
-                            skin:'submit-success',
-                            id:'redirectDialog',
+                            content: '<i class="am-icon-refresh am-icon-spin"></i> ' + res.responseJSON.msg,
+                            skin: 'submit-success',
+                            id: 'redirectDialog',
                             fixed: true,
                             okValue: '新窗口打开',
                             ok: function () {
@@ -136,12 +139,12 @@ $(function () {
                         redirectDialog.showModal();
                 }
 
-            }catch (e){
+            } catch (e) {
 
             }
             dialogOption.skin = 'submit-error';
-            dialogOption.content = '<i class="am-icon-times-circle"></i> '+msg;
-        }).complete(function(){
+            dialogOption.content = '<i class="am-icon-times-circle"></i> ' + msg;
+        }).complete(function () {
             if (obj.dialog == true) {
                 var d = dialog(dialogOption).showModal();
 
@@ -168,18 +171,22 @@ $(function () {
     /**
      * 关闭工单
      */
-    $(document).on('click', '.pes-close-ticket',function () {
+    $(document).on('click', '.pes-close-ticket', function () {
         var url = $(this).attr("href");
         var token = $('input[name="token"]').val()
         var reason = prompt('请填写您要关闭工单的理由');
 
-        if(reason == null){
+        if (reason === null) {
+            return false;
+        }
+
+        if (reason.trim() === '') {
             alert('请填写您要关闭工单的理由.');
             return false;
         }
         $.ajaxsubmit({
             url: url,
-            data: {token:token,reason:reason}
+            data: {token: token, reason: reason}
         }, function () {
         });
         return false;
@@ -188,9 +195,9 @@ $(function () {
     /**
      * 预览输入的图标
      */
-    $("body").on("blur", ".icon-input", function(){
+    $("body").on("blur", ".icon-input", function () {
         var name = $(this).attr("name");
-        $('.'+name).attr("class", $(this).val()+ ' '+ name);
+        $('.' + name).attr("class", $(this).val() + ' ' + name);
     })
 
     /**
@@ -224,13 +231,13 @@ $(function () {
      */
     $(".display-verify").on("click", function () {
         $(this).remove();
-        $(".refresh-verify").removeClass("am-hide").attr("src", PESCMS_PATH +"/?m=Index&a=verify&time=" + Date.parse(new Date()) + Math.random());
+        $(".refresh-verify").removeClass("am-hide").attr("src", PESCMS_PATH + "/?m=Index&a=verify&time=" + Date.parse(new Date()) + Math.random());
     });
 
     /**
      * 打印工单
      */
-    $('.print-ticket').on('click', function(){
+    $('.print-ticket').on('click', function () {
         var url = $(this).attr('href');
         window.open(url, '', 'width=800,height=600');
         return false;
@@ -240,9 +247,9 @@ $(function () {
      * 批量删除全选按钮
      */
     $('.checkbox-all').on('click, change', function () {
-        if($(this).prop('checked') == true){
+        if ($(this).prop('checked') == true) {
             $('.checkbox-all-children').prop('checked', 'checked')
-        }else{
+        } else {
             $('.checkbox-all-children').removeAttr('checked');
         }
     })
@@ -253,14 +260,14 @@ $(function () {
     $('.delete-batch').on('click', function () {
         var url = $(this).attr('data');
         var children = $('.checkbox-all-children').serialize()
-        if(!children){
+        if (!children) {
             alert('您没有勾选要删除的数据.')
             return false;
         }
 
-        if(confirm('确认进行批量删除所勾选数据吗？')){
+        if (confirm('确认进行批量删除所勾选数据吗？')) {
             var token = $('input[name="token"]').val();
-            $.ajaxsubmit({url:url, data:children+'&token='+token}, function () {
+            $.ajaxsubmit({url: url, data: children + '&token=' + token}, function () {
 
             })
 
@@ -274,7 +281,7 @@ $(function () {
      * 快速跳转到工单处理
      */
     $('.pes-handleTicket').on('click', function () {
-        var height = $('#btn-submit').length > 0 ? $('#btn-submit').offset().top  : document.getElementsByClassName('pes-chat')[0].offsetTop;
+        var height = $('#btn-submit').length > 0 ? $('#btn-submit').offset().top : document.getElementsByClassName('pes-chat')[0].offsetTop;
         var $w = $(window);
         $w.smoothScroll({position: height});
     })

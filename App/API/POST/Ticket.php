@@ -43,6 +43,14 @@ class Ticket extends \Core\Controller\Controller {
             $this->error('工单不存在。');
         }
 
+        if($ticket['ticket_close'] == 1){
+            $this->error('工单已关闭，无法继续回复。');
+        }
+
+        if($ticket['ticket_status'] == 3){
+            $this->error('工单已完成，无法继续回复。');
+        }
+
         $this->db('ticket_chat')->insert([
             'ticket_id' => $ticket['ticket_id'],
             'user_id' => '-1',

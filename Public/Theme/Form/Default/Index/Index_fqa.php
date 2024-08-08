@@ -8,8 +8,8 @@
                         <div class="am-panel-bd">
                             <h2><?= $name ?></h2>
                             <div class="subcard">
-                                <?php if (!empty($item)): ?>
-                                    <?php foreach ($item as $key => $value): ?>
+                                <?php if (!empty($item['list'])): ?>
+                                    <?php foreach ($item['list'] as $key => $value): ?>
                                         <div><a href="<?= $value['fqa_url'] ?>" target="_blank"><?= $value['fqa_title'] ?></a></div>
                                     <?php endforeach; ?>
                                 <?php endif; ?>

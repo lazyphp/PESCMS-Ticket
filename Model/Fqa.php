@@ -16,7 +16,7 @@ namespace Model;
 class Fqa extends \Core\Model\Model {
 
     public static
-        $field = "fqa_id, fqa_url, fqa_title, fqa_ticket_model_id, tm.ticket_model_name, fqa_createtime, tm.ticket_model_cid, fqa_content, ticket_model_login",
+        $field = "f.*, tm.ticket_model_login, tm.ticket_model_cid, tm.ticket_model_name, tm.ticket_model_img",
         $condition = " f.fqa_status = 1 ",
         $param = [];
 
@@ -24,7 +24,7 @@ class Fqa extends \Core\Model\Model {
         
         $result = \Model\Content::listContent([
             'table'     => 'fqa AS f',
-            'field'     => '',
+            'field'     => self::$field,
             'join'      => self::$modelPrefix . "ticket_model AS tm ON tm.ticket_model_id = f.fqa_ticket_model_id",
             'condition' => self::$condition,
             'order'     => 'fqa_listsort ASC, fqa_id DESC',

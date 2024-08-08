@@ -16,6 +16,7 @@
                             <h3><?= $title ?></h3>
                         </div>
                         <?= $label->token() ?>
+                        <input type="hidden" name="back_url" value="<?= $label->xss($_GET['back_url'] ?? '') ?>">
                         <?php require 'Login_' . ACTION . '.php' ?>
                     </form>
             </div>

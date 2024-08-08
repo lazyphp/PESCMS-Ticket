@@ -24,6 +24,59 @@
                 </div>
             </div>
         </div>
+
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">重新发送消息间隔(秒)</label>
+                    <input name="resend_time" placeholder="重新发送消息间隔(秒)" type="text" value="<?= $resend_time['value'] ?? '60'; ?>">
+                    <div class="pes-alert pes-alert-info am-text-xs " >
+                        <i class="am-icon-lightbulb-o"></i> 此设置仅对手机验证码起效，新注册账号激活邮件发送次数起效。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">1小时发送限制（次）</label>
+                    <input name="send_limit_count" placeholder="重新发送消息间隔(秒)" type="text" value="<?= $send_limit_count['value'] ?? '5'; ?>" <?= isset($license) && $license == 1 ? '' : 'readonly="readonly" data-am-popover="{content: \'需求购买授权方解除限制\', trigger: \'hover\', theme:\'sm\'}"' ?> >
+                    <div class="pes-alert pes-alert-error am-text-xs " >
+                        <i class="am-icon-lightbulb-o"></i> 此设置仅对手机验证码起效，新注册账号激活邮件发送次数起效。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">反向代理验证<i class="am-text-danger">*</i></label>
+
+                    <div class="am-form-inline">
+                        <div class="am-form-group">
+                        <label class="am-radio-inline">
+                            <input type="radio" value="0" name="enable_proxy" required="" <?= $enable_proxy['value'] == '0' ? 'checked="checked"' : '' ?>> 关闭
+                        </label>
+                        <label class="am-radio-inline">
+                            <input type="radio" value="1" name="enable_proxy" required="" <?= $enable_proxy['value'] == '1' ? 'checked="checked"' : '' ?>> 开启
+                        </label>
+                        </div>
+                        <div class="am-form-group am-margin-left">
+                            <label>HTTP头信息传递的IP参数</label>
+                            <input type="text" name="REMOTE_ADDR" value="<?= $REMOTE_ADDR['value'] ?>" class="am-inline-block" <?= isset($license) && $license == 1 ? '' : 'readonly="readonly" data-am-popover="{content: \'需求购买授权方解除限制\', trigger: \'hover\', theme:\'sm\'}"' ?>>
+                        </div>
+
+                    </div>
+
+                    <div class="pes-alert pes-alert-error am-text-xs " >
+                        <i class="am-icon-lightbulb-o"></i> 当您通过反向代理运行PT程序或者CDN加速时，程序验证IP功能将失效，此时您需要填写对应的HTTP头部信息传递的IP参数，一般会以HTTP_X_FORWARDED_FOR。
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="am-g am-g-collapse">
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">

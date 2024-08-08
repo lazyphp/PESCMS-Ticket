@@ -11,9 +11,28 @@ namespace Model;
 
 class Option extends \Core\Model\Model {
 
-    public static function csText(){
-        $content = \Model\Content::findContent('option', 'cs_text', 'option_name');
+    /**
+     * 获取配置项
+     * @param $optionName
+     * @param $isJson
+     * @return mixed
+     */
+    public static function getOptionValue($optionName, $isJson = false) {
+        $content = \Model\Content::findContent('option', $optionName, 'option_name');
+        if ($isJson) {
+            return json_decode($content['value'], true);
+        } else {
+            return $content['value'];
+        }
 
+    }
+
+    /**
+     * 获取客服工单回复的预设信息
+     * @return mixed
+     */
+    public static function csText() {
+        $content = \Model\Content::findContent('option', 'cs_text', 'option_name');
         return json_decode($content['value'], true);
     }
 
@@ -21,22 +40,22 @@ class Option extends \Core\Model\Model {
      * 获取后台登录参数
      * @return mixed|string
      */
-    public static function getNoticeLoginParam(){
+    public static function getNoticeLoginParam() {
         $loginParam = explode('|', \Core\Func\CoreFunc::$param['system']['notice_login']);
 
-        if($loginParam[0] < time() - 86400){
+        if ($loginParam[0] < time() - 86400) {
             static $newLoginParam;
-            if(empty($newLoginParam)){
+            if (empty($newLoginParam)) {
                 $newLoginParam = \Model\Extra::getOnlyNumber();
             }
             self::db('option')->where('option_name = :option_name')->update([
                 'noset' => [
-                    'option_name' => 'notice_login'
+                    'option_name' => 'notice_login',
                 ],
-                'value' => time() . "|{$newLoginParam}"
+                'value' => time() . "|{$newLoginParam}",
             ]);
             return $newLoginParam;
-        }else{
+        } else {
             return $loginParam['1'];
         }
     }

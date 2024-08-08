@@ -1,6 +1,17 @@
 <?php include THEME_PATH . '/header.php'; ?>
 <style type="text/css" media="print">
     .print-btn{display: none;}
+    .pes-ticket-form-img-group{
+        column-count: 4; /* 控制列数 */
+        column-gap: 10px; /* 控制列间距 */
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .pes-ticket-form-img-group li{
+        break-inside: avoid;
+        margin-bottom: 10px; /* 控制图片间距 */
+    }
 </style>
 <div class="am-padding-xs am-margin-top am-text-sm">
     <div class="printer_logo am-nbfc">

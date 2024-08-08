@@ -18,7 +18,7 @@ class Setting extends \Core\Controller\Controller {
 
         $operate = [
             //字符串形式的更新设置
-            'str' => [
+            'str'   => [
                 'domain',
                 'siteLogo',
                 'siteTitle',
@@ -39,6 +39,13 @@ class Setting extends \Core\Controller\Controller {
                 'weixinRegister',
                 'max_upload_size',
                 'openapi',
+                'ticket_read',
+                'sms_login',
+                'sms_verify_template',
+                'resend_time',
+                'send_limit_count',
+                'enable_proxy',
+                'REMOTE_ADDR',
             ],
             //基于数组的json更新设置
             'array' => [
@@ -53,15 +60,15 @@ class Setting extends \Core\Controller\Controller {
                 'dingtalk',
                 'register_form',
                 'disturb',
-            ]
+            ],
         ];
         foreach ($operate as $type => $item) {
             foreach ($item as $value) {
                 $this->db('option')->where('option_name = :option_name')->update([
                     'noset' => [
-                        'option_name' => $value
+                        'option_name' => $value,
                     ],
-                    'value' => $type == 'array' ? json_encode($this->p($value, false)) : $this->p($value, false)
+                    'value' => $type == 'array' ? json_encode($this->p($value, false)) : $this->p($value, false),
                 ]);
             }
 
@@ -87,26 +94,26 @@ class Setting extends \Core\Controller\Controller {
             $ticketContact = array_merge($ticketContact, [
                 $key => [
                     'title' => $value,
-                    'key' => $_POST['ticket_contact_key'][$key],
-                    'field' => $_POST['ticket_contact_field'][$key]
-                ]
+                    'key'   => $_POST['ticket_contact_key'][$key],
+                    'field' => $_POST['ticket_contact_field'][$key],
+                ],
             ]);
             $ticketContactInModelField[$value] = $_POST['ticket_contact_key'][$key];
         }
 
         $this->db('field')->where('field_id IN (:a_240, :a_241)')->update([
-            'noset' => [
+            'noset'        => [
                 'a_240' => 240,
                 'a_241' => 241,
             ],
-            'field_option' => json_encode($ticketContactInModelField)
+            'field_option' => json_encode($ticketContactInModelField),
         ]);
 
         $this->db('option')->where('option_name = :option_name')->update([
             'noset' => [
-                'option_name' => 'ticket_contact'
+                'option_name' => 'ticket_contact',
             ],
-            'value' => json_encode($ticketContact)
+            'value' => json_encode($ticketContact),
         ]);
     }
 
@@ -134,7 +141,7 @@ class Setting extends \Core\Controller\Controller {
         foreach ($data as $key => $value) {
             $this->db('option')->where('option_name = :option_name')->update([
                 'value' => $value,
-                'noset' => ['option_name' => $key]
+                'noset' => ['option_name' => $key],
             ]);
         }
     }
@@ -150,9 +157,9 @@ class Setting extends \Core\Controller\Controller {
         }
         $this->db('option')->where('option_name = :name')->update([
             'noset' => [
-                'name' => $name
+                'name' => $name,
             ],
-            'value' => '1'
+            'value' => '1',
         ]);
         $this->success('更新记录成功');
     }
@@ -170,7 +177,7 @@ class Setting extends \Core\Controller\Controller {
                 'X-Requested-With: XMLHttpRequest',
                 'Content-Type: application/json; charset=utf-8',
                 'Accept: application/json',
-            ]
+            ],
         ]), true);
 
         if (empty($getPatch)) {
@@ -200,13 +207,13 @@ class Setting extends \Core\Controller\Controller {
 
             $continueUrl = $this->url(GROUP . '-Setting-atUpgrade', ['method' => 'PUT', 'complete' => 1]);
 
-            if($getPatch['data']['confirm'] == 1){
+            if ($getPatch['data']['confirm'] == 1) {
                 $this->assign('title', '[重要提示]本次更新需要二次确认');
                 $this->assign('continueUrl', $continueUrl);
                 $this->assign('version', $getPatch['data']['new_version']);
                 $this->assign('detail', $getPatch['data']['update_content']);
                 $this->layout('Setting_upgrade_confirm');
-            }else{
+            } else {
                 //继续跳转至自动更新方法
                 $this->success("{$getPatch['data']['new_version']}升级完毕,自动更新程序正在运行,请勿关闭浏览器", $continueUrl, '1');
             }
@@ -218,12 +225,12 @@ class Setting extends \Core\Controller\Controller {
             $this->upgradeStatistics(\Core\Func\CoreFunc::$param['system']['version']);
 
             //获取从旧版到最新版的升级说明
-            $detail = json_decode((new \Expand\cURL())->init(PESCMS_URL . '/patch/detail', ['method' => 'GET','version' => $this->session()->get('oldVersion'),'project' => 5,],
+            $detail = json_decode((new \Expand\cURL())->init(PESCMS_URL . '/patch/detail', ['method' => 'GET', 'version' => $this->session()->get('oldVersion'), 'project' => 5,],
                 [
                     CURLOPT_HTTPHEADER => [
                         'X-Requested-With: XMLHttpRequest',
                         'Accept: application/json',
-                    ]
+                    ],
                 ]), true);
 
             $this->assign('detail', $detail['data']);
@@ -250,7 +257,7 @@ class Setting extends \Core\Controller\Controller {
                 'X-Requested-With: XMLHttpRequest',
                 'Content-Type: application/json; charset=utf-8',
                 'Accept: application/json',
-            ]
+            ],
         ]), true);
         if (empty($getPatch)) {
             $this->error('连接PESCMS服务器失败!');
@@ -315,8 +322,8 @@ class Setting extends \Core\Controller\Controller {
                 $this->db('option')->where('option_name = :option_name')->update([
                     'value' => $iniversion,
                     'noset' => [
-                        'option_name' => 'version'
-                    ]
+                        'option_name' => 'version',
+                    ],
                 ]);
             }
         }
@@ -332,9 +339,9 @@ class Setting extends \Core\Controller\Controller {
      */
     private function upgradeStatistics($version) {
         (new \Expand\cURL())->init(PESCMS_URL . '/?g=Api&m=Statistics&a=action', [
-            'id' => 3,
-            'type' => 2,
-            'version' => $version
+            'id'      => 3,
+            'type'    => 2,
+            'version' => $version,
         ]);
     }
 

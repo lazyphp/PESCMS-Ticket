@@ -5,6 +5,7 @@
  * For the full copyright and license information, please view
  * the file LICENSE.md that was distributed with this source code.
  */
+
 namespace Model;
 
 
@@ -32,9 +33,23 @@ class MailTemplate extends \Core\Model\Model {
      * @return mixed
      */
     public static function getTemplate($type) {
+        //当模型为0时，一般为发送手机验证码
+        if ($type == 0) {
+            $smsTemplate = \Model\Option::getOptionValue('sms_verify_template');
+            self::$templateType[$type] = [
+                'mail_template_id'              => 0,
+                'mail_template_type'              => 0,
+                'mail_template_title'           => $smsTemplate,
+                'mail_template_content'         => $smsTemplate,
+                'mail_template_sms'             => $smsTemplate,
+            ];
+        }
+
         if (empty(self::$templateType[$type])) {
             self::$templateType[$type] = \Model\Content::findContent('mail_template', $type, 'mail_template_type');
         }
+
+
         return self::$templateType[$type];
     }
 
@@ -48,11 +63,11 @@ class MailTemplate extends \Core\Model\Model {
         self::setSystemParam();
 
         $urlParam = [
-            'number' => $number
+            'number' => $number,
         ];
 
         //微信通知带上微信标记,用于指向用户自动登录
-        if($contactType == 3){
+        if ($contactType == 3) {
             $urlParam['loginType'] = 'weixin';
         }
 
@@ -111,7 +126,7 @@ class MailTemplate extends \Core\Model\Model {
         self::setSystemParam();
 
         static $SMS;
-        if(empty($SMS)){
+        if (empty($SMS)) {
             $SMS = json_decode(self::$system['sms'], true);
         }
 
@@ -122,38 +137,39 @@ class MailTemplate extends \Core\Model\Model {
 
         $dictionary = self::ticketDictionary($number);
 
-        foreach ([
-                    '1' => 'mail_template_content',
-                    '2' => 'mail_template_sms',
-                    '3' => 'mail_template_weixin_template',
-                    '4' => 'mail_template_content_tmp',
-                    '5' => 'mail_template_content_tmp',
-                    '6' => 'mail_template_wxapp_template',
-                 ] as $key => $item){
+        foreach (
+            [
+                '1' => 'mail_template_content',
+                '2' => 'mail_template_sms',
+                '3' => 'mail_template_weixin_template',
+                '4' => 'mail_template_content_tmp',
+                '5' => 'mail_template_content_tmp',
+                '6' => 'mail_template_wxapp_template',
+            ] as $key => $item) {
 
-            if($key == 1){
+            if ($key == 1) {
                 $template[$item] = self::mergeMailTemplate($template[$item]);
             }
 
             //短信和微信需要将超链接的HTML代码移除
-            if(in_array($key, [2, 3, 6])){
+            if (in_array($key, [2, 3, 6])) {
                 $param['view'] = strip_tags(self::getViewLink($number, $key));
             }
 
             //阿里云短信需要特殊组装数据
-            if($key == 2 && $SMS['COMPANY'] == 1){
+            if ($key == 2 && $SMS['COMPANY'] == 1) {
                 $newFormat = [
-                    'TemplateCode' => $SMS['aliyun_TemplateCode'][$type],
-                    'TemplateParam' => htmlspecialchars_decode($template[$item])
+                    'TemplateCode'  => $SMS['aliyun_TemplateCode'][$type],
+                    'TemplateParam' => htmlspecialchars_decode($template[$item]),
                 ];
                 $template[$item] = json_encode($newFormat);
             }
 
             //微信通知需要先将内容格式化，补充通知的超链接。
-            if(in_array($key, ['3', '6'])){
+            if (in_array($key, ['3', '6'])) {
                 $newFormat = [
-                    'data' => json_decode(htmlspecialchars_decode($template[$item]), true),
-                    'link' => strip_tags($param['view']),
+                    'data'          => json_decode(htmlspecialchars_decode($template[$item]), true),
+                    'link'          => strip_tags($param['view']),
                     'ticket_number' => $number,
                 ];
                 $template[$item] = json_encode($newFormat);
@@ -170,27 +186,27 @@ class MailTemplate extends \Core\Model\Model {
      * @param $number
      * @return array
      */
-    public static function ticketDictionary($number){
-        if(empty(self::$ticket)){
+    public static function ticketDictionary($number) {
+        if (empty(self::$ticket)) {
             self::$ticket = \Model\Ticket::getTicketBaseInfo($number);
         }
-        
+
         $ticket = self::$ticket;
 
         //处理工单提交用户
-        if($ticket['member_id'] > 0){
+        if ($ticket['member_id'] > 0) {
             $ticket['member_name'] = \Model\Member::getMemberWithID($ticket['member_id'])['member_name'];
-        }else{
+        } else {
             $ticket['member_name'] = '匿名用户';
         }
 
-        if($ticket['old_user_id'] > 0){
+        if ($ticket['old_user_id'] > 0) {
             $ticket['old_user_id'] = \Model\Content::findContent('user', $ticket['old_user_id'], 'user_id', 'user_name')['user_name'];
         }
 
 
         //前台跳转链接
-        $ticket['ticket_link'] = self::getViewLink($number , self::$ticket['ticket_contact']);
+        $ticket['ticket_link'] = self::getViewLink($number, self::$ticket['ticket_contact']);
 
         //后台跳转链接
         $ticket['handle_link'] = \Model\MailTemplate::getCSViewLink($number);
@@ -198,19 +214,25 @@ class MailTemplate extends \Core\Model\Model {
         $ticket['time_out'] = (1 + $ticket['ticket_time_out_sequence']) * $ticket['ticket_model_time_out'];
 
         //转换工单时间字段
-        foreach (['ticket_submit_time', 'ticket_refer_time', 'ticket_complete_time', 'ticket_score_time'] as $field){
+        foreach (['ticket_submit_time', 'ticket_refer_time', 'ticket_complete_time', 'ticket_score_time'] as $field) {
             $ticket[$field] = empty($ticket[$field]) ? 0 : date('Y-m-d H:i', $ticket[$field]);
         }
 
+        $ticket['sms_code'] = $number;
+        //一般测试工单才会没有ticket_number这个字段
+        if(empty($ticket['ticket_number'])) {
+            $ticket['ticket_number'] = $number;
+        }
+
         $ticketField = array_keys($ticket);
-        foreach ($ticketField as $name){
-            $search[] = '{'.$name.'}';
+        foreach ($ticketField as $name) {
+            $search[] = '{' . $name . '}';
             $replace[] = $ticket[$name];
         }
 
         return [
-            'search' => $search,
-            'replace' => $replace
+            'search'  => $search,
+            'replace' => $replace,
         ];
 
     }
@@ -220,7 +242,7 @@ class MailTemplate extends \Core\Model\Model {
      * @param $content
      * @return mixed
      */
-    public static function mergeMailTemplate($content){
+    public static function mergeMailTemplate($content) {
         self::setSystemParam();
 
         $host = self::$system['domain'];
@@ -229,7 +251,7 @@ class MailTemplate extends \Core\Model\Model {
         $authorize_type = \Core\Func\CoreFunc::$param['authorize_type'];
 
 
-        $emailTemplate = file_get_contents(PES_CORE.'Expand/Notice/mailTemplate.html');
+        $emailTemplate = file_get_contents(PES_CORE . 'Expand/Notice/mailTemplate.html');
 
         $search = [
             '{host}',
@@ -237,16 +259,16 @@ class MailTemplate extends \Core\Model\Model {
             '{siteTitle}',
             '{content}',
             '{display}',
-            '{date}'
+            '{date}',
         ];
 
         $replace = [
             $host,
-            $host.$siteLogo,
+            $host . $siteLogo,
             $siteTitle,
             htmlspecialchars_decode($content),
             $authorize_type == 1 ? 'none' : 'block',
-            date('Y')
+            date('Y'),
         ];
 
         return str_replace($search, $replace, $emailTemplate);
@@ -256,8 +278,8 @@ class MailTemplate extends \Core\Model\Model {
     /**
      * 设置全局的system变量
      */
-    private static function setSystemParam(){
-        if(empty(self::$system)){
+    private static function setSystemParam() {
+        if (empty(self::$system)) {
             self::$system = \Core\Func\CoreFunc::$param['system'];
         }
     }

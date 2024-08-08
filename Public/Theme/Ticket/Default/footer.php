@@ -169,7 +169,6 @@
         var month = new Date().getMonth() + 1;
         if(survivalDate == null) {
             localStorage.setItem('survivalDate', month);
-            recordSurvival();
         } else {
             if(survivalDate != month){
                 localStorage.setItem('survivalDate', month);

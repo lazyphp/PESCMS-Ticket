@@ -39,13 +39,24 @@
         </div>
     <?php endif; ?>
     <div class="am-fr">
-        <a href="<?= $label->url('Login-findpw') ?>">忘记密码？</a>
+
     </div>
 </div>
 
-<input type="hidden" name="back_url" value="<?= $label->xss($_GET['back_url'] ?? '') ?>">
-
 <button type="submit" class="am-btn am-btn-primary am-radius am-btn-sm am-margin-top-sm am-btn-block">登录</button>
+
+<div class="am-cf login-options am-text-sm">
+
+    <div class="am-fl">
+        <?php if ($system['sms_login'] == 1): ?>
+            <a href="<?= $label->url('Login-phone', ['back_url' => $label->xss($_GET['back_url'] ?? '')]) ?>" class="login-signup-link">手机验证码登录</a>
+        <?php endif; ?>
+    </div>
+
+    <div class="am-fr">
+        <a href="<?= $label->url('Login-findpw') ?>">忘记密码？</a>
+    </div>
+</div>
 
 
 <div class="am-input-group signBAT am-hide">

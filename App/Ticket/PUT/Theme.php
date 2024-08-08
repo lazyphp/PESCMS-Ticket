@@ -42,8 +42,10 @@ class Theme extends \Core\Controller\Controller {
         ];
 
         if (!empty($check['indexField']) && count($check['indexField']) > 0) {
-            foreach ($check['indexField'] as $key => $value) {
-                $data[$key] = $this->p($key);
+            foreach ($check['indexField'] as $item) {
+                foreach ($item as $key => $v) {
+                    $data[$key] = $this->p($key);
+                }
             }
         }
 

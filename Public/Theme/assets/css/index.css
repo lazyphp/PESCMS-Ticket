@@ -381,6 +381,11 @@
 .login .loginFlow input.am-field-valid + span {
   opacity: 1;
 }
+.login .loginFlow .get-sms-code {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+}
 .login .login-options {
   margin: 20px 0;
 }

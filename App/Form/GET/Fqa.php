@@ -21,7 +21,7 @@ class Fqa extends \Core\Controller\Controller {
     }
 
     /**
-     * FQA列表输出
+     * FQA列表输出(工单提交页接口)
      */
     public function index() {
         $number = $this->isG('number', '请提交工单number');
@@ -44,30 +44,50 @@ class Fqa extends \Core\Controller\Controller {
 
     }
 
+    /**
+     * FQA列表
+     * @return void
+     */
     public function getList() {
-
-
-        if (!empty($_GET['keyword'])) {
-            \Model\Fqa::$condition .= ' AND (f.fqa_title LIKE :fqa_title OR f.fqa_content LIKE :fqa_content)';
-            \Model\Fqa::$param['fqa_title'] = \Model\Fqa::$param['fqa_content'] = '%' . $this->g('keyword') . '%';
-        }
-
-
         $result = \Model\Fqa::getList();
 
-        if (!empty($result) && empty($_GET['keyword'])) {
+        $list = [];
+        if (!empty($result)) {
             foreach ($result as $value) {
                 $list[$value['ticket_model_cid']][$value['fqa_ticket_model_id']]['ticket_model_name'] = $value['ticket_model_name'];
                 $list[$value['ticket_model_cid']][$value['fqa_ticket_model_id']]['list'][] = $value;
             }
-        } elseif (!empty($result)) {
-            $list = $result;
         }
 
-        $this->assign('title', '常见问题');
-        $this->assign('list', $list ?? []);
+        $this->renderFqaPage('常见问题', $list, 'Fqa_list');
+    }
+
+    /**
+     * FQA搜索
+     * @return void
+     */
+    public function search(){
+
+        $keyword = $this->isG('keyword', '请提交搜索关键词');
+
+        \Model\Fqa::$condition .= ' AND (f.fqa_title LIKE :fqa_title OR f.fqa_content LIKE :fqa_content)';
+        \Model\Fqa::$param['fqa_title'] = \Model\Fqa::$param['fqa_content'] = "%{$keyword}%";
+        $list = \Model\Fqa::getList();
+
+        $this->renderFqaPage('搜索结果', $list);
+    }
+
+    /**
+     * 渲染FQA页面
+     * @param string $title
+     * @param array $list
+     * @return void
+     */
+    private function renderFqaPage($title, $list, $templete = '') {
+        $this->assign('title', $title);
+        $this->assign('list', $list);
         $this->assign('category', \Model\Category::getAllCategoryCidPrimaryKey());
-        $this->layout('Fqa_list');
+        $this->layout($templete);
     }
 
     /**

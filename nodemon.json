@@ -1,0 +1,6 @@
+{
+  "watch": ["Public/Theme/assets/css/ticket.css", "Public/Theme/assets/css/index.css"],
+  "ext": "css",
+  "ignore": ["Public/Theme/assets/css/*.min.css"],
+  "exec": "node compress-css.js"
+}

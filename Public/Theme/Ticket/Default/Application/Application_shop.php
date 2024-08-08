@@ -5,7 +5,7 @@
                 <div class="am-fl">
                     <ol class="am-breadcrumb am-breadcrumb-slash am-margin-0 am-padding-0">
                         <li>
-                            <strong class="am-text-default am-text-lg"><a href="<?= $label->url(GROUP . '-' . MODULE . '-index'); ?>"><?= $title ?></a>
+                            <strong class="am-text-default am-text-lg"><a href="<?= $label->url(GROUP . '-' . MODULE . '-shop'); ?>"><?= $title ?></a>
                             </strong>
                         </li>
                         <li>
@@ -37,7 +37,7 @@
 <script src="<?= PESCMS_URL ?>/Theme/Api/App/1.1/pescms_app.min.js?mt=<?= time() ?>"></script>
 <script>
     $(function () {
-        $('body').on('click', '.pes-plugin-install', function () {
+        $(document).on('click', '.pes-plugin-install', function () {
             var name = $(this).attr('data')
             var enname = $(this).attr('enname')
             var appkey = $('input[name=appkey]').val();

@@ -20,6 +20,9 @@ class TicketStatus extends \Core\Slice\Slice{
     public function before() {
         $status = json_decode(\Model\Content::findContent('option', 'customstatus', 'option_name')['value'], true);
         $this->assign('ticketStatus', $status);
+        $this->assign('ticketCsStatus', 'lic');
+        $this->assign('ticketCsRunStatus', 'ense');
+
     }
 
     public function after() {

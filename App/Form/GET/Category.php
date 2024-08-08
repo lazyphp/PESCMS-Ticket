@@ -21,7 +21,7 @@ class Category extends \Core\Controller\Controller {
         $result = \Model\Category::getCategoryORTicketList();
 
         $this->assign('title', '提交工单');
-
+		$this->assign('currentCategory', \Model\Content::findContent('category', (int)($_GET['id'] ?? 0), 'category_id'));
         $this->assign('ticket', $result['ticket']);
         $this->assign('category', $result['category']);
 

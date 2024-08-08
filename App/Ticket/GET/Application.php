@@ -10,7 +10,7 @@ class Application extends \Core\Controller\Controller {
     /**
      * 应用商店列表
      */
-    public function index(){
+    public function shop(){
         $plugin = $this->getPluginList();
 
         $this->assign('installed', json_encode(empty($plugin) ? [] :array_keys($plugin)));

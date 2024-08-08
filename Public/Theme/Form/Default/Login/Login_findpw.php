@@ -17,3 +17,7 @@
 
 
 <button type="submit" class="am-btn am-btn-primary am-radius am-btn-sm am-margin-top am-btn-block">提交</button>
+
+<div class="am-text-sm am-margin-vertical">
+    <a href="<?= $label->url('Login-index') ?>" class="login-signup-link" > <i class="am-icon-arrow-left"></i> 我想起账号密码了！</a>
+</div>

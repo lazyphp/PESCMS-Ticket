@@ -26,7 +26,7 @@ class Setting extends \Core\Controller\Controller {
         
         $option = [];
         foreach(\Model\Content::listContent(['table' => 'option']) as $key => $value){
-            if(is_array(json_decode($value['value'], true)) || $value['option_name'] == 'crossdomain' ){
+            if((is_array(json_decode($value['value'], true)) || $value['option_name'] == 'crossdomain') && $value['option_name'] != 'sms_verify_template'){
                 $option[$value['option_name']] = json_decode($value['value'], true);
             }else{
                 $option[$value['option_name']] = $value;

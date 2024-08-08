@@ -8,7 +8,6 @@ class Login extends \Core\Controller\Controller {
      * 登录账号
      */
     public function index() {
-
         $qrcode = \Model\Extra::getOnlyNumber() . (new \Godruoyi\Snowflake\Snowflake)->id();
         $this->session()->set('qrcode', $qrcode);
         $this->assign('qrcode', $qrcode);
@@ -283,6 +282,30 @@ class Login extends \Core\Controller\Controller {
             echo '用户信息:' . (empty($user) ? '失败' : '正常') . '<br/>';
             echo '校验信息已完成记录，请联系站点管理员获取解决办法。';
         }
+    }
+
+    /**
+     * 账号激活
+     * @return void
+     */
+    public function activate(){
+        if(empty($this->session()->get('toBeActivated'))){
+            $this->jump($this->url('Login-index'));
+        }
+        $this->assign('title', '账号激活');
+        $this->layout('','Login_layout');
+    }
+
+    /**
+     * 手机验证码登录
+     * @return void
+     */
+    public function phone(){
+        $this->assign('title', '手机验证码登录');
+        $wrapper = new \Model\SendLimitWrapper();
+
+        $this->assign('sendCount', $wrapper->sendCount);
+        $this->layout('','Login_layout');
     }
 
 }

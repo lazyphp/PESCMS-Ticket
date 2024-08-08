@@ -280,7 +280,21 @@ class Ticket extends \Core\Controller\Controller {
         if(!empty($_GET['replyRefresh'])){
             echo $content['chat']['pageObj']->totalRow;
             exit;
-        }else {
+        }elseif (!empty($_GET['getChat'])) {
+            $this->assign('chat', $content['chat']['list']);
+            ob_start();
+            $this->display('Ticket_chat_list');
+            $html = ob_get_contents();
+            ob_clean();
+            $this->success([
+                'msg'  => '获取对话内容成功',
+                'data' => [
+                    'html'       => $html,
+                    'pageTotal'  => $content['chat']['pageObj']->totalRow,
+                    'totalPages' => $content['chat']['pageObj']->totalPages,
+                ],
+            ]);
+        } else {
 
             $this->getTicketUserGroup($content['ticket']['ticket_model_group_id']);
             //当前客服的回复短语

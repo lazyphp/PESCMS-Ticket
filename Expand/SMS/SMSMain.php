@@ -18,8 +18,12 @@ class SMSMain {
                 $name = 'ihuyiSMS';
                 break;
             default:
-                $error = '未知的短信接口设置';
-                \Model\Extra::stopSend($param['send_id'], $error);
+                $error = [
+                    'msg' => "未知的短信接口设置",
+                    'status' => 1,
+                    'second' => 600,
+                ];
+                \Model\Extra::stopSend($param['send_id'], $error['msg']);
                 return $error;
         }
 

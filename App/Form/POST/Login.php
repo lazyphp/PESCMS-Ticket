@@ -2,12 +2,13 @@
 
 namespace App\Form\POST;
 
+
 class Login extends \Core\Controller\Controller {
 
     public function __init() {
         parent::__init();
         $this->checkToken();
-        if (!in_array(ACTION, ['weixin', 'index']) ||
+        if (!in_array(ACTION, ['weixin', 'index', 'reActivate', 'sendSMSCode', 'phone']) ||
             (ACTION == 'index' && json_decode(\Core\Func\CoreFunc::$param['system']['login_verify'])[0] == 1)
         ) {
             $this->checkVerify();
@@ -49,21 +50,14 @@ class Login extends \Core\Controller\Controller {
 
         if ($member['member_status'] == 0) {
             $statusMsg = $system['member_review'] == 2 ? '请先打开邮箱完成账号激活。' : '当前账号处于待审核/被禁用，请联系网站管理员解决。';
-            $this->error($statusMsg);
+            if ($system['member_review'] == 2) {
+                $this->session()->set('toBeActivated', $member['member_email']);
+            }
+            $this->success($statusMsg, $this->url('Login-activate'));
         }
 
         unset($member['member_password']);
-        $this->session()->set('member', $member);
-        $this->session()->set('login_expire', time());
-
-        if (empty($_POST['back_url'])) {
-            $url = $this->url('Member-index');
-        } else {
-            $url = base64_decode($_POST['back_url']);
-        }
-
-
-        $this->success('登录成功', $url, -1);
+        $this->setLogin($member);
     }
 
     /**
@@ -223,22 +217,11 @@ class Login extends \Core\Controller\Controller {
      * 微信登录
      */
     public function weixin() {
-        $param['member_weixin'] = $this->isP('openid', '获取openid失败');
+        $wxID = $this->isP('openid', '获取openid失败');
 
         //邮件地址没有填写，则直接随机创建账号
         if (empty($_POST['email'])) {
-            $randomAccount = \Model\Extra::getOnlyNumber();
-            $param['member_email'] = "{$randomAccount}@default.wx";
-            $param['member_name'] = "微信用户" . \Model\Extra::getOnlyNumber();
-            $param['member_account'] = "wx_{$randomAccount}";
-            $param['member_password'] = md5(\Model\Extra::getOnlyNumber());//随机写入一些字符，随机账号无法使用
-            $param['member_status'] = \Core\Func\CoreFunc::$param['system']['member_review'] == 2 ? 0 : \Core\Func\CoreFunc::$param['system']['member_review'];
-            $param['member_organize_id'] = 1; //默认客户分组为 1
-            $param['member_createtime'] = time();
-            $memberID = $this->db('member')->insert($param);
-
-            $member = $param;
-            $member['member_id'] = $memberID;
+            $member = $this->createRandomMember(null, $wxID);
         } else {
             $data['member_email'] = $this->isP('email', '请填写邮箱地址');
             $password = $this->isP('password', '请填密码');
@@ -249,18 +232,167 @@ class Login extends \Core\Controller\Controller {
                 $this->error('账号绑定失败!账号可能不存在、待审核/被禁用、密码错误或已绑定!');
             }
 
+            //对应账号绑定微信ID
             $this->db('member')->where('member_id = :member_id')->update([
                 'noset'         => [
                     'member_id' => $member['member_id'],
                 ],
-                'member_weixin' => $param['member_weixin'],
+                'member_weixin' => $wxID,
             ]);
         }
 
+        $this->setLogin($member);
+
+    }
+
+    /**
+     * 重新发送激活账号
+     * @return void
+     */
+    public function reActivate() {
+
+        $email = $this->session()->get('toBeActivated');
+
+        if (empty($email)) {
+            $this->jump($this->url('Login-index'));
+        }
+
+        $member = \Model\Content::findContent('member', $email, 'member_email', 'member_id, member_email');
+
+        $this->sendSignUpEmail($member['member_id'], $email, 2);
+
+        //限制发送频率
+        $wrapper = new \Model\SendLimitWrapper();
+        $wrapper->getLimitFromAccountAndType($member['member_email'], 0, '激活邮件已发送，请稍后再试')->getLimitFromSession('激活邮件发送太频繁了，请稍后再试')->getLimitFromIP('激活邮件发送太频繁了，已被限制发送')->addRecord($member['member_email'], 0);
+
+
+        $this->success('我们已发送激活邮件至您的邮箱，请注意查收！', $this->url('Login-index'));
+
+    }
+
+    /**
+     * 发送短信验证码
+     * @return void
+     */
+    public function sendSMSCode() {
+        $phone = $this->isP('phone', '请提交您的手机号码');
+
+        if (\Model\Extra::checkInputValueType($phone, 2) == false) {
+            $this->error('请提交正确的手机号码');
+        }
+
+        $wrapper = new \Model\SendLimitWrapper();
+
+        $wrapper->getLimitFromAccountAndType($phone, 0, '短信已发送，请稍后再试')->verifyCode()->getLimitFromSession('您短信发送太频繁了，请稍后再试')->getLimitFromIP('您短信发送太频繁了，已被限制发送')->addRecord($phone, 0);
+
+        $smsCode = random_int(100000, 999999);
+
+        $template = \Model\MailTemplate::matchContent($smsCode, 0);
+
+        $this->db('sms_code')->insert([
+            'sms_code_phone'     => $phone,
+            'sms_code'           => $smsCode,
+            'sms_code_send_time' => time(),
+        ]);
+
+        $param = [
+            'send_id'      => -1,
+            'send_account' => $phone,
+            'send_title'   => "{$phone}的验证码短信",
+            'send_content' => $template['2'],
+        ];
+
+        $result = (new \Expand\SMS\SMSMain())->send($param);
+
+        \Model\Extra::insertSend($phone, "{$phone}的验证码短信", $template['2'], 2, json_encode($result, JSON_UNESCAPED_UNICODE), $result['status'], 999);
+
+
+        if ($result['status'] == 2) {
+            $this->success(['msg' => '验证码已发送，请注意查收。', 'data' => $wrapper->sendCount]);
+        } else {
+            $this->error(['msg' => '验证码发送失败，请稍后再试。', 'data' => $wrapper->sendCount]);
+        }
+    }
+
+    /**
+     * 手机验证码登录
+     * @return void
+     */
+    public function phone() {
+        $phone = $this->isP('phone', '请填写手机号码');
+        $smscode = $this->isP('smscode', '请填写手机验证码');
+
+        if (\Model\Extra::checkInputValueType($phone, 2) == false) {
+            $this->error('请提交正确的手机号码');
+        }
+
+        $checkCode = $this->db('sms_code')->where('sms_code_phone = :sms_code_phone AND sms_code = :sms_code AND sms_code_used = 0 AND sms_code_send_time > :sms_code_send_time')->find([
+            'sms_code_phone'     => $phone,
+            'sms_code'           => $smscode,
+            'sms_code_send_time' => time() - 600,
+        ]);
+
+        if (empty($checkCode)) {
+            $this->error('验证码错误或已过期，请重新获取');
+        } else {
+            $this->db('sms_code')->where('sms_code_id = :sms_code_id')->update([
+                'noset'         => [
+                    'sms_code_id' => $checkCode['sms_code_id'],
+                ],
+                'sms_code_used' => 1,
+            ]);
+        }
+
+        $member = $this->db('member')->where('member_phone = :member_phone')->find(['member_phone' => $phone]);
+
+        if (empty($member)) {
+            $member = $this->createRandomMember($phone);
+        }
+
+        $this->setLogin($member);
+    }
+
+    /**
+     * 快速注册 - 创建对应的随机账号
+     * @param $phone
+     * @param $weixin
+     * @return array
+     */
+    private function createRandomMember($phone = null, $weixin = null) {
+        $randomAccount = \Model\Extra::getOnlyNumber();
+        $param = [
+            'member_phone'       => $phone,
+            'member_weixin'      => $weixin,
+            'member_email'       => "{$randomAccount}@default." . ($phone ? "phone" : "wx"),
+            'member_name'        => ($phone ? "手机用户" : "微信用户") . \Model\Extra::getOnlyNumber(),
+            'member_account'     => ($phone ? "phone_" : "wx_") . $randomAccount,
+            'member_password'    => md5(\Model\Extra::getOnlyNumber()), // 随机写入一些字符，随机账号无法使用
+            'member_status'      => \Core\Func\CoreFunc::$param['system']['member_review'] == 2 ? 0 : \Core\Func\CoreFunc::$param['system']['member_review'],
+            'member_organize_id' => 1, // 默认客户分组为 1
+            'member_createtime'  => time(),
+        ];
+        $memberID = $this->db('member')->insert($param);
+
+        $param['member_id'] = $memberID;
+        return $param;
+    }
+
+    /**
+     * 设置登录状态
+     * @param $member
+     * @return void
+     */
+    private function setLogin($member, $url = null) {
         $this->session()->set('member', $member);
         $this->session()->set('login_expire', time());
-        $this->success('登录成功', $this->url('Member-index'), -1);
 
+        if (empty($_POST['back_url'])) {
+            $link = $this->url('Member-index');
+        } else {
+            $link = base64_decode($_POST['back_url']);
+        }
+
+        $this->success('登录成功', $url ?? $link, -1);
     }
 
 }

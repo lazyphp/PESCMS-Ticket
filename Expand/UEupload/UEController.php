@@ -91,7 +91,7 @@ class UEController {
                             break;
                     }
 
-                    \Model\Content::insert('attachment', [
+                    $attachmentID = \Model\Content::insert('attachment', [
                         'attachment_status' => 1,
                         'attachment_path' => $info['url'],
                         'attachment_path_type' => 0,
@@ -102,6 +102,12 @@ class UEController {
                         'attachment_user_id' => empty($session['ticket']) ? 0 : $session['ticket']['user_id'],
                         'attachment_member_id' => empty($session['member']) ? -1 : $session['member']['member_id']
                     ]);
+
+                    $extension = pathinfo($info['url'], PATHINFO_EXTENSION);
+
+                    $info['url'] = \Core\Func\CoreFunc::url('Attachment-index', ['id' => $attachmentID, 'extension' => $extension]);
+
+                    $result = json_encode($info, JSON_UNESCAPED_UNICODE);
                 }
             }
             return $result;

@@ -15,6 +15,15 @@ class Upload extends \Core\Controller\Controller {
      * @description 本上传方法直接基于百度原有的上传库。PESCMS在此之上进行二次安全转换（主要在图片处理上和上传目录）。
      */
     public function ueditor() {
+
+        $anonymousUpload = \Model\Option::getOptionValue('anonymous_upload');
+        if($anonymousUpload == '0' &&  empty($this->session()->get('member')) && empty($this->session()->get('ticket')) ) {
+            exit(json_encode([
+                    'state' => '请先登录再上传文件',
+            ], JSON_UNESCAPED_UNICODE));
+
+        }
+
         //上传大文件，可能需要较大的内存，默认设定为1G
         ini_set ('memory_limit', '1024M');
         echo (new \Expand\UEupload\UEController())->action();

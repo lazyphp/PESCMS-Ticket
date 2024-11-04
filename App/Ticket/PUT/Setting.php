@@ -46,6 +46,7 @@ class Setting extends \Core\Controller\Controller {
                 'send_limit_count',
                 'enable_proxy',
                 'REMOTE_ADDR',
+                'anonymous_upload',
             ],
             //基于数组的json更新设置
             'array' => [

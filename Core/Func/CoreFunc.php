@@ -311,7 +311,10 @@ class CoreFunc {
     public final static function session($id = '') {
         if (empty(self::$session)) {
             $sessionid = self::loadConfig('SESSION_ID');
-            self::$session = new \duncan3dc\Sessions\SessionInstance($sessionid, null, $id);
+
+            $cookie = (new \duncan3dc\Sessions\Cookie)->createFromIni()
+                ->withHttpOnly(true);
+            self::$session = new \duncan3dc\Sessions\SessionInstance($sessionid, $cookie, $id);
         }
         return self::$session;
     }

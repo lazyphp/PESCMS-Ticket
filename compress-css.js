@@ -6,6 +6,7 @@ const fs = require('fs');
 const cssFiles = [
     path.join(__dirname, 'Public', 'Theme', 'assets', 'css', 'ticket.css'),
     path.join(__dirname, 'Public', 'Theme', 'assets', 'css', 'index.css'),
+    path.join(__dirname, 'Public', 'Theme', 'assets', 'css', 'app.css'),
 ];
 
 cssFiles.forEach(filePath => {

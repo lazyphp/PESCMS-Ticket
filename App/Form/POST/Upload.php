@@ -16,17 +16,25 @@ class Upload extends \Core\Controller\Controller {
      */
     public function ueditor() {
 
+        $member = null;
+
         $anonymousUpload = \Model\Option::getOptionValue('anonymous_upload');
         if($anonymousUpload == '0' &&  empty($this->session()->get('member')) && empty($this->session()->get('ticket')) ) {
-            exit(json_encode([
-                    'state' => '请先登录再上传文件',
-            ], JSON_UNESCAPED_UNICODE));
 
+            if(!empty($_POST['token'])){
+                $member = \Model\API\Member::auth();
+            }
+
+            if(empty($member)){
+                exit(json_encode([
+                    'state' => '请先登录再上传文件',
+                ], JSON_UNESCAPED_UNICODE));
+            }
         }
 
         //上传大文件，可能需要较大的内存，默认设定为1G
         ini_set ('memory_limit', '1024M');
-        echo (new \Expand\UEupload\UEController())->action();
+        echo (new \Expand\UEupload\UEController())->action($member);
     }
 
 }

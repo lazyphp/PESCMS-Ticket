@@ -10,7 +10,7 @@ namespace Expand\UEupload;
 
 class UEController {
 
-    public function action(){
+    public function action($member = null){
         $expandPath = PES_CORE . '/Expand/UEupload/';
         $configjson = file_get_contents("{$expandPath}config.json");
 
@@ -91,17 +91,25 @@ class UEController {
                             break;
                     }
 
-                    \Model\Content::insert('attachment', [
+                    $attachment_member_id = $member['member_id'] ?? ( empty($session['member']) ? -1 : $session['member']['member_id'] );
+
+                    $attachmentID = \Model\Content::insert('attachment', [
                         'attachment_status' => 1,
                         'attachment_path' => $info['url'],
                         'attachment_path_type' => 0,
                         'attachment_createtime' => time(),
                         'attachment_name' => (new \voku\helper\AntiXSS())->xss_clean(trim($info['original'])),
                         'attachment_type' => $type,
-                        'attachment_owner' => empty($session['ticket']) ? 0 : 1,
+                        'attachment_owner' => empty($session['ticket']) ? 0 : 1, //标记前台or后台
                         'attachment_user_id' => empty($session['ticket']) ? 0 : $session['ticket']['user_id'],
-                        'attachment_member_id' => empty($session['member']) ? -1 : $session['member']['member_id']
+                        'attachment_member_id' => $attachment_member_id
                     ]);
+
+                    $extension = pathinfo($info['url'], PATHINFO_EXTENSION);
+
+                    $info['url'] = \Core\Func\CoreFunc::url('Attachment-index', ['id' => $attachmentID, 'extension' => $extension]);
+
+                    $result = json_encode($info, JSON_UNESCAPED_UNICODE);
                 }
             }
             return $result;

@@ -157,5 +157,22 @@
             </div>
         </div>
 
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
+                    <label class="am-block">允许匿名上传<i class="am-text-danger">*</i></label>
+                    <label class="am-radio-inline">
+                        <input type="radio" value="0" name="anonymous_upload" required="" <?= $anonymous_upload['value'] == '0' ? 'checked="checked"' : '' ?>> 关闭
+                    </label>
+                    <label class="am-radio-inline">
+                        <input type="radio" value="1" name="anonymous_upload" required="" <?= $anonymous_upload['value'] == '1' ? 'checked="checked"' : '' ?>> 开启
+                    </label>
+                    <div class="pes-alert pes-alert-info am-text-xs " >
+                        开启后用户将可以匿名上传文件，建议根据工单业务情况选择开启。
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

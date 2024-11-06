@@ -102,6 +102,18 @@
         <div class="am-g am-g-collapse">
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
+                    <label class="am-block">后台通知链接失效时间(小时)</label>
+                    <input name="service_login_timeout" placeholder="重新发送消息间隔(秒)" type="text" value="<?= $service_login_timeout['value'] ?? '24'; ?>" <?= isset($license) && $license == 1 ? '' : 'readonly="readonly" data-am-popover="{content: \'需求购买授权方解除限制\', trigger: \'hover\', theme:\'sm\'}"' ?> >
+                    <div class="pes-alert pes-alert-info am-text-xs " >
+                        <i class="am-icon-lightbulb-o"></i> 系统生成工单通知后台客服登录的链接有效时间，超过此时间后链接将失效。为了系统安全，建议不要设置太长的失效时间。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="am-g am-g-collapse">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-form-group">
                     <label class="am-block">开启行锁<i class="am-text-danger">*</i></label>
                     <label class="am-radio-inline">
                         <input type="radio" value="0" name="rowlock" required="" <?= $rowlock['value'] == '0' ? 'checked="checked"' : '' ?>>

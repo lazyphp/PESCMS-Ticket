@@ -43,7 +43,9 @@ class Option extends \Core\Model\Model {
     public static function getNoticeLoginParam() {
         $loginParam = explode('|', \Core\Func\CoreFunc::$param['system']['notice_login']);
 
-        if ($loginParam[0] < time() - 86400) {
+        $serviceLoginTimeout = \Model\Option::getOptionValue('service_login_timeout');
+
+        if ($loginParam[0] < time() - $serviceLoginTimeout * 3600) {
             static $newLoginParam;
             if (empty($newLoginParam)) {
                 $newLoginParam = \Model\Extra::getOnlyNumber();

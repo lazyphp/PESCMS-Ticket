@@ -155,11 +155,14 @@ Component({
         fileList
       })
 
+      let token = app.getLoginToken();
+      let systemInfo = app.data.systemInfo;
 
       wx.uploadFile({
         url: '{{siteUrl}}/?m=Upload&a=ueditor&method=POST&action=' + action,
         filePath: file.path,
         name: 'upfile',
+        formData: { token: token, systemInfo: systemInfo },
         success(res) {
           var data = JSON.parse(res.data);
 

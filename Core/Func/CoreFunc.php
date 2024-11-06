@@ -34,7 +34,7 @@ class CoreFunc {
      * 用于存储赋值变量
      * @var array
      */
-    public static $param = array();
+    public static $param = [];
 
     /**
      * 暴露当前URL是否使用了自定义路由规则。
@@ -63,15 +63,15 @@ class CoreFunc {
      */
     final public static function loadConfig($name = '', $overload = false) {
         static $config;
-        if (empty($config) || $overload === true ) {
+        if (empty($config) || $overload === true) {
             $config = require CONFIG_PATH . 'config.php';
         }
 
-        if(empty($name)){
+        if (empty($name)) {
             return $config;
-        }elseif(!empty($config[$name])){
+        } elseif (!empty($config[$name])) {
             return $config[$name];
-        }else{
+        } else {
             return NULL;
         }
     }
@@ -83,7 +83,7 @@ class CoreFunc {
      * @param bool $close 强制关闭后缀
      * @return type 返回URL
      */
-    final public static function url($controller, $param = array(), $close = false) {
+    final public static function url($controller, $param = [], $close = false) {
 
         $urlModel = self::loadConfig('URLMODEL');
         /**
@@ -95,7 +95,7 @@ class CoreFunc {
 
         if ($param === true) {
             self::$useRoute = true;
-            return $controller.$suffix;
+            return $controller . $suffix;
         }
 
         $routeUrlPath = CONFIG_PATH . 'RouteUrl/' . md5(self::loadConfig('PRIVATE_KEY')) . '_route.php';
@@ -114,7 +114,7 @@ class CoreFunc {
                 if (!empty($param)) {
 
                     foreach ($param as $key => $value) {
-                        $replaceUrl = str_replace('{'.$key.'}', $value, $replaceUrl);
+                        $replaceUrl = str_replace('{' . $key . '}', $value, $replaceUrl);
                     }
                 }
                 $url .= $replaceUrl . $suffix;
@@ -146,11 +146,10 @@ class CoreFunc {
     private static function urlLinkStr($param) {
         $url = "";
         foreach ($param as $key => $value) {
-            $url .= "&".htmlspecialchars($key)."=".htmlspecialchars($value);
+            $url .= "&" . htmlspecialchars($key) . "=" . htmlspecialchars($value);
         }
         return $url;
     }
-
 
     /**
      * 数据库连接方法
@@ -211,36 +210,46 @@ class CoreFunc {
      * @param str $waitSecond 响应时间
      * @return boolean|json|xml|str 返回对应的数据类型
      */
-    public static function isAjax($data, $code, $jumpUrl = '', $waitSecond = 3){
-        if(self::X_REQUESTED_WITH() === false){
+    public static function isAjax($data, $code, $jumpUrl = '', $waitSecond = 3) {
+        if (self::X_REQUESTED_WITH() === false) {
             return FALSE;
         }
 
         //@todo 我觉得ajax请求不论失败还是什么，不应该存在返回上一页的。现在直接设置为空置，让本身的函数执行刷新功能。
-        if($jumpUrl == 'javascript:history.go(-1)'){
+        if ($jumpUrl == 'javascript:history.go(-1)') {
             $jumpUrl = '';
         }
 
         $data = array_merge([
-            'msg' => '',
-            'data' => ''
+            'msg'  => '',
+            'data' => '',
         ], $data);
 
-        $type = explode(',', $_SERVER['HTTP_ACCEPT']);
-        $status['status'] = $code;
-        $status['msg'] = $data['msg'];
-        $status['data'] = $data['data'];
-        $status['url'] = $jumpUrl;
-        $status['waitSecond'] = $waitSecond;
+        $acceptType = explode(',', $_SERVER['HTTP_ACCEPT']);
+        $contentType = $_SERVER['CONTENT_TYPE'] ?? ($_SERVER['HTTP_CONTENT_TYPE'] ?? '');
 
-        if(empty($_REQUEST['keepToken'])){
+
+        $status = [
+            'status'     => $code,
+            'msg'        => $data['msg'],
+            'data'       => $data['data'],
+            'url'        => $jumpUrl,
+            'waitSecond' => $waitSecond,
+        ];
+
+        if (empty($_REQUEST['keepToken'])) {
             $token = self::token();
             $status['token'] = $token;
         }
 
-        switch ($type[0]) {
+        // 判断是否为 application/json 请求
+        if (stripos($contentType, 'application/json') !== false) {
+            exit(json_encode($status, JSON_UNESCAPED_UNICODE));
+        }
+
+        switch ($acceptType[0]) {
             case 'application/json':
-                exit(json_encode($status));
+                exit(json_encode($status, JSON_UNESCAPED_UNICODE));
                 break;
             case 'text/javascript':
                 // javascript 或 JSONP 格式  需要扩展
@@ -256,22 +265,56 @@ class CoreFunc {
         }
     }
 
-    public static function X_REQUESTED_WITH(){
-        if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strcasecmp($_SERVER['HTTP_X_REQUESTED_WITH'], 'XMLHttpRequest') != 0 ) {
-            return false;
-        }else{
+    public static function X_REQUESTED_WITH(): bool {
+        // 检查是否为标准的 AJAX 请求
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strcasecmp($_SERVER['HTTP_X_REQUESTED_WITH'], 'XMLHttpRequest') == 0) {
             return true;
         }
+
+        // 检查是否为 API 请求
+        if (self::isApiRequest()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function isApiRequest(): bool {
+
+        //缺少授权头部
+        if (empty($_SERVER['HTTP_AUTHORIZATION'])) {
+            return false;
+        }
+
+        // 检查 Content-Type 是否为 application/json
+        if (isset($_SERVER['CONTENT_TYPE']) && stripos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
+            return true;
+        }
+
+        // 检查 HTTP_CONTENT_TYPE 头部是否包含 application/json
+        if (isset($_SERVER['HTTP_CONTENT_TYPE']) && stripos($_SERVER['HTTP_CONTENT_TYPE'], 'application/json') !== false) {
+            return true;
+        }
+
+        // 检查 Accept 头部是否包含 application/json
+        if (isset($_SERVER['HTTP_ACCEPT']) && stripos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
      * 调用session类库
      * @return \duncan3dc\Sessions\SessionInstance
      */
-    public final static function session($id = ''){
-        if(empty(self::$session)){
+    public final static function session($id = '') {
+        if (empty(self::$session)) {
             $sessionid = self::loadConfig('SESSION_ID');
-            self::$session = new \duncan3dc\Sessions\SessionInstance($sessionid, null, $id);
+
+            $cookie = (new \duncan3dc\Sessions\Cookie)->createFromIni()
+                ->withHttpOnly(true);
+            self::$session = new \duncan3dc\Sessions\SessionInstance($sessionid, $cookie, $id);
         }
         return self::$session;
     }
@@ -280,32 +323,31 @@ class CoreFunc {
      * 生成token
      * @return string
      */
-    public static function token(){
+    public static function token() {
         $tokenArray = \Core\Func\CoreFunc::session()->get('token');
-        if(empty($tokenArray)){
+        if (empty($tokenArray)) {
             $tokenArray = [];
         }
 
         //系统默认只保存30个token
-        if(count($tokenArray) > 30){
+        if (count($tokenArray) > 30) {
             array_shift($tokenArray);
             //当最后一个token都已过时，则全部清空。
-            if(self::checkTokenExpired(end($tokenArray)) == true){
+            if (self::checkTokenExpired(end($tokenArray)) == true) {
                 \Core\Func\CoreFunc::session()->delete('token');
                 self::$token = NULL;
                 $tokenArray = [];
             }
         }
 
-        if(empty(self::$token)){
-            list($usec, $sec) = explode(" ", microtime());
+        if (empty(self::$token)) {
+            [$usec, $sec] = explode(" ", microtime());
             $shelfLife = time() * self::tokenTimeSalt();
-            self::$token = md5(substr($usec, 2) * rand(1, 100))."_{$shelfLife}";
+            self::$token = md5(substr($usec, 2) * rand(1, 100)) . "_{$shelfLife}";
             \Core\Func\CoreFunc::session()->set('token', array_merge($tokenArray, [self::$token => self::$token]));
-        }elseif(in_array(self::$token, $tokenArray)){
+        } elseif (in_array(self::$token, $tokenArray)) {
             \Core\Func\CoreFunc::session()->set('token', array_merge($tokenArray, [self::$token => self::$token]));
         }
-
 
 
         return self::$token;
@@ -315,7 +357,7 @@ class CoreFunc {
      * 令牌的时效加盐值
      * @return float|int
      */
-    public static function tokenTimeSalt(){
+    public static function tokenTimeSalt() {
         $publicKey = self::loadConfig('USER_KEY');
         $salt = ord($publicKey[0]) + ord($publicKey[1]) * ord($publicKey[2]);
         return $salt;
@@ -326,11 +368,11 @@ class CoreFunc {
      * @param $token
      * @return bool
      */
-    public static function checkTokenExpired($token){
+    public static function checkTokenExpired($token) {
         $checkExpired = explode('_', $token)[1] / self::tokenTimeSalt();
-        if($checkExpired + 600 < time()){
+        if ($checkExpired + 600 < time()) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

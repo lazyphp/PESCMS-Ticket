@@ -35,6 +35,8 @@ class Index extends \App\Install\Common {
 
         $check['curl'] = function_exists('curl_version') ? true : false;
 
+        $check['mime_content_type'] = function_exists('mime_content_type') ? true : false;
+
         $check['public'] = stripos($_SERVER['SCRIPT_NAME'], 'Public/') !== false || stripos($_SERVER['REQUEST_URI'], 'Public/') !== false || stripos($_SERVER['DOCUMENT_URI'], 'Public/') !== false ? true : false;
 
         $this->assign($check);

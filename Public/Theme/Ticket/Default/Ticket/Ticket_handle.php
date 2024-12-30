@@ -205,7 +205,7 @@
                 $("input[name=assign]").removeAttr("checked");
                 $("input[name=assign]").eq(0).prop("checked", "checked")
             } else {
-                $("form").submit();
+                $("#submit-reply").submit();
             }
         } else {
             $(".assign-user").addClass("am-hide");

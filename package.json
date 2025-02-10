@@ -1,9 +1,15 @@
 {
   "devDependencies": {
     "clean-css": "^4.2.3",
-    "uglify-js": "^3.13.10"
+    "uglify-js": "^3.13.10",
+    "concurrently": "^9.1.1",
+    "nodemon": "^3.1.9"
   },
   "dependencies": {
-    "commander": "^8.0.0"
+    "commander": "^8.0.0",
+    "less": "^4.1.3"
+  },
+  "scripts": {
+    "start": "node check-proxy.js && concurrently -n \"Nodemon, BrowserSync\" \"nodemon\" \"browser-sync start --config bs-config.js\""
   }
 }

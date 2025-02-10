@@ -36,7 +36,7 @@
 
                                     <?php if ($k == 0): ?>
 
-                                        <div class="am-g am-g-collapse">
+                                        <div class="am-g am-g-collapse <?= in_array('index_type', $disableThemeSetting) ? 'am-hide' : '' ?>">
                                             <div class="am-u-sm-12 am-u-sm-centered">
                                                 <div class="am-form-group">
                                                     <label class="am-block">首页布局形式<i class="am-text-danger">*</i></label>
@@ -50,7 +50,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="am-g am-g-collapse" id="index_cid">
+                                        <div class="am-g am-g-collapse <?= in_array('index_cid', $disableThemeSetting) ? 'am-hide' : '' ?>" id="index_cid">
                                             <div class="am-u-sm-12 am-u-sm-centered">
                                                 <div class="am-form-group">
                                                     <label class="am-block">特定工单分类ID</label>
@@ -65,7 +65,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="am-g am-g-collapse" id="hot_key">
+                                        <div class="am-g am-g-collapse <?= in_array('hot_key', $disableThemeSetting) ? 'am-hide' : '' ?>" id="hot_key">
                                             <div class="am-u-sm-12 am-u-sm-centered">
                                                 <div class="am-form-group">
                                                     <label class="am-block">搜索框热门搜索词</label>
@@ -74,7 +74,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="am-g am-g-collapse">
+                                        <div class="am-g am-g-collapse <?= in_array('fqa', $disableThemeSetting) ? 'am-hide' : '' ?>">
                                             <div class="am-u-sm-12 am-u-sm-centered">
                                                 <div class="am-form-group">
                                                     <label class="am-block">首页显示常见问题<i class="am-text-danger">*</i></label>

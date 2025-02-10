@@ -7,6 +7,7 @@
                 <a class="am-link-muted print-ticket"
                    href="<?= $label->url('View-printer', ['number' => $ticket_number]); ?>"><span
                             class="am-icon-print"></span></a>
+                <span class="am-hide"><?= $ticket_title ?></span>
             </div>
             <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
         <?php endif; ?>

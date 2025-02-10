@@ -1,6 +1,6 @@
 {
-  "watch": ["Public/Theme/assets/css/ticket.css", "Public/Theme/assets/css/index.css", "Public/Theme/assets/css/app.css"],
-  "ext": "css",
+  "watch": ["Public/Theme/assets/css/ticket.css", "Public/Theme/assets/css/index.css", "Public/Theme/assets/css/app.css", "Public/Theme/assets/js/app.js"],
+  "ext": "js css",
   "ignore": ["Public/Theme/assets/css/*.min.css"],
-  "exec": "node compress-css.js"
+  "exec": "node compress-css.js && node minify.js -c app"
 }

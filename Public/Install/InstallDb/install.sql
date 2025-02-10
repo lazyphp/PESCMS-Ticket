@@ -1074,6 +1074,8 @@ CREATE TABLE `pes_user` (
   `user_suspension_button` tinyint(1) NOT NULL COMMENT '是否关闭悬浮按钮',
   `user_ticket_status` varchar(10) NOT NULL DEFAULT '' COMMENT '客服设置列表默认打开的工单筛选状态',
   `user_bind_mid` int(11) NOT NULL COMMENT '绑定的用户ID',
+  `user_cs_panel` int(11) NOT NULL COMMENT '是否启用新工单处理面板',
+  `user_open_search` int(11) NOT NULL COMMENT '是否默认展开工单列表搜索栏',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_weixinWork` (`user_weixinWork`),
   UNIQUE KEY `user_dingtalk` (`user_dingtalk`)
@@ -1126,4 +1128,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-04 23:25:15
+-- Dump completed on 2025-02-10  0:00:45

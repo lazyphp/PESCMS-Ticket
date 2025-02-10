@@ -191,7 +191,7 @@
     <?php endif; ?>
 </div>
 
-<?php if(isset(${$ticketCsStatus.$ticketCsRunStatus}) && ${$ticketCsStatus.$ticketCsRunStatus} == 1): ?>
+<?php if(isset(${$ticketCsStatus.$ticketCsRunStatus}) && ${$ticketCsStatus.$ticketCsRunStatus} == 1 && $this->session()->get('ticket')['user_cs_panel'] != 2): ?>
 <link rel="stylesheet" href="/Theme/assets/css/cs.min.css?v=<?= $resources ?>">
 <script src="/Theme/assets/js/cs.min.js?v=<?= $resources ?>"></script>
 <?php endif; ?>

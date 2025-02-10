@@ -56,6 +56,8 @@ class User extends Content {
         $data['user_browser_msg_time'] = $this->p('browser_msg_time');
         $data['user_suspension_button'] = $this->p('suspension_button');
         $data['user_ticket_status'] = $this->p('user_ticket_status');
+        $data['user_cs_panel'] = (int) $this->p('user_cs_panel');
+        $data['user_open_search'] = (int) $this->p('user_open_search');
         $data['noset']['user_id'] = $userID;
         $this->db('user')->where('user_id = :user_id')->update($data);
 

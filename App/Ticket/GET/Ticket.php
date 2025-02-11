@@ -281,7 +281,9 @@ class Ticket extends \Core\Controller\Controller {
             echo $content['chat']['pageObj']->totalRow;
             exit;
         }elseif (!empty($_GET['getChat'])) {
+            $this->assign('member', $content['member']);
             $this->assign('chat', $content['chat']['list']);
+
             ob_start();
             $this->display('Ticket_chat_list');
             $html = ob_get_contents();

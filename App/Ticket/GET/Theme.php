@@ -77,6 +77,10 @@ class Theme extends \Core\Controller\Controller {
             $tabTitle = array_unique($tabTitle); // 去除重复值
         }
 
+        $themeINI = \Model\Theme::getThemeINI($check['theme']);
+        $disableThemeSetting = explode(',', $themeINI['Theme']['disableThemeSetting'] ?? '');
+
+        $this->assign('disableThemeSetting', $disableThemeSetting);
         self::assign('setting', $check['setting']);
         self::assign('indexField', $check['indexField']);
         self::assign('tabTitle', $tabTitle);

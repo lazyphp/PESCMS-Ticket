@@ -26,16 +26,15 @@ class Index extends \App\Install\Common {
      * 验证程序运行情况
      */
     private function checkRunning() {
-        $phpVersion = explode('.', phpversion());
-        $check['php_version'] =  $phpVersion[0] >= 7 ? true : false;
+        $check['php_version'] = version_compare(PHP_VERSION, '7.0.0', '>=');
 
-        $check['pdo'] = in_array('pdo_mysql', get_loaded_extensions()) ? true : false;
+        $check['pdo'] = extension_loaded('pdo_mysql');
 
-        $check['gd'] = function_exists('gd_info') ? true : false;
+        $check['gd'] = function_exists('gd_info');
 
-        $check['curl'] = function_exists('curl_version') ? true : false;
+        $check['curl'] = function_exists('curl_version');
 
-        $check['mime_content_type'] = function_exists('mime_content_type') ? true : false;
+        $check['fileinfo'] = extension_loaded('fileinfo');
 
         $check['public'] = stripos($_SERVER['SCRIPT_NAME'], 'Public/') !== false || stripos($_SERVER['REQUEST_URI'], 'Public/') !== false || stripos($_SERVER['DOCUMENT_URI'], 'Public/') !== false ? true : false;
 

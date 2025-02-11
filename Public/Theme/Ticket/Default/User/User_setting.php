@@ -100,6 +100,47 @@
 
                 <div class="am-g am-g-collapse">
                     <div class="am-u-sm-12 am-u-sm-centered">
+                        <div class="am-form-group">
+                            <label class="am-block">默认展开工单搜索栏<i class="am-text-danger">*</i></label>
+                            <label class="form-radio-label am-radio-inline">
+                                <input class="form-radio" type="radio" name="user_open_search" value="0"
+                                       required="" <?= $user_open_search == 0 ? 'checked="checked"' : '' ?>>
+                                <span>收起</span>
+                            </label>
+                            <label class="form-radio-label am-radio-inline">
+                                <input class="form-radio" type="radio" name="user_open_search" value="1"
+                                       required="" <?= $user_open_search == 1 ? 'checked="checked"' : '' ?>><span>展开</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <?php if (isset($license) && $license == 1): ?>
+                    <div class="am-g am-g-collapse">
+                        <div class="am-u-sm-12 am-u-sm-centered">
+                            <div class="am-form-group">
+                                <label class="am-block">启用新工单操作面板<i class="am-text-danger">*</i></label>
+                                <label class="form-radio-label am-radio-inline">
+                                    <input class="form-radio" type="radio" name="user_cs_panel" value="1"
+                                           required="" <?= $user_cs_panel == 1 ? 'checked="checked"' : '' ?>>
+                                    <span>启用新版</span>
+                                </label>
+                                <label class="form-radio-label am-radio-inline">
+                                    <input class="form-radio" type="radio" name="user_cs_panel" value="2"
+                                           required="" <?= $user_cs_panel == 2 ? 'checked="checked"' : '' ?>><span>我是保守派，沿用旧版操作界面就好了</span>
+                                </label>
+                            </div>
+
+                            <div class="pes-alert pes-alert-info am-text-xs ">
+                                <i class="am-icon-lightbulb-o"></i> 若您对工单新的操作面板布局不习惯，可以使用旧版。
+                            </div>
+
+                        </div>
+                    </div>
+                <?php endif; ?>
+
+                <div class="am-g am-g-collapse">
+                    <div class="am-u-sm-12 am-u-sm-centered">
 
                         <div class="am-form-group">
                             <label class="am-block">开启浏览器通知<i class="am-text-danger">*</i></label>

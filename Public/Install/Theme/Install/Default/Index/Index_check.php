@@ -36,10 +36,10 @@
 </div>
 
 <div class="am-form-group">
-    <label class="am-u-sm-2 am-text-right am-text-middle">mime_content_type扩展:</label>
+    <label class="am-u-sm-2 am-text-right am-text-middle">fileinfo扩展:</label>
     <div class="am-u-sm-10 am-text-middle">
-        <a href="https://www.php.net/manual/zh/function.mime-content-type.php" class="am-text-<?= $mime_content_type == true ? 'success' : 'warning' ?>" target="_blank">
-            <i class=" <?= $mime_content_type == true ? 'am-icon-check' : 'am-icon-close' ?>"></i> <?= $mime_content_type == true ? '' : "mime_content_type扩展，上传的图片/文件预览功能会受到影响，建议安装程序后开启此扩展，本扩展缺失不影响程序安装。" ?>
+        <a href="https://www.php.net/manual/zh/book.fileinfo.php" class="am-text-<?= $fileinfo == true ? 'success' : 'warning' ?>" target="_blank">
+            <i class=" <?= $fileinfo == true ? 'am-icon-check' : 'am-icon-close' ?>"></i> <?= $fileinfo == true ? '' : "fileinfo扩展，上传的图片/文件预览功能会受到影响，建议安装程序后开启此扩展，本扩展缺失不影响程序安装。" ?>
         </a>
     </div>
 </div>

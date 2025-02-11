@@ -191,7 +191,7 @@
     <?php endif; ?>
 </div>
 
-<?php if(isset(${$ticketCsStatus.$ticketCsRunStatus}) && ${$ticketCsStatus.$ticketCsRunStatus} == 1): ?>
+<?php if(isset(${$ticketCsStatus.$ticketCsRunStatus}) && ${$ticketCsStatus.$ticketCsRunStatus} == 1 && $this->session()->get('ticket')['user_cs_panel'] != 2): ?>
 <link rel="stylesheet" href="/Theme/assets/css/cs.min.css?v=<?= $resources ?>">
 <script src="/Theme/assets/js/cs.min.js?v=<?= $resources ?>"></script>
 <?php endif; ?>
@@ -205,7 +205,7 @@
                 $("input[name=assign]").removeAttr("checked");
                 $("input[name=assign]").eq(0).prop("checked", "checked")
             } else {
-                $("form").submit();
+                $("#submit-reply").submit();
             }
         } else {
             $(".assign-user").addClass("am-hide");

@@ -22,7 +22,7 @@ class Member extends \Core\Model\Model {
         header("HTTP/1.1 995 Login not found");
 
         $token = self::isP('token', '缺少登录参数，请重新打开小程序');
-        $systeminfo = self::isP('systemInfo', '请提交系统信息', false);
+        self::isP('systemInfo', '请提交系统信息', false);
 
         $result = self::db('certificate AS c')
             ->field('c.*, m.member_id, m.member_name, m.member_avatar, member_wxapp, member_organize_id, member_email, member_phone')
@@ -34,8 +34,6 @@ class Member extends \Core\Model\Model {
 
         if(empty($result)){
             self::error('登录信息不存在或者已经超时，请重新登录');
-        }elseif(!empty($result) && strcmp($result['certificate_systeminfo'], md5($systeminfo)) != 0 ){
-            self::error('设备信息发生变化，登录信息已更改，请重新登录');
         }
 
         header("HTTP/1.1 200 Status OK");

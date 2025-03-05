@@ -140,41 +140,6 @@
   text-decoration: line-through;
   color: #ff5757;
 }
-.pes-chat-tips {
-  margin-top: 10px;
-}
-.pes-chat-tips:before {
-  content: open-quote;
-  float: left;
-  position: relative;
-  margin-left: -0.8em;
-}
-.pes-chat-tips:after {
-  float: right;
-  position: relative;
-  content: close-quote;
-  bottom: 20px;
-  margin-right: -0.8em;
-}
-.pes-chat-tips:before,
-.pes-chat-tips:after {
-  font-size: 2em;
-  color: #ccc;
-  line-height: 0.01em;
-  vertical-align: -0.5em;
-  font: bold 21px/1.5 Consolas, "Courier New", "KaiTi", "KaiTi_GB2312", "FangSong_GB2312", SimHei, arial, Monaco, monospace;
-}
-.pes-chat-tips ul {
-  padding: 10px;
-  border: 1px dashed #cfcfcf;
-}
-.pes-chat-tips ul:first-child {
-  margin-bottom: 0px !important;
-}
-.pes-chat-tips ul li {
-  padding: 0 !important;
-  list-style: none;
-}
 .pes-ticket-form-img-group,
 .pes-ticket-form-video-group {
   padding: 0;
@@ -206,4 +171,47 @@
 .pes-ticket-content > li {
   background-color: #f8f8f8 !important;
   border: none;
+}
+.pes-ticket-content > li .pt-text-border img {
+  max-width: 100%;
+  height: auto;
+}
+.pes-chat > li > .am-g img {
+  max-width: 100%;
+  height: auto;
+}
+.pes-chat > li > .am-g .pes-chat-tips {
+  margin-top: 10px;
+}
+.pes-chat > li > .am-g .pes-chat-tips:before {
+  content: open-quote;
+  float: left;
+  position: relative;
+  margin-left: -0.8em;
+}
+.pes-chat > li > .am-g .pes-chat-tips:after {
+  float: right;
+  position: relative;
+  content: close-quote;
+  bottom: 20px;
+  margin-right: -0.8em;
+}
+.pes-chat > li > .am-g .pes-chat-tips:before,
+.pes-chat > li > .am-g .pes-chat-tips:after {
+  font-size: 2em;
+  color: #ccc;
+  line-height: 0.01em;
+  vertical-align: -0.5em;
+  font: bold 21px/1.5 Consolas, "Courier New", "KaiTi", "KaiTi_GB2312", "FangSong_GB2312", SimHei, arial, Monaco, monospace;
+}
+.pes-chat > li > .am-g .pes-chat-tips ul {
+  padding: 10px;
+  border: 1px dashed #cfcfcf;
+}
+.pes-chat > li > .am-g .pes-chat-tips ul:first-child {
+  margin-bottom: 0px !important;
+}
+.pes-chat > li > .am-g .pes-chat-tips ul li {
+  padding: 0 !important;
+  list-style: none;
 }

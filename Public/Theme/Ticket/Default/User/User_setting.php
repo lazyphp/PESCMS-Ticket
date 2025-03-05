@@ -127,7 +127,7 @@
                                 </label>
                                 <label class="form-radio-label am-radio-inline">
                                     <input class="form-radio" type="radio" name="user_cs_panel" value="2"
-                                           required="" <?= $user_cs_panel == 2 ? 'checked="checked"' : '' ?>><span>我是保守派，沿用旧版操作界面就好了</span>
+                                           required="" <?= $user_cs_panel == 2 ? 'checked="checked"' : '' ?>><span>沿用旧版操作界面</span>
                                 </label>
                             </div>
 

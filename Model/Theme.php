@@ -54,4 +54,14 @@ class Theme extends \Core\Model\Model {
         ];
     }
 
+    /**
+     * 获取主题配置信息
+     * @param $theme
+     * @return array|false
+     */
+    public static function getThemeINI($theme) {
+        $themePatch = THEME . '/Doc/' . $theme . '/info.ini';
+        return is_file($themePatch) ? parse_ini_file($themePatch, true) : [];
+    }
+
 }

@@ -3,7 +3,7 @@
 <van-popup show="{{showSignUp}}" custom-style="height: 35%;" position="bottom" bind:close="closeSingup" closeable
   custom-class="pes-padding-xs pes-text-center">
   <view style=" width:300px;margin:0 auto;">
-    <view class=" pes-text-strong">PESCMS Ticket 账号注册</view>
+    <view class=" pes-text-strong">{{wxapp_title}} 账号注册</view>
 
     <view class="pes-margin-top-xs pes-text-sm pes-alert pes-alert-info">为了更便捷处理您反馈的问题，在使用本系统前，需要先完成账号注册或者绑定系统已有账号。
     </view>

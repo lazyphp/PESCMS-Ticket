@@ -1,21 +1,23 @@
 .pes-ticket-form-img-group, .pes-ticket-form-video-group {
   padding: 0;
   list-style: none;
-  column-count:5;
+  column-count: 5;
   column-gap: 1em;
+
   li {
 
     padding: 1px;
+
     a:hover {
       border: none !important;
     }
 
-    video{
+    video {
       width: 100%;
       height: 20rem;
     }
 
-    img{
+    img {
       padding: 5px;
       border: 1px solid #cfcfcf;
     }
@@ -24,10 +26,79 @@
 
 }
 
-.pes-ticket-content{
+//工单提交内容样式
+.pes-ticket-content {
   margin: 0px !important;
-  >li{
+
+  > li {
     background-color: #f8f8f8 !important;
     border: none;
+
+    .pt-text-border {
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+
+  }
+}
+
+//工单互动对话样式
+.pes-chat {
+
+  > li {
+    > .am-g {
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      //工单对话提醒内容样式
+      .pes-chat-tips {
+        margin-top: 10px;
+
+        &:before {
+          content: open-quote;
+          float: left;
+          position: relative;
+          margin-left: -0.8em;
+        }
+
+        &:after {
+          float: right;
+          position: relative;
+          content: close-quote;
+          bottom: 20px;
+          margin-right: -0.8em;
+        }
+
+        &:before, &:after {
+          font-size: 2em;
+          color: #ccc;
+          line-height: .01em;
+          vertical-align: -0.5em;
+          font: bold 21px/1.5 Consolas, "Courier New", "KaiTi", "KaiTi_GB2312", "FangSong_GB2312", SimHei, arial, Monaco, monospace;
+        }
+
+        ul {
+
+          &:first-child {
+            margin-bottom: 0px !important;
+          }
+
+          //margin: 0px !important;
+          padding: 10px;
+          border: 1px dashed #cfcfcf;
+
+          li {
+            padding: 0 !important;
+            list-style: none;
+          }
+        }
+      }
+    }
+
   }
 }

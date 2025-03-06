@@ -14,8 +14,72 @@ namespace Model;
  */
 class Notice extends \Core\Model\Model {
 
-    public static function addNotice(){
+    /**
+     * 执行通知发送
+     */
+    public static function sendNotice() {
 
+        //删除7天发送失败和成功的记录
+        self::db('send')->where('send_time < :time AND send_status > 0')->delete([
+            'time' => time() - 86400 * 7,
+        ]);
+
+        //获取未发送或者重发少于5次的通知
+        $list = \Model\Content::listContent([
+            'table'     => 'send',
+            'condition' => "send_time <= :time AND send_status < 2 AND send_sequence < 5 ",
+            'lock'      => 'FOR UPDATE',
+            'param'     => [
+                'time' => time(),
+            ],
+        ]);
+
+        foreach ($list as $value) {
+            switch ($value['send_type']) {
+                case '1':
+                    $result = (new \Expand\Notice\Mail())->send($value);
+                    break;
+                case '2':
+                    $result = (new \Expand\SMS\SMSMain())->send($value);
+                    break;
+                case '3':
+                    $result = (new \Expand\weixin())->sendTemplate($value);
+                    break;
+                case '4':
+                    $result = (new \Expand\weixinWork())->send_notice($value);
+                    break;
+                case '5':
+                    $result = (new \Expand\dingtalk())->send_notice($value);
+                    break;
+                case '6':
+                    $result = (new \Expand\wxapp())->send($value);
+                    break;
+                default:
+                    //给予一个其他通知的扩展入口
+                    $result = (new \Expand\OtherNotice())->send($value);
+            }
+
+            if (DEBUG == true) {
+                echo "<p>{$value['send_type']}T: {$result['msg']}, 详细JSON格式: " . json_encode($result, JSON_UNESCAPED_UNICODE) . "</p>";
+            }
+
+        }
+    }
+
+    /**
+     * 因配置等信息，直接终止发送
+     * @param $sendID
+     * @param $msg
+     */
+    public static function stopSend($sendID, $msg) {
+        \Core\Func\CoreFunc::db('send')->where('send_id = :send_id')->update([
+            'noset'         => [
+                'send_id' => $sendID,
+            ],
+            'send_result'   => $msg,
+            'send_status'   => 1,
+            'send_sequence' => 5,
+        ]);
     }
 
     /**

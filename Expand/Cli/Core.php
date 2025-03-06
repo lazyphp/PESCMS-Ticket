@@ -25,14 +25,20 @@ abstract class Core {
         //vendor目录
         defined('VENDOR_PATH') or define('VENDOR_PATH', PES_CORE . 'vendor');
 
+
+        define('THEME', __DIR__);
+
         /**
          * 配置原因，
          */
         define('GROUP', 'Ticket');
         define('DEBUG', TRUE);
 
-        spl_autoload_register(array($this, 'loader'));
+        spl_autoload_register([$this, 'loader']);
         $this->system();
+
+        new \Core\Controller\Controller();
+
     }
 
     /**
@@ -58,17 +64,15 @@ abstract class Core {
     /**
      * 配置全局系统变量
      */
-    private function system(){
+    private function system() {
         $list = \Model\Content::listContent([
-            'table' => 'option',
-            'condition' => "option_range = 'system'"
+            'table'     => 'option',
+            'condition' => "option_range = 'system'",
         ]);
         $system = [];
-        foreach($list as $value){
+        foreach ($list as $value) {
             $system[$value['option_name']] = $value['value'];
         }
         \Core\Func\CoreFunc::$param['system'] = $system;
     }
-
-    abstract public function index();
 }

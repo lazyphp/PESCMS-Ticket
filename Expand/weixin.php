@@ -176,7 +176,7 @@ class weixin {
      */
     public function sendTemplate($param) {
         if (!empty($this->error)) {
-            \Model\Extra::stopSend($param['send_id'], $this->error);
+            \Model\Notice::stopSend($param['send_id'], $this->error);
             return [
                 'msg'    => $this->error,
                 'status' => 1,

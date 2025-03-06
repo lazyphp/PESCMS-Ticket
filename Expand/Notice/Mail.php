@@ -56,7 +56,7 @@ class Mail {
      */
     public function send(array $email) {
         if(!empty($this->error)){
-            \Model\Extra::stopSend($email['send_id'], $this->error);
+            \Model\Notice::stopSend($email['send_id'], $this->error);
             return $this->error;
         }
 

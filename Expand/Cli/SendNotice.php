@@ -9,18 +9,32 @@
 
 require 'Core.php';
 
+/**
+ * @todo 由于一些历史原因，这个文件现在不能随便改名了，改名将会导致老用户升级后，程序定时任务失效。
+ * 只能在这里进行一个扩展，以便支持插件的定时任务。
+ * 当然了，以后有更好的解决方案，会在新版本中进行调整。
+ */
 class SendNotice extends Core {
-    
-    public function index() {
+
+    /**
+     * @return void
+     */
+    public function notice() {
         $noticeWay = \Model\Content::findContent('option', 'notice_way', 'option_name')['value'];
         if (in_array($noticeWay, ['2', '3'])) {
-            \Model\Extra::actionNoticeSend();
+            \Model\Notice::sendNotice();
         }
 
-        (new \Expand\cURL())->init(\Core\Func\CoreFunc::$param['system']['domain'].'/?m=Index&a=behavior');
+        \Model\Behavior::behavior();
+
+    }
+
+    public function pluginCrontab(){
 
     }
 
 }
 
-(new SendNotice())->index();
+$cronTab = new SendNotice();
+$cronTab->notice();
+$cronTab->pluginCrontab();

@@ -17,6 +17,7 @@ require 'Core.php';
 class SendNotice extends Core {
 
     /**
+     * 发送通知
      * @return void
      */
     public function notice() {
@@ -29,7 +30,32 @@ class SendNotice extends Core {
 
     }
 
-    public function pluginCrontab(){
+    /**
+     * 插件定时任务
+     * @return bool|void
+     */
+    public function pluginCrontab() {
+        $crontabJSONFile = PES_CORE . 'crontab.json';
+
+        if (!file_exists($crontabJSONFile)) {
+            return true;
+        }
+
+        $jsonData = file_get_contents($crontabJSONFile);
+        $crontabArray = json_decode($jsonData, true) ?? [];
+
+        foreach ($crontabArray as $crontabFile) {
+            // 解析命名空间和类名
+            $className = str_replace('/', '\\', pathinfo($crontabFile, PATHINFO_DIRNAME)) . '\\Crontab';
+            if (class_exists($className)) {
+                $crontabInstance = new $className();
+                if (method_exists($crontabInstance, 'run')) {
+                    $crontabInstance->run(); // 执行 index() 方法
+                }
+            } else {
+                echo "类 $className 不存在 \n";
+            }
+        }
 
     }
 

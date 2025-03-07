@@ -26,7 +26,7 @@ class Index extends \App\Install\Common {
      * 验证程序运行情况
      */
     private function checkRunning() {
-        $check['php_version'] = version_compare(PHP_VERSION, '7.0.0', '>=');
+        $check['php_version'] = version_compare(PHP_VERSION, '7.2.0', '>=');
 
         $check['pdo'] = extension_loaded('pdo_mysql');
 

@@ -177,4 +177,46 @@ class Plugin{
     private function checkPluginFile($file){
         return is_file(PES_CORE.implode('/', $file).'.php');
     }
+
+    /**
+     * 注册和注销插件定时任务
+     * @param object $obj 插件对象
+     * @param bool $status 注册或注销
+     * @return $this
+     */
+    public function crontab(object $obj, bool $status) {
+        $crontabJSONFile = PES_CORE . 'crontab.json';
+
+        // 读取 JSON 文件
+        if (!file_exists($crontabJSONFile)) {
+            $crontabArray = [];
+        } else {
+            $jsonData = file_get_contents($crontabJSONFile);
+            $crontabArray = json_decode($jsonData, true) ?? [];
+        }
+
+        // 获取插件任务文件路径
+        $pluginCrontabFile = str_replace(PES_CORE, '', $obj->pluginPath['plugin']) . '/Crontab.php';
+
+        $crontabMap = array_flip($crontabArray);
+
+        if ($status) {
+            // 添加任务（如果不存在）
+            if (!isset($crontabMap[$pluginCrontabFile])) {
+                $crontabArray[] = $pluginCrontabFile;
+            }
+        } else {
+            // 移除任务（如果存在）
+            if (isset($crontabMap[$pluginCrontabFile])) {
+                unset($crontabArray[$crontabMap[$pluginCrontabFile]]);
+                $crontabArray = array_values($crontabArray); // 重新索引数组
+            }
+        }
+
+        // 写入 JSON 文件
+        file_put_contents($crontabJSONFile, json_encode($crontabArray, JSON_PRETTY_PRINT));
+
+        return $this;
+    }
+
 }

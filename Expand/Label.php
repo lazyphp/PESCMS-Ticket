@@ -222,15 +222,18 @@ class Label {
 
     /**
      * xss过滤
-     * @param $str
-     * @return mixed
+     * @param $str 字符串
+     * @param bool $isHtmlSpecialChars 是否使用htmlspecialchars
+     * @return string
      */
-    public function xss($str){
-        if(empty($this->xss)){
+    public function xss($str, bool $isHtmlSpecialChars = true) {
+        if (empty($this->xss)) {
             $this->xss = new \voku\helper\AntiXSS();
         }
 
-        return trim($this->xss->xss_clean($str));
+        $str = trim($this->xss->xss_clean($str));
+
+        return $isHtmlSpecialChars ? htmlspecialchars($str) : $str;
     }
 
     /**

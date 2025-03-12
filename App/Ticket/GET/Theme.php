@@ -111,13 +111,23 @@ class Theme extends \Core\Controller\Controller {
         $version = $this->isG('version', '请提交主题版本号');
         $enname = $this->isG('enname', '请提交主题英文名称');
 
+        //读取旧的主题JSON设置
+        $oldJSON = \Model\Theme::getThemeJSON($enname);
+
         //开始下载新版本和安装新版文件。
         $installObj = new \Expand\Install('2');
         $installObj->downloadPlugin($name, $version);
 
+        //读取新的主题JSON设置
+        $newJSON = \Model\Theme::getThemeJSON($enname);
+
+        //合并新旧JSON设置
+        $mergedJSONSetting = $oldJSON + $newJSON;
+        \Model\Theme::writeThemeJSON($enname, $mergedJSONSetting);
+
         $templateList = $this->getThemeList();
 
-
+        //读取解压后的主题信息
         $existNewVersion = $installObj->fetchPlugin($name, $templateList[$enname]['version'], true);
         if ($existNewVersion['status'] == 200) {
             $this->success("{$name}主题执行自动升级中，请勿关闭本页面", $this->url(GROUP . '-Theme-upgrade', ['name' => $name, 'version' => $templateList[$enname]['version'], 'enname' => $enname, 'appkey' => trim(htmlspecialchars($_REQUEST['appkey'])), 'method' => 'GET']));

@@ -735,8 +735,8 @@ class Ticket extends \Core\Model\Model {
                     'ticket_submit_time' => strtotime(date('Y-m-d') . ' 00:00:00'),
                 ])['total'] + 1;
 
-            $search = ['{Y}', '{M}', '{D}', '{Z}', '{A}', '{S}'];
-            $replace = [date('Y'), date('m'), date('d'), sprintf('%04d', $zKeyWord), sprintf('%04d', $aKeyWord), sprintf('%05d', rand(0, 99999))];
+            $search = ['{Y}', '{M}', '{D}', '{His}', '{Z}', '{A}', '{S}'];
+            $replace = [date('Y'), date('m'), date('d'), date('His'),sprintf('%04d', $zKeyWord), sprintf('%04d', $aKeyWord), sprintf('%05d', rand(0, 99999))];
 
             return str_replace($search, $replace, $ticket_model_custom_no);
 

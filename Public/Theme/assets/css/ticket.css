@@ -140,6 +140,60 @@
   text-decoration: line-through;
   color: #ff5757;
 }
+.tips-manual a:focus {
+  outline: none;
+}
+.tips-manual .desc {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.tips-manual .document {
+  padding: 10px 0;
+  display: flex;
+  gap: 10px;
+}
+.tips-manual .document .fqa {
+  flex: 1;
+}
+.tips-manual .document .fqa ol li {
+  padding: 5px 0;
+}
+.tips-manual .document .miniprogram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  border-left: 1px solid #f0f0f0;
+}
+.tips-manual .document .miniprogram img {
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  padding: 2px;
+  width: 150px;
+  height: 150px;
+}
+.tips-manual .document .miniprogram small {
+  padding-top: 5px;
+}
+.tips-manual .ad {
+  border-top: 1px solid #f0f0f0;
+  padding-top: 10px;
+}
+.fqa-dialog {
+  background-color: #fde047 !important;
+}
+.fqa-dialog h3 {
+  font-size: 22px;
+}
+.fqa-dialog ol li {
+  padding: 5px;
+}
+.fqa-dialog ol li a {
+  color: #000 !important;
+}
+.fqa-dialog ol li a:hover {
+  color: #595959 !important;
+}
 .pes-ticket-form-img-group,
 .pes-ticket-form-video-group {
   padding: 0;

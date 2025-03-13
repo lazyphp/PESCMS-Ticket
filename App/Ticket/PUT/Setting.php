@@ -152,16 +152,18 @@ class Setting extends \Core\Controller\Controller {
         switch ($this->p('name')) {
             case 'tipsManual':
             case 'help_document':
+                $status = (int) $this->p('status');
                 $name = $this->p('name');
                 break;
             default:
                 $this->error('未知参数');
         }
+
         $this->db('option')->where('option_name = :name')->update([
             'noset' => [
                 'name' => $name,
             ],
-            'value' => '1',
+            'value' => empty($status) ? 1 : $status,
         ]);
         $this->success('更新记录成功');
     }

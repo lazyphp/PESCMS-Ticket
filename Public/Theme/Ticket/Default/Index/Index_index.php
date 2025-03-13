@@ -184,4 +184,4 @@
     </div>
 <?php endif; ?>
 
-<?php require_once __DIR__ . '/Index_driver.php' ?>
+<?php include __DIR__ . '/Index_driver.php' ?>

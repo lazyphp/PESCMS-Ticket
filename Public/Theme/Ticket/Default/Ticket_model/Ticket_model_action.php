@@ -116,3 +116,4 @@
     </script>
 <?php endif; ?>
 <?php include THEME_PATH . '/Content/Content_action_footer.php' ?>
+<?php include __DIR__ . '/Ticket_model_action_driver.php' ?>

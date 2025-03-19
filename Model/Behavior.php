@@ -60,7 +60,7 @@ class Behavior extends \Core\Model\Model {
      * 工单超时提醒
      * @return bool
      */
-    public static function ticketTimeOut(): bool {
+    public static function ticketTimeOut() {
         $list = \Model\Content::listContent([
             'table'     => 'ticket AS t',
             'field'     => 't.ticket_id, t.ticket_number, t.ticket_status, t.ticket_submit_time, t.user_id, t.ticket_time_out_sequence, t.ticket_exclusive, tm.ticket_model_group_id, tm.ticket_model_time_out, tm.ticket_model_time_out_sequence',

@@ -14,12 +14,17 @@ abstract class Core {
             exit("Only run in cmd!");
         }
         header("Content-type: text/html; charset=utf-8");
-        //核心文件当前的路径
-        defined('PES_CORE') or define('PES_CORE', dirname(dirname(dirname(__FILE__))) . '/');
 
-        defined('PES_PATH') or define('PES_PATH', dirname(dirname(dirname(__FILE__))) . '/');
+        $basePath = dirname(dirname(dirname(__FILE__)));
+
+        defined('DOCUMENT_ROOT') or define('DOCUMENT_ROOT', $basePath . '/');
+
+        //核心文件当前的路径
+        defined('PES_CORE') or define('PES_CORE', $basePath . '/');
+
+        defined('PES_PATH') or define('PES_PATH', $basePath . '/');
         //项目默认控制器所在目录
-        defined('APP_PATH') or define('APP_PATH', dirname(dirname(dirname(__FILE__))) . '/');
+        defined('APP_PATH') or define('APP_PATH', $basePath . '/');
         //项目默认的配置文件所在目录
         defined('CONFIG_PATH') or define('CONFIG_PATH', PES_CORE . 'Config/');
         //vendor目录
@@ -52,7 +57,6 @@ abstract class Core {
 
     /**
      * 自动加载
-     * @param type $className
      */
     private function loader($className) {
         $unixPath = str_replace("\\", "/", $className);

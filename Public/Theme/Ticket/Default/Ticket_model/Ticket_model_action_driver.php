@@ -46,9 +46,20 @@
                     {
                         element: '.am-form-group:has([name="organize_id[]"])',
                         popover: {
-                            description: '若没有特殊需求，尽量不要勾选此选项。只有您希望特定客户分组的账户登录后才可见此工单时，您才勾选本选项。',
+                            description: '若没有特殊需求，尽量不要勾选此选项。<b>只有您希望特定客户分组的账户登录后才可见此工单时，您才勾选本选项。</b>',
                             side: "bottom",
-                            align: 'start'
+                            align: 'start',
+                            onPrevClick:() => {
+                                let link = $("a:contains('工单基础属性')");
+                                $(link).trigger('click');
+                                const animatedElement = $(link.attr('href'));
+                                animatedElement.one('transitionend', function () {
+                                    // 动画已完成，继续操作
+                                    let id = link.attr('href');
+                                    // 操作目标元素
+                                    driverObj.movePrevious();
+                                });
+                            }
                         }
                     },
                     {

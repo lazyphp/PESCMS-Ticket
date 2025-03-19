@@ -35,8 +35,11 @@
                                 side: "bottom",
                                 align: 'start',
                                 onNextClick: () => {
-                                    ticketModelAlert.style.display = 'none';
-                                    ticketModelAlert.insertAdjacentHTML('afterend', res.data);
+                                    if(ticketModelAlert){
+                                        ticketModelAlert.style.display = 'none';
+                                        ticketModelAlert.insertAdjacentHTML('afterend', res.data);
+                                    }
+
                                     driverObj.moveNext();
                                 },
                             }

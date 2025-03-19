@@ -21,6 +21,7 @@
                 showProgress: true,
                 allowClose: false,
                 steps: [
+                    
                     {
                         popover: {
                             title: '欢迎使用PESCMS Ticket',
@@ -42,10 +43,7 @@
                             side: "left",
                             align: 'start',
                             onNextClick: () => {
-                                let ticketMenu = $('#ticket-topbar-collapse .am-topbar-nav>li').eq(2).find('>ul');
-                                ticketMenu.show();
-                                driverObj.moveNext();
-                                ticketMenu.removeClass('driver-active-element')
+                                handleTicketMenu('moveNext');
                             },
                         }
                     },
@@ -56,10 +54,6 @@
                             description: '在开始使用工单系统前，您需要先完成工单分类和工单模型的创建，具体教学指引我们将在您进行操作时再次进行指引。',
                             side: "left",
                             align: 'start',
-                            onNextClick: () => {
-                                $('#ticket-topbar-collapse .am-topbar-nav>li').eq(2).find('>ul').hide();
-                                driverObj.moveNext();
-                            }
                         }
                     },
 
@@ -68,9 +62,24 @@
                         popover: {
                             description: '在仪表盘和工单模型您可以点击问号，唤出常见问题列表。此按钮仅超级管理员可见。',
                             side: "bottom",
-                            align: 'start'
+                            align: 'start',
+                            onPrevClick:() => {
+                                handleTicketMenu('movePrevious');
+                            }
+                        }
+                    },
+                    {
+                        popover: {
+                            description: '至此，您已经对PT系统有了初步的了解。我们将会在后续一些地方继续指引您。<br/>后续若您使用过程中有任何疑问，可以随时联系我们。'+
+
+                            '<div class="am-margin-top-sm">推荐登录问答中心反馈问题：<a href="https://forum.pescms.com/" target="_blank">https://forum.pescms.com/</a></div>'+
+
+                            '<div class="am-margin-top-sm">或者加入官方QQ群：<br/>PESCMS官方QQ 1群：451828934 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=70b9d382c5751b7b64117191a71d083fbab885f1fb7c009f0dc427851300be3a"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="PESCMS官方1群" title="PESCMS官方1群"></a> <br/> PESCMS官方QQ 2群：496804032 <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=5HqmNLN"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="PESCMS官方2群" title="PESCMS官方2群"></a></div>',
+                            side: "bottom",
+                            align: 'start',
                         }
                     }
+                    
                 ],
 
                 onDestroyStarted: () => {
@@ -90,6 +99,9 @@
                 },
 
                 onDestroyed: () => {
+
+                    $('#ticket-topbar-collapse .am-topbar-nav>li').eq(2).find('>ul').hide();
+
                     $.post('<?= $label->url('Ticket-Setting-recordTips') ?>', {
                         name: 'tipsManual',
                         method: 'PUT'
@@ -101,6 +113,14 @@
 
             if (tipsManualStatus == 0) {
                 driverObj.drive();
+            }
+
+            // 添加处理菜单的通用函数
+            function handleTicketMenu(moveAction) {
+                let ticketMenu = $('#ticket-topbar-collapse .am-topbar-nav>li').eq(2).find('>ul');
+                ticketMenu.show();
+                driverObj[moveAction]();
+                ticketMenu.removeClass('driver-active-element');
             }
 
         });

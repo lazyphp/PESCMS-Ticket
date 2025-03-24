@@ -1,5 +1,5 @@
 <div class="am-panel am-panel-default">
-    <div class="am-panel-hd">可定义的内容</div>
+    <div class="am-panel-hd">工单状态客服自动回复文本内容定义</div>
     <div class="am-panel-bd">
         
         <?php foreach($cs_text as $key => $item): ?>
@@ -13,6 +13,10 @@
             </div>
         </div>
         <?php endforeach; ?>
+
+        <div class="pes-alert pes-alert-info am-text-xs ">
+            <i class="am-icon-lightbulb-o"></i> 所有回复文本可以填写：{job_number} 自动生成工号
+        </div>
 
     </div>
 </div>

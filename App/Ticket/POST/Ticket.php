@@ -26,7 +26,7 @@ class Ticket extends \Core\Controller\Controller {
             $this->error('该工单不存在');
         }
 
-        $csText = \Model\Option::csText();
+        $csText = \Model\Option::getCSReplyText();
         
         list($status, $templateType, $content, $referTime) = $this->handleTicketStatusChange($ticket, $csText);
         
@@ -228,7 +228,7 @@ class Ticket extends \Core\Controller\Controller {
             $this->error('该工单不存在');
         }
 
-        \Model\Ticket::addReply($ticket['ticket_id'], \Model\Option::csText()['close']['content']);
+        \Model\Ticket::addReply($ticket['ticket_id'], \Model\Option::getCSReplyText()['close']['content']);
 
         \Model\Ticket::inTicketIdWithUpdate([
             'noset'               => [

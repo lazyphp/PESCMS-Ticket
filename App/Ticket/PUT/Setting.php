@@ -48,6 +48,7 @@ class Setting extends \Core\Controller\Controller {
                 'REMOTE_ADDR',
                 'anonymous_upload',
                 'service_login_timeout',
+                'job_number_format',
             ],
             //基于数组的json更新设置
             'array' => [

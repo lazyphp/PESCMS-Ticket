@@ -63,6 +63,7 @@ class Setting extends \Core\Controller\Controller {
                 'dingtalk',
                 'register_form',
                 'disturb',
+                'doc',
             ],
         ];
         foreach ($operate as $type => $item) {

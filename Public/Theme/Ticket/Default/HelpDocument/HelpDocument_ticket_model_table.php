@@ -15,6 +15,11 @@
                 <i class="am-margin-left-xs am-margin-right-xs">|</i>
 
                 <a class="am-text-warning" href="javascript:;"><span class="am-icon-question-circle"></span> FQA列表</a>
+
+                <i class="am-margin-left-xs am-margin-right-xs">|</i>
+                <a class="" href="javascript:;"  ><span class="am-icon-sign-in"></span>
+                    导入文档系统</a>
+
             </div>
             <div>
                 管辖客服分组 : 管理员, 客服人员, 投诉反馈

@@ -604,3 +604,6 @@
   padding: 0 !important;
   list-style: none;
 }
+.link-disabled:hover {
+  cursor: not-allowed !important;
+}

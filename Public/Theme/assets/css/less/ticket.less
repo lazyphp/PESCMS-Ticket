@@ -267,5 +267,62 @@
   }
 }
 
+.fqa-doc {
+  .doc-transfer {
+    display: flex;
+    gap: 10px;
+    height: 50vh;
+
+    .doc-path, .doc-path-list {
+      flex: 1;
+      overflow: auto;
+      border: 1px solid #f0f0f0;
+      padding: 10px;
+    }
+
+    .doc-path {
+
+
+      ul {
+        list-style: none;
+        margin: 0;
+
+        &:first-child {
+          padding-left: 0;
+        }
+
+        li {
+          padding: 5px 0;
+
+          label {
+            margin: 0;
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+
+            input {
+              margin: 0;
+              height: 16px;
+            }
+          }
+        }
+      }
+    }
+
+    .doc-path-list {
+      .selected-doc {
+        padding: 5px 0;
+        cursor: pointer;
+        &:hover{
+          color: #a6a6a6;
+        }
+      }
+    }
+  }
+
+}
+
 
 @import "common";

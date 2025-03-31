@@ -12,5 +12,5 @@
     FQA列表</a>
 
 <i class="am-margin-left-xs am-margin-right-xs">|</i>
-<a class="<?= $license == 1 ? '' : 'link-disabled' ?>" href="<?= $license == 1 ? $label->url('Ticket-Fqa-index', ['ticket_model_id' => $value["ticket_model_id"], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) : 'javascript:;'; ?>" data-am-popover="<?= $license == 1 ? '' : '{content: \'此功能需要购买软件授权方可使用\', trigger: \'hover focus\'}' ?>" ><span class="am-icon-sign-in"></span>
+<a class="<?= $license == 1 ? '' : 'link-disabled' ?>" href="<?= $license == 1 ? $label->url('Ticket-Fqa-doc', ['ticket_model_id' => $value["ticket_model_id"], 'back_url' => base64_encode($_SERVER['REQUEST_URI'])]) : 'javascript:;'; ?>" data-am-popover="<?= $license == 1 ? '' : '{content: \'此功能需要购买软件授权方可使用\', trigger: \'hover focus\'}' ?>" ><span class="am-icon-sign-in"></span>
     导入文档系统</a>

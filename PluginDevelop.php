@@ -143,7 +143,7 @@ class PluginDevelop {
                 '/**',
                 ' * @desc 如果需要使用定时任务，请在此文件中的run方法中编写任务逻辑。',
                 ' */',
-                'class Init extends \Core\Plugin\PluginCrontab {',
+                'class Crontab extends \Core\Plugin\PluginCrontab {',
             ],
             'content' => [
                 'run',

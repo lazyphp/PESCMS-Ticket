@@ -18,4 +18,4 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 
 ALTER TABLE `pes_fqa` ADD `fqa_type` INT NOT NULL COMMENT 'FQA文章类型' AFTER `fqa_content`, ADD `fqa_link` VARCHAR(255) NOT NULL COMMENT 'FQA外链地址' AFTER `fqa_type`;
 
-ALTER TABLE `pes_fqa` ADD `fqa_apiurl` VARCHAR(255) NOT NULL COMMENT '文章对应的api请求地址';
+ALTER TABLE `pes_fqa` ADD `fqa_is_doc` INT NOT NULL COMMENT '判断是否doc文档';

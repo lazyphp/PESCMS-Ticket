@@ -199,24 +199,34 @@
   gap: 10px;
   height: 50vh;
 }
-.fqa-doc .doc-transfer .doc-path,
-.fqa-doc .doc-transfer .doc-path-list {
+.fqa-doc .doc-transfer .doc-transfer-panel {
   flex: 1;
-  overflow: auto;
   border: 1px solid #f0f0f0;
+  overflow: auto;
+}
+.fqa-doc .doc-transfer .doc-transfer-panel .doc-transfer-title {
+  position: sticky;
+  top: 0;
+  background-color: #f2f2f2;
+  border-bottom: 1px solid #f0f0f0;
+  z-index: 99;
+}
+.fqa-doc .doc-transfer .doc-transfer-panel .doc-transfer-title,
+.fqa-doc .doc-transfer .doc-transfer-panel .doc-path,
+.fqa-doc .doc-transfer .doc-transfer-panel .doc-path-list {
   padding: 10px;
 }
-.fqa-doc .doc-transfer .doc-path ul {
+.fqa-doc .doc-transfer .doc-transfer-panel .doc-path ul {
   list-style: none;
   margin: 0;
 }
-.fqa-doc .doc-transfer .doc-path ul:first-child {
+.fqa-doc .doc-transfer .doc-transfer-panel .doc-path ul:first-child {
   padding-left: 0;
 }
-.fqa-doc .doc-transfer .doc-path ul li {
+.fqa-doc .doc-transfer .doc-transfer-panel .doc-path ul li {
   padding: 5px 0;
 }
-.fqa-doc .doc-transfer .doc-path ul li label {
+.fqa-doc .doc-transfer .doc-transfer-panel .doc-path ul li label {
   margin: 0;
   font-weight: normal;
   display: flex;
@@ -224,15 +234,15 @@
   gap: 10px;
   font-size: 16px;
 }
-.fqa-doc .doc-transfer .doc-path ul li label input {
+.fqa-doc .doc-transfer .doc-transfer-panel .doc-path ul li label input {
   margin: 0;
   height: 16px;
 }
-.fqa-doc .doc-transfer .doc-path-list .selected-doc {
+.fqa-doc .doc-transfer .doc-transfer-panel .doc-path-list .selected-doc {
   padding: 5px 0;
   cursor: pointer;
 }
-.fqa-doc .doc-transfer .doc-path-list .selected-doc:hover {
+.fqa-doc .doc-transfer .doc-transfer-panel .doc-path-list .selected-doc:hover {
   color: #a6a6a6;
 }
 .pes-ticket-form-img-group,

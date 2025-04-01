@@ -65,10 +65,44 @@ class Fqa extends Content {
             }
         }
 
+        $apiDocList = $this->db('fqa')->where('fqa_ticket_model_id = :fqa_ticket_model_id AND fqa_is_doc = 1')->select([
+            'fqa_ticket_model_id' => $ticket_model_id,
+        ]);
+
+
+        $this->getApiDoc($ticket_model_id);
+
         $this->assign('title', "工单模型 「{$ticketModel[$ticket_model_id]['ticket_model_name']}」 —— 导入文档系统");
         $this->assign('doc', $doc);
         $this->layout();
 
+    }
+
+    /**
+     * 获取API文档
+     * @param $ticket_model_id
+     * @return void
+     */
+    private function getApiDoc($ticket_model_id) {
+
+        $apiDocList = $this->db('fqa')->where('fqa_ticket_model_id = :fqa_ticket_model_id AND fqa_is_doc = 1')->select([
+            'fqa_ticket_model_id' => $ticket_model_id,
+        ]);
+
+        $apiDocList = array_map(function ($item) {
+            if (!empty($item['fqa_link'])) {
+                $parsedUrl = parse_url($item['fqa_link']);
+                $queryString = $parsedUrl['query'] ?? '';
+
+                parse_str($queryString, $params);
+
+                $item['fqa_link_params'] = $params;
+            }
+            return $item;
+        }, $apiDocList);
+
+
+        $this->assign('apiDocList', $apiDocList);
     }
 
     /**

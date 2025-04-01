@@ -13,6 +13,7 @@
             <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed am-no-layout">
             <form class="am-form am-form-horizontal ajax-submit" action="" method="post" data-am-validator>
                 <?= $label->token(); ?>
+                <input type="hidden" name="id" value="<?= (int)$_GET['ticket_model_id'] ?>">
 
                 <div class="am-g am-g-collapse">
                     <div class="am-u-sm-12 am-u-sm-centered">
@@ -30,15 +31,37 @@
 
                 <div class="am-g am-g-collapse">
                     <div class="am-u-sm-12 am-u-sm-centered doc-transfer">
-                        <div class="doc-path">
-                            <div class="am-text-center am-margin-top">等待选择文档</div>
+                        <div class="doc-transfer-panel">
+                            <div class="doc-transfer-title">文档系统文档目录</div>
+                            <div class="doc-path">
+                                <div class="am-text-center am-margin-top">等待选择文档</div>
+                            </div>
                         </div>
-                        <div class="doc-path-list">
-                            <div class="am-text-center am-margin-top">
-                                还没有选择文档
+                        <div class="doc-transfer-panel">
+                            <div class="doc-transfer-title">已选择的文档列表</div>
+                            <div class="doc-path-list">
+                                <?php if (!empty($apiDocList)): ?>
+                                    <?php foreach ($apiDocList as  $item): ?>
+                                        <div class="selected-doc" data-aid="<?= $item['fqa_link_params']['aid'] ?>">
+                                            <?= $item['fqa_title'] ?>
+                                            <input type="hidden" name="docID[]" value="<?= $item['fqa_link_params']['id'] ?>">
+                                            <input type="hidden" name="title[]" value="<?= $item['fqa_title'] ?>">
+                                            <input type="hidden" name="aidlist[]" value="<?= $item['fqa_link_params']['aid'] ?>">
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <div class="am-text-center am-margin-top">
+                                        还没有选择文档
+                                    </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
+
+                    <div class="pes-alert pes-alert-info am-text-xs ">
+                        <i class="am-icon-lightbulb-o"></i> DOC文档系统中，文档目录和外链是作为FQA指引，我们将此选项标记了禁用状态。
+                    </div>
+
                 </div>
 
 
@@ -93,7 +116,7 @@
                 `);
                 $(".doc-path-list").find(".am-text-center").remove();
                 $(".doc-path-list").append(newItem);
-                $(".doc-path-list").stop().animate({ scrollTop: $(".doc-path-list")[0].scrollHeight }, 300);
+                $(".doc-path-list").stop().animate({scrollTop: $(".doc-path-list")[0].scrollHeight}, 300);
 
             } else {
                 // 取消勾选时，删除对应的 div

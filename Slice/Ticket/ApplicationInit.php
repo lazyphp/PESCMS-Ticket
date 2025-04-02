@@ -18,6 +18,11 @@ namespace Slice\Ticket;
 class ApplicationInit extends \Core\Slice\Slice{
 
     public function before() {
+
+        if(isset(self::session()->get('ticket')['user_id']) && self::session()->get('ticket')['user_id'] != '1'){
+            $this->error('请使用超级管理员账号进行操作');
+        }
+
         $pluginName = $this->isG('n', '请提交插件名称');
         $pluginFunc = $this->isG('f', '请提交插件名称');
 

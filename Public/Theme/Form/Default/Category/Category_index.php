@@ -65,7 +65,8 @@
                     for (var key in data.data) {
                         var no = parseInt(key) + 1;
                         let link = data.data[key]['fqa_type'] == 0 ? data.data[key]['fqa_url'] : data.data[key]['fqa_link'];
-                        str += '<li><a href="' + link + '" target="_blank">' + no + '. ' + data.data[key]['fqa_title'] + '</a></li>';
+                        let exlinkIcon = data.data[key]['fqa_type'] == 0 ? '' : '<i class="am-icon-external-link"></i>';
+                        str += '<li><a href="' + link + '" target="_blank">' + no + '. ' + data.data[key]['fqa_title'] + exlinkIcon + '</a></li>';
                         $('.fqa-list').html(str);
                     }
                 } else {

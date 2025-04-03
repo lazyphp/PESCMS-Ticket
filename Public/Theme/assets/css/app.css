@@ -15,14 +15,16 @@ body {
 }
 /*大屏幕时菜单展示样式*/
 @media only screen and (min-width: 1025px) {
-  .am-topbar .am-dropdown:hover > .am-dropdown-content {
+  .am-topbar .am-dropdown > .am-dropdown-content {
     background-color: rgba(0, 0, 0, 0.618);
+  }
+  .am-topbar .am-dropdown > .am-dropdown-content a {
+    color: #fff;
+  }
+  .am-topbar .am-dropdown:hover > .am-dropdown-content {
     display: block !important;
     animation-duration: 0s !important;
     -webkit-animation-duration: 0s !important;
-  }
-  .am-topbar .am-dropdown:hover > .am-dropdown-content a {
-    color: #fff;
   }
   .am-topbar .am-dropdown:hover > .am-dropdown-content a:hover,
   .am-topbar .am-dropdown:hover > .am-dropdown-content a:focus {

@@ -68,7 +68,7 @@ class weixinWork {
      */
     public function send_notice($param) {
         if(!empty($this->error)){
-            \Model\Extra::stopSend($param['send_id'], $this->error);
+            \Model\Notice::stopSend($param['send_id'], $this->error);
             return $this->error;
         }
         $result = json_decode($this->notice($param['send_account'], htmlspecialchars_decode($param['send_content'])), true);

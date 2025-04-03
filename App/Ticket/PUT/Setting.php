@@ -48,6 +48,7 @@ class Setting extends \Core\Controller\Controller {
                 'REMOTE_ADDR',
                 'anonymous_upload',
                 'service_login_timeout',
+                'job_number_format',
             ],
             //基于数组的json更新设置
             'array' => [
@@ -62,6 +63,7 @@ class Setting extends \Core\Controller\Controller {
                 'dingtalk',
                 'register_form',
                 'disturb',
+                'doc',
             ],
         ];
         foreach ($operate as $type => $item) {
@@ -152,16 +154,18 @@ class Setting extends \Core\Controller\Controller {
         switch ($this->p('name')) {
             case 'tipsManual':
             case 'help_document':
+                $status = (int) $this->p('status');
                 $name = $this->p('name');
                 break;
             default:
                 $this->error('未知参数');
         }
+
         $this->db('option')->where('option_name = :name')->update([
             'noset' => [
                 'name' => $name,
             ],
-            'value' => '1',
+            'value' => empty($status) ? 1 : $status,
         ]);
         $this->success('更新记录成功');
     }

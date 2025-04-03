@@ -416,12 +416,20 @@ class Controller {
             self::error('请输入验证码');
         }
 
-        if (md5(strtolower($_REQUEST['verify'])) !== self::session()->get('verify')) {
-            self::error('验证码不一致');
+        $session = self::session()->get('verify');
+        
+        // 检查验证码是否存在及有效
+        if (empty($session) || empty($session['code']) || empty($session['salt']) || time() > $session['expire']) {
+            self::error('验证码已过期或无效');
+        }
+        
+        // 使用盐值进行验证
+        if (md5(strtolower($_REQUEST['verify']) . $session['salt']) !== $session['code']) {
+            self::error('验证码不正确');
         }
 
+        // 验证通过后删除验证码
         self::session()->delete('verify');
-
     }
 
     /**

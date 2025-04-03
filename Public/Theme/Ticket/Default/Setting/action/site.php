@@ -6,7 +6,7 @@
                     <label class="am-block">授权码<i class="am-text-danger">*</i></label>
                     <input name="authorize" placeholder="请输入授权码" type="text" value="<?= $authorize['value']; ?>">
                     <div class="pes-alert pes-alert-info am-text-xs " >
-                        <i class="am-icon-lightbulb-o"></i> 当前域名：<?= empty($_SERVER['HTTP_HOST']) ? '获取当前域名失败' : $_SERVER['HTTP_HOST'] ?> ;  授权购买请访问:《<a href="https://www.pescms.com/Page/Authorization.html" target="_blank" tyle="color:#0e90d2 ">商业授权</a>》
+                        <i class="am-icon-lightbulb-o"></i> 当前域名：<?= empty($_SERVER['HTTP_HOST']) ? '获取当前域名失败' : $_SERVER['HTTP_HOST'] ?> ;  如需购买授权，请点击此按钮:<a href="https://www.pescms.com/shop/detail/software/PESCMS%20TICKET%20%E5%AE%A2%E6%9C%8D%E5%B7%A5%E5%8D%95%E7%B3%BB%E7%BB%9F/5.html" class="am-btn am-btn-xs am-btn-success am-radius am-margin-left-xs" target="_blank" tyle="color:#0e90d2 "><i class="am-icon-shopping-cart"></i> 商业授权</a>
                     </div>
                 </div>
             </div>

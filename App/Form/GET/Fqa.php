@@ -28,7 +28,7 @@ class Fqa extends \Core\Controller\Controller {
         $ticket = \Model\TicketModel::numberFind($number);
         $list = \Model\Content::listContent([
             'table'     => 'fqa',
-            'field'     => 'fqa_id, fqa_url, fqa_title',
+            'field'     => 'fqa_id, fqa_url, fqa_title, fqa_type, fqa_link',
             'condition' => 'fqa_ticket_model_id = :model_id AND fqa_status = 1',
             'order'     => 'fqa_listsort ASC, fqa_id DESC',
             'param'     => [

@@ -13,7 +13,7 @@
                 </div>
                 <div class="am-u-sm-10 am-u-lg-11">
                     <div class="am-block am-nbfc <?= $value['ticket_chat_delete'] == 1 ? 'pes-chat-delete' : '' ?> ">
-                        <?= $value['user_id'] == '-1' ? (empty($member) ? '匿名用户 : ' : "{$member['member_name']} : ") : "{$value['user_name']} : " ?><?= $label->xss(htmlspecialchars_decode($value['ticket_chat_content'])) ?>
+                        <?= $value['user_id'] == '-1' ? (empty($member) ? '匿名用户 : ' : "{$member['member_name']} : ") : "{$value['user_name']} : " ?><?= $label->xss(htmlspecialchars_decode($value['ticket_chat_content']), false) ?>
                     </div>
 
                     <div class="am-block">

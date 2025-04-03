@@ -24,7 +24,9 @@ class cURL {
             }
         }
 
-        curl_setopt($curl, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']); // 模拟用户使用的浏览器
+        $defaultUserAgent = "Mozilla/5.0 (compatible; PESCMS bot/1.0; +https://www.pescms.com/)";
+
+        curl_setopt($curl, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] ?? $defaultUserAgent); // 模拟用户使用的浏览器
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1); // 使用自动跳转
         curl_setopt($curl, CURLOPT_AUTOREFERER, 1); // 自动设置Referer
         curl_setopt($curl, CURLOPT_TIMEOUT, 30); // 设置超时限制防止死循环

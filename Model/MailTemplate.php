@@ -37,11 +37,11 @@ class MailTemplate extends \Core\Model\Model {
         if ($type == 0) {
             $smsTemplate = \Model\Option::getOptionValue('sms_verify_template');
             self::$templateType[$type] = [
-                'mail_template_id'              => 0,
-                'mail_template_type'              => 0,
-                'mail_template_title'           => $smsTemplate,
-                'mail_template_content'         => $smsTemplate,
-                'mail_template_sms'             => $smsTemplate,
+                'mail_template_id'      => 0,
+                'mail_template_type'    => 0,
+                'mail_template_title'   => $smsTemplate,
+                'mail_template_content' => $smsTemplate,
+                'mail_template_sms'     => $smsTemplate,
             ];
         }
 
@@ -201,9 +201,10 @@ class MailTemplate extends \Core\Model\Model {
         }
 
         if ($ticket['old_user_id'] > 0) {
-            $ticket['old_user_id'] = \Model\Content::findContent('user', $ticket['old_user_id'], 'user_id', 'user_name')['user_name'];
+            $oldCsUserName = \Model\Content::findContent('user', $ticket['old_user_id'], 'user_id', 'user_name')['user_name'];
+            $ticket['old_user_id'] = $oldCsUserName;
+            $ticket['old_user_name'] = $oldCsUserName;
         }
-
 
         //前台跳转链接
         $ticket['ticket_link'] = self::getViewLink($number, self::$ticket['ticket_contact']);
@@ -220,11 +221,12 @@ class MailTemplate extends \Core\Model\Model {
 
         $ticket['sms_code'] = $number;
         //一般测试工单才会没有ticket_number这个字段
-        if(empty($ticket['ticket_number'])) {
+        if (empty($ticket['ticket_number'])) {
             $ticket['ticket_number'] = $number;
         }
 
         $ticketField = array_keys($ticket);
+
         foreach ($ticketField as $name) {
             $search[] = '{' . $name . '}';
             $replace[] = $ticket[$name];
@@ -248,7 +250,7 @@ class MailTemplate extends \Core\Model\Model {
         $host = self::$system['domain'];
         $siteLogo = self::$system['siteLogo'];
         $siteTitle = self::$system['siteTitle'];
-        $authorize_type = \Core\Func\CoreFunc::$param['authorize_type'];
+        $authorize_type = \Core\Func\CoreFunc::$param['authorize_type'] ?? '';
 
 
         $emailTemplate = file_get_contents(PES_CORE . 'Expand/Notice/mailTemplate.html');

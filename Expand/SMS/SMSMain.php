@@ -23,7 +23,7 @@ class SMSMain {
                     'status' => 1,
                     'second' => 600,
                 ];
-                \Model\Extra::stopSend($param['send_id'], $error['msg']);
+                \Model\Notice::stopSend($param['send_id'], $error['msg']);
                 return $error;
         }
 

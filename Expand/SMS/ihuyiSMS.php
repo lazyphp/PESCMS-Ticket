@@ -21,7 +21,7 @@ class ihuyiSMS implements SMSInterface {
 
     public function send($param){
         if(!empty($this->error)){
-            \Model\Extra::stopSend($param['send_id'], $this->error);
+            \Model\Notice::stopSend($param['send_id'], $this->error);
             return $this->error;
         }
 

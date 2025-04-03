@@ -1,4 +1,5 @@
 <?php if (isset(\Core\Func\CoreFunc::session()->get('ticket')['user_id']) && \Core\Func\CoreFunc::session()->get('ticket')['user_id'] == 1): ?>
+
     <script>
         $(function () {
             var version = '<?= $system['version'] ?>';
@@ -36,35 +37,13 @@
                 })
             }
 
-            $('body').on('click', '.close-important', function () {
+            $(document).on('click', '.close-important', function () {
                 localStorage.setItem('close_important', '1')
             })
 
-            <?php if($system['tipsManual'] == 0): ?>
-            var topTips = dialog({
-                fixed: true,
-                title: '欢迎使用PESCMS Ticket',
-                content: $('.tips-manual')[0],
-                width: '300px',
-            }).showModal();
-
-            $('.btn-loading-example').button('loading').html('加载完成还需要5秒...');
-            setTimeout(function () {
-                $('.btn-loading-example').button('reset');
-            }, 5000);
-
-            $('body').on('click', '.btn-loading-example', function () {
-                $.post('<?= $label->url('Ticket-Setting-recordTips') ?>', {
-                    name: 'tipsManual',
-                    method: 'PUT'
-                }, function () {
-                }, 'JSON')
-                topTips.close();
-            })
-            <?php endif; ?>
 
             <?php if($system['help_document'] == 0): ?>
-            $('header').before('<div class="am-alert am-alert-postscript am-text-sm am-margin-0" data-am-alert><button type="button" class="close-f1 am-close">&times;</button><i class="am-icon-leanpub"></i> 按F1可以打开PESCMS Ticket帮助文档。 [点击右方&times;按钮可关闭本提示]</div>')
+            $('header').before('<div class="pes-help-doc am-alert am-alert-postscript am-text-sm am-margin-0" data-am-alert><button type="button" class="close-f1 am-close">&times;</button><i class="am-icon-leanpub"></i> 按F1可以打开PESCMS Ticket帮助文档。 [点击右方&times;按钮可关闭本提示]</div>')
             $('html, body').animate({scrollTop: 0}, '500');
             $('.close-f1').on('click', function () {
                 confirm('请谨记在客服端按F1可随时打开PESCMS Ticket帮助文档。');
@@ -77,51 +56,79 @@
             })
             <?php endif; ?>
 
+            let pesDriver = document.querySelector('.pes-driver')
+
+            if (pesDriver) {
+                pesDriver.addEventListener('click', function () {
+                    let fqaDialog = dialog({
+                        id: 'fqa-dialog',
+                        skin: 'fqa-dialog',
+                        fixed: true,
+                        align: 'left top',
+                        content: $(".document .fqa")[0].outerHTML,
+                        quickClose: true
+                    })
+                    fqaDialog.show(pesDriver)
+                })
+
+            }
+
         })
     </script>
     <div class="tips-manual" style="display: none">
-        <a href="https://document.pescms.com/article/3.html" class="am-btn am-btn-warning am-btn-xs am-radius" target="_blank"><i class="am-icon-book"></i>
-            查看PESCMS Ticket 使用教程</a>
-        <p>
-            常见问题
-        </p>
-        <ol class=" list-paddingleft-2" style="list-style-type: decimal;">
-            <li>
-                <strong class="am-text-danger">大部分问题官方文档有解决方案！！！</strong>
-            </li>
-            <li>
-                <a href="https://document.pescms.com/article/3/296096861045915648.html" target="_blank">创建工单教程</a>
-            </li>
-            <li>
-                <a href="https://document.pescms.com/article/3/296557456849371136.html" target="_blank">访问工单404或工单不显示</a>
-            </li>
-            <li>
-                <a href="https://www.pescms.com/different/5.html" target="_blank">开源版和授权版差异</a>
-            </li>
-        </ol>
 
-        <hr>
-        <!--为了让项目可持续发展，加入广告投放-->
-        <article class="am-article">
-            <div class="am-article-hd">
-                <h3 class="am-text-success">PESCMS推荐您使用阿里云服务器</h3>
-            </div>
-            <div class="am-article-bd">
-                <p>
-                    <a href="https://www.pescms.com/goAd/12.html" target="_blank" style="color: #f56c6c"><i class="am-icon-external-link"></i>【采购季】上云仅¥223/3年</a>
-                </p>
-                <p>
-                    <a href="https://www.pescms.com/goAd/12.html" target="_blank" style="color: #f56c6c"><i class="am-icon-external-link"></i>
-                        &nbsp;新用户福利专场，云服务器ECS低至102元/年</a></p>
-                <p>
-                    <a href="https://www.pescms.com/goAd/12.html" target="_blank" style="color: #f56c6c"><i class="am-icon-external-link"></i>
-                        &nbsp;更多优惠云产品，点击查看详情</a></p>
-            </div>
-        </article>
-        <!--为了让项目可持续发展，加入广告投放-->
+        <div class="desc">
+            <p>
+                感谢您使用PESCMS Ticket。为了更好的使用本系统，请您花费几分钟时间阅读以下提示和根据指引提示操作。若您已经熟悉本系统，您可以点击“跳开教学”按钮关闭本提示。
+            </p>
+            <p class="am-margin-bottom-0">
+                本项目若对您有所帮助，您可以给我们一个Star支持一下，非常感谢！<br/>
+                <a href="https://gitee.com/fallBirds/PESCMS-Ticket" target="_blank">Gitee地址</a>
+                <a href="https://github.com/lazyphp/PESCMS-Ticket" target="_blank" class="am-margin-left">Github地址</a>
+            </p>
+        </div>
 
-        <div class=" am-text-right ">
-            <button type="button" class="am-btn am-btn-primary am-btn-sm am-radius btn-loading-example">朕已阅</button>
+        <div class="document">
+            <div class="fqa">
+                <h3 class="am-text-center">常见问题</h3>
+                <ol>
+                    <li>
+                        <a href="https://document.pescms.com/article/3/296096861045915648.html" target="_blank">创建工单教程</a>
+                    </li>
+                    <li>
+                        <a href="https://document.pescms.com/article/3/296557456849371136.html" target="_blank"><span class="am-badge am-badge-danger am-radius">常见</span>
+                            访问工单进入404页面或工单不显示</a>
+                    </li>
+                    <li>
+                        <a href="https://document.pescms.com/article/3/735782623820906496.html" target="_blank">打开任意工单都是同一张工单</a>
+                    </li>
+                    <li>
+                        <a href="https://www.pescms.com/shop/detail/software/PESCMS%20TICKET%20%E5%AE%A2%E6%9C%8D%E5%B7%A5%E5%8D%95%E7%B3%BB%E7%BB%9F/5.html" target="_blank">开源版和授权版差异</a>
+                    </li>
+                </ol>
+            </div>
+            <div class="miniprogram">
+                <h3>微信小程序Demo</h3>
+                <img src="<?= DOCUMENT_ROOT ?>/Theme/assets/i/miniprogram.jpg">
+                <small>打开微信客户端扫一扫即可查看效果</small>
+            </div>
+        </div>
+        <div class="ad">
+            <h3>PESCMS带货服务器：</h3>
+
+            <p>
+                <a href="https://www.aliyun.com/minisite/goods?userCode=dwpuyec3" target="_blank"><i class="am-icon-external-link"></i>
+                    新用户购阿里云服务器享受7.5折优惠，老用户一样有优惠。</a>
+            </p>
+            <p>
+                <a href="https://cloud.tencent.com/act/cps/redirect?redirect=2446&cps_key=593915c4c0306b57e399c4259553c150&from=console" target="_blank" style="color: #f56c6c"><i class="am-icon-external-link"></i>
+                    &nbsp;PESCMS用户也可以考虑使用腾讯云，官方服务器部署在腾讯云上。</a>
+            </p>
+            <p>
+                <a href="https://my.locvps.net/page.aspx?c=referral&u=15004" target="_blank" style="color: #b88408"><i class="am-icon-external-link"></i>
+                    &nbsp;免备案服务器，老牌LocVPS，PESCMS官方早期使用的服务器。</a>
+            </p>
+
         </div>
 
     </div>
@@ -160,17 +167,17 @@
 
         var survivalDate = localStorage.getItem('survivalDate');
 
-        var recordSurvival = function (){
+        var recordSurvival = function () {
             //这是基于前端ajax跨域请求，因此并不会将软件部署的服务器信息发给PESCMS。
             $.post(PESCMS_URL + '/?g=Api&m=Statistics&a=survival&method=POST', {id: '5'}, function () {
             }, 'JSON')
         }
 
         var month = new Date().getMonth() + 1;
-        if(survivalDate == null) {
+        if (survivalDate == null) {
             localStorage.setItem('survivalDate', month);
         } else {
-            if(survivalDate != month){
+            if (survivalDate != month) {
                 localStorage.setItem('survivalDate', month);
                 recordSurvival();
             }
@@ -191,6 +198,13 @@
             <a href="javascript:;" title="处理工单" class="pes-handleTicket am-icon-btn am-icon-edit"></a>
         <?php endif; ?>
         <a href="javascript:;" title="关闭浮窗" class="pes-close-amz-toolbar am-icon-btn am-icon-chain-broken"></a>
+
+        <?php if (in_array(MODULE, ['Index', 'Ticket_model']) && ACTION == 'index' &&
+            (isset(\Core\Func\CoreFunc::session()->get('ticket')['user_id']) && \Core\Func\CoreFunc::session()->get('ticket')['user_id'] == 1)
+        ): ?>
+            <a href="javascript:;" title="常见问题" class="pes-driver am-icon-btn am-icon-question-circle"></a>
+        <?php endif; ?>
+
     </div>
 <?php endif; ?>
 </body>

@@ -4,6 +4,7 @@
             <div class="am-cf">
                 <div class="am-fl am-cf">
                     <strong class="am-text-primary am-text-lg"><?= $title; ?></strong>
+                    <span class="authorize-status"></span>
                 </div>
             </div>
             <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
@@ -18,7 +19,8 @@
                     <li><a href="#tab2">网站信息</a></li>
                     <li><a href="#tab3">客户账号设置</a></li>
                     <li><a href="#tab4">通知设置</a></li>
-                    <li><a href="#tab5">工单回复文本</a></li>
+                    <li><a href="#tab5">客服相关设置</a></li>
+                    <li class="doc-system-tab" style="display: none;"><a href="#doc-system">文档系统</a></li>
                 </ul>
 
                 <div class="am-tabs-bd">
@@ -46,8 +48,14 @@
                         <?php include 'action/dingtalk.php';?>
                     </div>
                     <div class="am-tab-panel am-fade" id="tab5">
+                        <?php include 'action/cs.php';?>
                         <?php include 'action/cs_text.php';?>
                     </div>
+
+                    <div class="am-tab-panel am-fade" id="doc-system">
+                        <?php include 'action/doc_system.php';?>
+                    </div>
+
                 </div>
             </div>
 
@@ -93,11 +101,20 @@
         var authorizeKey = $('input[name=authorize]').val()
 
         if(authorizeKey != ''){
+
+            $('.authorize-status').addClass('am-text-xs am-margin-left-sm am-text-warning').html('<i class="am-icon-circle-o-notch am-icon-spin"></i> 软件授权验证中，未完成前请不要修改系统设置，若长时间没校验成功请刷新本页面。');
+
             $.getJSON('<?=$label->url('Ticket-Setting-authorize')?>', {key:authorizeKey}, function(data){
                 if(data.status == 200){
                     $('input[name=siteTitle], textarea[name=siteContact], textarea[name=pescmsIntroduce], input[name=siteKeywords], textarea[name=siteDescription]').removeAttr('readonly').unbind('mouseenter mouseleave')
+
+                    $('.authorize-status').removeClass('am-text-warning').addClass('am-text-success').html('<i class="am-icon-check"></i> 授权码验证通过，您可以修改系统设置了。');
+
+                    $('.doc-system-tab').show();
+
                 }else{
                     $('.save-setting').attr('msg', '当前授权码未通过验证，可能会导致部分信息被重置，是否提交本次系统设置的更改？')
+                    $('.authorize-status').removeClass('am-text-warning').addClass('am-text-danger').html(`<i class="am-icon-close"></i> 授权码验证失败，原因：${data.msg}`);
                 }
             })
         }

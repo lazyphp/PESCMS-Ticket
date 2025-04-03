@@ -32,7 +32,7 @@ class Setting extends \Core\Controller\Controller {
                 $option[$value['option_name']] = $value;
             }
         }
-        
+
         $this->assign($option);
         $this->assign('title', '系统设置');
         $this->layout();

@@ -38,7 +38,7 @@
                                     (<?= count($item['list']) ?>)</h3>
                                 <ul class="fqa-ul am-avg-sm-1 am-avg-lg-4">
                                     <?php foreach ($item['list'] as $key => $value): ?>
-                                        <li><a href="<?= $value['fqa_url'] ?>"><?= $value['fqa_title'] ?></a></li>
+                                        <li><a href="<?= $value['fqa_type'] == 0 ? $value['fqa_url'] : $value['fqa_link'] ?>"><?= $value['fqa_title'] ?> <?= $value['fqa_type'] == 0 ? '' : '<i class="am-icon-external-link"></i>' ?> </a></li>
                                     <?php endforeach; ?>
                                 </ul>
                             <?php endforeach; ?>

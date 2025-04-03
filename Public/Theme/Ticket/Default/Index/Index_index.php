@@ -23,7 +23,6 @@
     </div>
 
 
-
 </div>
 <?= $label->token() ?>
 <?php if (!empty($list)): ?>
@@ -37,7 +36,7 @@
                 <div class="am-panel am-panel-default">
                     <div class="am-panel-bd am-margin-bottom">
 
-                        <span class="am-fl"><strong><?= $item['title'] ?></strong> <?= empty($item['tips']) ? '' : '<i class="am-icon-question-circle"  title="'.$item['tips'].'"></i>' ?> </span>
+                        <span class="am-fl"><strong><?= $item['title'] ?></strong> <?= empty($item['tips']) ? '' : '<i class="am-icon-question-circle"  title="' . $item['tips'] . '"></i>' ?> </span>
                         <?php if (!empty($item['url'])): ?>
                             <a href="<?= $item['url'] ?>" class="am-fr">更多>></a>
                         <?php endif; ?>
@@ -184,3 +183,5 @@
         </div>
     </div>
 <?php endif; ?>
+
+<?php include __DIR__ . '/Index_driver.php' ?>

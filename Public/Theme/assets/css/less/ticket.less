@@ -189,5 +189,154 @@
   color: #ff5757;
 }
 
+.tips-manual {
+
+  a {
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .desc {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .document {
+    padding: 10px 0;
+    display: flex;
+    gap: 10px;
+
+    .fqa {
+      flex: 1;
+
+      ol {
+        li {
+          padding: 5px 0;
+        }
+      }
+    }
+
+    .miniprogram {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+
+      border-left: 1px solid #f0f0f0;
+
+      img {
+        border: 1px solid #f0f0f0;
+        border-radius: 6px;
+        padding: 2px;
+        width: 150px;
+        height: 150px;
+      }
+
+      small {
+        padding-top: 5px;
+      }
+    }
+  }
+
+  .ad {
+    border-top: 1px solid #f0f0f0;
+    padding-top: 10px;
+  }
+}
+
+.fqa-dialog {
+  background-color: #fde047 !important;
+
+  h3 {
+    font-size: 22px;
+  }
+
+  ol {
+    li {
+      padding: 5px;
+
+      a {
+        color: #000 !important;
+
+        &:hover {
+          color: #595959 !important;
+        }
+      }
+    }
+  }
+}
+
+.fqa-doc {
+  .doc-transfer {
+    display: flex;
+    gap: 10px;
+    height: 50vh;
+
+    .doc-transfer-panel {
+      flex: 1;
+      border: 1px solid #f0f0f0;
+      overflow: auto;
+
+      .doc-transfer-title {
+        position: sticky;
+        top: 0;
+        background-color: #f2f2f2;
+        border-bottom: 1px solid #f0f0f0;
+        z-index: 99;
+      }
+
+      .doc-transfer-title, .doc-path, .doc-path-list {
+        padding: 10px;
+      }
+
+      .doc-path {
+
+
+        ul {
+          list-style: none;
+          margin: 0;
+
+          &:first-child {
+            padding-left: 0;
+          }
+
+          li {
+            padding: 5px 0;
+
+            label {
+              margin: 0;
+              font-weight: normal;
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              font-size: 16px;
+
+              input {
+                margin: 0;
+                height: 16px;
+              }
+            }
+          }
+        }
+      }
+
+      .doc-path-list {
+        .selected-doc {
+          padding: 5px 0;
+          cursor: pointer;
+
+          &:hover {
+            color: #a6a6a6;
+          }
+        }
+      }
+
+    }
+
+  }
+
+}
+
 
 @import "common";

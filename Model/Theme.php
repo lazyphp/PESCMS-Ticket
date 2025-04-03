@@ -16,7 +16,7 @@ class Theme extends \Core\Model\Model {
      * 获取主题首页设置信息
      * @return array|mixed
      */
-    public static function getThemeIndexSetting(){
+    public static function getThemeIndexSetting() {
         $settingFile = THEME_PATH . '/index.json';
         return is_file($settingFile) ? json_decode(file_get_contents($settingFile), true) : [];
     }
@@ -50,7 +50,7 @@ class Theme extends \Core\Model\Model {
             'theme'       => $theme,
             'setting'     => $setting,
             'settingFile' => $settingFile,
-            'indexField'  => $indexField
+            'indexField'  => $indexField,
         ];
     }
 
@@ -60,8 +60,29 @@ class Theme extends \Core\Model\Model {
      * @return array|false
      */
     public static function getThemeINI($theme) {
-        $themePatch = THEME . '/Doc/' . $theme . '/info.ini';
+        $themePatch = THEME . '/Form/' . $theme . '/info.ini';
         return is_file($themePatch) ? parse_ini_file($themePatch, true) : [];
+    }
+
+    /**
+     * 获取主题配置信息
+     * @param $theme
+     * @return array|mixed
+     */
+    public static function getThemeJSON($theme) {
+        $themePatch = THEME . '/Form/' . $theme . '/index.json';
+        return file_exists($themePatch) ? json_decode(file_get_contents($themePatch), true) : [];
+    }
+
+    /**
+     * 写入主题配置信息
+     * @param $theme
+     * @param $data
+     * @return void
+     */
+    public static function writeThemeJSON($theme, $data) {
+        $themePatch = THEME . '/Form/' . $theme . '/index.json';
+        file_put_contents($themePatch, json_encode($data, JSON_UNESCAPED_UNICODE));
     }
 
 }

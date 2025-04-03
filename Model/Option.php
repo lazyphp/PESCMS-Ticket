@@ -31,9 +31,21 @@ class Option extends \Core\Model\Model {
      * 获取客服工单回复的预设信息
      * @return mixed
      */
-    public static function csText() {
-        $content = \Model\Content::findContent('option', 'cs_text', 'option_name');
-        return json_decode($content['value'], true);
+    public static function getCSReplyText() {
+
+        $content = \Model\Option::getOptionValue('cs_text', true);
+
+        $jobNumber = self::session()->get('ticket')['user_job_number'];
+
+        $replacements = [
+            '{job_number}' => $jobNumber,
+        ];
+
+        foreach ($content as $key => &$item) {
+            $item['content'] = strtr($item['content'], $replacements);
+        }
+
+        return $content;
     }
 
     /**

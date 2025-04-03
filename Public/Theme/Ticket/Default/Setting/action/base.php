@@ -30,7 +30,7 @@
                     <label class="am-block">域名白名单</label>
                     <textarea rows="5" name="crossdomain"><?= empty($crossdomain) ? '' : implode("\n", $crossdomain); ?></textarea>
                     <div class="pes-alert pes-alert-error am-text-xs " >
-                        <i class="am-icon-lightbulb-o"></i> 需要填写白名单才可以启用跨域工单！域名白名单，请一行一个域名的形式填写。开启跨域工单后，除了填写跨域的域名，还需要填写当前程序所在的网站URL，否则站内工单将无法提交！！
+                        <i class="am-icon-lightbulb-o"></i> <strong class="am-text-primary">若您不知道此选项作用时，请不要在此处填写任何内容！</strong><br/>需要填写白名单才可以启用跨域工单！域名白名单，请一行一个域名的形式填写。开启跨域工单后，除了填写跨域的域名，还需要填写当前程序所在的网站URL，否则站内工单将无法提交！！
                     </div>
                 </div>
             </div>
@@ -146,14 +146,17 @@
             <div class="am-u-sm-12 am-u-sm-centered">
                 <div class="am-form-group">
                     <label class="am-block">上传大小<i class="am-text-danger">*</i></label>
-                    <div class="am-input-group am-u-lg-2 am-u-sm-12">
+                    <div class="am-input-group am-u-lg-2 am-u-sm-12 am-margin-bottom-sm">
                         <input name="max_upload_size" placeholder="1" type="number" value="<?= $max_upload_size['value']; ?>" class="am-form-field am-text-right" required="required">
                         <span class="am-input-group-label">MB</span>
                     </div>
+
+                    <div class="pes-alert pes-alert-info am-text-xs " >
+                        当前PHP.ini配置最大上传容量: <?= ini_get('max_file_uploads') ?>M
+                    </div>
+
                 </div>
-                <div class="pes-alert pes-alert-info am-text-xs " >
-                    当前PHP.ini配置最大上传容量: <?= ini_get('max_file_uploads') ?>M
-                </div>
+
             </div>
         </div>
 

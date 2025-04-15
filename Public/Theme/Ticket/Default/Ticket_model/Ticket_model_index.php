@@ -21,48 +21,51 @@
         <?= $label->token() ?>
         <input type="hidden" name="method" value="PUT"/>
 
+
         <?php foreach ($list as $cid => $item): ?>
-            <table class="am-table am-table-bordered ticket_model_table">
-                <?php foreach ($item as $key => $value): ?>
-                    <tr>
-                        <?php if ($key == 0): ?>
-                            <td class="am-text-middle am-text-center" rowspan="<?= count($item) ?>" style="width: 10%">
-                                <?= \Model\Content::findContent('category', $cid, 'category_id', 'category_name')['category_name'] ?>
+            <div class="ticket-model-panel">
+                <div class="ticket-model-cate">
+                    <?= \Model\Content::findContent('category', $cid, 'category_id', 'category_name')['category_name'] ?>
+                </div>
+
+                <table class="am-table am-table-striped am-table-bordered ticket_model_table">
+                    <?php foreach ($item as $key => $value): ?>
+                        <tr>
+
+                            <td class="am-text-middle ticket_model_base">
+                                <div>
+                                    <strong><?= $value['ticket_model_name'] ?></strong>
+                                    <span>#<?= $value['ticket_model_number'] ?></span>
+                                    <?php require __DIR__ . '/Ticket_model_index_button.php' ?>
+                                </div>
+                                <div>
+                                    <?= $field['main']['211']['field_display_name'] ?>
+                                    : <?= $label->getFieldOptionToMatch(211, $value['ticket_model_group_id']); ?>
+                                </div>
+                                <div>
+                                    <?= $field['main']['240']['field_display_name'] ?>
+                                    : <?= $label->getFieldOptionToMatch(240, $value['ticket_model_contact']); ?>
+                                </div>
                             </td>
-                        <?php endif; ?>
-                        <td class="am-text-middle ticket_model_base">
-                            <div>
-                                <strong><?= $value['ticket_model_name'] ?></strong>
-                                <span>#<?= $value['ticket_model_number'] ?></span>
-                                <?php require __DIR__ . '/Ticket_model_index_button.php' ?>
-                            </div>
-                            <div>
-                                <?= $field['main']['211']['field_display_name'] ?>
-                                : <?= $label->getFieldOptionToMatch(211, $value['ticket_model_group_id']); ?>
-                            </div>
-                            <div>
-                                <?= $field['main']['240']['field_display_name'] ?>
-                                : <?= $label->getFieldOptionToMatch(240, $value['ticket_model_contact']); ?>
-                            </div>
-                        </td>
-                        <?php foreach ($field['other'] as $item) : ?>
-                            <td class="am-text-middle ticket_model_setting am-hide-md-down">
-                                <?php foreach ($item as $fv): ?>
-                                    <div>
-                                        <span><?= $fv['field_display_name'] ?></span>
-                                        <span><?= $label->valueTheme($fv, $fieldPrefix, $value); ?></span>
-                                    </div>
-                                <?php endforeach; ?>
+                            <?php foreach ($field['other'] as $item) : ?>
+                                <td class="am-text-middle ticket_model_setting am-hide-md-down">
+                                    <?php foreach ($item as $fv): ?>
+                                        <div>
+                                            <span><?= $fv['field_display_name'] ?></span>
+                                            <span><?= $label->valueTheme($fv, $fieldPrefix, $value); ?></span>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </td>
+                            <?php endforeach; ?>
+                            <td class="am-text-middle ticket_model_operate am-hide-md-down">
+                                <?php /* 若要实现自定义的操作按钮，请更改本变量 */ ?>
+                                <?php $operate = empty($operate) ? '/Content/Content_index_operate.php' : $operate; ?>
+                                <?php include THEME_PATH . $operate; ?>
                             </td>
-                        <?php endforeach; ?>
-                        <td class="am-text-middle ticket_model_operate am-hide-md-down">
-                            <?php /* 若要实现自定义的操作按钮，请更改本变量 */ ?>
-                            <?php $operate = empty($operate) ? '/Content/Content_index_operate.php' : $operate; ?>
-                            <?php include THEME_PATH . $operate; ?>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </table>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
         <?php endforeach; ?>
 
     </form>

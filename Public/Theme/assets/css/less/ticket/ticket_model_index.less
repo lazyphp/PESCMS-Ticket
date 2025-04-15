@@ -1,0 +1,82 @@
+.ticket-model-panel {
+  display: flex;
+  transition: all .2s ease-in-out;
+  margin-bottom: 1.6rem;
+  &:hover {
+    box-shadow: 0 2px 30px rgb(0 0 0 / 22%), 0 2px 5px rgb(0 0 0 / 10%);
+    background: #e6f7ff; //旧色彩 f5f7fa
+  }
+
+  .ticket-model-cate {
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid #ebeef5;
+    border-top: 1px solid #ebeef5;
+    border-bottom: 1px solid #ebeef5;
+  }
+
+  .ticket_model_table {
+    margin-bottom: 0;
+    tbody:hover td[rowspan],
+    tr:hover td {
+      background: #f5f7fa;
+    }
+
+    tbody tr:nth-child(odd) td {
+      background: #fff; // 保持白色
+    }
+
+    tbody tr:nth-child(even) td {
+      background: #f0f0f0; //旧色彩 f9f9f9
+    }
+
+    tbody tr:hover td {
+      background: #e6f7ff; //旧色彩 f5f7fa
+    }
+
+
+    .ticket_model_base {
+      width: 40%;
+
+      div {
+        border-bottom: 1px solid #eee;
+        padding: 5px 0;
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+
+
+    }
+
+    .ticket_model_setting {
+
+      div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        border-bottom: 1px solid #eee;
+        padding: 5px 0;
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+
+
+    }
+
+    .ticket_model_operate {
+      width: 10%;
+
+      div {
+        margin: 2px 0;
+      }
+
+    }
+
+  }
+}

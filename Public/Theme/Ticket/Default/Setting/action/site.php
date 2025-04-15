@@ -18,7 +18,7 @@
                 <div class="am-form-group" disabled="disabled">
                     <label class="am-block">网站名称<i class="am-text-danger">*</i></label>
                     <input name="siteTitle" placeholder="网站名称" type="text"
-                           value="<?= $siteTitle['value']; ?>" <?= isset($license) && $license == 1 ? '' : 'readonly="readonly" data-am-popover="{content: \'需求购买使用授权方解除限制\', trigger: \'hover\', theme:\'sm\'}"' ?>>
+                           value="<?= $siteTitle['value']; ?>" <?= isset($license) && $license == 1 ? '' : 'readonly="readonly" data-am-popover="{content: \'购买软件授权方解除限制\', trigger: \'hover\', theme:\'sm\'}"' ?>>
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@
                 <div class="am-form-group">
                     <label class="am-block">网站联系方式</label>
                     <textarea rows="5"
-                              name="siteContact" <?= isset($license) && $license == 1 ? '' : 'readonly="readonly" data-am-popover="{content: \'需求购买使用授权方解除限制\', trigger: \'hover\', theme:\'sm\'}"' ?>><?= $siteContact['value']; ?></textarea>
+                              name="siteContact" <?= isset($license) && $license == 1 ? '' : 'readonly="readonly" data-am-popover="{content: \'购买软件授权方解除限制\', trigger: \'hover\', theme:\'sm\'}"' ?>><?= $siteContact['value']; ?></textarea>
                 </div>
             </div>
         </div>
@@ -73,7 +73,7 @@
                 <div class="am-form-group">
                     <label class="am-block">页脚内容</label>
                     <textarea rows="10"
-                              name="pescmsIntroduce" <?= isset($license) && $license == 1 ? '' : 'readonly="readonly" data-am-popover="{content: \'需求购买使用授权方解除限制\', trigger: \'hover\', theme:\'sm\'}"' ?>><?= $pescmsIntroduce['value']; ?></textarea>
+                              name="pescmsIntroduce" <?= isset($license) && $license == 1 ? '' : 'readonly="readonly" data-am-popover="{content: \'购买软件授权方解除限制\', trigger: \'hover\', theme:\'sm\'}"' ?>><?= $pescmsIntroduce['value']; ?></textarea>
                     <div class="pes-alert pes-alert-info am-text-xs " >
                         <i class="am-icon-lightbulb-o"></i> 网站联系方式和页脚内容的设置，可以阅读这里查看教程:《<a
                                 href="https://www.pescms.com/d/v/1.2.7/22/149.html" target="_blank" style="color:#0e90d2 ">自定义网站设置</a>》
@@ -88,7 +88,7 @@
                 <div class="am-form-group">
                     <label class="am-block">自定义样式</label>
                     <textarea rows="10"
-                              name="siteStyle" <?= isset($license) && $license == 1 ? '' : 'readonly="readonly" data-am-popover="{content: \'需求购买使用授权方解除限制\', trigger: \'hover\', theme:\'sm\'}"' ?>><?= $siteStyle['value']; ?></textarea>
+                              name="siteStyle" <?= isset($license) && $license == 1 ? '' : 'readonly="readonly" data-am-popover="{content: \'购买软件授权方解除限制\', trigger: \'hover\', theme:\'sm\'}"' ?>><?= $siteStyle['value']; ?></textarea>
                 </div>
             </div>
         </div>

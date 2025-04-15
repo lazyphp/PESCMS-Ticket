@@ -56,6 +56,7 @@
             const form = document.getElementsByClassName('am-form')[0];
 
             const requiredFields = form.querySelectorAll('[required]')
+
             // console.dir(requiredFields)
 
             function isFieldValid(field) {
@@ -71,8 +72,8 @@
                 }
             }
 
-            $('.am-form').submit(function (){
-                if($(this).validator('isFormValid') == false){
+            $('.am-form').submit(function () {
+                if ($(this).validator('isFormValid') == false) {
                     for (let i = 0; i < requiredFields.length; i++) {
                         if (!isFieldValid(requiredFields[i])) {
                             var index = $(requiredFields[i]).parents('.am-tab-panel').index();
@@ -108,9 +109,17 @@
 <?php if (empty($license)): ?>
     <script>
         $(function () {
+
+            $('input[name="is_appointment"][value="0"]').prop('checked', true);
+
+            $('input[name="is_appointment"][value="0"]').closest(".form-radio-label").after(`<div class="pes-alert pes-alert-warning am-text-xs ">
+                                                <i class="am-icon-shopping-cart"></i> 购买软件授权即可开通预约工单功能。<a href="https://www.pescms.com/shop/detail/software/PESCMS%20TICKET%20%E5%AE%A2%E6%9C%8D%E5%B7%A5%E5%8D%95%E7%B3%BB%E7%BB%9F/5.html" class="am-btn am-btn-xs am-btn-success am-radius am-margin-left-xs" target="_blank" tyle="color:#0e90d2 "><i class="am-icon-shopping-cart"></i> 商业授权</a></div>`)
+
+            $('input[name="is_appointment"][value="1"]').closest('.form-radio-label').hide();
+
             $('input[name=time_out_sequence]').attr('readonly', 'readonly').popover({
                 trigger: 'hover',
-                content: '需求购买使用授权方解除限制'
+                content: '购买软件授权方解除限制。'
             })
         })
     </script>

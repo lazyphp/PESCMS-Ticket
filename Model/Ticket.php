@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 版权所有 2022 PESCMS (https://www.pescms.com)
  * 完整版权和软件许可协议请阅读源码根目录下的LICENSE文件。
@@ -21,6 +22,8 @@ class Ticket extends \Core\Model\Model {
         $field = $result['field'];
         $firstContent = $result['firstContent'];
         $param = $result['param'];
+
+        self::checkAppointment($param, $firstContent);
 
         self::loginCheck($firstContent);
 
@@ -173,7 +176,6 @@ class Ticket extends \Core\Model\Model {
                 if ($optionName === NULL) {
                     self::error("您提交的'<b>{$value['ticket_form_description']}</b>'选项值存在异常，请提交正确的值，或者刷新页面再提交。");
                 }
-
             } else {
                 $optionName = '';
             }
@@ -188,9 +190,7 @@ class Ticket extends \Core\Model\Model {
                 self::db()->rollback();
                 self::error('记录工单内容出错');
             }
-
         }
-
     }
 
     /**
@@ -207,7 +207,6 @@ class Ticket extends \Core\Model\Model {
         if (($param['ticket_exclusive'] == 1 || $ticket['ticket_model_auto'] == 1) && !empty($param['user_id'])) {
             $user = \Model\Content::findContent('user', $param['user_id'], 'user_id');
             \Model\Notice::addCSNotice($param['ticket_number'], $user, -1);
-
         } elseif (!empty($ticket['ticket_model_group_id'])) {
             //移除手尾,
             $ticket['ticket_model_group_id'] = trim($ticket['ticket_model_group_id'], ',');
@@ -260,7 +259,6 @@ class Ticket extends \Core\Model\Model {
                         $avgSubTotal += $value['total'];
                         $userSort[$value['user_id']] = $value['total'];
                     }
-
                 });
                 array_multisort($userSort, SORT_ASC, $user);
 
@@ -311,8 +309,6 @@ class Ticket extends \Core\Model\Model {
             $user['exclusive'] = 1;
             return $user;
         }
-
-
     }
 
     /**
@@ -344,7 +340,6 @@ class Ticket extends \Core\Model\Model {
                 $getThemeContent = ob_get_contents();
                 ob_clean();
                 $form[$value['ticket_form_id']]['ticket_value'] = $getThemeContent ?? null;
-
             } else {
                 switch ($value['ticket_form_type']) {
                     case 'radio':
@@ -394,7 +389,7 @@ class Ticket extends \Core\Model\Model {
                             foreach ($splitImg as $item) {
                                 $suffix = pathinfo($item);
                                 $small = "{$item}";
-                                $imgStr .= '<li><video controls><source src="'.$small.'"></video></li>';
+                                $imgStr .= '<li><video controls><source src="' . $small . '"></video></li>';
                             }
                         }
                         $imgStr .= '</ul>';
@@ -474,7 +469,6 @@ class Ticket extends \Core\Model\Model {
             'member'         => $member,
             'global_contact' => array_flip(\Model\Field::findField('240', true)->deFieldOptionToArray()),
         ];
-
     }
 
     /**
@@ -536,7 +530,6 @@ class Ticket extends \Core\Model\Model {
         }
 
         return self::db('ticket_chat')->insert($param);
-
     }
 
     /**
@@ -736,12 +729,75 @@ class Ticket extends \Core\Model\Model {
                 ])['total'] + 1;
 
             $search = ['{Y}', '{M}', '{D}', '{His}', '{Z}', '{A}', '{S}'];
-            $replace = [date('Y'), date('m'), date('d'), date('His'),sprintf('%04d', $zKeyWord), sprintf('%04d', $aKeyWord), sprintf('%05d', rand(0, 99999))];
+            $replace = [date('Y'), date('m'), date('d'), date('His'), sprintf('%04d', $zKeyWord), sprintf('%04d', $aKeyWord), sprintf('%05d', rand(0, 99999))];
 
             return str_replace($search, $replace, $ticket_model_custom_no);
-
         }
-
     }
 
+    private static function checkAppointment(&$param, $ticket) {
+        if ($ticket['ticket_model_is_appointment'] == 0) {
+            return true;
+        }
+        $appointmentConfig = json_decode($ticket['ticket_model_appointment_config'], true);
+
+        $appointmentDate = self::isP('appointment_date', '请选择预约日期');
+
+        // 检查预约日期是否超过最大预约时间限制
+        $maxBookingTime = intval($appointmentConfig['max_booking_time'] ?? 14);
+        $maxAllowedDate = strtotime("+{$maxBookingTime} days");
+        $selectedDate = strtotime($appointmentDate);
+
+        if ($selectedDate > $maxAllowedDate) {
+            self::error("预约日期不能超过{$maxBookingTime}天");
+        }
+
+        // 检查预约日期是否在法定/休息日列表中
+        if (!empty($appointmentConfig['holidays']) && in_array($selectedDate, $appointmentConfig['holidays'])) {
+            self::error('您选择的日期是法定假日或休息日，不可预约');
+        }
+
+        // 检查工作日/周末设置
+        $dayOfWeek = date('N', $selectedDate); // 1-7，1是周一，6是周六，7是周日
+        $isWeekend = ($dayOfWeek == 6 || $dayOfWeek == 7);
+
+        if (isset($appointmentConfig['work'])) {
+            // 0: 仅限工作日，1: 仅限周末，2: 全年
+            if ($appointmentConfig['work'] == 0 && $isWeekend) {
+                self::error('您只能选择工作日进行预约');
+            } elseif ($appointmentConfig['work'] == 1 && !$isWeekend) {
+                self::error('您只能选择周末进行预约');
+            }
+        }
+
+        if ($appointmentConfig['appointment_type'] == 'time_slot') {
+            $appointmentTime = self::isP('appointment_time', '请选择预约时间');
+
+            // 检查预约时间是否在可预约时间段内
+            if (empty($appointmentConfig['capacity'][$appointmentTime])) {
+                self::error('您选择的时间段不可预约');
+            }
+
+            $param['ticket_appointment_time'] = strtotime($appointmentDate . ' ' . $appointmentTime . ':00:00');
+
+            // 检查该时间段是否还有预约名额
+            // 获取当前日期已预约的人数
+            $bookedCount = self::db('ticket')
+                ->field('count(*) AS total')
+                ->where('ticket_model_id = :ticket_model_id AND ticket_appointment_time = :ticket_appointment_time')
+                ->find([
+                    'ticket_model_id'         => $ticket['ticket_model_id'],
+                    'ticket_appointment_time' => $param['ticket_appointment_time'],
+                ])['total'];
+
+            $capacity = intval($appointmentConfig['capacity'][$appointmentTime]);
+            if ($bookedCount >= $capacity) {
+                self::error('您选择的时间段预约名额已满');
+            }
+
+        } else {
+            // 全天预约模式
+            $param['ticket_appointment_time'] = $selectedDate;
+        }
+    }
 }

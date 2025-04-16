@@ -1,0 +1,150 @@
+/* Calendar and Appointment Styles */
+
+// Colors
+@calendar-border-color: #ddd;
+@calendar-shadow-color: rgba(0, 0, 0, 0.1);
+@calendar-text-color: #333;
+@calendar-secondary-text: #666;
+@calendar-light-text: #ccc;
+@calendar-highlight-bg: #f0f8ff;
+@calendar-selected-bg: #0e90d2;
+@calendar-today-bg: #f5f5f5;
+@calendar-disabled-bg: #eee;
+
+// Calendar container
+.appointment-calendar-container {
+  margin-bottom: 20px;
+}
+
+// Calendar main container
+.custom-calendar {
+  width: 100%;
+  max-width: 600px;
+  background: #fff;
+  border: 1px solid @calendar-border-color;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px @calendar-shadow-color;
+  padding: 10px;
+  font-size: 14px;
+}
+
+// Calendar header section
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 5px 0;
+
+  .current-month {
+    font-weight: bold;
+    font-size: 16px;
+  }
+}
+
+// Week days header
+.week-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: bold;
+  color: @calendar-secondary-text;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+// Calendar days grid
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 1px;
+}
+
+// Individual calendar day
+.calendar-day {
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+
+  &:hover:not(.disabled):not(.other-month) {
+    background-color: @calendar-highlight-bg;
+  }
+
+  &.selected {
+    background-color: @calendar-selected-bg !important;
+    color: white;
+  }
+
+  &.today {
+    background-color: @calendar-today-bg;
+    font-weight: bold;
+  }
+
+  &.other-month {
+    color: @calendar-light-text;
+    cursor: default;
+  }
+
+  &.disabled {
+    color: @calendar-light-text;
+    cursor: not-allowed;
+    text-decoration: line-through;
+    opacity: 0.5;
+  }
+}
+
+// Date title for time slots
+.date-title {
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: @calendar-text-color;
+}
+
+// Time slots container
+.time-slots {
+  max-width: 600px;
+  margin: 10px 0;
+}
+
+// Individual time slot
+.slot {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  background-color: #fff;
+  border: 1px solid @calendar-border-color;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    background-color: @calendar-highlight-bg;
+    border-color: @calendar-selected-bg;
+  }
+
+  &.selected {
+    background-color: @calendar-selected-bg;
+    border-color: @calendar-selected-bg;
+    color: #fff;
+  }
+
+  &.full {
+    background-color: @calendar-disabled-bg;
+    color: #999;
+    cursor: not-allowed;
+  }
+
+  .slot-time {
+    font-weight: bold;
+  }
+
+  .slot-people {
+    font-size: 14px;
+  }
+}

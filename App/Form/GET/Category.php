@@ -21,7 +21,7 @@ class Category extends \Core\Controller\Controller {
         $result = \Model\Category::getCategoryORTicketList();
 
         $this->assign('title', '提交工单');
-		$this->assign('currentCategory', \Model\Content::findContent('category', (int)($_GET['id'] ?? 0), 'category_id'));
+        $this->assign('currentCategory', \Model\Content::findContent('category', (int)($_GET['id'] ?? 0), 'category_id'));
         $this->assign('ticket', $result['ticket']);
         $this->assign('category', $result['category']);
 
@@ -74,18 +74,20 @@ class Category extends \Core\Controller\Controller {
         $ticketInfo = [];
         foreach ($result as $key => $value) {
             $ticketInfo = [
-                'title'              => $value['ticket_model_name'],
-                'number'             => $value['ticket_model_number'],
-                'login'              => $value['ticket_model_login'],
-                'ticket_model_login' => $value['ticket_model_login'],
-                'verify'             => $value['ticket_model_verify'],
-                'cid'                => $value['ticket_model_cid'],
-                'contact'            => $value['ticket_model_contact'],
-                'contact_default'    => $value['ticket_model_contact_default'],
-                'postscript'         => $value['ticket_model_postscript'],
-                'exclusive'          => $value['ticket_model_exclusive'],
-                'organize_id'        => $value['ticket_model_organize_id'],
-                'title_description'  => $value['ticket_model_title_description'],
+                'title'                           => $value['ticket_model_name'],
+                'number'                          => $value['ticket_model_number'],
+                'login'                           => $value['ticket_model_login'],
+                'ticket_model_login'              => $value['ticket_model_login'],
+                'verify'                          => $value['ticket_model_verify'],
+                'cid'                             => $value['ticket_model_cid'],
+                'contact'                         => $value['ticket_model_contact'],
+                'contact_default'                 => $value['ticket_model_contact_default'],
+                'postscript'                      => $value['ticket_model_postscript'],
+                'exclusive'                       => $value['ticket_model_exclusive'],
+                'organize_id'                     => $value['ticket_model_organize_id'],
+                'title_description'               => $value['ticket_model_title_description'],
+                'ticket_model_is_appointment'     => $value['ticket_model_is_appointment'],
+                'ticket_model_appointment_config' => json_decode($value['ticket_model_appointment_config'], true) ?: [],
             ];
             $field[$value['ticket_form_id']] = [
                 'field_name'         => $value['ticket_form_name'],

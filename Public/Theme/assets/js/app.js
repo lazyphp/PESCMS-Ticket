@@ -22,7 +22,7 @@ $(function () {
     /**
      * 触发表单提交功能。
      */
-    $('body').on('submit', '.ajax-submit', function () {
+    $(document).on('submit', '.ajax-submit', function () {
         var url = $(this).attr("action")
         var dom = $(this)
         $.ajaxsubmit({
@@ -39,7 +39,7 @@ $(function () {
      * 需要注意的是，若需要明确restful的话，请在URL中声明method方法。
      * 若监听的class中存在ajax-dialog，在该标签中声明 msg="提示信息" ，将可以自定义提示信息
      */
-    $("body").on("click", ".ajax-click", function () {
+    $(document).on("click", ".ajax-click", function () {
         var url = $(this).attr("href");
         var stop = false;
         //设置了禁用则不允许触发事件
@@ -195,7 +195,7 @@ $(function () {
     /**
      * 预览输入的图标
      */
-    $("body").on("blur", ".icon-input", function () {
+    $(document).on("blur", ".icon-input", function () {
         var name = $(this).attr("name");
         $('.' + name).attr("class", $(this).val() + ' ' + name);
     })

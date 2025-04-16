@@ -31,11 +31,19 @@
                 <table class="am-table am-table-striped am-table-bordered ticket_model_table">
                     <?php foreach ($item as $key => $value): ?>
                         <tr>
-
                             <td class="am-text-middle ticket_model_base">
                                 <div>
+                                    <?php if($value['ticket_model_is_appointment'] == 1): ?>
+                                    <span class="am-badge am-badge-primary  am-round"><i class="am-icon-calendar-check-o"></i> 预约工单</span>
+                                    <?php endif; ?>
                                     <strong><?= $value['ticket_model_name'] ?></strong>
                                     <span>#<?= $value['ticket_model_number'] ?></span>
+
+                                    <a class="am-text-success am-margin-left-xs" href="<?= $label->url('Category-ticket', ['number' => $value["ticket_model_number"]]); ?>" target="_blank"><span class="am-icon-external-link"></span>
+                                        预览</a>
+
+                                </div>
+                                <div>
                                     <?php require __DIR__ . '/Ticket_model_index_button.php' ?>
                                 </div>
                                 <div>

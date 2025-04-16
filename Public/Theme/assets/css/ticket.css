@@ -68,7 +68,7 @@
 .ticket-timeout,
 .ticket-timeout a {
   font-weight: bold;
-  color: #FF4500;
+  color: #ff4500;
 }
 /*短信设置样式*/
 .sms-1,
@@ -157,6 +157,109 @@
 }
 .fqa-dialog ol li a:hover {
   color: #595959 !important;
+}
+.appointment-form .holiday-container {
+  max-width: 500px;
+  margin-bottom: 15px;
+}
+.appointment-form .holiday-container .am-input-group {
+  width: 100%;
+  margin-bottom: 5px;
+}
+.appointment-form .date-range-picker {
+  margin-top: 10px;
+  max-width: 500px;
+  padding: 10px;
+  background: #f8f8f8;
+  border-radius: 4px;
+}
+.appointment-form .date-range-picker .date-range-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.appointment-form .date-range-picker .date-range-inputs {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+.appointment-form .date-range-picker .date-range-inputs .date-range-input {
+  flex: 1;
+}
+.appointment-form .date-range-picker .date-range-inputs .date-range-input label {
+  display: block;
+  margin-bottom: 5px;
+}
+.appointment-form .date-range-picker .date-range-inputs .date-range-input input {
+  width: 100%;
+}
+.appointment-form .date-range-picker .range-btn {
+  margin-top: 10px;
+}
+.appointment-form .time-slot-container {
+  max-width: 500px;
+  margin: 0;
+}
+.appointment-form .time-slot-container .time-slot-content {
+  width: 100%;
+}
+.appointment-form .time-slot-container .time-range-selector {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+.appointment-form .time-slot-container .time-range-selector .time-range-item {
+  flex: 1;
+}
+.appointment-form .time-slot-container .time-range-selector .time-range-item label {
+  display: block;
+  margin-bottom: 5px;
+}
+.appointment-form .time-slot-container .time-range-selector .time-range-item select {
+  width: 100%;
+  padding: 5px;
+  border-radius: 4px;
+}
+.appointment-form .time-slot-container .time-range-selector .time-range-item #default-capacity {
+  padding: 5px;
+}
+.appointment-form .time-slot-container .time-slots {
+  margin-top: 20px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.appointment-form .time-slot-container .time-slots .time-slot {
+  display: flex;
+  border-bottom: 1px solid #eee;
+  padding: 10px;
+  transition: background-color 0.2s;
+}
+.appointment-form .time-slot-container .time-slots .time-slot:last-child {
+  border-bottom: none;
+}
+.appointment-form .time-slot-container .time-slots .time-slot:hover {
+  background-color: #f8f8f8;
+}
+.appointment-form .time-slot-container .time-slots .time-slot .time-label-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+.appointment-form .time-slot-container .time-slots .time-slot .time-label-container .time-label {
+  font-weight: bold;
+  color: #555;
+}
+.appointment-form .time-slot-container .time-slots .time-slot .capacity-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+.appointment-form .time-slot-container .time-slots .time-slot .capacity-container .capacity-input {
+  width: 150px;
+}
+.appointment-form .time-slot-container .time-slots .time-slot .capacity-container .capacity-input input {
+  width: 100%;
+  text-align: center;
 }
 .ticket-model-panel {
   display: flex;

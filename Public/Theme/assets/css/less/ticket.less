@@ -14,11 +14,9 @@
     height: 5pt;
     top: 7px;
   }
-
 }
 
 @media only screen and (max-width: 640px) {
-
   .ticket-search-form .am-selected {
     margin-bottom: 10px;
   }
@@ -26,14 +24,12 @@
   .ticket-member-table-dropdown .am-dropdown-content {
     left: 0 !important;
     right: auto !important;
-
   }
 
   .ticket-member-table {
     width: 31vh;
   }
 }
-
 
 @media only screen and (min-width: 641px) {
   #mobile-new-tips {
@@ -42,7 +38,6 @@
 }
 
 @media only screen and (min-width: 1025px) {
-
   .ticket-index-table tr td:last-child {
     width: 10rem;
   }
@@ -60,7 +55,8 @@
   color: #888888;
 }
 
-.admin-task-bd, .ticket-operation-bd {
+.admin-task-bd,
+.ticket-operation-bd {
   /*font-size: 1.6rem;*/
   margin-top: 0.5rem;
 }
@@ -82,23 +78,25 @@
 }
 
 /*工单超时*/
-.ticket-timeout, .ticket-timeout a {
+.ticket-timeout,
+.ticket-timeout a {
   font-weight: bold;
-  color: #FF4500;
+  color: #ff4500;
 }
 
 /*短信设置样式*/
-.sms-1, .sms-2 {
+.sms-1,
+.sms-2 {
   display: none;
 }
 
 .pes-ucheck {
   padding-left: 22px !important;
-  position: relative !important;;
-  -webkit-transition: color .25s linear !important;;
-  transition: color .25s linear !important;;
-  font-size: 14px !important;;
-  line-height: 1.5 !important;;
+  position: relative !important;
+  -webkit-transition: color 0.25s linear !important;
+  transition: color 0.25s linear !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
 }
 
 @media only screen and (min-width: 1025px) {
@@ -117,13 +115,11 @@
   }
 
   tr {
-    transition: all .2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 
     &:hover {
       box-shadow: 0 2px 30px rgb(0 0 0 / 22%), 0 2px 5px rgb(0 0 0 / 10%) !important;
-
     }
-
   }
 }
 
@@ -133,7 +129,6 @@
 }
 
 .tips-manual {
-
   a {
     &:focus {
       outline: none;
@@ -204,6 +199,137 @@
 
         &:hover {
           color: #595959 !important;
+        }
+      }
+    }
+  }
+}
+
+.appointment-form {
+  .holiday-container {
+    max-width: 500px;
+    margin-bottom: 15px;
+
+    .am-input-group {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+  }
+
+  .date-range-picker {
+    margin-top: 10px;
+    max-width: 500px;
+    padding: 10px;
+    background: #f8f8f8;
+    border-radius: 4px;
+
+    .date-range-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .date-range-inputs {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 10px;
+
+      .date-range-input {
+        flex: 1;
+
+        label {
+          display: block;
+          margin-bottom: 5px;
+        }
+
+        input {
+          width: 100%;
+        }
+      }
+    }
+
+    .range-btn {
+      margin-top: 10px;
+    }
+  }
+
+  .time-slot-container {
+    max-width: 500px;
+    margin: 0;
+
+    .time-slot-content {
+      width: 100%;
+    }
+
+    .time-range-selector {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+
+      .time-range-item {
+        flex: 1;
+
+        label {
+          display: block;
+          margin-bottom: 5px;
+        }
+
+        select {
+          width: 100%;
+          padding: 5px;
+          border-radius: 4px;
+        }
+
+        #default-capacity{
+          padding: 5px;
+        }
+
+      }
+    }
+
+    .time-slots {
+      margin-top: 20px;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      overflow: hidden;
+
+      .time-slot {
+        display: flex;
+        border-bottom: 1px solid #eee;
+        padding: 10px;
+        transition: background-color 0.2s;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &:hover {
+          background-color: #f8f8f8;
+        }
+
+        .time-label-container {
+          flex: 1;
+          display: flex;
+          align-items: center;
+
+          .time-label {
+            font-weight: bold;
+            color: #555;
+          }
+        }
+
+        .capacity-container {
+          flex: 1;
+          display: flex;
+          justify-content: flex-end;
+
+          .capacity-input {
+            width: 150px;
+
+            input {
+              width: 100%;
+              text-align: center;
+            }
+          }
         }
       }
     }

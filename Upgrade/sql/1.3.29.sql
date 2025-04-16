@@ -1,4 +1,7 @@
 ALTER TABLE `pes_ticket` ADD `ticket_appointment_time` INT NOT NULL COMMENT '预约工单时间';
+ALTER TABLE `pes_ticket` ADD INDEX(`ticket_model_id`);
+ALTER TABLE `pes_ticket` ADD INDEX(`ticket_appointment_time`);
+
 
 UPDATE `pes_field` SET `field_explain` = '若您的工单表单需要设置默认值，可以在这里填写对应的数值。页面渲染时会自动填充。<br/>部分表单类型默认值的作用说明：<a href=\"https://document.pescms.com/article/3/552003742304567296.html\" target=\"_blank\">「编辑器作用说明」</a> <a href=\"https://document.pescms.com/article/3/649484225052934144.html\" target=\"_blank\">「上传组件作用说明」</a> <br/>注意：部分表单类型可能不起效' WHERE `pes_field`.`field_id` = 294;
 
@@ -20,3 +23,4 @@ INSERT INTO `pes_field` (`field_id`, `field_model_id`, `field_name`, `field_disp
 (NULL, 15, 'is_appointment', '是否预约工单', 'radio', '{&quot;普通工单&quot;:&quot;0&quot;,&quot;预约工单&quot;:&quot;1&quot;}', '', '0', 0, 10, 1, 1, 1, 0, 0, 'POST,PUT');
 
 ALTER TABLE `pes_ticket_model` ADD `ticket_model_is_appointment` INT NOT NULL COMMENT '是否预约工单';
+ALTER TABLE `pes_ticket_model` ADD `ticket_model_appointment_config` TEXT NOT NULL COMMENT '预约配置信息' AFTER `ticket_model_is_appointment`;
